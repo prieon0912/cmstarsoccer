@@ -234,6 +234,9 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
 #pick,#friendly{background:rgba(4,7,13,.9)}
 .pick-card{width:min(780px,100%)}
 .card .pick-sub,.card .pick-warn{text-align:left}
+.card .pick-mine{display:flex;flex-direction:row;align-items:center;gap:8px;font-size:13px;color:var(--ink);background:rgba(255,212,71,.08);border:1px solid rgba(255,212,71,.35);border-radius:8px;padding:8px 10px;cursor:pointer}
+.card .pick-mine input{width:18px;height:18px;accent-color:var(--flood)}
+.card .pick-mine b{color:var(--flood)}
 .pick-warn{color:#ff9f1c}
 .pick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:6px}
 .card .pick-grid .club{display:grid;grid-template-columns:24px minmax(0,1fr);column-gap:8px;row-gap:1px;width:auto;padding:6px 8px;justify-items:start;align-items:center;border:1px solid var(--rule)}
@@ -295,7 +298,7 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
 .tm-head .bon{color:var(--flood);font-weight:700}
 .tm-pw{flex:1 1 0;min-height:0;container-type:size;display:grid;place-items:center}
 .tm-pw .tac-pitch{width:min(100cqw,calc(100cqh * 105 / 68));max-height:none}
-.tm-bench{display:grid;grid-template-columns:auto repeat(7,minmax(0,1fr));gap:4px;align-items:center}
+.tm-bench{display:grid;grid-template-columns:auto repeat(9,minmax(0,1fr));gap:4px;align-items:center}
 .tm-bench>i{font-style:normal;font-size:11px;color:var(--mute);font-weight:700;writing-mode:vertical-rl;transform:rotate(180deg)}
 .bs{display:grid;justify-items:center;gap:1px;padding:4px 2px;border-radius:7px;border:1px dashed var(--rule);background:rgba(255,255,255,.03);cursor:pointer;min-width:0;min-height:52px;align-content:center}
 .bs b{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--kit);color:var(--num);font-family:var(--f-num);font-weight:800;font-size:13px}
@@ -337,6 +340,46 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
 .hub-acc{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mute)}
 .hub-acc b{color:var(--ink)}
 #teamBtn.pri{background:var(--flood);color:#16120a;border-color:transparent}
+/* player cards: base cards are plain silver hexagons */
+.pc{--w:86px;position:relative;width:var(--w);aspect-ratio:86/116;flex:0 0 auto;display:grid;grid-template-rows:minmax(0,1fr) auto auto;justify-items:center;
+  padding:calc(var(--w)*0.15) calc(var(--w)*0.09) calc(var(--w)*0.19);gap:1px;box-sizing:border-box;color:#1b222c;font-family:var(--f-num);
+  clip-path:polygon(50% 0,100% 12%,100% 88%,50% 100%,0 88%,0 12%);
+  background:linear-gradient(160deg,#fbfcfd 0%,#d9dee4 30%,#aab2bc 52%,#cfd4da 70%,#eef1f4 100%);border:0;cursor:pointer;text-align:center}
+.pc::before{content:"";position:absolute;inset:2px;clip-path:inherit;background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0) 40%),repeating-linear-gradient(120deg,rgba(255,255,255,.08) 0 6px,rgba(0,0,0,.03) 6px 12px);pointer-events:none}
+.pc>*{position:relative}
+.pc-top{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;width:100%;height:100%;min-height:0;column-gap:2px}
+.pc-l{display:grid;justify-items:center;align-self:start;gap:1px}
+.pc-ovr{font-weight:800;font-size:calc(var(--w)*0.27);line-height:.9;letter-spacing:-.02em}
+.pc-pos{font-style:normal;font-weight:700;font-size:calc(var(--w)*0.12);opacity:.8}
+.pc-top .crest{width:calc(var(--w)*0.18);height:calc(var(--w)*0.21);font-size:0;clip-path:polygon(0 0,100% 0,100% 70%,50% 100%,0 70%)}
+.pc-shirt{width:80%;max-height:100%;justify-self:center;aspect-ratio:1;align-self:center;display:grid;place-items:center;background:var(--kit,#c3162f);color:var(--num,#fff);font-weight:800;font-size:calc(var(--w)*0.17);
+  clip-path:polygon(28% 6%,40% 0,60% 0,72% 6%,100% 22%,90% 46%,78% 40%,78% 100%,22% 100%,22% 40%,10% 46%,0 22%);filter:drop-shadow(0 1px 0 rgba(0,0,0,.2))}
+.pc-name{font-family:var(--f-ui);font-weight:800;font-size:calc(var(--w)*0.13);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-top:1px solid rgba(27,34,44,.25);padding-top:1px;width:90%}
+.pc-st{display:grid;grid-template-columns:repeat(3,1fr);width:100%;column-gap:2px;font-size:calc(var(--w)*0.072);font-weight:600;line-height:1.2;opacity:.85;white-space:nowrap}
+.pc-st b{font-weight:800;font-size:calc(var(--w)*0.1);margin-right:1px}
+.pc-tag{position:absolute;top:calc(var(--w)*0.03);right:0;left:0;margin:auto;width:max-content;font-family:var(--f-ui);font-size:calc(var(--w)*0.1);font-weight:800;padding:1px 5px;border-radius:3px;background:#16202c;color:var(--flood)}
+.pc-tag.bn{color:#6ebef0}
+.pc.in{filter:saturate(.6) brightness(.82)}
+.pc.bonus .pc-ovr{color:#7a5b00}
+.pc.sel{outline:none;filter:drop-shadow(0 0 0 var(--flood)) drop-shadow(0 0 6px rgba(255,212,71,.9))}
+.pc.mis .pc-pos{color:#c25400;opacity:1}
+.pc.s{--w:44px;padding:5px 3px 6px;grid-template-rows:auto auto;gap:0}
+.pc.s .pc-ovr{font-size:15px;text-align:center}
+.pc.s .pc-name{font-size:8.5px;border:0;padding:0}
+.pc.xs{--w:38px}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(84px,1fr));gap:6px 4px;justify-items:center}
+.cg .pc{--w:84px}
+.tm-card{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center}
+.tm-card .pc{--w:92px;cursor:default}
+.tp.cardy{min-width:0}
+.tp.cardy em{margin-top:1px}
+.bs .pc{--w:36px}
+.tp.cardy .pc-ovr,.bs .pc-ovr{display:block;width:auto;height:auto;border-radius:0;background:none;box-shadow:none;color:inherit;place-items:initial}
+.tp.cardy .pc-ovr,.bs .pc .pc-ovr{font-size:calc(var(--w)*0.34)}
+.tp.cardy span,.bs span{text-shadow:none}
+.tp.cardy .pc-name,.bs .pc .pc-name{font-size:calc(var(--w)*0.2);max-width:calc(var(--w) - 6px);font-weight:800;color:#1b222c}
+.bs.full{padding:2px}
+.bs.sel .pc{filter:drop-shadow(0 0 5px rgba(255,212,71,.95))}
 /* substitutions */
 .sub-card{width:min(640px,100%)}
 .sub-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;min-height:0}
@@ -419,7 +462,7 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
     <div class="hub">
       <div class="hub-l">
         <div class="brand sm"><span class="a">FLOODLIGHT</span><span class="b">ELEVEN</span></div>
-        <div class="hub-top"><p class="hub-season" id="hubSeason">2025-26 시즌</p><button id="helpBtn">조작법</button></div>
+        <div class="hub-top"><p class="hub-season" id="hubSeason">2026-27 시즌</p><button id="helpBtn">조작법</button></div>
         <div class="hub-club" id="hubClub"></div>
         <div class="hub-next" id="hubNext"></div>
         <div class="go-row"><button class="go" id="goBtn"><svg viewBox="0 0 12 12"><path d="M2 1l9 5-9 5z"/></svg>경기 시작</button><button class="go alt" id="simBtn">결과만 보기</button></div>
@@ -438,7 +481,8 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
   <section id="pick" class="ov" hidden>
     <div class="card pick-card">
       <h2>PREMIER LEAGUE</h2>
-      <p class="r-msg pick-sub">시즌을 함께할 클럽을 고르세요. 38라운드를 치르고 순위표에서 우승을 다퉈요.</p>
+      <p class="r-msg pick-sub" id="pickSub">시즌을 함께할 클럽을 고르세요. 38라운드를 치르고 순위표에서 우승을 다퉈요.</p>
+      <label class="pick-mine" id="pickMine" hidden><input type="checkbox" id="pickMineC" checked><span id="pickMineT"></span></label>
       <p class="r-msg pick-warn" id="pickNote" hidden>새 클럽을 고르면 지금 시즌 기록은 지워져요.</p>
       <div class="pick-grid" id="pickGrid"></div>
       <button id="pickBack" hidden>돌아가기</button>
@@ -616,76 +660,168 @@ const SKILLERS=new Set(['이사크','도쿠','셰르키','사카','살라','비�
 const lsGet=k=>{try{return localStorage.getItem(k);}catch(e){return null;}};
 const lsSet=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
 
-// Premier League 2025-26 clubs. Starting XIs are listed in the order of each club's formation slots
+// 2026-27 squads: 20 Premier League clubs (the league), then La Liga, Bundesliga, Ligue 1 and Serie A clubs. Starting XIs
+// (late October 2026 lineups) are listed in the order of each club's formation slots; sub holds the other 9 of the 20
 // (keeper, defenders left to right, midfield, attack); [name, shirt number, role, overall].
 // Squads reflect the summer 2025 transfer window as best known and may be out of date: edit here.
 const CLUBS=[
- {id:'ARS',name:'아스널',form:'4-3-3',shirt:'#db0007',pc:'#ffffff',pat:'sleeves',shorts:'#ffffff',socks:'#ffffff',num:'#ffffff',gk:'#f2c94c',
-  xi:[['라야',1,'GK',86],['칼라피오리',33,'DF',83],['가브리엘',6,'DF',87],['살리바',2,'DF',88],['팀버',12,'DF',84],['라이스',41,'MF',87],['수비멘디',36,'MF',86],['외데고르',8,'MF',87],['마르티넬리',11,'FW',83],['요케레스',14,'FW',85],['사카',7,'FW',88]]},
- {id:'AVL',name:'아스톤 빌라',form:'4-2-3-1',shirt:'#670e36',pc:'#95bfe5',pat:'sleeves',shorts:'#ffffff',socks:'#670e36',num:'#ffffff',gk:'#2bb3c0',
-  xi:[['E.마르티네스',23,'GK',85],['디뉴',12,'DF',79],['파우 토레스',14,'DF',81],['콘사',4,'DF',82],['캐시',2,'DF',79],['카마라',44,'MF',81],['틸레만스',8,'MF',82],['로저스',27,'MF',83],['맥긴',7,'FW',80],['왓킨스',11,'FW',83],['말런',17,'FW',80]]},
- {id:'BOU',name:'본머스',form:'4-2-3-1',shirt:'#da291c',pc:'#111111',pat:'stripe',shorts:'#111111',socks:'#111111',num:'#ffffff',gk:'#9be15d',
-  xi:[['페트로비치',1,'GK',79],['트뤼페르',3,'DF',77],['세네시',5,'DF',79],['디아키테',18,'DF',76],['A.스미스',15,'DF',74],['애덤스',12,'MF',78],['A.스콧',8,'MF',79],['타베르니에',16,'MF',79],['클라위버르트',19,'FW',79],['에바니우송',9,'FW',79],['세메뇨',24,'FW',83]]},
- {id:'BRE',name:'브렌트퍼드',form:'4-2-3-1',shirt:'#e30613',pc:'#ffffff',pat:'stripe',shorts:'#111111',socks:'#e30613',num:'#111111',gk:'#7d4ee0',
-  xi:[['켈러허',1,'GK',79],['히키',2,'DF',76],['판덴베르흐',4,'DF',78],['콜린스',22,'DF',77],['카요데',33,'DF',77],['헨더슨',6,'MF',77],['야르몰류크',18,'MF',75],['담스고르',24,'MF',79],['샤데',7,'FW',78],['이고르 티아구',9,'FW',79],['와타라',19,'FW',77]]},
- {id:'BHA',name:'브라이턴',form:'4-2-3-1',shirt:'#0057b8',pc:'#ffffff',pat:'stripe',shorts:'#ffffff',socks:'#0057b8',num:'#0057b8',gk:'#f39c1a',
-  xi:[['페르브뤼헌',1,'GK',79],['더카위퍼르',25,'DF',77],['덩크',5,'DF',78],['판헤케',29,'DF',80],['벨트만',34,'DF',75],['발레바',20,'MF',82],['힌셜우드',13,'MF',77],['뤼테르',14,'MF',78],['미토마',22,'FW',81],['웰벡',18,'FW',78],['민테',17,'FW',79]]},
- {id:'BUR',name:'번리',form:'4-2-3-1',shirt:'#6c1d45',pc:'#99d6ea',pat:'sleeves',shorts:'#ffffff',socks:'#6c1d45',num:'#ffffff',gk:'#2bd66b',
-  xi:[['두브라우카',1,'GK',77],['하트먼',3,'DF',73],['에스테브',5,'DF',75],['에크달',18,'DF',74],['워커',2,'DF',79],['컬런',24,'MF',75],['우고추쿠',8,'MF',74],['플레밍',19,'MF',74],['앤서니',11,'FW',75],['포스터',9,'FW',73],['에드워즈',10,'FW',72]]},
- {id:'CHE',name:'첼시',form:'4-2-3-1',shirt:'#034694',pc:'#d1d3d4',pat:'',shorts:'#034694',socks:'#ffffff',num:'#ffffff',gk:'#ff6f3c',
-  xi:[['산체스',1,'GK',80],['쿠쿠레야',3,'DF',83],['찰로바',23,'DF',80],['포파나',29,'DF',80],['제임스',24,'DF',84],['카이세도',25,'MF',87],['엔소',8,'MF',85],['파머',10,'MF',87],['네투',7,'FW',82],['주앙 페드루',20,'FW',82],['이스테방',41,'FW',80]]},
- {id:'CRY',name:'크리스털 팰리스',form:'3-4-3',shirt:'#1b458f',pc:'#c4122e',pat:'stripe',shorts:'#1b458f',socks:'#1b458f',num:'#ffffff',gk:'#f2c94c',
-  xi:[['헨더슨',1,'GK',82],['리처즈',26,'DF',78],['게히',6,'DF',83],['라크루아',5,'DF',82],['미첼',3,'MF',79],['워튼',20,'MF',81],['가마다',18,'MF',79],['무뇨스',2,'MF',81],['피노',10,'FW',79],['마테타',14,'FW',82],['사르',7,'FW',81]]},
- {id:'EVE',name:'에버턴',form:'4-2-3-1',shirt:'#003399',pc:'#ffffff',pat:'',shorts:'#ffffff',socks:'#ffffff',num:'#ffffff',gk:'#e0457b',
-  xi:[['픽퍼드',1,'GK',83],['미콜렌코',16,'DF',77],['브랜스웨이트',32,'DF',81],['타코우스키',6,'DF',80],['오브라이언',15,'DF',77],['게예',27,'MF',78],['가너',37,'MF',77],['듀스버리홀',22,'MF',79],['그릴리시',18,'FW',81],['배리',11,'FW',77],['은디아예',10,'FW',81]]},
- {id:'FUL',name:'풀럼',form:'4-2-3-1',shirt:'#f5f5f5',pc:'#111111',pat:'',shorts:'#111111',socks:'#f5f5f5',num:'#111111',gk:'#2bb3c0',
-  xi:[['레노',1,'GK',82],['로빈슨',33,'DF',79],['배시',3,'DF',78],['안데르센',5,'DF',80],['테테',2,'DF',78],['베리',16,'MF',79],['루키치',20,'MF',77],['스미스 로',32,'MF',79],['이워비',17,'FW',79],['히메네스',7,'FW',79],['윌슨',8,'FW',77]]},
- {id:'LEE',name:'리즈 유나이티드',form:'4-3-3',shirt:'#f7f7f2',pc:'#1d428a',pat:'',shorts:'#f7f7f2',socks:'#f7f7f2',num:'#1d428a',gk:'#9be15d',
-  xi:[['페리',1,'GK',77],['구드문드손',3,'DF',75],['로던',6,'DF',75],['스트라위크',5,'DF',76],['보글',2,'DF',74],['슈타흐',18,'MF',77],['암파두',4,'MF',76],['다나카',22,'MF',77],['오카포르',19,'FW',77],['캘버트르윈',9,'FW',77],['에런슨',11,'FW',76]]},
- {id:'LIV',name:'리버풀',form:'4-2-3-1',shirt:'#c8102e',pc:'#f6eb61',pat:'',shorts:'#c8102e',socks:'#c8102e',num:'#ffffff',gk:'#2bd66b',
-  xi:[['알리송',1,'GK',88],['케르케즈',6,'DF',81],['반다이크',4,'DF',88],['코나테',5,'DF',85],['프림퐁',30,'DF',83],['흐라번베르흐',38,'MF',85],['맥알리스터',10,'MF',86],['비르츠',7,'MF',87],['각포',18,'FW',84],['이사크',9,'FW',88],['살라',11,'FW',89]]},
- {id:'MCI',name:'맨체스터 시티',form:'4-2-3-1',shirt:'#6cabdd',pc:'#1c2c5b',pat:'',shorts:'#ffffff',socks:'#6cabdd',num:'#1c2c5b',gk:'#f39c1a',
-  xi:[['돈나룸마',25,'GK',88],['오라일리',33,'DF',77],['그바르디올',24,'DF',85],['디아스',3,'DF',86],['누네스',27,'DF',80],['로드리',16,'MF',89],['레인더르스',4,'MF',84],['셰르키',10,'MF',82],['도쿠',11,'FW',83],['홀란',9,'FW',91],['포든',47,'FW',84]]},
- {id:'MUN',name:'맨체스터 유나이티드',form:'3-4-3',shirt:'#da291c',pc:'#111111',pat:'',shorts:'#ffffff',socks:'#111111',num:'#ffffff',gk:'#7d4ee0',
-  xi:[['라먼스',31,'GK',77],['요로',15,'DF',79],['더리흐트',4,'DF',81],['쇼',23,'DF',78],['도르구',13,'MF',76],['카세미루',18,'MF',79],['브루누 페르난드스',8,'MF',86],['달로트',2,'MF',79],['쿠냐',10,'FW',82],['셰슈코',30,'FW',80],['음뵈모',19,'FW',83]]},
- {id:'NEW',name:'뉴캐슬',form:'4-3-3',shirt:'#f5f5f5',pc:'#111111',pat:'stripe',shorts:'#111111',socks:'#111111',num:'#ffffff',gk:'#9be15d',
-  xi:[['포프',22,'GK',82],['홀',3,'DF',79],['번',33,'DF',80],['티아우',12,'DF',80],['트리피어',2,'DF',79],['토날리',8,'MF',85],['기마랑이스',39,'MF',86],['조엘린통',7,'MF',81],['고든',10,'FW',84],['볼테마데',27,'FW',81],['엘랑가',20,'FW',80]]},
- {id:'NFO',name:'노팅엄 포레스트',form:'4-2-3-1',shirt:'#e53233',pc:'#ffffff',pat:'',shorts:'#ffffff',socks:'#e53233',num:'#ffffff',gk:'#2bb3c0',
-  xi:[['셀스',26,'GK',81],['N.윌리엄스',3,'DF',78],['무리요',5,'DF',82],['밀렌코비치',31,'DF',81],['아이나',34,'DF',77],['상가레',6,'MF',78],['앤더슨',8,'MF',81],['깁스화이트',10,'MF',83],['허드슨오도이',7,'FW',78],['우드',11,'FW',80],['은도예',14,'FW',79]]},
- {id:'SUN',name:'선덜랜드',form:'4-2-3-1',shirt:'#eb172b',pc:'#ffffff',pat:'stripe',shorts:'#111111',socks:'#eb172b',num:'#111111',gk:'#f2c94c',
-  xi:[['루프스',22,'GK',76],['레이니우두',17,'DF',77],['밸러드',5,'DF',75],['무키엘레',20,'DF',77],['흄',32,'DF',74],['자카',34,'MF',82],['사디키',27,'MF',76],['르페',28,'MF',77],['탈비',7,'FW',75],['이시도르',18,'FW',77],['아딩그라',24,'FW',76]]},
- {id:'TOT',name:'토트넘',form:'4-2-3-1',shirt:'#f7f7f7',pc:'#132257',pat:'',shorts:'#132257',socks:'#f7f7f7',num:'#132257',gk:'#e0457b',
-  xi:[['비카리오',1,'GK',83],['우도기',13,'DF',79],['판더벤',37,'DF',84],['로메로',17,'DF',84],['포로',23,'DF',82],['팔리냐',6,'MF',82],['베리발',15,'MF',78],['시몬스',7,'MF',83],['존슨',22,'FW',80],['히샤를리송',9,'FW',77],['쿠두스',20,'FW',82]]},
- {id:'WHU',name:'웨스트햄',form:'4-2-3-1',shirt:'#7a263a',pc:'#1bb1e7',pat:'sleeves',shorts:'#ffffff',socks:'#ffffff',num:'#ffffff',gk:'#9be15d',
-  xi:[['헤르만센',1,'GK',77],['디우프',12,'DF',77],['킬먼',3,'DF',78],['토디보',25,'DF',79],['완비사카',29,'DF',78],['소우첵',28,'MF',79],['마테우스 페르난드스',18,'MF',77],['파케타',10,'MF',82],['서머빌',7,'FW',79],['윌슨',9,'FW',76],['보언',20,'FW',82]]},
- {id:'WOL',name:'울버햄튼',form:'3-4-3',shirt:'#fdb913',pc:'#111111',pat:'',shorts:'#111111',socks:'#fdb913',num:'#111111',gk:'#2bb3c0',
-  xi:[['조제 사',1,'GK',79],['아그바두',18,'DF',76],['S.부에노',4,'DF',75],['모스케라',15,'DF',76],['H.부에노',3,'MF',75],['안드레',7,'MF',78],['주앙 고메스',8,'MF',80],['도허티',2,'MF',74],['황희찬',11,'FW',76],['스트란 라르센',9,'FW',79],['벨가르드',27,'FW',76]]},
+ {id:'ARS',name:'아스널',lg:'PL',form:'4-2-3-1',shirt:'#db0007',pc:'#ffffff',pat:'sleeves',shorts:'#ffffff',socks:'#ffffff',num:'#ffffff',gk:'#f2c94c',
+  xi:[['라야', 1, 'GK', 88], ['칼라피오리', 33, 'DF', 82], ['가브리엘', 6, 'DF', 89], ['살리바', 2, 'DF', 88], ['팀버', 12, 'DF', 84], ['라이스', 41, 'MF', 88], ['기마랑이스', 39, 'MF', 86], ['외데고르', 8, 'MF', 86], ['에제', 10, 'FW', 84], ['요케레스', 14, 'FW', 86], ['사카', 7, 'FW', 87]],
+  sub:[['케파', 13, 'GK', 78], ['콘사', 15, 'CB', 84], ['화이트', 4, 'RB', 81], ['인카피에', 5, 'LB', 84], ['모스케라', 3, 'CB', 78], ['수비멘디', 36, 'CDM', 84], ['메리노', 23, 'CM', 83], ['하베르츠', 29, 'ST', 81], ['마두에케', 20, 'RW', 80]]},
+ {id:'AVL',name:'아스톤 빌라',lg:'PL',form:'4-2-3-1',shirt:'#670e36',pc:'#95bfe5',pat:'sleeves',shorts:'#ffffff',socks:'#670e36',num:'#ffffff',gk:'#2bb3c0',
+  xi:[['스즈키', 1, 'GK', 76], ['마트선', 22, 'DF', 79], ['파우 토레스', 14, 'DF', 81], ['린델뢰프', 3, 'DF', 77], ['캐시', 2, 'DF', 81], ['카마라', 44, 'MF', 84], ['고레츠카', 18, 'MF', 82], ['맥긴', 7, 'MF', 83], ['만잠비', 21, 'FW', 80], ['N.잭슨', 9, 'FW', 79], ['베일리', 31, 'FW', 77]],
+  sub:[['비조', 40, 'GK', 77], ['밍스', 5, 'CB', 77], ['보가르드', 26, 'RB', 74], ['키바 시세', 6, 'CB', 68], ['오나나', 24, 'CDM', 81], ['조앙 고메스', 8, 'CDM', 78], ['가르나초', 17, 'LW', 77], ['왓킨스', 11, 'ST', 83], ['에이브러햄', 19, 'ST', 77]]},
+ {id:'BOU',name:'본머스',lg:'PL',form:'4-2-3-1',shirt:'#da291c',pc:'#111111',pat:'stripe',shorts:'#111111',socks:'#111111',num:'#ffffff',gk:'#9be15d',
+  xi:[['페트로비치', 1, 'GK', 79], ['트뤼페르', 3, 'DF', 80], ['힐', 27, 'DF', 78], ['실바', 5, 'DF', 77], ['A.스미스', 15, 'DF', 73], ['크리스티', 10, 'MF', 78], ['애덤스', 12, 'MF', 79], ['클라위버르트', 19, 'MF', 79], ['타베르니에', 16, 'FW', 79], ['에바니우송', 9, 'FW', 79], ['하이앙', 11, 'FW', 79]],
+  sub:[['포스터', 13, 'GK', 71], ['디아키테', 18, 'CB', 79], ['후안루', 20, 'RB', 76], ['A.스콧', 29, 'CM', 81], ['브룩스', 7, 'CAM', 76], ['개넌도크', 14, 'RW', 71], ['크루피', 22, 'ST', 80], ['아들리', 21, 'LW', 77], ['아라우호', 17, 'RB', 74]]},
+ {id:'BRE',name:'브렌트퍼드',lg:'PL',form:'4-2-3-1',shirt:'#e30613',pc:'#ffffff',pat:'stripe',shorts:'#111111',socks:'#e30613',num:'#111111',gk:'#7d4ee0',
+  xi:[['켈러허', 1, 'GK', 80], ['루이스포터', 23, 'DF', 77], ['판덴베르흐', 4, 'DF', 78], ['아예르', 20, 'DF', 77], ['카요데', 33, 'DF', 81], ['야넬트', 27, 'MF', 78], ['상가레', 6, 'MF', 81], ['옌센', 8, 'MF', 80], ['와타라', 19, 'FW', 79], ['이고르 티아구', 9, 'FW', 82], ['샤데', 7, 'FW', 79]],
+  sub:[['발디마르손', 12, 'GK', 69], ['콜린스', 22, 'CB', 79], ['히키', 2, 'RB', 75], ['김지수', 36, 'CB', 65], ['야르몰류크', 18, 'CM', 78], ['담스고르', 24, 'CAM', 80], ['앤서니', 44, 'LW', 76], ['F.카르발류', 14, 'CAM', 74], ['밀람보', 10, 'CAM', 73]]},
+ {id:'BHA',name:'브라이턴',lg:'PL',form:'4-2-3-1',shirt:'#0057b8',pc:'#ffffff',pat:'stripe',shorts:'#ffffff',socks:'#0057b8',num:'#0057b8',gk:'#f39c1a',
+  xi:[['페르브뤼헌', 1, 'GK', 81], ['보스칼리', 21, 'DF', 78], ['부슈코비치', 44, 'DF', 81], ['덩크', 5, 'DF', 77], ['코스티냐', 20, 'DF', 75], ['체마 안드레스', 14, 'MF', 76], ['그로스', 13, 'MF', 79], ['아야리', 26, 'MF', 79], ['더카위퍼르', 29, 'FW', 78], ['코스툴라스', 19, 'FW', 73], ['디에고 고메스', 25, 'FW', 78]],
+  sub:[['스틸', 23, 'GK', 73], ['하잠', 3, 'LB', 75], ['카디오을루', 24, 'RB', 80], ['스보보다', 30, 'CB', 72], ['힌셜우드', 8, 'CM', 77], ['오라일리', 33, 'CM', 77], ['얄쿠예', 35, 'CM', 70], ['뤼테르', 10, 'CAM', 77], ['미토마', 22, 'LW', 81]]},
+ {id:'CHE',name:'첼시',lg:'PL',form:'3-4-3',shirt:'#034694',pc:'#d1d3d4',pat:'',shorts:'#034694',socks:'#ffffff',num:'#ffffff',gk:'#ff6f3c',
+  xi:[['펜더스', 39, 'GK', 78], ['콜윌', 6, 'DF', 80], ['포파나', 3, 'DF', 79], ['아체암퐁', 34, 'DF', 75], ['네투', 7, 'MF', 81], ['라비아', 45, 'MF', 78], ['카이세도', 25, 'MF', 86], ['팔레스트라', 2, 'MF', 78], ['로저스', 17, 'FW', 84], ['주앙 페드루', 9, 'FW', 83], ['파머', 10, 'FW', 85]],
+  sub:[['E.마르티네스', 1, 'GK', 85], ['귀스토', 27, 'RB', 79], ['라크루아', 5, 'CB', 82], ['하토', 21, 'LB', 78], ['헨더슨', 14, 'CM', 78], ['바르코', 4, 'CM', 79], ['이스테방', 41, 'RW', 80], ['웰벡', 18, 'ST', 80], ['켄다', 23, 'RW', 76]]},
+ {id:'COV',name:'코번트리',lg:'PL',form:'4-2-3-1',shirt:'#6cace4',pc:'#ffffff',pat:'',shorts:'#6cace4',socks:'#6cace4',num:'#ffffff',gk:'#2b2b2b',
+  xi:[['러시워스', 1, 'GK', 76], ['다실바', 3, 'DF', 73], ['음푸니', 5, 'DF', 69], ['피넉', 6, 'DF', 75], ['판에바이크', 27, 'DF', 75], ['토르프', 29, 'MF', 73], ['이렌키', 8, 'MF', 73], ['루도니', 10, 'MF', 75], ['그보호', 11, 'FW', 74], ['아워니이', 9, 'FW', 74], ['사카모토', 7, 'FW', 74]],
+  sub:[['벤틀리', 13, 'GK', 70], ['B.토머스', 4, 'CB', 74], ['키칭', 15, 'CB', 73], ['오녜카', 14, 'CDM', 75], ['토머스아산테', 23, 'RW', 73], ['심스', 16, 'ST', 71], ['셰리프', 19, 'ST', 72], ['H.라이트', 20, 'ST', 74], ['메이슨클라크', 21, 'LW', 75]]},
+ {id:'CRY',name:'크리스털 팰리스',lg:'PL',form:'3-4-3',shirt:'#1b458f',pc:'#c4122e',pat:'stripe',shorts:'#1b458f',socks:'#1b458f',num:'#ffffff',gk:'#f2c94c',
+  xi:[['헨더슨', 1, 'GK', 82], ['리처즈', 26, 'DF', 80], ['디사시', 2, 'DF', 77], ['캉보', 5, 'DF', 76], ['미첼', 3, 'MF', 79], ['워튼', 20, 'MF', 82], ['가마다', 18, 'MF', 79], ['밍게사', 17, 'MF', 80], ['맥닐', 7, 'FW', 76], ['마테타', 14, 'FW', 81], ['피노', 10, 'FW', 79]],
+  sub:[['매슈스', 31, 'GK', 63], ['리아드', 34, 'CB', 74], ['토미야스', 12, 'LB', 76], ['레르마', 8, 'CDM', 76], ['휴스', 19, 'CM', 77], ['에세', 44, 'CAM', 70], ['사르', 11, 'RW', 81], ['스트란 라르센', 22, 'ST', 77], ['데브니', 55, 'LW', 72]]},
+ {id:'EVE',name:'에버턴',lg:'PL',form:'4-2-3-1',shirt:'#003399',pc:'#ffffff',pat:'',shorts:'#ffffff',socks:'#ffffff',num:'#ffffff',gk:'#e0457b',
+  xi:[['픽퍼드', 1, 'GK', 85], ['미콜렌코', 16, 'DF', 77], ['오브라이언', 15, 'DF', 76], ['타코우스키', 6, 'DF', 80], ['뢸', 18, 'DF', 74], ['가너', 37, 'MF', 82], ['암스트롱', 8, 'MF', 73], ['듀스버리홀', 22, 'MF', 81], ['T.조지', 11, 'FW', 72], ['배리', 9, 'FW', 76], ['B.존슨', 7, 'FW', 78]],
+  sub:[['트래버스', 12, 'GK', 72], ['패터슨', 2, 'RB', 71], ['브랜스웨이트', 32, 'CB', 79], ['킨', 5, 'CB', 76], ['뇌르고르', 36, 'CDM', 79], ['알카라스', 24, 'CM', 75], ['디블링', 20, 'RW', 74], ['베투', 14, 'ST', 77], ['아즈누', 3, 'LB', 67]]},
+ {id:'FUL',name:'풀럼',lg:'PL',form:'4-2-3-1',shirt:'#f5f5f5',pc:'#111111',pat:'',shorts:'#111111',socks:'#f5f5f5',num:'#111111',gk:'#2bb3c0',
+  xi:[['레노', 1, 'GK', 79], ['로빈슨', 33, 'DF', 80], ['아펜그루버', 4, 'DF', 76], ['배시', 31, 'DF', 78], ['카스타뉴', 21, 'DF', 75], ['샤를', 6, 'MF', 73], ['베리', 16, 'MF', 79], ['킹', 24, 'MF', 74], ['이워비', 17, 'FW', 80], ['가르시아', 9, 'FW', 75], ['보브', 11, 'FW', 76]],
+  sub:[['르콩트', 23, 'GK', 73], ['안데르센', 25, 'CB', 79], ['테테', 2, 'RB', 78], ['쿠엔카', 5, 'CB', 76], ['케어니', 10, 'CM', 74], ['스미스 로', 32, 'CAM', 77], ['세세뇽', 30, 'LB', 77], ['무니스', 19, 'ST', 76], ['케빈', 7, 'LW', 76]]},
+ {id:'HUL',name:'헐 시티',lg:'PL',form:'3-4-3',shirt:'#f5a12d',pc:'#111111',pat:'stripe',shorts:'#111111',socks:'#f5a12d',num:'#111111',gk:'#3fa34d',
+  xi:[['촐라키스', 1, 'GK', 79], ['아자이', 5, 'DF', 70], ['이건', 6, 'DF', 72], ['멘디', 4, 'DF', 75], ['자일스', 3, 'MF', 72], ['슬레이터', 27, 'MF', 72], ['이로에그부남', 8, 'MF', 76], ['코일', 2, 'MF', 70], ['스트라우드', 11, 'FW', 74], ['맥버니', 9, 'FW', 75], ['벨루미', 7, 'FW', 73]],
+  sub:[['버틀랜드', 13, 'GK', 75], ['헤링턴', 15, 'CB', 66], ['드라메', 12, 'RB', 69], ['크룩스', 25, 'CM', 71], ['모리타', 28, 'CM', 78], ['밀러', 17, 'LW', 72], ['겔하르트', 21, 'ST', 73], ['오뮈르', 10, 'RW', 69], ['휴스', 16, 'CB', 74]]},
+ {id:'IPS',name:'입스위치',lg:'PL',form:'4-2-3-1',shirt:'#0044a9',pc:'#ffffff',pat:'',shorts:'#ffffff',socks:'#0044a9',num:'#ffffff',gk:'#2fbf71',
+  xi:[['월턴', 1, 'GK', 73], ['데이비스', 3, 'DF', 75], ['디오프', 24, 'DF', 75], ['오셰이', 26, 'DF', 75], ['와타라', 2, 'DF', 73], ['플로렌티노', 5, 'MF', 77], ['루키치', 8, 'MF', 78], ['엔시소', 10, 'MF', 78], ['필로젠', 11, 'FW', 76], ['에메르손', 9, 'FW', 74], ['파타우', 7, 'FW', 75]],
+  sub:[['A.파머', 31, 'GK', 71], ['그리브스', 6, 'CB', 74], ['펄롱', 22, 'RB', 73], ['테일러', 14, 'CM', 72], ['마투시와', 4, 'CDM', 75], ['마에다', 23, 'LW', 78], ['아크폼', 19, 'ST', 71], ['메흐메티', 47, 'CAM', 72], ['클라크', 20, 'LW', 75]]},
+ {id:'LEE',name:'리즈 유나이티드',lg:'PL',form:'3-4-3',shirt:'#f7f7f2',pc:'#1d428a',pat:'',shorts:'#f7f7f2',socks:'#f7f7f2',num:'#1d428a',gk:'#9be15d',
+  xi:[['트래퍼드', 1, 'GK', 79], ['무하레모비치', 15, 'DF', 75], ['엘베디', 4, 'DF', 78], ['쥐스탱', 24, 'DF', 76], ['구드문드손', 3, 'MF', 78], ['암파두', 26, 'MF', 80], ['다나카', 22, 'MF', 76], ['보글', 2, 'MF', 76], ['H.윌슨', 8, 'FW', 81], ['캘버트르윈', 9, 'FW', 79], ['D.제임스', 7, 'FW', 75]],
+  sub:[['페리', 31, 'GK', 76], ['비욜', 6, 'CB', 77], ['로던', 14, 'CB', 77], ['그루에프', 44, 'CDM', 75], ['슈타흐', 18, 'CM', 80], ['에런슨', 11, 'CAM', 76], ['오카포르', 19, 'LW', 77], ['은메차', 39, 'ST', 76], ['뇬토', 29, 'RW', 74]]},
+ {id:'LIV',name:'리버풀',lg:'PL',form:'4-2-3-1',shirt:'#c8102e',pc:'#f6eb61',pat:'',shorts:'#c8102e',socks:'#c8102e',num:'#ffffff',gk:'#2bd66b',
+  xi:[['알리송', 1, 'GK', 87], ['케르케즈', 6, 'DF', 81], ['반다이크', 4, 'DF', 88], ['아라우호', 12, 'DF', 80], ['프림퐁', 30, 'DF', 81], ['흐라번베르흐', 38, 'MF', 85], ['맥알리스터', 10, 'MF', 84], ['비르츠', 7, 'MF', 86], ['각포', 18, 'FW', 82], ['이사크', 9, 'FW', 86], ['소보슬라이', 8, 'FW', 86]],
+  sub:[['마마르다슈빌리', 25, 'GK', 83], ['자케', 5, 'CB', 77], ['고메스', 2, 'CB', 79], ['브래들리', 84, 'RB', 79], ['치미카스', 21, 'LB', 76], ['엔도', 3, 'CDM', 78], ['에키티케', 22, 'ST', 85], ['키에사', 14, 'RW', 80], ['응구모하', 73, 'LW', 75]]},
+ {id:'MCI',name:'맨체스터 시티',lg:'PL',form:'4-2-3-1',shirt:'#6cabdd',pc:'#1c2c5b',pat:'',shorts:'#ffffff',socks:'#6cabdd',num:'#1c2c5b',gk:'#f39c1a',
+  xi:[['돈나룸마', 1, 'GK', 89], ['그바르디올', 24, 'DF', 85], ['디아스', 3, 'DF', 87], ['쿠사노프', 45, 'DF', 82], ['누네스', 22, 'DF', 83], ['엔소', 17, 'MF', 86], ['E.앤더슨', 5, 'MF', 84], ['포든', 47, 'MF', 84], ['도쿠', 11, 'FW', 84], ['홀란', 9, 'FW', 91], ['은디아예', 7, 'FW', 82]],
+  sub:[['룰리', 28, 'GK', 80], ['게히', 6, 'CB', 85], ['아이트누리', 21, 'LB', 81], ['루이스', 82, 'RB', 77], ['코바치치', 8, 'CM', 81], ['부아디', 32, 'CDM', 78], ['셰르키', 10, 'CAM', 86], ['세메뇨', 42, 'RW', 85], ['맥에이두', 56, 'ST', 72]]},
+ {id:'MUN',name:'맨체스터 유나이티드',lg:'PL',form:'4-2-3-1',shirt:'#da291c',pc:'#111111',pat:'',shorts:'#ffffff',socks:'#111111',num:'#ffffff',gk:'#7d4ee0',
+  xi:[['라먼스', 1, 'GK', 82], ['달로트', 2, 'DF', 78], ['리산드로 마르티네스', 6, 'DF', 82], ['매과이어', 5, 'DF', 82], ['요로', 15, 'DF', 78], ['발레바', 20, 'MF', 80], ['마이누', 37, 'MF', 81], ['브루누 페르난드스', 8, 'MF', 89], ['쿠냐', 10, 'FW', 84], ['셰슈코', 30, 'FW', 82], ['음뵈모', 19, 'FW', 84]],
+  sub:[['달로', 12, 'GK', 76], ['더리흐트', 4, 'CB', 82], ['마즈라위', 3, 'RB', 80], ['쇼', 23, 'LB', 79], ['틸레만스', 18, 'CM', 85], ['안드레이 산투스', 17, 'CM', 80], ['마운트', 7, 'CAM', 78], ['디알로', 16, 'RW', 79], ['래시퍼드', 9, 'LW', 82]]},
+ {id:'NEW',name:'뉴캐슬',lg:'PL',form:'4-2-3-1',shirt:'#f5f5f5',pc:'#111111',pat:'stripe',shorts:'#111111',socks:'#111111',num:'#ffffff',gk:'#9be15d',
+  xi:[['호르니체크', 1, 'GK', 77], ['홀', 3, 'DF', 83], ['번', 33, 'DF', 79], ['셰어', 5, 'DF', 81], ['데디치', 2, 'DF', 76], ['조엘린통', 7, 'MF', 80], ['N.곤살레스', 6, 'MF', 81], ['윌록', 28, 'MF', 76], ['반스', 11, 'FW', 80], ['오술라', 18, 'FW', 75], ['엘랑가', 20, 'FW', 79]],
+  sub:[['포프', 22, 'GK', 78], ['티아우', 12, 'CB', 81], ['보트만', 4, 'CB', 81], ['리브라멘투', 21, 'RB', 81], ['마일리', 67, 'CM', 77], ['J.램지', 41, 'CM', 78], ['머피', 23, 'RW', 79], ['위사', 9, 'ST', 80], ['박승수', 30, 'LW', 62]]},
+ {id:'NFO',name:'노팅엄 포레스트',lg:'PL',form:'3-4-3',shirt:'#e53233',pc:'#ffffff',pat:'',shorts:'#ffffff',socks:'#e53233',num:'#ffffff',gk:'#2bb3c0',
+  xi:[['셀스', 26, 'GK', 81], ['무리요', 5, 'DF', 82], ['밀렌코비치', 31, 'DF', 80], ['자이르', 23, 'DF', 75], ['N.윌리엄스', 3, 'MF', 80], ['슐라거', 24, 'MF', 78], ['매커티', 8, 'MF', 73], ['아이나', 34, 'MF', 79], ['은도예', 14, 'FW', 77], ['들랩', 9, 'FW', 77], ['깁스화이트', 7, 'FW', 83]],
+  sub:[['빅토르', 13, 'GK', 71], ['모라투', 4, 'CB', 75], ['애벗', 21, 'RB', 63], ['도밍게스', 16, 'CM', 78], ['예이츠', 22, 'CDM', 75], ['허드슨오도이', 11, 'LW', 78], ['바크와', 29, 'RW', 76], ['우드', 27, 'ST', 81], ['이고르 제주스', 19, 'ST', 77]]},
+ {id:'SUN',name:'선덜랜드',lg:'PL',form:'4-2-3-1',shirt:'#eb172b',pc:'#ffffff',pat:'stripe',shorts:'#111111',socks:'#eb172b',num:'#111111',gk:'#f2c94c',
+  xi:[['루프스', 1, 'GK', 81], ['레이니우두', 5, 'DF', 80], ['알데레테', 15, 'DF', 81], ['오닌', 13, 'DF', 73], ['흄', 32, 'DF', 78], ['자카', 34, 'MF', 85], ['사디키', 27, 'MF', 80], ['르페', 28, 'MF', 80], ['앙굴로', 11, 'FW', 73], ['브로베이', 9, 'FW', 78], ['리그', 10, 'FW', 74]],
+  sub:[['엘보리', 22, 'GK', 68], ['무키엘레', 20, 'RB', 81], ['밸러드', 25, 'CB', 78], ['셀트', 6, 'CB', 68], ['디아라', 19, 'CM', 77], ['탈비', 7, 'RW', 77], ['아딩그라', 24, 'LW', 76], ['이시도르', 18, 'ST', 75], ['메우니에', 2, 'RB', 78]]},
+ {id:'TOT',name:'토트넘',lg:'PL',form:'4-2-3-1',shirt:'#f7f7f7',pc:'#132257',pat:'',shorts:'#132257',socks:'#f7f7f7',num:'#132257',gk:'#e0457b',
+  xi:[['킨스키', 31, 'GK', 77], ['로버트슨', 26, 'DF', 80], ['판헤케', 6, 'DF', 81], ['판더벤', 37, 'DF', 81], ['그레이', 14, 'DF', 77], ['토날리', 8, 'MF', 85], ['마테우스 페르난드스', 18, 'MF', 80], ['마르무시', 22, 'MF', 82], ['텔', 11, 'FW', 78], ['솔랑케', 19, 'FW', 79], ['쿠두스', 20, 'FW', 81]],
+  sub:[['오스틴', 40, 'GK', 67], ['세네시', 5, 'CB', 82], ['포로', 23, 'RB', 83], ['우도기', 13, 'LB', 79], ['벤탄쿠르', 30, 'CM', 79], ['사르', 29, 'CM', 79], ['베리발', 15, 'CM', 78], ['시몬스', 7, 'CAM', 81], ['히샤를리송', 9, 'ST', 78]]},
+ {id:'RMA',name:'레알 마드리드',lg:'LL',form:'4-2-3-1',shirt:'#f7f7f7',pc:'#d4af37',pat:'',shorts:'#f7f7f7',socks:'#f7f7f7',num:'#1a1a4e',gk:'#3a3a3a',
+  xi:[['쿠르투아', 1, 'GK', 90], ['쿠쿠레야', 17, 'DF', 86], ['하위선', 4, 'DF', 81], ['코나테', 16, 'DF', 84], ['알렉산더아널드', 12, 'DF', 84], ['추아메니', 14, 'MF', 84], ['B.실바', 20, 'MF', 84], ['벨링엄', 5, 'MF', 90], ['비니시우스', 7, 'FW', 89], ['음바페', 10, 'FW', 91], ['귈레르', 15, 'FW', 83]],
+  sub:[['루닌', 13, 'GK', 80], ['뤼디거', 22, 'CB', 83], ['밀리탕', 3, 'CB', 84], ['둠프리스', 24, 'RB', 83], ['발베르데', 8, 'CM', 87], ['카마빙가', 6, 'CDM', 81], ['브라임', 21, 'CAM', 81], ['호드리구', 11, 'LW', 84], ['Y.디오망데', 25, 'LW', 84]]},
+ {id:'BAR',name:'바르셀로나',lg:'LL',form:'4-3-3',shirt:'#a50044',pc:'#004d98',pat:'stripe',shorts:'#004d98',socks:'#a50044',num:'#ffd700',gk:'#f5e663',
+  xi:[['호안 가르시아', 1, 'GK', 86], ['칸셀루', 2, 'DF', 83], ['쿠바르시', 5, 'DF', 86], ['G.마르틴', 18, 'DF', 79], ['쿤데', 23, 'DF', 85], ['페드리', 8, 'MF', 90], ['로드리', 16, 'MF', 90], ['더용', 21, 'MF', 86], ['고든', 17, 'FW', 82], ['하피냐', 11, 'FW', 88], ['야말', 10, 'FW', 90]],
+  sub:[['슈쳉스니', 13, 'GK', 81], ['발데', 3, 'LB', 82], ['크리스텐센', 15, 'CB', 79], ['에릭 가르시아', 24, 'RB', 85], ['가비', 6, 'CM', 83], ['페르민', 7, 'CAM', 85], ['올모', 20, 'CAM', 84], ['아데예미', 14, 'LW', 82], ['가브리에우 제주스', 9, 'ST', 79]]},
+ {id:'ATM',name:'아틀레티코',lg:'LL',form:'4-4-2',shirt:'#cb3524',pc:'#ffffff',pat:'stripe',shorts:'#262e61',socks:'#cb3524',num:'#262e61',gk:'#2fbf71',
+  xi:[['오블락', 13, 'GK', 88], ['그리말도', 20, 'DF', 85], ['한초', 17, 'DF', 83], ['푸빌', 18, 'DF', 81], ['요렌테', 14, 'DF', 85], ['바에나', 10, 'MF', 83], ['바리오스', 8, 'MF', 83], ['히울만', 5, 'MF', 83], ['줄리아노', 22, 'MF', 82], ['이강인', 19, 'FW', 80], ['알바레스', 9, 'FW', 86]],
+  sub:[['무소', 1, 'GK', 82], ['르노르망', 24, 'CB', 81], ['히메네스', 2, 'CB', 82], ['로메로', 16, 'CB', 82], ['코케', 6, 'CM', 81], ['카르도주', 4, 'CDM', 80], ['루크먼', 21, 'ST', 83], ['쇠를로트', 7, 'ST', 83], ['르마르', 23, 'CM', 77]]},
+ {id:'ATH',name:'아틀레틱 빌바오',lg:'LL',form:'4-2-3-1',shirt:'#ee2523',pc:'#ffffff',pat:'stripe',shorts:'#111111',socks:'#111111',num:'#111111',gk:'#f5e663',
+  xi:[['우나이 시몬', 1, 'GK', 85], ['유리', 17, 'DF', 79], ['비비안', 3, 'DF', 82], ['파레데스', 4, 'DF', 78], ['링콘', 2, 'DF', 75], ['하우레기사르', 18, 'MF', 79], ['루이스 데 갈라레타', 16, 'MF', 79], ['산세트', 8, 'MF', 82], ['N.윌리엄스', 10, 'FW', 84], ['구루세타', 12, 'FW', 78], ['I.윌리엄스', 9, 'FW', 80]],
+  sub:[['파디야', 26, 'GK', 69], ['라포르트', 14, 'CB', 84], ['아레소', 22, 'RB', 76], ['보이로', 19, 'LB', 73], ['프라도스', 24, 'CM', 77], ['예라이', 5, 'CB', 80], ['베렝게르', 7, 'RW', 79], ['산나디', 11, 'ST', 71], ['나바로', 20, 'RW', 76]]},
+ {id:'FCB',name:'바이에른 뮌헨',lg:'BL',form:'4-2-3-1',shirt:'#dc052d',pc:'#ffffff',pat:'',shorts:'#dc052d',socks:'#dc052d',num:'#ffffff',gk:'#2b2b2b',
+  xi:[['우르비히', 40, 'GK', 79], ['데이비스', 19, 'DF', 82], ['김민재', 3, 'DF', 83], ['우파메카노', 2, 'DF', 87], ['라이머', 27, 'DF', 85], ['키미히', 6, 'MF', 88], ['파블로비치', 45, 'MF', 83], ['무시알라', 10, 'MF', 87], ['루이스 디아스', 14, 'FW', 88], ['케인', 9, 'FW', 90], ['올리세', 17, 'FW', 90]],
+  sub:[['울라이히', 26, 'GK', 73], ['타', 4, 'CB', 87], ['이토', 21, 'CB', 78], ['스타니시치', 44, 'RB', 80], ['브라운', 37, 'LB', 81], ['비쇼프', 20, 'CM', 79], ['사이바리', 34, 'CAM', 83], ['카를', 42, 'CAM', 77], ['그나브리', 7, 'RW', 83]]},
+ {id:'BVB',name:'도르트문트',lg:'BL',form:'3-4-3',shirt:'#fde100',pc:'#111111',pat:'',shorts:'#111111',socks:'#fde100',num:'#111111',gk:'#8a2be2',
+  xi:[['코벨', 1, 'GK', 87], ['슐로터베크', 4, 'DF', 87], ['안톤', 3, 'DF', 84], ['가두', 22, 'DF', 68], ['스벤손', 24, 'MF', 79], ['은메차', 8, 'MF', 85], ['조브 벨링엄', 7, 'MF', 77], ['라이어슨', 26, 'MF', 82], ['추쿠에메카', 17, 'FW', 78], ['기라시', 9, 'FW', 85], ['바이어', 14, 'FW', 81]],
+  sub:[['마이어', 33, 'GK', 74], ['벤세바이니', 5, 'CB', 79], ['레지아니', 49, 'CB', 67], ['프라치스', 36, 'LB', 67], ['베이르만', 25, 'CM', 82], ['자비처', 20, 'CM', 81], ['엠레 잔', 23, 'CDM', 81], ['은와네리', 18, 'CAM', 75], ['파비우 시우바', 21, 'ST', 78]]},
+ {id:'B04',name:'레버쿠젠',lg:'BL',form:'4-2-3-1',shirt:'#e32221',pc:'#111111',pat:'sash',shorts:'#111111',socks:'#e32221',num:'#ffffff',gk:'#2fbf71',
+  xi:[['플레컨', 1, 'GK', 77], ['구티에레스', 3, 'DF', 80], ['메디나', 4, 'DF', 79], ['탑소바', 12, 'DF', 82], ['콴사', 2, 'DF', 77], ['알레익스 가르시아', 24, 'MF', 84], ['팔라시오스', 25, 'MF', 83], ['마자', 30, 'MF', 80], ['틸만', 10, 'FW', 79], ['시크', 14, 'FW', 83], ['모레이라', 37, 'FW', 78]],
+  sub:[['블라스비치', 28, 'GK', 74], ['바데', 5, 'CB', 77], ['아르투르', 13, 'RB', 73], ['안드리히', 8, 'CDM', 78], ['호프만', 7, 'CAM', 76], ['벤세기르', 17, 'CAM', 74], ['텔라', 19, 'RW', 78], ['포쿠', 20, 'RW', 76], ['코판', 35, 'ST', 77]]},
+ {id:'RBL',name:'라이프치히',lg:'BL',form:'4-2-3-1',shirt:'#f7f7f7',pc:'#dd0741',pat:'sleeves',shorts:'#f7f7f7',socks:'#f7f7f7',num:'#dd0741',gk:'#f5a12d',
+  xi:[['반더보르트', 1, 'GK', 78], ['라움', 22, 'DF', 83], ['루케바', 23, 'DF', 81], ['오르반', 4, 'DF', 83], ['헨리히스', 39, 'DF', 78], ['페르메이런', 28, 'MF', 76], ['반주지', 26, 'MF', 73], ['라이츠', 24, 'MF', 77], ['그루다', 7, 'FW', 77], ['호물루', 9, 'FW', 78], ['누사', 11, 'FW', 78]],
+  sub:[['칭에를레', 25, 'GK', 69], ['클로스터만', 16, 'CB', 75], ['비샤부', 5, 'CB', 75], ['바쿠', 17, 'RB', 79], ['자이발트', 13, 'CDM', 81], ['우에드라오고', 27, 'CM', 76], ['바움가르트너', 14, 'CAM', 82], ['바카요코', 18, 'RW', 76], ['하르더', 99, 'ST', 75]]},
+ {id:'PSG',name:'파리 생제르맹',lg:'L1',form:'4-3-3',shirt:'#004170',pc:'#da291c',pat:'',shorts:'#004170',socks:'#004170',num:'#ffffff',gk:'#d9d9d9',
+  xi:[['슈발리에', 30, 'GK', 80], ['누누 멘드스', 25, 'DF', 89], ['파초', 51, 'DF', 89], ['마르키뉴스', 5, 'DF', 87], ['하키미', 2, 'DF', 88], ['비티냐', 17, 'MF', 90], ['주앙 네베스', 87, 'MF', 88], ['자이르에메리', 33, 'MF', 83], ['크바라츠헬리아', 7, 'FW', 89], ['뎀벨레', 10, 'FW', 90], ['두에', 14, 'FW', 86]],
+  sub:[['사포노프', 39, 'GK', 83], ['자바르니', 6, 'CB', 80], ['L.에르난데스', 21, 'CB', 81], ['디뉴', 3, 'LB', 80], ['마율루', 24, 'CM', 79], ['파비안 루이스', 8, 'CM', 86], ['바르콜라', 29, 'LW', 85], ['베랄도', 35, 'CB', 79], ['아클리우슈', 11, 'CAM', 81]]},
+ {id:'OM',name:'마르세유',lg:'L1',form:'4-2-3-1',shirt:'#f7f7f7',pc:'#2faee0',pat:'sleeves',shorts:'#f7f7f7',socks:'#f7f7f7',num:'#2faee0',gk:'#f5a12d',
+  xi:[['더랑어', 1, 'GK', 74], ['에메르송', 33, 'DF', 77], ['콘도그비아', 19, 'DF', 76], ['이건라일리', 4, 'DF', 75], ['웨아', 22, 'DF', 78], ['카미소코', 27, 'MF', 64], ['응나디', 23, 'MF', 70], ['압델리', 8, 'MF', 75], ['파이상', 11, 'FW', 79], ['구이리', 9, 'FW', 80], ['아리트', 10, 'FW', 74]],
+  sub:[['판넥', 40, 'GK', 63], ['발레르디', 5, 'CB', 79], ['아게르드', 21, 'CB', 80], ['Q.팀버', 28, 'CM', 79], ['호이비에르', 6, 'CDM', 80], ['A.고메스', 18, 'CAM', 75], ['모페', 15, 'ST', 74], ['뭄바냐', 97, 'ST', 71], ['울리세스', 26, 'LB', 73]]},
+ {id:'ASM',name:'모나코',lg:'L1',form:'4-2-3-1',shirt:'#e51a2b',pc:'#ffffff',pat:'sash',shorts:'#ffffff',socks:'#e51a2b',num:'#ffffff',gk:'#2b2b2b',
+  xi:[['흐라데키', 1, 'GK', 79], ['나지뉴', 12, 'DF', 72], ['케러', 5, 'DF', 77], ['테제', 4, 'DF', 78], ['반데르송', 2, 'DF', 77], ['카마라', 15, 'MF', 80], ['자카리아', 6, 'MF', 81], ['골로빈', 10, 'MF', 78], ['안수 파티', 31, 'FW', 77], ['비어레트', 14, 'FW', 76], ['미나미노', 18, 'FW', 77]],
+  sub:[['쾬', 16, 'GK', 77], ['다이어', 3, 'CB', 77], ['마위사', 13, 'CB', 75], ['살리수', 22, 'CB', 76], ['아블린', 19, 'ST', 76], ['디오프', 7, 'CAM', 68], ['쿨리발리', 28, 'CM', 73], ['발로건', 9, 'ST', 80], ['브루너', 11, 'ST', 66]]},
+ {id:'OL',name:'리옹',lg:'L1',form:'4-3-3',shirt:'#f7f7f7',pc:'#da291c',pat:'sash',shorts:'#f7f7f7',socks:'#f7f7f7',num:'#14387f',gk:'#2fbf71',
+  xi:[['그라이프', 1, 'GK', 81], ['아브네르', 16, 'DF', 76], ['니아카테', 19, 'DF', 81], ['마타', 22, 'DF', 77], ['메이틀랜드나일스', 98, 'DF', 77], ['테스만', 6, 'MF', 75], ['모턴', 23, 'MF', 79], ['톨리소', 8, 'MF', 82], ['말리크 포파나', 11, 'FW', 77], ['슐츠', 10, 'FW', 79], ['누아마', 37, 'FW', 74]],
+  sub:[['데캉', 40, 'GK', 75], ['R.클라위버르트', 3, 'CB', 75], ['바허', 4, 'CB', 72], ['비드스트루프', 14, 'CM', 73], ['오펜다', 24, 'ST', 80], ['찰레타차르', 55, 'CB', 74], ['메라', 9, 'ST', 73], ['뒤랑빌', 7, 'RW', 72], ['타글리아피코', 33, 'LB', 78]]},
+ {id:'INT',name:'인테르',lg:'SA',form:'3-5-2',shirt:'#0068a8',pc:'#111111',pat:'stripe',shorts:'#111111',socks:'#111111',num:'#ffffff',gk:'#f5e663',
+  xi:[['호셉 마르티네스', 13, 'GK', 76], ['바스토니', 95, 'DF', 86], ['아칸지', 25, 'DF', 83], ['비세크', 31, 'DF', 78], ['디마르코', 32, 'MF', 86], ['바렐라', 23, 'MF', 87], ['찰하놀루', 20, 'MF', 85], ['수치치', 8, 'MF', 78], ['스펜스', 2, 'MF', 80], ['라우타로', 10, 'FW', 87], ['튀랑', 9, 'FW', 85]],
+  sub:[['프로베델', 1, 'GK', 83], ['스톤스', 5, 'CB', 82], ['카를루스 아우구스투', 30, 'LB', 80], ['루이스 엔히키', 11, 'RB', 77], ['므키타리안', 22, 'CM', 81], ['지엘린스키', 7, 'CM', 82], ['디우프', 17, 'CM', 76], ['에스포지토', 94, 'ST', 77], ['보니', 14, 'ST', 78]]},
+ {id:'MIL',name:'AC 밀란',lg:'SA',form:'4-2-3-1',shirt:'#fb090b',pc:'#111111',pat:'stripe',shorts:'#f7f7f7',socks:'#111111',num:'#ffffff',gk:'#2fbf71',
+  xi:[['메냥', 16, 'GK', 87], ['에스투피냔', 2, 'DF', 78], ['파블로비치', 31, 'DF', 78], ['힐라', 28, 'DF', 81], ['더빈터', 5, 'DF', 75], ['모드리치', 14, 'MF', 85], ['라비오', 12, 'MF', 85], ['풀리식', 11, 'MF', 83], ['디에고 모레이라', 7, 'FW', 79], ['곤살루 하무스', 9, 'FW', 80], ['무사', 80, 'FW', 73]],
+  sub:[['테라차노', 1, 'GK', 76], ['토모리', 23, 'CB', 80], ['바르테사기', 33, 'LB', 74], ['아테카메', 24, 'RB', 68], ['자샤리', 30, 'CM', 76], ['포파나', 29, 'CM', 80], ['로프터스치크', 8, 'CM', 79], ['레앙', 10, 'LW', 83], ['은쿤쿠', 18, 'ST', 80]]},
+ {id:'JUV',name:'유벤투스',lg:'SA',form:'3-4-3',shirt:'#f7f7f7',pc:'#111111',pat:'stripe',shorts:'#111111',socks:'#111111',num:'#111111',gk:'#f5a12d',
+  xi:[['비카리오', 25, 'GK', 80], ['루쿠미', 26, 'DF', 76], ['브레메르', 3, 'DF', 86], ['가티', 4, 'DF', 79], ['캄비아소', 20, 'MF', 80], ['로카텔리', 5, 'MF', 84], ['K.튀랑', 19, 'MF', 81], ['칼룰루', 15, 'MF', 81], ['이을드즈', 10, 'FW', 84], ['볼테마데', 27, 'FW', 80], ['콘세이상', 7, 'FW', 80]],
+  sub:[['디그레고리오', 16, 'GK', 80], ['켈리', 6, 'CB', 77], ['카발', 32, 'LB', 74], ['첼리크', 2, 'RB', 79], ['코프메이너르스', 8, 'CM', 78], ['매케니', 22, 'CM', 80], ['두글라스 루이스', 12, 'CM', 78], ['콜로 무아니', 9, 'ST', 77], ['제그로바', 11, 'RW', 78]]},
+ {id:'NAP',name:'나폴리',lg:'SA',form:'4-3-3',shirt:'#12a0d7',pc:'#ffffff',pat:'',shorts:'#ffffff',socks:'#12a0d7',num:'#ffffff',gk:'#2b2b2b',
+  xi:[['밀린코비치사비치', 32, 'GK', 80], ['올리베라', 17, 'DF', 77], ['부온조르노', 4, 'DF', 81], ['라흐마니', 13, 'DF', 83], ['디로렌초', 22, 'DF', 82], ['맥토미니', 8, 'MF', 86], ['로보트카', 68, 'MF', 83], ['더브라위너', 11, 'MF', 85], ['랑', 70, 'FW', 79], ['회일룬', 19, 'FW', 78], ['폴리타노', 21, 'FW', 80]],
+  sub:[['메레트', 1, 'GK', 81], ['라파 마린', 5, 'CB', 76], ['베우케마', 31, 'CB', 78], ['스피나촐라', 37, 'LB', 80], ['길모어', 6, 'CM', 75], ['앙귀사', 99, 'CM', 82], ['네레스', 7, 'RW', 81], ['폴로룬쇼', 90, 'CM', 74], ['루카', 27, 'ST', 75]]}
 ];
-for(const c of CLUBS){c.rating=Math.round(c.xi.reduce((a,p)=>a+p[3],0)/11);c.sp='';c.spc='#ffffff';}
+const posNat=l=>l==='GK'?'GK':/^(CB|LB|RB|LWB|RWB)$/.test(l)?'DF':/^(CDM|CM|CAM|LM|RM)$/.test(l)?'MF':'FW';
+// the league is the Premier League (the first 20 clubs); the other leagues' clubs can be picked for friendlies,
+// online and as an account's starting club
+const LEAGUES=[['PL','프리미어리그'],['LL','라리가'],['BL','분데스리가'],['L1','리그 1'],['SA','세리에 A']];
+const PL_IDX=[];
+for(const [i,c] of CLUBS.entries()){c.rating=Math.round(c.xi.reduce((a,p)=>a+p[3],0)/11);c.sp='';c.spc='#ffffff';c.bench=(c.sub||[]).map(p=>c.id+'|'+p[0]);if(c.lg==='PL')PL_IDX.push(i);}
+// <option>s for every club, grouped by league
+const clubOptsG=(sel,label)=>LEAGUES.map(([k,n])=>`<optgroup label="${n}">${CLUBS.map((c,i)=>c.lg===k?`<option value="${i}"${i===sel?' selected':''}>${label?label(c):c.name}</option>`:'').join('')}</optgroup>`).join('');
 // Player ratings, one line per club in the XI order above: name:pace,shooting,passing,dribbling,defending,physical,skill stars.
 // These are estimates in the style of FC ratings (not official data) so each player plays like himself; edit freely.
 // Keepers' shooting/defending don't matter; their passing is distribution and physical is presence in the air.
 const PSTAT_SRC=`
-ARS|라야:52,20,72,40,30,72,1|칼라피오리:78,55,74,73,82,78,2|가브리엘:70,50,62,60,87,88,2|살리바:80,40,68,70,88,84,2|팀버:80,55,75,78,82,76,3|라이스:74,72,84,80,82,84,3|수비멘디:62,68,86,82,80,72,3|외데고르:72,80,90,88,62,64,4|마르티넬리:91,78,74,84,42,68,4|요케레스:83,86,72,80,40,90,3|사카:86,83,84,88,60,68,4
-AVL|E.마르티네스:48,20,70,38,30,80,1|디뉴:68,70,82,76,78,74,2|파우 토레스:64,45,78,70,81,76,2|콘사:72,40,64,62,82,84,2|캐시:78,55,72,74,77,74,2|카마라:72,58,76,76,80,82,3|틸레만스:62,80,86,80,72,76,3|로저스:80,78,80,86,55,78,4|맥긴:72,78,80,80,68,82,3|왓킨스:84,83,74,80,42,82,3|말런:86,72,70,82,40,70,4
-BOU|페트로비치:48,20,62,38,30,78,1|트뤼페르:72,40,64,66,78,80,2|세네시:68,45,72,66,80,80,2|디아키테:80,35,58,62,77,82,2|A.스미스:78,50,66,70,73,70,2|애덤스:70,62,72,74,79,86,2|A.스콧:74,68,80,82,72,70,3|타베르니에:74,80,80,82,52,68,3|클라위버르트:84,76,78,84,40,64,4|에바니우송:80,80,66,76,40,82,3|세메뇨:88,82,72,84,48,84,4
-BRE|켈러허:48,20,66,40,30,74,1|히키:76,45,68,70,75,74,2|판덴베르흐:72,40,62,62,79,84,2|콜린스:64,40,62,58,78,84,2|카요데:82,50,66,72,74,76,3|헨더슨:52,70,80,74,72,74,2|야르몰류크:68,60,74,76,72,74,3|담스고르:74,74,82,84,52,64,4|샤데:90,78,68,82,40,70,4|이고르 티아구:78,82,62,74,40,86,2|와타라:88,72,68,80,38,70,4
-BHA|페르브뤼헌:52,20,76,44,30,70,1|더카위퍼르:78,55,72,74,74,72,2|덩크:56,50,74,64,79,86,2|판헤케:74,40,70,70,80,78,2|벨트만:74,48,68,70,74,70,2|발레바:74,68,80,80,79,84,3|힌셜우드:70,60,74,74,76,74,2|뤼테르:76,74,78,82,52,62,4|미토마:86,76,76,86,42,62,5|웰벡:74,78,72,80,42,76,4|민테:92,72,70,82,40,64,4
-BUR|두브라우카:42,20,64,38,30,74,1|하트먼:74,50,66,68,72,70,2|에스테브:70,40,64,62,76,80,2|에크달:64,40,62,60,74,80,2|워커:86,55,70,72,77,80,2|컬런:64,62,74,72,72,70,3|우고추쿠:70,58,70,72,72,80,2|플레밍:74,70,70,74,60,72,3|앤서니:82,70,70,78,40,66,4|포스터:72,74,62,70,40,82,2|에드워즈:76,68,72,76,44,64,3
-CHE|산체스:50,20,74,42,30,74,1|쿠쿠레야:80,55,76,78,80,74,3|찰로바:70,62,72,68,80,82,2|포파나:78,40,64,66,80,84,2|제임스:80,72,84,80,82,80,3|카이세도:76,66,80,80,86,82,3|엔소:70,78,86,82,72,76,4|파머:78,84,86,86,54,66,4|네투:90,74,76,84,40,62,4|주앙 페드루:80,80,74,84,40,72,4|이스테방:88,76,74,86,38,62,5
-CRY|헨더슨:50,20,66,40,30,78,1|리처즈:74,40,62,64,77,80,2|게히:72,45,70,68,83,82,2|라크루아:80,40,62,64,81,82,2|미첼:76,55,74,74,74,70,2|워튼:64,62,84,80,72,70,3|가마다:66,76,80,82,66,66,3|무뇨스:88,62,72,78,72,80,3|피노:80,74,74,84,40,68,4|마테타:76,82,64,74,40,88,2|사르:90,78,72,80,40,72,4
-EVE|픽퍼드:50,20,74,40,30,76,1|미콜렌코:74,50,70,72,75,72,2|브랜스웨이트:72,40,66,64,81,84,2|타코우스키:62,45,68,62,80,84,2|오브라이언:72,40,64,64,77,80,2|게예:72,62,72,74,80,82,2|가너:72,66,78,76,74,74,3|듀스버리홀:70,74,78,78,64,72,3|그릴리시:74,74,82,86,46,72,5|배리:76,74,66,74,40,82,3|은디아예:88,78,72,86,38,68,5
-FUL|레노:48,20,72,40,30,72,1|로빈슨:84,50,74,74,76,72,2|배시:70,40,64,62,78,82,2|안데르센:62,45,76,64,80,82,2|테테:80,55,68,72,76,74,2|베리:64,72,80,76,74,74,3|루키치:60,72,78,76,70,80,3|스미스 로:76,72,80,82,62,70,3|이워비:78,74,80,84,52,68,4|히메네스:70,80,68,72,40,84,2|윌슨:80,74,74,80,42,66,4
-LEE|페리:46,20,64,38,30,72,1|구드문드손:76,50,68,70,72,70,2|로던:64,40,64,60,76,80,2|스트라위크:70,40,66,64,76,80,2|보글:76,50,66,70,70,70,2|슈타흐:70,74,78,76,74,80,3|암파두:70,55,74,72,78,76,2|다나카:68,70,78,78,70,72,3|오카포르:86,76,66,80,40,70,4|캘버트르윈:72,78,64,72,42,82,2|에런슨:80,70,72,80,48,66,4
-LIV|알리송:56,20,80,46,30,80,1|케르케즈:84,58,74,78,77,74,3|반다이크:72,60,76,72,89,88,2|코나테:82,40,64,66,85,88,2|프림퐁:92,70,76,84,72,66,4|흐라번베르흐:76,72,82,86,80,80,4|맥알리스터:62,80,88,84,76,74,3|비르츠:80,82,88,90,54,64,5|각포:86,82,74,84,40,74,4|이사크:86,88,74,88,40,72,5|살라:88,88,82,88,44,74,4
-MCI|돈나룸마:50,20,66,40,30,84,1|오라일리:72,60,74,76,72,74,3|그바르디올:80,62,78,76,84,84,3|디아스:74,45,70,68,87,84,2|누네스:84,62,76,80,74,74,3|로드리:62,80,90,84,86,84,3|레인더르스:76,78,82,82,72,82,3|셰르키:74,80,86,88,40,62,5|도쿠:94,72,74,90,38,64,5|홀란:88,94,66,80,40,90,3|포든:80,82,86,90,56,62,4
-MUN|라먼스:50,20,66,40,30,76,1|요로:78,40,66,68,80,82,2|더리흐트:62,55,68,64,82,86,2|쇼:72,60,80,78,76,74,3|도르구:84,62,70,78,72,76,3|카세미루:52,74,80,72,80,84,3|브루누 페르난드스:72,86,90,84,66,74,4|달로트:84,66,76,78,76,76,3|쿠냐:80,82,78,86,48,76,4|셰슈코:84,82,64,76,40,86,3|음뵈모:86,84,78,86,46,70,4
-NEW|포프:46,20,62,40,30,80,1|홀:80,50,74,76,74,70,3|번:56,40,62,56,80,90,2|티아우:74,40,64,64,80,82,2|트리피어:62,66,84,74,74,68,2|토날리:76,76,86,82,78,80,3|기마랑이스:64,76,88,86,78,76,4|조엘린통:72,74,76,80,72,84,3|고든:90,80,78,86,44,72,4|볼테마데:72,80,72,80,42,84,3|엘랑가:92,76,74,82,40,66,4
-NFO|셀스:48,20,62,38,30,80,1|N.윌리엄스:78,50,68,72,74,72,2|무리요:78,60,72,72,80,84,2|밀렌코비치:62,55,64,60,80,86,2|아이나:80,50,66,72,74,78,2|상가레:72,62,72,74,76,84,2|앤더슨:74,74,82,80,72,76,3|깁스화이트:76,76,84,84,58,72,4|허드슨오도이:84,74,74,82,42,66,4|우드:56,82,60,64,40,88,2|은도예:84,74,72,82,40,68,4
-SUN|루프스:46,20,62,38,30,72,1|레이니우두:80,50,68,72,74,74,2|밸러드:62,40,58,56,76,80,2|무키엘레:76,50,68,70,76,80,2|흄:78,48,64,68,70,70,2|자카:52,78,84,76,76,80,3|사디키:74,60,70,74,74,74,3|르페:78,72,76,80,50,64,4|탈비:86,70,68,78,40,64,4|이시도르:80,76,64,74,40,76,3|아딩그라:92,70,66,78,40,64,4
-TOT|비카리오:50,20,66,40,30,76,1|우도기:80,55,70,74,77,80,3|판더벤:94,45,66,70,82,82,2|로메로:74,55,70,68,85,86,2|포로:80,72,82,80,74,72,3|팔리냐:58,72,78,72,84,86,2|베리발:72,68,78,82,66,70,4|시몬스:82,78,82,88,48,62,5|존슨:90,78,72,80,40,64,3|히샤를리송:80,76,68,78,46,78,4|쿠두스:82,76,76,88,52,74,5
-WHU|헤르만센:48,20,62,40,30,72,1|디우프:80,50,66,72,74,72,2|킬먼:70,40,64,62,78,82,2|토디보:78,40,68,70,79,82,2|완비사카:76,40,62,72,80,74,2|소우첵:60,76,72,70,76,88,2|마테우스 페르난드스:72,64,76,78,72,70,3|파케타:70,80,84,86,70,76,5|서머빌:88,74,72,82,40,62,4|윌슨:64,78,66,72,40,74,2|보언:86,82,76,82,50,72,4
-WOL|조제 사:48,20,68,40,30,72,1|아그바두:72,40,62,60,77,84,2|S.부에노:68,40,62,60,74,78,2|모스케라:76,40,62,64,75,80,2|H.부에노:80,50,66,72,72,70,2|안드레:72,62,76,76,76,76,3|주앙 고메스:72,66,80,80,76,74,3|도허티:76,62,72,70,72,72,2|황희찬:84,76,68,78,46,76,4|스트란 라르센:74,80,66,74,40,84,2|벨가르드:80,72,72,82,42,62,4
+ARS|라야:58,25,88,40,30,86,1|칼라피오리:71,68,76,77,80,78,3|가브리엘:64,44,64,66,91,84,1|살리바:77,41,68,73,90,82,2|팀버:76,48,76,78,83,78,3|라이스:72,75,86,81,85,84,4|기마랑이스:59,75,85,84,80,80,4|외데고르:65,78,88,87,66,63,4|에제:74,80,82,87,57,68,4|요케레스:81,87,72,78,44,87,3|사카:79,82,85,87,60,73,4|케파:47,25,82,40,30,76,1|콘사:71,55,72,75,86,80,2|화이트:68,49,75,75,81,77,2|인카피에:83,48,71,72,84,81,2|모스케라:74,48,65,66,79,77,1|수비멘디:65,71,82,80,80,75,3|메리노:51,79,80,79,81,79,3|하베르츠:69,79,77,80,48,72,3|마두에케:88,75,74,83,45,69,4
+AVL|스즈키:56,25,76,40,30,74,1|마트선:87,65,75,81,73,63,4|파우 토레스:66,41,75,69,83,74,2|린델뢰프:50,51,71,68,77,71,1|캐시:70,67,75,76,78,76,3|카마라:64,56,78,78,83,78,3|고레츠카:67,66,80,76,82,88,2|맥긴:69,80,81,82,78,84,4|만잠비:71,74,73,83,70,71,4|N.잭슨:76,77,69,79,40,76,3|베일리:86,73,73,82,38,58,4|비조:44,25,71,40,30,78,1|밍스:57,44,67,61,76,77,1|보가르드:66,53,67,70,72,69,2|키바 시세:69,38,53,53,69,69,1|오나나:73,68,74,74,81,82,2|조앙 고메스:54,66,74,75,76,76,2|가르나초:86,77,72,79,37,53,3|왓킨스:78,82,72,78,51,76,3|에이브러햄:72,76,65,72,36,72,2
+BOU|페트로비치:49,25,73,40,30,77,1|트뤼페르:83,57,73,75,76,73,2|힐:71,40,62,67,78,75,1|실바:77,37,64,69,77,80,2|A.스미스:56,59,72,70,73,68,2|크리스티:66,71,76,77,73,74,3|애덤스:77,60,73,76,79,75,3|클라위버르트:86,78,77,81,42,60,4|타베르니에:80,78,77,79,60,67,3|에바니우송:75,78,69,77,37,75,3|하이앙:85,78,74,80,35,74,3|포스터:27,25,67,40,30,71,1|디아키테:69,46,66,70,80,78,2|후안루:80,68,73,75,71,73,2|A.스콧:68,71,80,82,76,73,4|브룩스:70,71,77,78,49,57,3|개넌도크:88,66,67,75,28,52,2|크루피:83,83,71,81,48,65,4|아들리:78,75,72,81,46,69,4|아라우호:83,35,64,70,71,72,2
+BRE|켈러허:51,25,79,40,30,80,1|루이스포터:77,70,74,78,72,64,3|판덴베르흐:72,38,64,67,79,76,1|아예르:67,56,65,68,76,79,1|카요데:81,49,72,76,78,80,3|야넬트:53,70,74,73,76,76,2|상가레:80,67,76,81,78,72,4|옌센:63,72,82,78,70,72,3|와타라:85,74,73,80,54,66,3|이고르 티아구:74,83,67,75,44,85,2|샤데:92,75,71,78,30,73,3|발디마르손:40,25,70,40,30,68,1|콜린스:54,31,58,64,80,81,1|히키:69,56,70,74,74,64,2|김지수:52,29,47,46,65,71,1|야르몰류크:66,65,75,76,74,73,3|담스고르:66,73,82,81,66,65,4|앤서니:78,72,70,76,39,67,3|F.카르발류:74,69,70,77,46,41,3|밀람보:70,68,70,75,62,59,2
+BHA|페르브뤼헌:50,25,81,40,30,81,1|보스칼리:60,53,75,75,78,73,2|부슈코비치:54,62,62,65,83,82,1|덩크:36,52,66,64,78,79,1|코스티냐:78,65,72,74,70,77,2|체마 안드레스:62,60,74,70,75,76,1|그로스:37,74,84,78,71,71,3|아야리:69,76,77,80,74,64,3|더카위퍼르:76,73,80,77,73,72,3|코스툴라스:79,72,61,74,41,72,2|디에고 고메스:70,76,76,77,73,76,3|스틸:39,25,78,40,30,73,1|하잠:77,50,69,70,72,69,1|카디오을루:79,68,76,80,76,67,3|스보보다:56,47,53,55,71,83,1|힌셜우드:66,71,76,76,74,72,3|오라일리:61,77,79,76,67,69,3|얄쿠예:81,61,67,72,65,67,2|뤼테르:75,75,75,79,61,71,3|미토마:83,76,76,86,57,63,4
+CHE|펜더스:33,25,80,40,30,75,1|콜윌:68,43,71,71,81,78,2|포파나:77,41,62,71,80,77,2|아체암퐁:75,50,67,69,75,73,2|네투:91,76,77,82,40,70,4|라비아:66,52,74,78,77,72,3|카이세도:69,68,77,81,84,82,4|팔레스트라:90,65,69,80,70,81,3|로저스:76,82,82,84,67,78,4|주앙 페드루:77,83,74,84,38,74,4|파머:75,83,85,85,50,64,4|E.마르티네스:50,25,82,40,30,85,1|귀스토:82,55,75,79,75,73,3|라크루아:86,45,61,67,83,82,1|하토:85,42,70,74,76,74,2|헨더슨:53,71,80,74,75,71,2|바르코:77,52,81,80,73,63,3|이스테방:89,76,75,84,33,57,4|웰벡:54,82,73,77,45,77,3|켄다:86,64,72,79,41,68,3
+COV|러시워스:55,25,75,40,30,75,1|다실바:77,48,70,76,67,63,3|음푸니:74,37,57,66,68,69,1|피넉:52,36,55,59,77,69,1|판에바이크:92,58,67,73,68,72,2|토르프:61,73,75,73,68,67,2|이렌키:75,65,67,73,70,89,2|루도니:71,71,74,77,64,74,3|그보호:78,70,68,76,34,56,2|아워니이:66,73,60,69,32,73,2|사카모토:75,66,71,78,62,64,3|벤틀리:46,25,68,40,30,70,1|B.토머스:64,51,51,57,73,83,1|키칭:62,41,58,62,71,82,1|오녜카:75,66,68,74,73,79,2|토머스아산테:83,71,64,72,45,80,2|심스:71,72,56,65,34,78,1|셰리프:86,71,60,72,35,78,2|H.라이트:83,73,61,71,33,75,2|메이슨클라크:86,71,69,76,36,78,3
+CRY|헨더슨:55,25,79,40,30,81,1|리처즈:65,27,60,66,81,78,1|디사시:52,48,60,58,77,78,1|캉보:75,32,62,68,76,76,1|미첼:75,54,69,74,77,73,2|워튼:54,63,85,80,77,69,3|가마다:68,75,79,80,67,66,3|밍게사:78,69,79,77,76,76,3|맥닐:67,76,77,77,55,65,3|마테타:75,82,69,76,42,81,3|피노:75,74,80,81,38,51,4|매슈스:45,25,62,40,30,62,1|리아드:61,32,63,63,74,73,1|토미야스:67,33,67,71,78,76,2|레르마:66,70,69,73,76,76,2|휴스:36,62,76,75,73,67,2|에세:76,64,65,75,44,58,2|사르:87,80,76,80,40,69,3|스트란 라르센:73,79,62,70,32,80,2|데브니:63,68,73,71,65,66,2
+EVE|픽퍼드:57,25,89,40,30,82,1|미콜렌코:73,55,70,71,75,72,2|오브라이언:75,50,67,62,76,80,1|타코우스키:41,47,64,59,81,84,1|뢸:76,65,71,75,63,66,2|가너:64,71,82,77,80,77,3|암스트롱:67,64,72,72,69,71,2|듀스버리홀:68,77,82,81,70,71,4|T.조지:78,67,67,74,37,55,2|배리:80,75,65,73,25,73,2|B.존슨:85,76,73,77,43,58,3|트래버스:40,25,69,40,30,72,1|패터슨:68,46,66,69,72,67,2|브랜스웨이트:71,40,62,59,80,76,1|킨:42,58,62,59,77,76,1|뇌르고르:44,65,75,71,77,76,2|알카라스:71,71,73,78,46,63,3|디블링:76,67,71,77,38,64,3|베투:74,77,60,69,25,83,2|아즈누:76,52,63,70,65,49,2
+FUL|레노:47,25,75,40,30,80,1|로빈슨:88,57,74,76,76,76,3|아펜그루버:64,36,62,58,77,78,1|배시:77,44,63,68,77,85,1|카스타뉴:66,56,70,72,73,71,2|샤를:64,64,72,71,69,76,2|베리:55,64,75,70,75,84,2|킹:69,66,73,78,61,52,3|이워비:68,77,79,82,63,72,4|가르시아:72,76,64,71,46,73,2|보브:81,66,73,81,35,43,4|르콩트:41,25,74,40,30,72,1|안데르센:39,57,71,65,80,83,1|테테:73,48,69,73,78,75,2|쿠엔카:60,37,60,60,77,73,1|케어니:45,71,76,73,66,62,2|스미스 로:67,73,76,80,53,60,3|세세뇽:78,68,74,78,73,64,3|무니스:67,77,60,73,42,76,2|케빈:82,70,70,82,33,58,4
+HUL|촐라키스:54,25,76,40,30,78,1|아자이:67,48,52,59,69,78,1|이건:50,46,52,59,73,76,1|멘디:80,46,58,62,73,82,1|자일스:86,60,71,73,62,67,2|슬레이터:71,62,70,74,68,70,2|이로에그부남:65,58,68,74,75,72,2|코일:69,53,66,67,67,75,1|스트라우드:86,67,69,71,68,76,2|맥버니:59,76,66,71,36,84,2|벨루미:80,72,71,76,37,59,3|버틀랜드:49,25,72,40,30,75,1|헤링턴:65,32,46,53,63,83,1|드라메:82,37,58,69,66,72,2|크룩스:54,69,68,69,67,85,2|모리타:68,71,75,78,72,78,3|밀러:85,66,66,75,52,59,2|겔하르트:76,73,69,75,41,71,2|오뮈르:78,63,68,71,53,56,2|휴스:68,40,63,65,73,80,1
+IPS|월턴:38,25,72,40,30,72,1|데이비스:79,54,76,73,70,72,2|디오프:57,37,55,57,75,78,1|오셰이:69,33,56,58,75,79,1|와타라:76,59,69,74,47,64,2|플로렌티노:48,53,68,72,78,74,2|루키치:75,65,76,73,75,79,2|엔시소:78,74,72,83,33,53,4|필로젠:84,73,71,79,41,66,3|에메르손:81,72,61,76,30,73,3|파타우:84,74,72,78,47,67,3|A.파머:38,25,70,40,30,70,1|그리브스:66,40,63,64,74,78,1|펄롱:73,45,61,70,69,78,2|테일러:69,68,68,70,69,74,2|마투시와:57,53,67,69,73,79,2|마에다:92,77,70,76,64,77,3|아크폼:74,70,59,70,31,73,2|메흐메티:76,70,68,74,54,66,2|클라크:78,73,70,78,42,63,3
+LEE|트래퍼드:48,25,78,40,30,78,1|무하레모비치:57,23,54,61,76,78,1|엘베디:70,39,62,64,79,78,1|쥐스탱:75,53,70,72,73,72,2|구드문드손:87,64,73,77,72,75,3|암파두:68,55,75,73,78,79,2|다나카:67,70,74,77,72,68,3|보글:77,56,70,75,71,72,2|H.윌슨:76,82,81,82,46,59,4|캘버트르윈:73,77,65,73,39,83,2|D.제임스:89,71,69,76,50,58,3|페리:41,25,70,40,30,75,1|비욜:63,59,64,62,78,81,1|로던:76,40,58,59,77,79,1|그루에프:64,57,74,72,72,69,2|슈타흐:67,72,81,76,78,79,3|에런슨:78,71,74,77,60,62,3|오카포르:88,76,70,78,32,68,3|은메차:77,76,66,73,40,74,2|뇬토:86,72,66,79,46,67,3
+LIV|알리송:50,25,82,40,30,86,1|케르케즈:84,59,75,78,76,79,3|반다이크:70,60,72,70,89,85,2|아라우호:79,54,64,59,78,81,1|프림퐁:94,62,74,82,72,62,4|흐라번베르흐:79,76,81,83,80,80,4|맥알리스터:61,81,83,82,77,74,4|비르츠:77,79,86,88,54,61,5|각포:77,83,80,81,47,74,4|이사크:81,87,72,82,39,72,4|소보슬라이:82,83,86,84,74,77,4|마마르다슈빌리:47,25,75,40,30,82,1|자케:64,38,61,62,77,77,1|고메스:70,29,70,71,80,73,2|브래들리:79,62,71,75,76,73,2|치미카스:78,56,73,73,74,72,2|엔도:56,68,71,74,78,71,2|에키티케:86,83,72,84,33,73,4|키에사:87,79,75,83,44,68,4|응구모하:90,71,68,79,37,49,3
+MCI|돈나룸마:46,25,72,40,30,88,1|그바르디올:78,70,76,77,85,82,3|디아스:58,44,69,69,87,83,2|쿠사노프:88,39,64,68,83,80,1|누네스:87,70,80,79,78,75,3|엔소:68,78,86,83,74,76,4|E.앤더슨:68,71,83,82,81,78,4|포든:77,82,82,88,57,53,5|도쿠:91,75,78,88,40,72,5|홀란:87,92,71,80,47,89,3|은디아예:86,77,74,86,44,65,4|룰리:54,25,80,40,30,75,1|게히:69,46,70,72,85,82,2|아이트누리:84,52,76,84,77,69,4|루이스:75,55,74,79,74,58,3|코바치치:57,74,80,81,73,68,4|부아디:64,62,76,72,77,78,1|셰르키:74,79,85,91,41,67,5|세메뇨:82,85,79,84,46,80,4|맥에이두:70,74,58,68,27,72,1
+MUN|라먼스:45,25,77,40,30,82,1|달로트:78,63,73,74,74,78,2|리산드로 마르티네스:66,59,76,75,82,75,2|매과이어:35,57,69,65,83,83,1|요로:69,41,60,65,79,73,1|발레바:74,70,76,79,78,78,3|마이누:66,70,77,83,78,75,4|브루누 페르난드스:67,85,92,85,68,75,4|쿠냐:77,86,79,84,44,73,4|셰슈코:85,82,67,78,46,77,3|음뵈모:89,83,78,86,49,75,4|달로:47,25,70,40,30,75,1|더리흐트:60,59,66,67,82,81,1|마즈라위:74,64,76,78,78,71,3|쇼:66,58,78,75,79,80,2|틸레만스:53,79,85,80,76,70,3|안드레이 산투스:69,70,76,79,80,78,3|마운트:66,76,80,79,62,61,3|디알로:83,75,74,83,54,53,4|래시퍼드:92,83,78,81,33,68,4
+NEW|호르니체크:28,25,74,40,30,76,1|홀:78,64,81,82,80,68,4|번:42,36,66,63,79,84,1|셰어:49,68,76,73,83,76,2|데디치:83,62,72,80,68,78,3|조엘린통:68,72,76,79,82,90,3|N.곤살레스:65,70,79,77,78,77,3|윌록:75,72,74,78,72,68,3|반스:82,81,75,81,43,66,4|오술라:88,73,60,76,25,71,3|엘랑가:94,70,74,80,39,65,3|포프:44,25,64,40,30,76,1|티아우:70,47,70,71,82,80,2|보트만:56,37,62,65,82,80,1|리브라멘투:82,51,73,79,78,73,3|마일리:68,66,76,75,76,69,2|J.램지:78,75,76,81,69,71,4|머피:76,77,78,79,60,66,3|위사:80,81,70,78,31,70,3|박승수:87,58,53,65,26,52,1
+NFO|셀스:44,25,78,40,30,81,1|무리요:79,55,67,71,82,83,2|밀렌코비치:53,46,62,60,81,84,1|자이르:67,38,59,58,74,79,1|N.윌리엄스:71,50,73,75,79,72,2|슐라거:66,69,72,76,74,78,3|매커티:70,69,70,75,41,56,2|아이나:87,62,71,74,77,75,2|은도예:88,72,70,79,62,65,3|들랩:76,77,60,75,30,79,2|깁스화이트:75,78,83,85,63,74,4|빅토르:38,25,66,40,30,68,1|모라투:53,37,57,60,75,80,1|애벗:63,34,52,54,63,66,1|도밍게스:67,65,75,76,76,74,3|예이츠:47,61,67,67,75,75,1|허드슨오도이:77,75,75,80,50,63,3|바크와:87,72,72,77,30,64,3|우드:53,82,67,71,40,80,2|이고르 제주스:68,77,65,72,36,76,2
+SUN|루프스:54,25,77,40,30,81,1|레이니우두:78,57,69,74,79,77,2|알데레테:58,61,63,70,81,80,2|오닌:66,58,65,67,72,74,1|흄:75,52,67,70,76,76,2|자카:45,75,85,74,78,81,2|사디키:79,67,75,80,75,75,3|르페:64,72,81,82,69,64,4|앙굴로:78,69,69,74,38,59,2|브로베이:83,75,61,73,30,85,2|리그:68,68,74,76,60,56,3|엘보리:45,25,66,40,30,67,1|무키엘레:71,50,71,73,81,80,2|밸러드:60,43,58,60,78,82,1|셀트:56,35,49,50,68,72,1|디아라:70,70,75,77,71,71,3|탈비:88,72,71,80,51,55,3|아딩그라:87,70,70,80,30,54,3|이시도르:76,74,62,72,32,73,2|메우니에:59,74,73,71,78,82,2
+TOT|킨스키:45,25,76,40,30,76,1|로버트슨:72,62,78,76,77,73,3|판헤케:54,47,75,70,82,80,2|판더벤:90,60,65,72,80,81,2|그레이:68,61,73,75,75,72,2|토날리:79,74,82,80,81,84,3|마테우스 페르난드스:67,73,79,80,75,73,3|마르무시:87,83,76,83,34,69,4|텔:86,80,70,79,29,64,3|솔랑케:70,79,66,76,42,75,3|쿠두스:88,76,74,86,60,74,4|오스틴:41,25,64,40,30,65,1|세네시:58,43,73,71,83,80,2|포로:76,73,82,79,78,75,3|우도기:88,64,73,77,75,75,3|벤탄쿠르:59,68,77,76,78,72,3|사르:66,66,77,79,78,74,3|베리발:74,68,77,78,72,71,3|시몬스:75,76,79,84,61,66,4|히샤를리송:71,78,72,78,53,76,3
+RMA|쿠르투아:46,25,78,40,30,90,1|쿠쿠레야:75,64,79,78,84,78,3|하위선:72,55,72,72,82,77,2|코나테:77,34,65,68,84,85,1|알렉산더아널드:75,72,89,80,77,72,3|추아메니:74,70,79,77,83,82,3|B.실바:50,77,84,87,71,65,4|벨링엄:79,86,83,88,79,85,5|비니시우스:93,85,80,91,31,71,5|음바페:96,91,80,92,29,76,5|귈레르:77,79,85,84,55,57,4|루닌:37,25,79,40,30,79,1|뤼디거:75,54,71,69,83,85,2|밀리탕:79,54,71,72,85,82,2|둠프리스:82,70,74,79,78,87,3|발베르데:90,84,83,81,81,85,4|카마빙가:79,67,80,82,78,80,4|브라임:80,73,78,84,33,63,4|호드리구:87,77,79,87,33,63,4|Y.디오망데:93,77,75,87,47,70,4
+BAR|호안 가르시아:46,25,80,40,30,84,1|칸셀루:84,72,84,85,77,72,4|쿠바르시:78,44,69,77,85,81,3|G.마르틴:74,53,75,70,80,79,2|쿤데:82,53,74,78,83,83,3|페드리:76,75,89,91,77,75,5|로드리:62,78,86,81,85,81,4|더용:77,70,85,84,77,77,4|고든:91,78,77,82,50,71,4|하피냐:91,86,85,87,54,76,4|야말:86,84,87,93,38,61,5|슈쳉스니:36,25,74,40,30,82,1|발데:90,52,75,79,77,69,3|크리스텐센:72,32,67,69,81,71,2|에릭 가르시아:79,58,77,76,86,82,3|가비:76,66,78,85,68,70,4|페르민:81,84,80,84,63,72,4|올모:74,79,82,85,51,59,4|아데예미:95,80,72,82,36,69,4|가브리에우 제주스:78,79,74,84,39,68,4
+ATM|오블락:46,25,79,40,30,86,1|그리말도:73,77,87,85,72,65,4|한초:77,67,74,75,83,84,2|푸빌:79,56,71,74,81,82,2|요렌테:91,79,80,82,79,83,4|바에나:78,75,83,82,66,68,4|바리오스:80,71,78,83,75,78,4|히울만:70,76,78,77,80,84,3|줄리아노:92,76,75,80,57,83,3|이강인:72,76,81,83,52,63,4|알바레스:86,86,82,87,58,77,4|무소:46,25,73,40,30,81,1|르노르망:66,31,60,63,81,80,1|히메네스:68,46,60,62,83,80,1|로메로:64,48,62,64,83,81,1|코케:50,72,84,77,76,77,3|카르도주:74,67,75,77,79,78,3|루크먼:86,83,73,84,32,68,4|쇠를로트:75,83,71,74,37,83,2|르마르:72,74,78,79,67,61,3
+ATH|우나이 시몬:49,25,76,40,30,82,1|유리:77,68,75,74,77,81,2|비비안:76,50,61,68,82,83,1|파레데스:64,42,53,57,79,77,1|링콘:83,64,69,72,69,75,2|하우레기사르:75,72,76,77,78,80,3|루이스 데 갈라레타:50,65,79,80,75,70,3|산세트:75,80,80,84,69,81,4|N.윌리엄스:93,77,79,86,37,67,4|구루세타:71,78,73,78,52,79,3|I.윌리엄스:92,79,74,77,47,83,3|파디야:34,25,63,40,30,68,1|라포르트:53,52,76,70,85,79,2|아레소:80,45,71,74,70,77,2|보이로:77,59,66,70,70,74,2|프라도스:67,62,71,75,76,75,2|예라이:64,49,73,66,82,75,1|베렝게르:81,78,77,80,67,68,3|산나디:68,71,58,67,33,82,1|나바로:84,71,70,78,45,66,3
+FCB|우르비히:32,25,85,40,30,77,1|데이비스:93,66,78,84,74,76,4|김민재:73,32,58,63,84,82,1|우파메카노:80,45,65,75,86,83,2|라이머:86,69,78,77,81,77,3|키미히:71,73,90,84,81,79,4|파블로비치:66,68,82,82,79,79,4|무시알라:79,81,79,90,62,65,5|루이스 디아스:82,82,83,87,44,74,4|케인:62,94,83,82,49,83,4|올리세:83,82,89,91,47,69,5|울라이히:41,25,62,40,30,73,1|타:62,38,60,63,87,86,1|이토:74,57,71,72,80,72,2|스타니시치:76,46,69,71,81,75,2|브라운:90,60,76,83,73,59,4|비쇼프:57,72,80,80,67,68,3|사이바리:83,78,77,83,55,82,4|카를:73,73,73,84,34,43,4|그나브리:77,83,79,84,43,65,4
+BVB|코벨:44,25,64,40,30,86,1|슐로터베크:81,60,76,74,86,84,2|안톤:69,47,68,67,85,85,1|가두:73,34,49,51,67,72,1|스벤손:75,60,76,77,75,75,3|은메차:83,78,78,84,82,88,4|조브 벨링엄:70,69,73,76,80,83,3|라이어슨:75,63,76,77,78,82,3|추쿠에메카:74,69,75,83,65,70,4|기라시:72,85,75,81,45,83,4|바이어:86,80,74,81,56,65,4|마이어:41,25,79,40,30,74,1|벤세바이니:73,70,70,77,79,78,3|레지아니:62,30,48,60,68,65,1|프라치스:76,37,59,66,61,64,1|베이르만:48,74,84,77,66,71,3|자비처:74,79,80,80,78,77,3|엠레 잔:70,76,71,72,81,82,2|은와네리:81,69,74,77,50,54,3|파비우 시우바:76,75,67,81,33,76,4
+B04|플레컨:32,25,81,40,30,76,1|구티에레스:79,71,79,78,76,67,3|메디나:73,44,70,72,79,81,2|탑소바:74,58,73,72,82,80,2|콴사:80,48,62,69,77,76,2|알레익스 가르시아:76,75,85,85,75,69,4|팔라시오스:62,76,79,82,81,71,4|마자:74,69,77,85,64,66,4|틸만:67,77,77,80,67,76,3|시크:70,83,71,81,38,78,4|모레이라:89,71,70,78,50,70,3|블라스비치:43,25,59,40,30,76,1|바데:61,45,57,67,77,78,1|아르투르:84,46,69,75,65,58,2|안드리히:57,72,75,67,77,81,1|호프만:61,75,77,78,64,68,3|벤세기르:73,72,71,78,28,61,3|텔라:90,74,71,80,46,60,3|포쿠:90,67,68,77,40,64,3|코판:81,76,62,73,33,74,2
+RBL|반더보르트:55,25,82,40,30,76,1|라움:83,62,82,81,76,79,4|루케바:79,43,70,74,82,76,2|오르반:54,40,56,56,86,83,1|헨리히스:68,54,75,76,77,70,3|페르메이런:66,55,78,77,66,66,3|반주지:69,63,69,71,66,74,2|라이츠:72,70,74,78,77,72,3|그루다:83,72,74,82,32,64,4|호물루:72,78,69,77,37,81,3|누사:85,73,70,85,42,64,4|칭에를레:42,25,66,40,30,68,1|클로스터만:76,49,62,67,75,72,1|비샤부:67,36,60,56,74,79,1|바쿠:83,72,75,80,75,76,3|자이발트:78,62,77,74,80,79,2|우에드라오고:82,72,76,82,59,71,4|바움가르트너:73,79,77,83,57,68,4|바카요코:80,72,69,80,33,63,3|하르더:79,76,66,72,30,81,2
+PSG|슈발리에:50,25,73,40,30,78,1|누누 멘드스:94,77,80,86,84,80,4|파초:80,34,63,65,90,86,1|마르키뉴스:74,56,75,73,89,78,2|하키미:92,79,81,82,82,81,4|비티냐:72,81,88,91,75,70,5|주앙 네베스:72,75,84,87,86,82,4|자이르에메리:79,71,78,81,79,85,4|크바라츠헬리아:86,85,84,90,59,81,5|뎀벨레:90,89,83,93,55,70,5|두에:83,81,79,90,55,80,5|사포노프:50,25,80,40,30,83,1|자바르니:77,37,65,64,81,80,1|L.에르난데스:71,52,72,71,82,75,2|디뉴:66,68,79,76,78,73,3|마율루:75,75,75,79,64,62,3|파비안 루이스:60,77,83,82,77,73,4|바르콜라:92,76,78,84,39,67,4|베랄도:64,45,71,68,80,75,1|아클리우슈:74,72,80,84,48,62,4
+OM|더랑어:56,25,74,40,30,74,1|에메르송:71,63,75,76,74,71,3|콘도그비아:58,66,70,70,77,80,2|이건라일리:80,32,61,66,74,79,1|웨아:87,75,72,77,68,67,3|카미소코:57,40,59,57,62,58,1|응나디:69,52,66,61,69,71,1|압델리:59,72,76,77,59,71,3|파이상:87,78,75,80,32,70,3|구이리:77,82,77,81,45,71,4|아리트:75,64,71,79,59,57,3|판넥:28,25,55,40,30,57,1|발레르디:74,46,65,69,80,79,2|아게르드:75,50,66,65,81,81,1|Q.팀버:76,77,75,79,74,83,3|호이비에르:49,71,75,74,76,82,2|A.고메스:71,70,74,78,72,60,3|모페:70,74,68,74,42,70,2|뭄바냐:83,71,57,65,28,68,1|울리세스:77,49,64,70,70,66,2
+ASM|흐라데키:40,25,64,40,30,79,1|나지뉴:75,33,61,68,67,65,1|케러:69,44,65,65,79,77,1|테제:76,55,71,73,76,78,2|반데르송:78,62,74,77,72,71,3|카마라:79,69,82,79,71,72,3|자카리아:80,67,74,77,80,85,3|골로빈:72,75,78,82,59,66,4|안수 파티:81,75,73,80,30,53,3|비어레트:75,76,63,71,31,76,2|미나미노:75,73,75,81,40,64,4|쾬:46,25,69,40,30,75,1|다이어:46,62,66,62,77,80,1|마위사:79,31,57,64,75,74,1|살리수:57,36,50,55,77,80,1|아블린:86,76,67,81,33,65,4|디오프:69,63,67,72,41,44,2|쿨리발리:70,63,69,74,66,70,2|발로건:84,80,63,78,24,71,3|브루너:65,67,54,68,27,59,1
+OL|그라이프:24,25,83,40,30,82,1|아브네르:80,60,73,74,71,69,2|니아카테:68,49,65,64,82,81,1|마타:79,61,68,74,77,78,2|메이틀랜드나일스:79,65,74,76,72,74,3|테스만:53,65,71,71,72,80,2|모턴:65,65,80,77,74,74,3|톨리소:68,79,80,76,79,82,3|말리크 포파나:85,69,70,83,40,46,4|슐츠:74,77,75,78,47,73,3|누아마:81,70,69,78,24,58,3|데캉:43,25,65,40,30,75,1|R.클라위버르트:85,34,58,65,74,77,1|바허:57,34,47,56,71,80,1|비드스트루프:70,58,69,70,71,74,2|오펜다:94,79,69,78,30,75,3|찰레타차르:53,40,55,57,73,77,1|메라:66,55,71,78,58,45,3|뒤랑빌:88,61,63,82,26,49,4|타글리아피코:68,56,70,75,77,76,2
+INT|호셉 마르티네스:26,25,69,40,30,75,1|바스토니:74,47,76,78,86,82,3|아칸지:75,48,70,74,84,81,2|비세크:78,57,64,72,77,80,2|디마르코:81,78,85,81,80,74,4|바렐라:77,78,84,86,81,72,4|찰하놀루:68,81,85,82,81,68,4|수치치:73,71,77,81,64,78,4|스펜스:89,54,71,79,76,75,3|라우타로:80,88,76,85,51,74,4|튀랑:86,83,75,81,50,81,4|프로베델:42,25,82,40,30,83,1|스톤스:54,58,74,74,83,71,2|카를루스 아우구스투:77,72,77,79,79,74,3|루이스 엔히키:90,74,72,78,70,76,3|므키타리안:69,77,81,82,72,72,4|지엘린스키:77,77,81,83,70,63,4|디우프:77,71,72,78,67,75,3|에스포지토:59,78,71,73,38,75,2|보니:87,76,73,78,33,75,3
+MIL|메냥:64,25,81,40,30,84,1|에스투피냔:73,57,76,78,74,65,3|파블로비치:72,50,60,70,76,86,2|힐라:85,53,68,75,81,79,2|더빈터:73,40,60,67,76,77,1|모드리치:65,75,87,86,73,59,4|라비오:81,79,81,81,78,85,4|풀리식:87,83,81,84,47,60,4|디에고 모레이라:89,69,70,83,64,69,4|곤살루 하무스:72,79,65,76,47,79,3|무사:88,69,71,78,70,68,3|테라차노:41,25,72,40,30,78,1|토모리:85,40,63,68,80,80,1|바르테사기:78,58,67,66,70,76,1|아테카메:79,48,56,65,64,66,1|자샤리:75,67,75,73,72,76,2|포파나:75,69,76,79,78,74,3|로프터스치크:80,76,77,79,76,79,3|레앙:93,79,79,83,30,73,4|은쿤쿠:75,83,79,82,41,56,4
+JUV|비카리오:48,25,77,40,30,79,1|루쿠미:74,39,64,61,76,82,1|브레메르:85,52,59,68,87,85,1|가티:77,42,56,67,80,82,1|캄비아소:80,72,78,80,74,72,3|로카텔리:56,70,81,75,81,76,2|K.튀랑:79,74,78,79,81,85,3|칼룰루:79,53,68,72,83,79,2|이을드즈:85,81,79,85,59,70,4|볼테마데:67,80,72,81,41,77,4|콘세이상:88,72,76,86,44,55,4|디그레고리오:56,25,78,40,30,79,1|켈리:76,48,67,70,77,78,2|카발:70,43,67,68,74,65,1|첼리크:74,59,72,73,76,77,2|코프메이너르스:66,74,82,77,74,71,3|매케니:78,74,79,79,79,81,3|두글라스 루이스:62,75,81,79,75,68,3|콜로 무아니:88,77,68,77,38,63,3|제그로바:82,67,75,84,34,58,4
+NAP|밀린코비치사비치:43,25,80,40,30,81,1|올리베라:73,51,69,72,77,70,2|부온조르노:75,47,67,65,83,82,1|라흐마니:75,51,61,64,84,80,1|디로렌초:83,71,73,72,79,80,2|맥토미니:80,83,77,82,80,86,4|로보트카:68,69,81,82,75,62,4|더브라위너:59,82,89,84,66,67,4|랑:80,77,73,84,50,68,4|회일룬:83,78,65,73,42,79,2|폴리타노:79,77,78,84,56,52,4|메레트:44,25,75,40,30,82,1|라파 마린:70,28,63,63,77,76,1|베우케마:41,55,64,65,80,77,1|스피나촐라:84,68,76,79,76,67,3|길모어:55,59,76,77,71,52,3|앙귀사:72,77,76,81,79,81,4|네레스:86,76,75,85,46,53,4|폴로룬쇼:76,74,70,72,70,82,2|루카:61,77,59,65,34,75,1
 `;
 const PSTAT={};
 /* ================= cards, your own team, accounts =================
@@ -699,7 +835,7 @@ const BASE_RO=[];const baseRoster=ci=>BASE_RO[ci]||(BASE_RO[ci]=makeRoster(ci));
 let CARDS=null,CARD_MAP=null;
 function cards(){
   if(CARDS)return CARDS;CARDS=[];CARD_MAP=new Map();
-  CLUBS.forEach((c,ci)=>{const sl=FORMS[c.form]||FORMS['4-3-3'];baseRoster(ci).forEach((m,k)=>{const cd={id:c.id+'|'+m.name,ci,k,name:m.name,num:m.num,nat:m.nat,pos:sl[k].l,ovr:m.ovr,stars:m.stars,club:c};CARDS.push(cd);CARD_MAP.set(cd.id,cd);});});
+  CLUBS.forEach((c,ci)=>{const sl=FORMS[c.form]||FORMS['4-3-3'];baseRoster(ci).forEach((m,k)=>{const cd={id:c.id+'|'+m.name,ci,k,name:m.name,num:m.num,nat:m.nat,pos:k<11?sl[k].l:c.sub[k-11][2],ovr:m.ovr,stars:m.stars,club:c};CARDS.push(cd);CARD_MAP.set(cd.id,cd);});});
   return CARDS;
 }
 const cardById=id=>(cards(),CARD_MAP.get(id));
@@ -711,12 +847,14 @@ function customRoster(cl){
     return Object.assign({},m,{k,st,ovr:m.ovr+(one?3:0),card:cd.id});});
 }
 // a team spec checked over: 11 different real cards (keeper first if one is there), bench without repeats
-function cleanSpec(sp,fallbackCi){
-  const fb=CLUBS[fallbackCi|0]||CLUBS[0],ids=new Set();
-  let st=Array.isArray(sp&&sp.cards)?sp.cards.filter(id=>cardById(id)&&!ids.has(id)&&ids.add(id)).slice(0,11):[];
-  for(const p of fb.xi){if(st.length>=11)break;const id=fb.id+'|'+p[0];if(!ids.has(id)){ids.add(id);st.push(id);}}
-  for(const cd of cards()){if(st.length>=11)break;if(!ids.has(cd.id)){ids.add(cd.id);st.push(cd.id);}}
-  const bench=(Array.isArray(sp&&sp.bench)?sp.bench:[]).filter(id=>id&&cardById(id)&&!ids.has(id)&&ids.add(id)).slice(0,7);
+const BENCH_MAX=9;
+// own: the club whose cards may be used (an account's club); without it any real card is accepted (an online opponent's team)
+function cleanSpec(sp,fallbackCi,own){
+  const fb=CLUBS[fallbackCi|0]||CLUBS[0],ids=new Set(),ok=id=>{const cd=cardById(id);return !!cd&&(!own||cd.club.id===own);};
+  let st=Array.isArray(sp&&sp.cards)?sp.cards.filter(id=>ok(id)&&!ids.has(id)&&ids.add(id)).slice(0,11):[];
+  for(const p of fb.xi){if(st.length>=11)break;const id=fb.id+'|'+p[0];if(!ids.has(id)&&ok(id)){ids.add(id);st.push(id);}}
+  for(const cd of cards()){if(st.length>=11)break;if(!ids.has(cd.id)&&ok(cd.id)){ids.add(cd.id);st.push(cd.id);}}
+  const bench=(Array.isArray(sp&&sp.bench)?sp.bench:[]).filter(id=>id&&ok(id)&&!ids.has(id)&&ids.add(id)).slice(0,BENCH_MAX);
   const kit=clamp((sp&&sp.kit)|0,0,CLUBS.length-1);
   return{name:String(sp&&sp.name||'내 팀').slice(0,16),tag:String(sp&&sp.tag||'MYT').replace(/[^A-Za-z0-9]/g,'').slice(0,3).toUpperCase()||'MYT',kit,
     form:sp&&FORMS[sp.form]?sp.form:'4-3-3',ment:clamp((sp&&sp.ment)|0,-1,1),cards:st,bench};
@@ -732,8 +870,18 @@ function accLoad(){try{const a=JSON.parse(lsGet('fl11-acc')||'null');if(a&&a.lis
 function accSave(){lsSet('fl11-acc',JSON.stringify({list:ACC.list,cur:ACC.cur}));}
 const prof=()=>ACC.cur?ACC.list[ACC.cur]:null;
 // a new account starts with its favourite club's real XI in their usual shape (so the one-club bonus is on)
-function newProfile(name,ci){const c=CLUBS[ci]||CLUBS[0];return{name,team:cleanSpec({name:c.name.slice(0,10)+' 드림',tag:c.id,kit:ci,form:FORMS[c.form]?c.form:'4-3-3',ment:0,cards:c.xi.map(p=>c.id+'|'+p[0]),bench:[]},ci),skills:cleanSk(null),made:Date.now()};}
-function applyProfile(){const p=prof();if(!p){CUSTOM[0]=null;return;}p.team=cleanSpec(p.team);CUSTOM[0]=teamFromSpec(p.team);G.set.skills=cleanSk(p.skills);}
+// a new account receives the base cards of the one club it picks (its 20 players): the real XI starts, the rest are on the bench
+function newProfile(name,ci){const c=CLUBS[ci]||CLUBS[0];return{name,club:c.id,team:cleanSpec({name:c.name.slice(0,10)+' 드림',tag:c.id,kit:ci,form:FORMS[c.form]?c.form:'4-3-3',ment:0,cards:c.xi.map(p=>c.id+'|'+p[0]),bench:c.bench},ci,c.id),skills:cleanSk(null),made:Date.now()};}
+// the club an account owns (older accounts without one take their kit's club)
+function profClub(p){
+  let ci=CLUBS.findIndex(c=>c.id===p.club);
+  if(ci<0){const n={};for(const id of (p.team&&p.team.cards)||[]){const k=String(id).split('|')[0];n[k]=(n[k]||0)+1;}
+    const best=Object.keys(n).filter(k=>CLUBS.some(c=>c.id===k)).sort((a,b)=>n[b]-n[a])[0];
+    ci=best?CLUBS.findIndex(c=>c.id===best):0;p.club=CLUBS[ci].id;}
+  return ci;
+}
+const ownedCards=p=>cards().filter(cd=>cd.club.id===p.club);
+function applyProfile(){const p=prof();if(!p){CUSTOM[0]=null;return;}const ci=profClub(p);p.team=cleanSpec(p.team,ci,p.club);CUSTOM[0]=teamFromSpec(p.team);G.set.skills=cleanSk(p.skills);}
 
 for(const line of PSTAT_SRC.trim().split('\n')){const [id,...ps]=line.split('|');for(const p of ps){const [n,v]=p.split(':');const a=v.split(',').map(Number);PSTAT[id+'|'+n]={pace:a[0]/100,shoot:a[1]/100,pass:a[2]/100,drib:a[3]/100,tackle:a[4]/100,phy:a[5]/100,stars:a[6]};}}
 
@@ -777,6 +925,16 @@ const SP_TYPES=['','throw','corner','goalkick','freekick','penalty'];
 const SP_LABELS={kickoff:['패스','패스','패스'],throw:['스로인','스로인','스로인'],corner:['크로스','짧게','낮은 크로스'],goalkick:['패스','패스','패스'],freekick:['패스','스루','슛'],penalty:['슛','슛','슛']};
 const SP_HINT={throw:'패스 버튼: 스로인 · 조이스틱으로 방향',corner:'패스: 크로스(짧게 니어포스트 · 중간 페널티 스팟 · 길게 파포스트) · 스루: 짧은 패스',freekick:'조이스틱 위/아래로 조준 · 슛 길게 눌러 파워(위로 밀면 칩슛, 아래로 감아차기) · 노란 선이 궤적',penalty:'조이스틱 위/아래로 조준 · 슛을 길게 눌러 차세요'};
 const SUR='김이박최정강조윤장임한오서신권황안송류홍전고문양배백허남심노'.split('');
+// a free kick within shooting range is aimed at goal (stick up/down slides the aim); further out it is taken like
+// any other set piece: the stick points the pass, and a shot is still there on the shoot button
+const fkShootMode=sp=>!!sp&&(sp.type==='penalty'||(sp.type==='freekick'&&hyp(sp.team.dir*HL-sp.x,sp.z)<31&&Math.abs(sp.z)<21));
+// a pass from a shooting free kick: stick left/right picks a side, otherwise the nearest free man short
+function fkPassTarget(c,kind,inp,pw){
+  if(Math.abs(inp.jx)>0.3)return pickTarget(c,kind,{jx:inp.jx,jy:inp.jy*0.35},pw).best;
+  let best=null,bs=-1e9;
+  for(const p of c.team.players){if(p===c||p.off||p.isGK)continue;const d=hyp(p.x-c.x,p.z-c.z);if(d<3||d>26)continue;const [,open]=nearestOpp(p);const s2=Math.min(open,6)*0.5-d*0.08+((p.x-c.x)*c.team.dir>0?0.4:0);if(s2>bs){bs=s2;best=p;}}
+  return best;
+}
 const GIV=['도윤','시우','하준','지호','준서','은우','건우','현우','민재','지훈','태오','우진','선우','서진','연우','유찬','정민','승현','재윤','한결','이안','로운','시온','준혁','도현','민규','태윤','성빈','진우','하람','동하','윤재'];
 const CAMS=[{h:17,b:26,f:30,n:'방송'},{h:12.5,b:19,f:34,n:'근접'},{h:30,b:44,f:30,n:'와이드'}];
 
@@ -1141,7 +1299,7 @@ function aimPreview(T){
   aimDots.visible=false;aimRing.visible=false;
   const pd=LP(),sp=G.sp;
   if(G.state!=='setpiece'||!sp||!sp.ready||sp.launched||!pd||pd.ti!==sp.team.i||pd.ctrl!==sp.taker||NET.role==='guest')return;
-  const c=sp.taker,inp=pd.inp,kickSp=sp.type==='freekick'||sp.type==='penalty',passing=IN.charging&&(IN.chargeK==='pass'||IN.chargeK==='thru'||IN.chargeK==='lob');
+  const c=sp.taker,inp=pd.inp,kickSp=fkShootMode(sp),passing=IN.charging&&(IN.chargeK==='pass'||IN.chargeK==='thru'||IN.chargeK==='lob');
   let v,shot=false;
   if(kickSp&&!passing){
     const charging=IN.charging&&IN.chargeK==='shoot';
@@ -1149,7 +1307,7 @@ function aimPreview(T){
   }else{
     const kind=passing&&IN.chargeK==='thru'?'through':'ground',pw=passing&&IN.power>=0.2?IN.power:null;
     if(passing&&(IN.chargeK==='lob'||(IN.chargeK==='pass'&&IN.lift.pass))&&sp.type!=='throw'){const L=longPlan(c,inp,pw,sp.type==='corner');if(!L.r)return;v=passVel(c,L.r,L.kind,L.pt,pw,true);}else{
-    const {best}=pickTarget(c,kind,inp,pw);if(!best)return;
+    const best=kickSp&&sp.type==='freekick'?fkPassTarget(c,kind,inp,pw):pickTarget(c,kind,inp,pw).best;if(!best)return;
     const k=sp.type==='throw'?'throw':sp.type==='corner'?(kind==='through'?'ground':'cross'):(sp.type==='freekick'&&kind==='ground'&&hyp(best.x-c.x,best.z-c.z)>30?'lob':kind);
     v=passVel(c,best,k,null,k==='throw'?null:pw,true);}
   }
@@ -1435,7 +1593,7 @@ function actionPose(e,P){
           break;}
         case 13:{
           // La Croqueta: inside of the far foot pushes it across, the near foot receives it, hips ride over
-          const s_=sd||1,a=-s_,b=s_;P[PY]=HIP_H-0.07;P[SX]=0.18;P[PX]=s_*0.07*Math.sin(PI*u);P[PRZ]=-s_*0.08*Math.sin(PI*u);P[ALZ]=0.75;P[ARZ]=-0.75;
+          const s_=sd||1,a=-s_,b=s_;P[PY]=HIP_H-0.09;P[SX]=0.2;P[PX]=s_*0.14*Math.sin(PI*u);P[PRZ]=-s_*0.15*Math.sin(PI*u);P[SZ]=s_*0.18*Math.sin(PI*u);P[ALZ]=0.85+0.2*Math.sin(PI*u);P[ARZ]=-0.85-0.2*Math.sin(PI*u);
           const w1=clamp(u/0.36,0,1),w2=clamp((u-0.3)/0.4,0,1);
           // pushing foot: from the stance out to the ball and back under the body
           if(near&&w1<1){const q=Math.sin(PI*w1);solveLeg(P,a,lerp(a*0.13,bx-a*0.06,q),ANK+0.03*q,lerp(0.08,bz,q));}else solveLeg(P,a,a*0.13,ANK,0.08);
@@ -1453,13 +1611,13 @@ function actionPose(e,P){
           P[PY]=HIP_H-0.07;P[SX]=0.18;solveLeg(P,1,0.13,ANK,0.08);solveLeg(P,-1,-0.13,ANK,0.08);
           for(const [leg,a,b] of [[-1,0.03,0.43],[1,0.38,0.78]]){
             const w=clamp((u-a)/(b-a),0,1);if(w<=0||w>=1)continue;
-            const R=0.24,cx=near?bx:0,cz=near?bz:0.5;let x,y,z;
-            if(w<0.22){const q=easeIO(w/0.22);x=lerp(leg*0.13,cx-leg*R,q);z=lerp(0.08,cz,q);y=ANK+0.1*q;}
-            else if(w<0.78){const th=PI*(w-0.22)/0.56;x=cx-leg*R*Math.cos(th);z=cz+R*Math.sin(th)*0.9;y=ANK+0.1+0.08*Math.sin(th);}
+            const R=0.31,cx=near?bx:0,cz=near?bz:0.5;let x,y,z;
+            if(w<0.22){const q=easeIO(w/0.22);x=lerp(leg*0.13,cx-leg*R,q);z=lerp(0.08,cz,q);y=ANK+0.14*q;}
+            else if(w<0.78){const th=PI*(w-0.22)/0.56;x=cx-leg*R*Math.cos(th);z=cz+R*Math.sin(th)*0.95;y=ANK+0.14+0.12*Math.sin(th);}
             else{const q=easeIO((w-0.78)/0.22);x=lerp(cx+leg*R,leg*0.13,q);z=lerp(cz,0.08,q);y=lerp(ANK+0.1,ANK,q);}
             solveLeg(P,leg,x,y,z);
-            const sw=Math.sin(PI*w);P[PX]+=leg*0.08*sw;P[PRZ]-=leg*0.12*sw;P[SZ]+=leg*0.2*sw;P[PRY]-=leg*0.22*sw;P[SY]+=leg*0.15*sw;
-            if(leg>0)P[ALZ]+=0.5*sw;else P[ARZ]-=0.5*sw;
+            const sw=Math.sin(PI*w);P[PX]+=leg*0.13*sw;P[PRZ]-=leg*0.19*sw;P[SZ]+=leg*0.3*sw;P[PRY]-=leg*0.32*sw;P[SY]+=leg*0.22*sw;P[PY]-=0.03*sw;
+            if(leg>0)P[ALZ]+=0.7*sw;else P[ARZ]-=0.7*sw;
           }
           break;}
         case 2:{
@@ -1668,7 +1826,7 @@ function applySkinned(e,dt){
 
 /* ================= game state ================= */
 const G={tac:[],oppTac:null,state:'boot',t:0,clock:0,half:1,score:[0,0],teams:[],ents:[],ref:null,ctrl:null,sp:null,timer:0,queue:null,lock:null,lastManual:-9,switchFx:-9,
-  set:{home:0,away:1,diff:1,len:1,cam:0,stick:0,tacs:{},skills:null},mode:'friendly',venue:0,goalLog:[],lgRes:null,firstKick:0,kickTeam:0,stats:null,paused:false,lastSwitch:0,goal:null,introT:0,menuT:0,sound:true,portraitOK:false};
+  set:{home:0,away:1,diff:1,len:1,cam:0,stick:0,tacs:{},skills:null,dv:2},mode:'friendly',venue:0,goalLog:[],lgRes:null,firstKick:0,kickTeam:0,stats:null,paused:false,lastSwitch:0,goal:null,introT:0,menuT:0,sound:true,portraitOK:false};
 const B={x:0,y:BR,z:0,vx:0,vy:0,vz:0,spin:0,owner:null,held:false,last:null,lastTeam:-1,shot:null,kicker:null,kickT:-9,target:null};
 let D=DIFFS[1];
 const TRAJ=new Float32Array(61*3);
@@ -1678,8 +1836,11 @@ function newStats(){const z=()=>({shots:0,onT:0,pass:0,passOk:0,poss:0,tack:0,fo
 // a club's squad: the real starting XI (names, numbers, overall) with looks seeded from the club, so both online players build the same squad
 function makeRoster(ci){
   if(ci>=100)return customRoster(CUSTOM[ci-100]);
-  const club=CLUBS[ci],rr=seeded(1000+ci*97),slots=FORMS[club.form]||FORMS['4-3-3'];
-  return club.xi.map(([name,num,r,ovr],k)=>{const q=ovr/100,wide=/^[LR]/.test(slots[k].l)?0.04:0,sk=SKILLERS.has(name);
+  const club=CLUBS[ci],rr=seeded(1000+ci*97),fs=FORMS[club.form]||FORMS['4-3-3'];
+  // starters take their formation slot; substitutes carry their own position label
+  const slots=fs.concat((club.sub||[]).map(p=>({l:p[2]})));
+  const list=club.xi.concat((club.sub||[]).map(p=>[p[0],p[1],posNat(p[2]),p[3]]));
+  return list.map(([name,num,r,ovr],k)=>{const q=ovr/100,wide=/^[LR]/.test(slots[k].l)?0.04:0,sk=SKILLERS.has(name);
     // the old per-club rating noise took five draws here; they are still taken (and thrown away) so every player's looks stay as they were
     for(let i=0;i<5;i++)rr();
     // each player's own ratings from PSTAT; anyone missing from the table falls back to an estimate from his overall
@@ -2065,14 +2226,44 @@ function gainBall(e){
   if(pd&&e===pd.ctrl&&pd.queue&&G.t-pd.queue.t<0.6){const q=pd.queue;pd.queue=null;doUserAction(pd,q.kind,q.power,q.sk);}
 }
 function inOwnBox(e){const gx=ownGoalX(e.team);return Math.abs(e.x-gx)<16.5&&Math.abs(e.z)<20.16;}
+/* a standing tackle is a lunge: the defender turns square to the ball and stabs a foot at it. Nothing is decided
+   until the foot gets there (~0.15 s), and only if the ball is really at the end of his leg — no winning it from a
+   metre and a half away, and no reaching through the carrier from behind */
+const POKE_HIT=0.15,POKE_REACH=0.62;
 function tryTackle(d,c,bonus){
-  if(!c||B.owner!==c||B.held)return false;
-  const dist=hyp(B.x-d.x,B.z-d.z);G.stats[d.team.i].tkTry=(G.stats[d.team.i].tkTry||0)+1;
-  d.act=ACT.POKE;d.actT=0;
-  if(dist>1.75){d.tackleCd=0.6;return false;}
-  let p=0.46+(d.st.tackle-c.st.drib)*0.9-(dist>1.2?0.12:0)+(bonus||0);
-  if(d.isGK)p=0.55*d.gkSkill+0.1;
+  if(!c||B.owner!==c||B.held||d.act===ACT.POKE)return false;
+  G.stats[d.team.i].tkTry=(G.stats[d.team.i].tkTry||0)+1;
+  // lunge at where the ball will be when the foot lands
+  const px=B.x+c.vx*POKE_HIT,pz=B.z+c.vz*POKE_HIT,dx=px-d.x,dz=pz-d.z,dl=hyp(dx,dz)||1;
+  d.face=d.face+angD(d.face,Math.atan2(dx,dz))*0.85;
+  d.act=ACT.POKE;d.actT=0;d.poke={c,bonus:bonus||0,done:false};d.kick=null;
+  const lunge=clamp((dl-0.55)/POKE_HIT,0,7);
+  d.vx=dx/dl*lunge+c.vx*0.5;d.vz=dz/dl*lunge+c.vz*0.5;
+  return true;
+}
+function pokeStep(e,dt){
+  const pk=e.poke;
+  if(!pk.done){
+    // keep the foot tracking the ball through the lunge
+    const c=pk.c,px=B.x+c.vx*Math.max(0,POKE_HIT-e.actT),pz=B.z+c.vz*Math.max(0,POKE_HIT-e.actT),dx=px-e.x,dz=pz-e.z,dl=hyp(dx,dz)||1;
+    const st=angD(e.face,Math.atan2(dx,dz))*Math.min(1,dt*18);e.face+=st;
+    if(e.actT<POKE_HIT){const v=clamp((dl-0.55)/Math.max(0.03,POKE_HIT-e.actT),0,7.5);e.vx+=(dx/dl*v+c.vx*0.4-e.vx)*Math.min(1,dt*20);e.vz+=(dz/dl*v+c.vz*0.4-e.vz)*Math.min(1,dt*20);}
+    else{pk.done=true;resolvePoke(e,pk.c,pk.bonus);}
+  }else{const k=Math.exp(-7*dt);e.vx*=k;e.vz*=k;}
+  if(e.actT>actEnd(e)-0.02)e.poke=null;
+}
+function resolvePoke(d,c,bonus){
+  if(B.owner!==c||B.held||G.state!=='play'){d.tackleCd=0.35;return false;}
+  const fx0=Math.sin(d.face),fz0=Math.cos(d.face),footX=d.x+fx0*POKE_REACH,footZ=d.z+fz0*POKE_REACH;
+  const dist=hyp(B.x-footX,B.z-footZ);
   const fx=Math.sin(c.face),fz=Math.cos(c.face),dot=((d.x-c.x)*fx+(d.z-c.z)*fz)/Math.max(0.1,hyp(d.x-c.x,d.z-c.z));
+  if(dist>0.62){
+    // missed the ball: through the man's legs from behind it is a foul, otherwise he is left lunging at air
+    if(hyp(c.x-footX,c.z-footZ)<0.55&&Math.random()<(dot<-0.3?0.6:0.18)){callFoul(d,c,dot<-0.3?'behind':'trip');return false;}
+    d.act=ACT.STUMBLE;d.actT=0;d.stun=0.38;d.tackleCd=0.9;d.poke=null;return false;
+  }
+  let p=0.5+(d.st.tackle-c.st.drib)*0.9-(dist>0.4?0.1:0)+(bonus||0);
+  if(d.isGK)p=0.55*d.gkSkill+0.1;
   if(dot<-0.3)p-=0.15;
   // shielding: coming from the side or behind, strength decides as much as timing
   if(dot<0.3)p-=((c.st.phy||0.75)-(d.st.phy||0.75))*0.6;
@@ -2082,17 +2273,20 @@ function tryTackle(d,c,bonus){
     // winning it through the back of the man is still a foul
     if(dot<-0.3&&Math.random()<0.25){callFoul(d,c,'behind');return false;}
     G.stats[d.team.i].tack++;
-    c.stun=0.4;c.cool=0.55;c.kick=null;c.act=ACT.STUMBLE;c.actT=0;
-    if(d.isGK||Math.random()<0.55){gainBall(d);}
-    else{B.owner=null;B.held=false;const a=Math.atan2(B.x-d.x,B.z-d.z)+rnd(-0.8,0.8),v=rnd(3,6);B.vx=Math.sin(a)*v;B.vz=Math.cos(a)*v;B.vy=0;B.last=d;B.lastTeam=d.team.i;B.kicker=d;B.kickT=G.t;d.cool=0.15;}
+    c.stun=0.4;c.cool=0.55;c.kick=null;c.act=ACT.STUMBLE;c.actT=0;c.skill=null;
+    // a clean stab with the ball right on his foot: he keeps it; otherwise it is knocked loose from where the foot met it
+    if(d.isGK||(dist<0.38&&Math.random()<0.6)){B.x=footX;B.z=footZ;gainBall(d);}
+    else{B.owner=null;B.held=false;B.x=footX*0.5+B.x*0.5;B.z=footZ*0.5+B.z*0.5;const a=Math.atan2(B.x-c.x,B.z-c.z)*0.5+d.face*0.5+rnd(-0.7,0.7),v=rnd(3,6);B.vx=Math.sin(a)*v;B.vz=Math.cos(a)*v;B.vy=0;B.last=d;B.lastTeam=d.team.i;B.kicker=d;B.kickT=G.t;d.cool=0.15;}
     if(Math.random()<0.5)say(d.name+', 깔끔한 태클!');
     sfx.kick(5);
     return true;
   }
   // a mistimed challenge sometimes clips the man instead of the ball
   const behind=dot<-0.3;
-  if(Math.random()<(behind?0.5:0.2)*(d.isGK?1.3:1)){callFoul(d,c,behind?'behind':'trip');return false;}
-  d.act=ACT.STUMBLE;d.actT=0;d.stun=0.32;d.tackleCd=0.8;
+  if(Math.random()<(behind?0.5:0.16)*(d.isGK?1.3:1)){callFoul(d,c,behind?'behind':'trip');return false;}
+  // the carrier rides it: a little nudge off his line, the defender off balance
+  c.vx*=0.85;c.vz*=0.85;
+  d.act=ACT.STUMBLE;d.actT=0;d.stun=0.32;d.tackleCd=0.8;d.poke=null;
   return false;
 }
 const FOUL_SEV={trip:0.08,behind:0.3,slide:0.35,slideBehind:0.72};
@@ -2166,13 +2360,17 @@ function standTackles(t,dt){
   const fx=Math.sin(c.face),fz=Math.cos(c.face);
   for(const d of t.players){
     if(d.isGK||d.off||d.stun>0||d.tackleCd>0||d.act||d.kick)continue;
-    const db=hyp(B.x-d.x,B.z-d.z);if(db>1.6)continue;
+    const db=hyp(B.x-d.x,B.z-d.z);if(db>1.8)continue;
     G.stats[t.i].nearT=(G.stats[t.i].nearT||0)+dt;
     if(d===uc&&!(pd.inp.btn.thru||pd.inp.btn.sprint))continue;
-    const dot=((d.x-c.x)*fx+(d.z-c.z)*fz)/Math.max(0.1,hyp(d.x-c.x,d.z-c.z)),behind=dot<-0.3;
+    const dot=((d.x-c.x)*fx+(d.z-c.z)*fz)/Math.max(0.1,hyp(d.x-c.x,d.z-c.z));
+    // no lunging through the back of him, and only while actually looking at the ball
+    if(dot<-0.2)continue;
+    // (he turns into the lunge, but not from facing away: his body has to be open to the ball)
+    if(Math.abs(angD(d.face,Math.atan2(B.x-d.x,B.z-d.z)))>1.6)continue;
     const h=d.hid||{press:'contain',read:1};
-    let rate=1.0+exp*2.6+turned*0.8+trap*1.8;
-    rate*=(h.press==='aggr'?1.3:0.8)*(0.7+0.3*(h.read??1))*(0.6+d.st.tackle*0.6)*(behind?0.3:1)*(db>1.25?0.6:1);
+    let rate=1.15+exp*2.8+turned*0.8+trap*1.9;
+    rate*=(h.press==='aggr'?1.3:0.85)*(0.7+0.3*(h.read??1))*(0.6+d.st.tackle*0.6)*(dot>0.4?1.35:0.9)*(db>1.4?0.6:1);
     if(!t.human&&!NET.online)rate*=D.tackle/1.25;
     if(d===uc)rate*=1.4;
     if(Math.random()<rate*dt){d.tackleCd=0.5;tryTackle(d,c,exp*0.25+trap*0.15+turned*0.05);return;}
@@ -2253,6 +2451,8 @@ function startSkill(c,s){
   c.act=ACT.SKILL;c.actT=0;c.actD=s.id;c.ap1=s.side;c.ap2=s.dir;c.ap3=c.face;c.aimFace=null;
   c.sk={id:s.id,side:s.side,dir:s.dir,f0:c.face,beat:false,launched:false,v0:Math.max(0,c.vx*Math.sin(c.face)+c.vz*Math.cos(c.face)),evx:c.vx,evz:c.vz};
   c.skillCd=G.t+SKILLS[s.id].T+0.35;
+  // after the move he carries his speed on for a moment instead of braking to a jog
+  c.skCarry=G.t+SKILLS[s.id].T+0.5;
   G.stats[c.team.i].skTry=(G.stats[c.team.i].skTry||0)+1;
   return true;
 }
@@ -2276,9 +2476,13 @@ function skillStep(e,dt){
   const s=e.sk,T=SKILLS[s.id].T,u=clamp(e.actT/T,0,1),f0=s.f0,fx=Math.sin(f0),fz=Math.cos(f0);
   let vf=0,vl=0,face=f0;
   switch(s.id){
-    case 1:{const vb=Math.max(1.4,s.v0*0.4);vf=vb;if(s.side&&u>0.7){const w=easeOut((u-0.7)/0.3);vl=s.side*5.5*w;vf=vb+2.4*w;face=f0+s.side*0.75*w;}
+    case 1:{
+      // step-overs at a jog (the hips sell it, the legs do not stop), then explode off the outside foot
+      const vb=Math.max(2.9,s.v0*0.72),ve=Math.max(7.2,s.v0+1.2);vf=vb;vl=s.side*0.6*Math.sin(TAU*clamp(u/0.7,0,1));
+      if(s.side&&u>0.66){const w=easeOut((u-0.66)/0.34);vl=s.side*5.2*Math.sin(PI*0.5*w)*(1-0.35*w);vf=lerp(vb,ve,w);face=f0+s.side*0.6*w;
+        if(!s.launched){s.launched=true;e.burst=G.t+1.1;}}
       if(!s.beat&&u>0.48){s.beat=true;skillBeat(e,3.3,0.06,0.62,-(s.side||(Math.random()<0.5?1:-1)));}break;}
-    case 2:{vl=s.side*2.4*Math.sin(PI*u);vf=0.5;face=f0+s.side*TAU*easeIO(clamp((u-0.06)/0.86,0,1));
+    case 2:{vl=s.side*2.8*Math.sin(PI*u);vf=1.0;face=f0+s.side*TAU*easeIO(clamp((u-0.06)/0.86,0,1));
       if(!s.beat&&u>0.45){s.beat=true;skillBeat(e,2.9,0.1,0.58,-s.side);}break;}
     case 3:{vf=u<0.55?-1.1:-0.4;if(u>0.34)face=f0+s.side*PI*easeIO(clamp((u-0.34)/0.6,0,1));
       if(!s.beat&&u>0.4){s.beat=true;skillBeat(e,2.6,-0.04,0.42,0);}break;}
@@ -2294,28 +2498,31 @@ function skillStep(e,dt){
       if(!s.launched&&u>0.36&&B.owner===e){s.launched=true;kickBall(e,fx*6.6+e.vx*0.3,6.4,fz*6.6+e.vz*0.3,0);B.y=0.32;e.cool=0.35;
         B.target={r:e,x:e.x+fx*8,z:e.z+fz*8};e.team.recv=e;e.burst=G.t+1.2;skillBeat(e,4.6,0.12,0.7,0);}
       break;}
-    case 6:{vl=s.side*2.7*Math.sin(PI*u);vf=0.3;if(!s.beat&&u>0.42){s.beat=true;skillBeat(e,2.5,0,0.42,-s.side);}break;}
-    case 7:{vl=u<0.3?-s.side*0.9:s.side*3.8*Math.sin(PI*clamp((u-0.3)/0.7,0,1));vf=1.2;face=f0+(u>0.4?s.side*0.35*easeOut((u-0.4)/0.6):0);
+    case 6:{vl=s.side*3.3*Math.sin(PI*u);vf=Math.max(0.8,s.v0*0.25);if(!s.beat&&u>0.42){s.beat=true;skillBeat(e,2.5,0,0.42,-s.side);}break;}
+    case 7:{vl=u<0.3?-s.side*1.1:s.side*4.6*Math.sin(PI*clamp((u-0.3)/0.7,0,1));vf=Math.max(2.0,s.v0*0.5);face=f0+(u>0.4?s.side*0.35*easeOut((u-0.4)/0.6):0);
       if(!s.beat&&u>0.36){s.beat=true;skillBeat(e,2.9,0.2,0.7,-s.side);}break;}
     case 8:{
       // lane change: keep the pace, shift a full lane across with one push of the outside of the foot
-      vf=Math.max(4.6,s.v0);vl=s.side*4.4*Math.sin(PI*u);face=f0+s.side*0.22*Math.sin(PI*u);
+      vf=Math.max(5.2,s.v0);vl=s.side*5.0*Math.sin(PI*u);face=f0+s.side*0.22*Math.sin(PI*u);
       if(!s.beat&&u>0.3){s.beat=true;skillBeat(e,3.0,0.08,0.5,-s.side);}break;}
     case 9:{
       // roulette: drag-spin with the body between man and ball, carrying on forward
-      vf=2.4;vl=s.side*1.7*Math.sin(PI*u);face=f0+s.side*TAU*easeIO(clamp((u-0.05)/0.85,0,1));
+      vf=3.0;vl=s.side*2.2*Math.sin(PI*u);face=f0+s.side*TAU*easeIO(clamp((u-0.05)/0.85,0,1));
       if(!s.beat&&u>0.45){s.beat=true;skillBeat(e,2.9,0.14,0.62,-s.side);}break;}
     case 10:{
       // heel to heel: a stutter as if stopping, then away at full speed
-      if(u<0.32){vf=0.3;}else{vf=7.2;vl=s.side*1.1;if(!s.launched){s.launched=true;e.burst=G.t+0.9;}}
+      // the stutter only checks the run; the burst builds smoothly to a sprint
+      if(u<0.32){vf=Math.max(1.8,s.v0*0.45);}else{const w=easeOut(clamp((u-0.32)/0.5,0,1));vf=lerp(Math.max(1.8,s.v0*0.45),Math.max(7.8,s.v0+1.5),w);vl=s.side*1.4*Math.sin(PI*w);if(!s.launched){s.launched=true;e.burst=G.t+1.2;}}
       if(!s.beat&&u>0.34){s.beat=true;skillBeat(e,3.0,0.1,0.55,0);}break;}
     case 11:{
       // fake shot: the shooting motion freezes the defender (and maybe the keeper), then the ball is dragged across
-      if(u<0.42)vf=0.4;else{vf=1.4;vl=s.side*4.8*Math.sin(PI*clamp((u-0.42)/0.58,0,1));}
+      if(u<0.42)vf=Math.max(0.6,s.v0*0.2);else{vf=2.2;vl=s.side*5.2*Math.sin(PI*clamp((u-0.42)/0.58,0,1));}
       if(!s.beat&&u>0.4){s.beat=true;skillBeat(e,4.0,0.16,0.7,-s.side);}break;}
     case 13:{
       // La Croqueta: inside of one foot slips it across, the other foot takes it on in the same stride
-      vf=Math.max(2.4,s.v0*0.75);vl=s.side*3.4*Math.sin(PI*clamp(u/0.72,0,1));face=f0+s.side*0.12*Math.sin(PI*u);
+      // he keeps running through it: the ball and body shift a full stride across in one movement
+      vf=Math.max(4.4,s.v0*0.95);vl=s.side*4.6*Math.sin(PI*clamp(u/0.8,0,1));face=f0+s.side*0.16*Math.sin(PI*u);
+      if(!s.launched&&u>0.5){s.launched=true;e.burst=G.t+0.8;}
       if(!s.beat&&u>0.3){s.beat=true;skillBeat(e,2.9,0.12,0.52,-s.side);}break;}
     case 12:{
       // hard stop: sole on the ball, a defender at full tilt runs past
@@ -2328,7 +2535,7 @@ function skillStep(e,dt){
   // the facing follows quickly but never jumps
   let tvx=fx*vf+fz*vl,tvz=fz*vf-fx*vl;const ein=easeIO(clamp(e.actT/(T*0.22),0,1));
   tvx=lerp(s.evx,tvx,ein);tvz=lerp(s.evz,tvz,ein);
-  const k=1-Math.exp(-dt*(ein<1?16:11));
+  const k=1-Math.exp(-dt*(ein<1?14:10));
   e.vx+=(tvx-e.vx)*k;e.vz+=(tvz-e.vz)*k;
   const st=angD(e.face,face)*Math.min(1,dt*24);e.turnRate=st/Math.max(dt,1e-3);e.face+=st;
 }
@@ -2336,18 +2543,18 @@ function skillStep(e,dt){
 function skillBall(o){
   const s=o.sk,u=clamp(o.actT/SKILLS[s.id].T,0,1),sd=s.side||0;
   switch(s.id){
-    case 1:{const w=sd&&u>0.7?easeOut((u-0.7)/0.3):0;return[sd*0.3*w,0.5+0.1*w,BR];}
+    case 1:{const w=sd&&u>0.66?easeOut((u-0.66)/0.34):0;return[sd*0.42*w,0.55+0.2*w,BR];}
     case 2:return[sd*0.12*Math.sin(PI*u),0.3-0.12*Math.sin(PI*u),BR];
     case 3:return[sd*0.08*Math.sin(PI*u),u<0.1?0.45:lerp(0.45,-0.55,easeIO(clamp((u-0.1)/0.52,0,1))),BR];
     case 5:return[0,lerp(0.42,-0.1,easeIO(clamp(u/0.34,0,1))),BR+0.1*Math.sin(PI*clamp(u/0.36,0,1))];
-    case 6:return[sd*lerp(-0.12,0.3,easeIO(u)),0.3,BR];
+    case 6:return[sd*lerp(-0.16,0.4,easeIO(u)),0.32,BR];
     case 7:return[u<0.3?-sd*0.28*easeOut(u/0.3):lerp(-sd*0.28,sd*0.5,easeIO(clamp((u-0.3)/0.3,0,1))),0.42,BR];
     case 8:return[sd*0.3*Math.sin(PI*u),0.62,BR];
     case 9:{const a=sd*TAU*easeIO(clamp((u-0.05)/0.85,0,1));return[Math.sin(a)*0.34,Math.cos(a)*0.34,BR];}
-    case 10:return u<0.32?[0,0.34,BR]:[sd*0.08,lerp(0.34,0.95,clamp((u-0.32)/0.3,0,1)),BR];
+    case 10:return u<0.32?[0,0.36,BR]:[sd*0.1,lerp(0.36,0.9,easeOut(clamp((u-0.32)/0.35,0,1))),BR];
     case 11:return u<0.42?[0,0.5,BR]:[sd*lerp(0,0.32,easeIO(clamp((u-0.42)/0.4,0,1))),0.45,BR];
     case 12:return[0,0.36,BR];
-    case 13:return[lerp(-sd*0.14,sd*0.32,easeIO(clamp((u-0.1)/0.32,0,1))),0.42+0.04*Math.sin(PI*u),BR];
+    case 13:return[lerp(-sd*0.2,sd*0.45,easeIO(clamp((u-0.08)/0.34,0,1))),0.5+0.1*u,BR];
   }
   return[0,0.45,BR];
 }
@@ -2757,10 +2964,10 @@ function smotherStep(e){
   if(el>0.7||e.act!==ACT.DIVE){e.smother=null;return;}
   if(s.done||el<0.08)return;
   const hx=e.x+Math.sin(e.face)*0.45,hz=e.z+Math.cos(e.face)*0.45;
-  if(hyp(B.x-hx,B.z-hz)>1.25||B.y>0.9)return;
+  if(hyp(B.x-hx,B.z-hz)>0.95||B.y>0.8)return;
   s.done=true;
   const c=B.owner&&B.owner.team!==e.team?B.owner:null;
-  const p=clamp(0.38+e.gkSkill*0.42-(c?(c.st.drib-0.75)*0.9:0)-(c&&c.act===ACT.SKILL?0.22:0),0.15,0.85);
+  const p=clamp(0.3+e.gkSkill*0.4-(c?(c.st.drib-0.75)*0.9:0)-(c&&c.act===ACT.SKILL?0.25:0),0.12,0.75);
   if(Math.random()>=p){if(c&&Math.random()<0.15)callFoul(e,c,'trip');return;}
   if(c){c.act=ACT.STUMBLE;c.actT=0;c.stun=0.45;c.kick=null;}
   if(inOwnBox(e)&&Math.random()<0.6){B.owner=null;gainBall(e);B.held=true;e.holdT=-0.9;say('골키퍼 '+e.name+', 발밑으로 뛰어들어 잡아냅니다!');}
@@ -2775,7 +2982,7 @@ function gkSaveStep(e){
     const dx=sv.tx-e.x,dz=sv.tz-e.z,d=hyp(dx,dz),rem=Math.max(0.05,sv.tEnd-G.t),v=Math.min(6.2,d/rem);
     e.vx=d>0.05?dx/d*v:0;e.vz=d>0.05?dz/d*v:0;e.mx=e.vx;e.mz=e.vz;e.strafe=true;e.faceTgt=B;
     if(!sv.jumped&&rem<0.3){sv.jumped=true;e.act=ACT.CATCH;e.actT=0;e.ap1=2.3;}
-    if(!sv.done&&G.t>=sv.tEnd-0.03){if(sv.ok&&!B.owner&&hyp(B.x-e.x,B.z-e.z)<1.6&&B.y<3.0)doSave(e,sv);else sv.done=true;}
+    if(!sv.done&&G.t>=sv.tEnd-0.03){if(sv.ok&&!B.owner&&hyp(B.x-e.x,B.z-e.z)<1.15&&B.y<2.9)doSave(e,sv);else sv.done=true;}
     if(G.t>sv.tEnd+0.4)e.save=null;
     return;
   }
@@ -2788,7 +2995,9 @@ function gkSaveStep(e){
   else{e.vz*=0.9;e.vx*=0.9;}
   e.mx=e.vx;e.mz=e.vz;
   if(!sv.done&&G.t>=sv.tEnd-0.03){
-    if(sv.ok&&!B.owner&&Math.abs(B.x-e.x)<1.6&&Math.abs(B.z-sv.handZ)<1.1&&B.y<3.1)doSave(e,sv);
+    // the save only counts where the hands actually are: body position plus the reach of the dive
+    const hz=e.z+(sv.sideW||0)*(sv.hand||0.5)*0.95;
+    if(sv.ok&&!B.owner&&Math.abs(B.x-e.x)<1.1&&Math.abs(B.z-hz)<0.85&&B.y<2.9)doSave(e,sv);
     else sv.done=true;
   }
   if(G.t>sv.tEnd+0.4)e.save=null;
@@ -2806,7 +3015,7 @@ function planSave(e){
     let ib=-1;for(let i=Math.ceil(tP/0.05)+1;i<=60&&i*0.05<=tG+0.05;i++){const y=TRAJ[i*3+1];if(y<2.5&&y<TRAJ[i*3-2]){ib=i;break;}}
     if(ib<0){e.save={watch:true,ok:false,done:true,tEnd:G.t+tP};return;}
     const tb=ib*0.05,bx=TRAJ[ib*3],bz=TRAJ[ib*3+2],d=hyp(bx-e.x,bz-e.z),reach=1.2+5.6*Math.max(0,tb-0.12);
-    const ok=d<reach&&Math.random()<e.gkSkill*0.75*(1-0.6*d/reach);
+    const ok=d<reach&&Math.random()<e.gkSkill*0.62*(1-0.7*d/reach);
     e.save={back:true,ok,done:false,tEnd:G.t+tb,t0:G.t,tx:bx,tz:bz,handZ:bz,T1:tb,catch:false,z0:e.z};
     return;
   }
@@ -2816,16 +3025,16 @@ function planSave(e){
   // a dive rolls the body around the hips (hands ~1.25 m from the pelvis); the pelvis rises for high balls
   let tilt=0,py=HIP_H,hand=0.5,kind='catch';
   if(al>0.65||h>2.05){py=clamp(0.3+(h-0.35)*0.55,0.28,1.25);tilt=Math.acos(clamp((h-py)/1.25,0.05,0.97));hand=Math.sin(tilt)*1.25+0.1;kind='dive';}
-  const move=Math.max(0,al-hand),can=0.45+avail*6.9;
+  const move=Math.max(0,al-hand),can=0.42+avail*6.2;
   let ch=0;
-  if(move<=can)ch=e.gkSkill*(1.12-(move/Math.max(0.01,can))*0.5-Math.max(0,sp-19)/40-(al>2.7?0.14:0)-(h>2.05&&al>2.2?0.16:0)-(kind==='dive'&&h<0.45&&al>2.2?0.08:0));
-  ch=clamp(ch,0,0.95);
+  if(move<=can)ch=e.gkSkill*(1.08-(move/Math.max(0.01,can))*0.62-Math.max(0,sp-17)/32-(al>2.5?0.16:0)-(h>2.0&&al>2.0?0.18:0)-(kind==='dive'&&h<0.45&&al>2.0?0.1:0));
+  ch=clamp(ch,0,0.88);
   const ok=Math.random()<ch;
   const reachZ=pt.z-sideW*hand*0.95;
   // a real keeper sets himself and goes late with one explosive spring: the dive lasts only as long as the reach needs,
   // and until it is time to go he shuffles a little toward the ball's line on his toes (the odds above are unchanged)
   const Td=clamp(0.26+move*0.05+(h>1.8?0.05:0),0.26,0.48),T1=Math.min(Td,Math.max(0.16,tP*0.92)),delay=Math.max(0,tP-T1-0.03);
-  e.save={ok,done:false,tEnd:G.t+tP,t0:G.t+delay,T1,z0:e.z,rootZ:ok?reachZ:e.z+(reachZ-e.z)*rnd(0.45,0.75),handZ:pt.z,catch:ok&&((sp<21&&(kind==='catch'||al<1.6)&&Math.random()<0.7)||(sp<28&&al<0.9&&Math.random()<0.45)),
+  e.save={ok,done:false,tEnd:G.t+tP,t0:G.t+delay,T1,z0:e.z,rootZ:ok?reachZ:e.z+(reachZ-e.z)*rnd(0.45,0.75),handZ:pt.z,sideW,hand,catch:ok&&((sp<21&&(kind==='catch'||al<1.6)&&Math.random()<0.7)||(sp<28&&al<0.9&&Math.random()<0.45)),
     pending:true,kind,tilt,py,sideL,h};
   if(delay<0.02)gkGo(e);
 }
@@ -2911,7 +3120,8 @@ function locomote(e,dt){
   const upd=e.team&&padOf(e.team),user=!!(upd&&e===upd.ctrl&&!upd.lock),own=B.owner===e;
   const sd=hyp(e.mx,e.mz),s=hyp(e.vx,e.vz);
   const agil=(user?1.15:1)*(0.85+0.3*(e.st?e.st.pace:0.8));
-  const ACC=(user?9:7.2)*agil,DEC=(user?(sd<0.25?17:13):10.5)*agil;
+  const carry=e.skCarry&&G.t<e.skCarry;
+  const ACC=(user?9.8:7.2)*agil*(carry?1.25:1),DEC=(user?(sd<0.25?17:13):10.5)*agil*(carry?0.3:1);
   if(e.strafe||s<1.0||sd<0.25){
     let dvx=e.mx-e.vx,dvz=e.mz-e.vz;const dl=hyp(dvx,dvz),a=(sd<s?DEC:ACC)*(e.strafe?1.1:1)*dt;
     if(dl>a){dvx*=a/dl;dvz*=a/dl;}
@@ -2932,6 +3142,7 @@ function locomote(e,dt){
 }
 function faceUpdate(e,dt,sp){
   if(e.act===ACT.SKILL&&e.sk)return;
+  if(e.act===ACT.POKE&&e.poke)return;
   if(e.act===ACT.SLIDE||e.act===ACT.DIVE||e.act===ACT.FALL||e.act===ACT.CARD){e.turnRate=0;return;}
   let fa=null,rate=10;
   if(e.aimFace!=null){fa=e.aimFace;rate=14;}
@@ -2954,6 +3165,7 @@ function moveEnt(e,dt){
   if(e.smother)smotherStep(e);
   if(e.act===ACT.SLIDE){slideUpdate(e,dt);if(e.stun>0)e.stun-=dt;}
   else if(e.act===ACT.SKILL&&e.sk)skillStep(e,dt);
+  else if(e.act===ACT.POKE&&e.poke)pokeStep(e,dt);
   else if(e.save&&!e.save.watch){/* keeper spring: velocity is driven by gkSaveStep */}
   else if(e.stun>0||e.act===ACT.FALL||e.act===ACT.DIVE){if(e.stun>0)e.stun-=dt;const k=Math.exp(-5*dt);e.vx*=k;e.vz*=k;}
   else locomote(e,dt);
@@ -3103,7 +3315,7 @@ function setpieceStep(dt){
       if(sp.type==='corner')tk.face=Math.atan2(-Math.sign(sp.x),-Math.sign(sp.z)*0.8);
       if(sp.type==='freekick'||sp.type==='penalty')tk.face=Math.atan2(adx,adz);
       B.x=tk.x+Math.sin(tk.face)*0.45;B.z=tk.z+Math.cos(tk.face)*0.45;
-      if(padOf(sp.team)&&tk===padOf(sp.team).ctrl)padHint(padOf(sp.team),SP_HINT[sp.type]||'패스 버튼으로 재개');
+      if(padOf(sp.team)&&tk===padOf(sp.team).ctrl)padHint(padOf(sp.team),sp.type==='freekick'&&!fkShootMode(sp)?'조이스틱으로 패스 방향 · 패스/스루 누른 시간이 세기 · 위로 밀었다 떼면 롱패스 · 슛도 가능':sp.type==='freekick'?'조이스틱 위/아래로 슛 조준 · 슛 길게 눌러 파워 · 패스: 좌우로 밀면 그쪽, 그냥 누르면 가까운 동료':SP_HINT[sp.type]||'패스 버튼으로 재개');
     }
     return;
   }
@@ -3205,7 +3417,7 @@ function fullTime(){
   if(!NET.online){const rec=getRec();rec[r]++;lsSet('fl11-rec',JSON.stringify(rec));}
   // a league fixture goes into the table, then the rest of the round is played out
   if(!NET.online&&G.mode==='league'&&LG.s){const md=LG.s.md,f=userFixture(md);
-    if(f&&G.set.home===LG.s.club&&G.set.away===f.opp){const [gh,ga]=f.home?[G.score[0],G.score[1]]:[G.score[1],G.score[0]];
+    if(f&&(G.set.home===LG.s.club||(G.set.home===100&&LG.s.custom))&&G.set.away===f.opp){const [gh,ga]=f.home?[G.score[0],G.score[1]]:[G.score[1],G.score[0]];
       recordResult(md,f.h,f.a,gh,ga,G.goalLog);finishRound();const T=leagueTable(),pos=T.findIndex(x=>x.i===LG.s.club);G.lgRes={md,pos:pos+1,pts:T[pos].pts};}}
   showResult(true);
 }
@@ -3382,11 +3594,12 @@ function userStep(pd,dt){
     if(G.state==='setpiece'&&(!G.sp.ready||G.sp.launched)){clearEdges(inp);return;}
     c.mx=c.mz=0;
     // free kicks and penalties: the stick's up/down slides the aim across the goal; the yellow line shows the flight
-    const shotSp=G.state==='setpiece'&&(G.sp.type==='freekick'||G.sp.type==='penalty');
+    const shotSp=G.state==='setpiece'&&fkShootMode(G.sp);
     if(shotSp){if(G.sp.aimZ==null)G.sp.aimZ=B.z>0?-0.6:0.6;G.sp.aimZ=clamp(G.sp.aimZ+inp.jy*dt*1.4,-1.05,1.05);}
     else if(jm>0.3)c.aimFace=Math.atan2(inp.jx,inp.jy);
     if(G.state==='kickoff'&&!G.kickReady)return; // a press before the whistle waits for it
     // free kicks and penalties shoot on release with the charged power; other set pieces act on press
+    // (free kicks: the shot always fires on release; other set pieces act on press)
     const kickSp=G.state==='setpiece'&&(G.sp.type==='freekick'||G.sp.type==='penalty');
     let pressed=E.passUp?'pass':(E.thruUp||E.tlobUp)?'thru':E.lobUp?'lob':kickSp?(E.shootUp?'shoot':null):(E.shoot?'shoot':null);
     // at a corner the pass button is the cross: how long it was held picks near post, penalty spot or far post
@@ -3405,7 +3618,7 @@ function userStep(pd,dt){
         if(G.sp)G.sp.launched=true;padHideHint(pd);return;
       }
       if(type==='penalty'||(type==='freekick'&&pressed==='shoot')){shoot(c,pressed==='shoot'?inp.power:0.62,G.sp.aimZ!=null?G.sp.aimZ:aim,pressed==='shoot'?inp.shotKind:'normal',G.sp.aimZ!=null);G.sp.launched=true;padHideHint(pd);return;}
-      if(type==='freekick'){const {best}=pickTarget(c,pressed==='thru'?'through':'ground',inp,pw);const far=best&&hyp(best.x-c.x,best.z-c.z)>30;passTo(c,best||c.team.players.find(e=>!e.isGK&&!e.off&&e!==c),pressed==='thru'?'through':far?'lob':'ground',null,pw);G.sp.launched=true;padHideHint(pd);return;}
+      if(type==='freekick'){const kd=pressed==='thru'?'through':'ground',best=fkShootMode(G.sp)?fkPassTarget(c,kd,inp,pw):pickTarget(c,kd,inp,pw).best;const far=best&&hyp(best.x-c.x,best.z-c.z)>30;passTo(c,best||c.team.players.find(e=>!e.isGK&&!e.off&&e!==c),pressed==='thru'?'through':far?'lob':'ground',null,pw);G.sp.launched=true;padHideHint(pd);return;}
       if(type==='kickoff'){G.state='play';sfx.whistle(0);padHideHint(pd);const {best}=pickTarget(c,'ground',inp,pw);passTo(c,best||c.team.players[6],'ground',null,pw);return;}
       const {best}=pickTarget(c,'ground',inp,pw);
       const tgt=best||c.team.players[6];
@@ -3460,7 +3673,7 @@ function userStep(pd,dt){
     if(E.shoot){
       const tx=opp?opp.x:B.x,tz=opp?opp.z:B.z,d=hyp(tx-c.x,tz-c.z);
       pd.lock=null;
-      if(opp&&d<1.75)tryTackle(c,opp);
+      if(opp&&d<1.9&&c.act!==ACT.POKE&&c.tackleCd<=0)tryTackle(c,opp);
       else if(d<5.5){c.face=Math.atan2(tx+(opp?opp.vx*0.25:B.vx*0.2)-c.x,tz+(opp?opp.vz*0.25:B.vz*0.2)-c.z);startSlide(c);}
       else{c.act=ACT.POKE;c.actT=0;}
     }
@@ -3510,6 +3723,7 @@ function step(dt){
       G.clock+=dt*45/(LENS[G.set.len].m*30);
       const poss=B.owner?B.owner.team.i:B.lastTeam;if(poss>=0)G.stats[poss].poss+=dt;
     }
+    if((st==='out'||st==='foul')&&G.timer<0.1)aiSubs();
     if(st==='out'||st==='foul'){G.timer+=dt;if(G.timer>(st==='foul'?2.0:1.0))startSetpiece();}
     else if(st==='setpiece')setpieceStep(dt);
     else if(st==='kickoff'){G.timer+=dt;if(G.timer>0.6&&!G.kickReady){G.kickReady=true;if(G.teams[G.kickTeam].human)sfx.whistle(0);}if(!G.teams[G.kickTeam].human&&G.timer>1.4)doKickoff();}
@@ -3891,14 +4105,19 @@ function crestHTML(c,big){
     :c.pat==='sleeves'?`linear-gradient(90deg,${p} 0 24%,${s} 24% 76%,${p} 76%)`:c.pat==='sash'?`linear-gradient(120deg,${s} 0 40%,${p} 40% 58%,${s} 58%)`:`linear-gradient(170deg,${s} 0 64%,${c.shorts} 64%)`;
   return `<span class="crest${big?' big':''}" style="background:${bg};color:${c.num}">${c.id}</span>`;
 }
-const clubOvr=ci=>CLUBS[ci].rating;
+// a season can be played with your own team: it takes the place of one club in the league (fixtures, table and
+// stats keep that club's slot), and plays its matches as custom side 100
+const lgMine=()=>!!(LG.s&&LG.s.custom&&CUSTOM[0]);
+const lgClub=ci=>lgMine()&&ci===LG.s.club?CUSTOM[0]:CLUBS[ci];
+const lgHome=()=>lgMine()?100:LG.s.club;
+const clubOvr=ci=>lgClub(ci).rating;
 /* the league season: 20 clubs, 38 rounds, kept in this browser */
 const LG={s:null};
 function lgSave(){if(LG.s)lsSet('fl11-season',JSON.stringify(LG.s));}
-function lgLoad(){try{const s=JSON.parse(lsGet('fl11-season')||'null');if(s&&s.v===1&&CLUBS[s.club]&&Array.isArray(s.fx)&&s.fx.length===38)LG.s=s;}catch(e){}}
+function lgLoad(){try{const s=JSON.parse(lsGet('fl11-season')||'null');if(s&&s.v===2&&CLUBS[s.club]&&CLUBS[s.club].lg==='PL'&&Array.isArray(s.fx)&&s.fx.length===38)LG.s=s;}catch(e){}}
 function makeFixtures(seed){
   // circle method: every club meets every other club once per half, home and away swapped in the second half
-  const rr=seeded(seed),t=[...Array(20).keys()];
+  const rr=seeded(seed),t=PL_IDX.slice();
   for(let i=t.length-1;i>0;i--){const j=Math.floor(rr()*(i+1));[t[i],t[j]]=[t[j],t[i]];}
   const first=[];let arr=t.slice();
   for(let r=0;r<19;r++){
@@ -3908,7 +4127,7 @@ function makeFixtures(seed){
   }
   return first.concat(first.map(p=>p.map(([h,a])=>[a,h])));
 }
-function newSeason(club){const seed=(Date.now()%2147483647)>>>0;LG.s={v:1,club,md:0,seed,fx:makeFixtures(seed),res:{},goals:{}};lgSave();}
+function newSeason(club,custom){const seed=(Date.now()%2147483647)>>>0;LG.s={v:2,club,custom:!!custom,md:0,seed,fx:makeFixtures(seed),res:{},goals:{}};lgSave();}
 const resKey=(md,h,a)=>md+':'+h+':'+a;
 function poisson(l){const L=Math.exp(-l);let k=0,p=1;do{k++;p*=Math.random();}while(p>L);return k-1;}
 // a simulated score: goal expectation from the gap in squad overall, plus home advantage
@@ -3916,30 +4135,30 @@ function simGoals(h,a){const d=(clubOvr(h)-clubOvr(a))/8;return[poisson(Math.max
 function addScorer(ci,name){const k=ci+'|'+name;LG.s.goals[k]=(LG.s.goals[k]||0)+1;}
 function simScorers(ci,n){
   // strikers score most, then wide forwards and the No.10; better players more often
-  const xi=CLUBS[ci].xi,sl=FORMS[CLUBS[ci].form],w=xi.map((p,k)=>(sl[k].l==='ST'?7:p[2]==='FW'?4:sl[k].l==='CAM'?3:p[2]==='MF'?1.6:p[2]==='DF'?0.45:0)*Math.pow(p[3]/80,5)),tot=w.reduce((a,b)=>a+b,0);
+  const C=lgClub(ci),xi=C.xi,sl=FORMS[C.form]||FORMS['4-3-3'],w=xi.map((p,k)=>(sl[k].l==='ST'?7:p[2]==='FW'?4:sl[k].l==='CAM'?3:p[2]==='MF'?1.6:p[2]==='DF'?0.45:0)*Math.pow(p[3]/80,5)),tot=w.reduce((a,b)=>a+b,0);
   for(let g=0;g<n;g++){let r=Math.random()*tot;for(let i=0;i<xi.length;i++){r-=w[i];if(r<=0){addScorer(ci,xi[i][0]);break;}}}
 }
-function recordResult(md,h,a,gh,ga,scorers){LG.s.res[resKey(md,h,a)]=[gh,ga];if(scorers)scorers.forEach(s=>addScorer(s.ci,s.name));else{simScorers(h,gh);simScorers(a,ga);}}
+function recordResult(md,h,a,gh,ga,scorers){LG.s.res[resKey(md,h,a)]=[gh,ga];if(scorers)scorers.forEach(s=>addScorer(s.ci>=100?LG.s.club:s.ci,s.name));else{simScorers(h,gh);simScorers(a,ga);}}
 function userFixture(md){const s=LG.s;if(!s||md>=38)return null;const p=s.fx[md].find(([h,a])=>h===s.club||a===s.club);return p?{h:p[0],a:p[1],home:p[0]===s.club,opp:p[0]===s.club?p[1]:p[0]}:null;}
 function finishRound(){const s=LG.s,md=s.md;for(const [h,a] of s.fx[md])if(!s.res[resKey(md,h,a)]){const [gh,ga]=simGoals(h,a);recordResult(md,h,a,gh,ga);}s.md++;lgSave();}
 function leagueTable(){
-  const T=CLUBS.map((c,i)=>({i,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0})),s=LG.s;
-  if(s)for(const k in s.res){const [,h,a]=k.split(':').map(Number),[gh,ga]=s.res[k],H=T[h],A=T[a];H.p++;A.p++;H.gf+=gh;H.ga+=ga;A.gf+=ga;A.ga+=gh;
+  const T=PL_IDX.map(i=>({i,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0})),s=LG.s,TI={};T.forEach(r=>TI[r.i]=r);
+  if(s)for(const k in s.res){const [,h,a]=k.split(':').map(Number),[gh,ga]=s.res[k],H=TI[h],A=TI[a];if(!H||!A)continue;H.p++;A.p++;H.gf+=gh;H.ga+=ga;A.gf+=ga;A.ga+=gh;
     if(gh>ga){H.w++;H.pts+=3;A.l++;}else if(gh<ga){A.w++;A.pts+=3;H.l++;}else{H.d++;A.d++;H.pts++;A.pts++;}}
   return T.sort((x,y)=>y.pts-x.pts||(y.gf-y.ga)-(x.gf-x.ga)||y.gf-x.gf||x.i-y.i);
 }
 let hubTab='table';
 function renderHub(){
   const s=LG.s;if(!s){renderPick(false);return;}
-  const c=CLUBS[s.club],T=leagueTable(),pos=T.findIndex(r=>r.i===s.club)+1,me=T[pos-1];
-  $('hubSeason').textContent=s.md<38?`2025-26 시즌 · ${s.md+1}라운드`:'2025-26 시즌 종료';
+  const c=lgClub(s.club),T=leagueTable(),pos=T.findIndex(r=>r.i===s.club)+1,me=T[pos-1];
+  $('hubSeason').textContent=s.md<38?`2026-27 시즌 · ${s.md+1}라운드`:'2026-27 시즌 종료';
   $('hubClub').innerHTML=`${crestHTML(c,true)}<div><b>${c.name}</b><span>${pos}위 · 승점 ${me.pts} · ${me.w}승 ${me.d}무 ${me.l}패 · OVR ${c.rating}</span></div>`;
   const f=userFixture(s.md);
   if(f){
-    $('hubNext').innerHTML=`<span class="hn-k">다음 경기 · ${f.home?'홈':'원정'}</span><div class="hn-m">${crestHTML(CLUBS[f.h])}<b>${CLUBS[f.h].name}</b><i>vs</i><b>${CLUBS[f.a].name}</b>${crestHTML(CLUBS[f.a])}</div><span class="hn-k">상대 OVR ${clubOvr(f.opp)} · ${CLUBS[f.opp].form}</span>`;
+    $('hubNext').innerHTML=`<span class="hn-k">다음 경기 · ${f.home?'홈':'원정'}</span><div class="hn-m">${crestHTML(lgClub(f.h))}<b>${lgClub(f.h).name}</b><i>vs</i><b>${lgClub(f.a).name}</b>${crestHTML(lgClub(f.a))}</div><span class="hn-k">상대 OVR ${clubOvr(f.opp)} · ${lgClub(f.opp).form}</span>`;
     $('goBtn').hidden=false;$('simBtn').hidden=false;
   }else{
-    const champ=CLUBS[T[0].i];
+    const champ=lgClub(T[0].i);
     $('hubNext').innerHTML=`<span class="hn-k">시즌 종료</span><div class="hn-m">${crestHTML(champ)}<b>우승 ${champ.name}</b></div><span class="hn-k">${c.name} 최종 ${pos}위 · 새 시즌을 시작해 보세요</span>`;
     $('goBtn').hidden=true;$('simBtn').hidden=true;
   }
@@ -3950,14 +4169,14 @@ function renderHub(){
 }
 function tableHTML(T){
   return '<table class="lt"><thead><tr><th>#</th><th class="l">클럽</th><th>경기</th><th>승</th><th>무</th><th>패</th><th>득실</th><th>승점</th></tr></thead><tbody>'+
-    T.map((r,i)=>{const c=CLUBS[r.i],gd=r.gf-r.ga;return `<tr class="${r.i===LG.s.club?'me ':''}${i<4?'top':i>=17?'rel':''}"><td>${i+1}</td><td class="l">${crestHTML(c)}<span>${c.name}</span></td><td>${r.p}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td><td>${gd>0?'+':''}${gd}</td><td><b>${r.pts}</b></td></tr>`;}).join('')+'</tbody></table><p class="lt-key"><span><i style="background:#3aa0ff"></i>챔피언스리그</span><span><i style="background:#ff4d5e"></i>강등</span></p>';
+    T.map((r,i)=>{const c=lgClub(r.i),gd=r.gf-r.ga;return `<tr class="${r.i===LG.s.club?'me ':''}${i<4?'top':i>=17?'rel':''}"><td>${i+1}</td><td class="l">${crestHTML(c)}<span>${c.name}</span></td><td>${r.p}</td><td>${r.w}</td><td>${r.d}</td><td>${r.l}</td><td>${gd>0?'+':''}${gd}</td><td><b>${r.pts}</b></td></tr>`;}).join('')+'</tbody></table><p class="lt-key"><span><i style="background:#3aa0ff"></i>챔피언스리그</span><span><i style="background:#ff4d5e"></i>강등</span></p>';
 }
 function fixHTML(){
   const s=LG.s,out=[],last=s.md>0?s.md-1:null;
   for(const md of [last,s.md<38?s.md:null]){
     if(md==null)continue;
     out.push(`<p class="fx-h">${md+1}라운드 ${md===last?'결과':'일정'}</p>`+s.fx[md].map(([h,a])=>{const r=s.res[resKey(md,h,a)],mine=h===s.club||a===s.club;
-      return `<div class="fx${mine?' me':''}"><span class="r">${CLUBS[h].name}</span><b>${r?r[0]+' - '+r[1]:'vs'}</b><span>${CLUBS[a].name}</span></div>`;}).join(''));
+      return `<div class="fx${mine?' me':''}"><span class="r">${lgClub(h).name}</span><b>${r?r[0]+' - '+r[1]:'vs'}</b><span>${lgClub(a).name}</span></div>`;}).join(''));
   }
   return out.join('');
 }
@@ -3965,13 +4184,18 @@ function scorersHTML(){
   const g=Object.entries(LG.s.goals).sort((a,b)=>b[1]-a[1]).slice(0,15);
   if(!g.length)return '<p class="fx-h">아직 득점 기록이 없어요.</p>';
   return '<table class="lt"><thead><tr><th>#</th><th class="l">선수</th><th class="l">클럽</th><th>골</th></tr></thead><tbody>'+
-    g.map(([k,n],i)=>{const [ci,name]=k.split('|');return `<tr class="${+ci===LG.s.club?'me':''}"><td>${i+1}</td><td class="l">${name}</td><td class="l">${CLUBS[+ci].name}</td><td><b>${n}</b></td></tr>`;}).join('')+'</tbody></table>';
+    g.map(([k,n],i)=>{const [ci,name]=k.split('|');return `<tr class="${+ci===LG.s.club?'me':''}"><td>${i+1}</td><td class="l">${name}</td><td class="l">${lgClub(+ci).name}</td><td><b>${n}</b></td></tr>`;}).join('')+'</tbody></table>';
 }
 function renderPick(canBack){
-  $('pickGrid').innerHTML=CLUBS.map((c,i)=>`<button class="club" data-i="${i}">${crestHTML(c)}<span>${c.name}</span><em>OVR ${c.rating}</em></button>`).join('');
+  const p=prof();
+  $('pickMine').hidden=!p;if(p){$('pickMineT').innerHTML=`<b>★ 내 팀으로 참가</b> · ${esc(CUSTOM[0].name)} (OVR ${CUSTOM[0].rating})`;$('pickMineC').checked=pickMine;}
+  $('pickSub').textContent=p&&pickMine?'내 팀이 대신 들어갈 클럽 자리를 고르세요. 그 클럽의 일정을 내 팀이 치러요.':'시즌을 함께할 클럽을 고르세요. 38라운드를 치르고 순위표에서 우승을 다퉈요.';
+  $('pickGrid').innerHTML=PL_IDX.map(i=>{const c=CLUBS[i];return `<button class="club" data-i="${i}">${crestHTML(c)}<span>${c.name}</span><em>OVR ${c.rating}</em></button>`;}).join('');
   $('pickBack').hidden=!canBack;$('pickNote').hidden=!canBack;$('pick').hidden=false;
 }
-$('pickGrid').addEventListener('click',e=>{const b=e.target.closest('.club');if(!b)return;newSeason(+b.dataset.i);$('pick').hidden=true;hubTab='table';goMenu();});
+let pickMine=true;
+$('pickMineC').addEventListener('change',e=>{pickMine=e.target.checked;renderPick(!$('pickBack').hidden);});
+$('pickGrid').addEventListener('click',e=>{const b=e.target.closest('.club');if(!b)return;newSeason(+b.dataset.i,pickMine&&!!prof());$('pick').hidden=true;hubTab='table';goMenu();});
 $('pickBack').addEventListener('click',()=>{$('pick').hidden=true;});
 $('hubTabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;hubTab=b.dataset.tab;renderHub();});
 $('simBtn').addEventListener('click',()=>{finishRound();hubTab='fix';goMenu();});
@@ -3981,7 +4205,7 @@ function buildMenu(){
   $('segL').innerHTML=LENS.map((d,i)=>`<button data-i="${i}">${d.label}</button>`).join('');
   $('segD').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{G.set.diff=+b.dataset.i;syncMenu();}));
   $('segL').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{G.set.len=+b.dataset.i;syncMenu();}));
-  const opts=CLUBS.map((c,i)=>`<option value="${i}">${c.name}</option>`).join('');$('frH').innerHTML=opts;$('frA').innerHTML=opts;$('olClub').innerHTML=opts;
+  const opts=clubOptsG(-1);$('frH').innerHTML=opts;$('frA').innerHTML=opts;$('olClub').innerHTML=opts;
   syncMenu();
 }
 function syncMenu(){
@@ -4005,7 +4229,7 @@ function goMenu(){
   // the stadium behind the hub shows your club against the next opponent
   const f=LG.s&&userFixture(LG.s.md);
   applyProfile();
-  if(LG.s){G.set.home=LG.s.club;G.set.away=f?f.opp:(LG.s.club+1)%CLUBS.length;G.venue=f&&!f.home?1:0;}
+  if(LG.s){G.set.home=lgHome();G.set.away=f?f.opp:(LG.s.club+1)%CLUBS.length;G.venue=f&&!f.home?1:0;}
   if(!club(G.set.home))G.set.home=0;if(!club(G.set.away)||G.set.away>=100)G.set.away=(G.set.home>=100?0:G.set.home+1)%CLUBS.length;
   G.tac=[myTac(),clubTac(G.set.away)];
   renderHub();renderHubAcc();buildTeams();lineup();
@@ -4017,12 +4241,13 @@ function goFullscreen(){
 $('goBtn').addEventListener('click',()=>{
   AU.start();goFullscreen();
   const f=LG.s&&userFixture(LG.s.md);if(!f)return;
-  G.mode='league';G.set.home=LG.s.club;G.set.away=f.opp;G.venue=f.home?0:1;
-  openTac('solo');
+  G.mode='league';G.set.home=lgHome();G.set.away=f.opp;G.venue=f.home?0:1;
+  // your own team's shape is set in team settings, so it goes straight out
+  if(G.set.home>=100){G.oppTac=cpuTac();startMatch();}else openTac('solo');
 });
 const myOpt=()=>prof()?`<option value="100">★ 내 팀 · ${esc(CUSTOM[0].name)} (OVR ${CUSTOM[0].rating})</option>`:'';
-const clubOpts=()=>CLUBS.map((c,i)=>`<option value="${i}">${c.name}</option>`).join('');
-$('friendBtn').addEventListener('click',()=>{$('frH').innerHTML=myOpt()+clubOpts();const h=prof()?100:LG.s?LG.s.club:G.set.home;$('frH').value=h;$('frA').value=(G.set.away!==h?G.set.away:(h+1)%CLUBS.length);$('friendly').hidden=false;});
+const clubOpts=()=>clubOptsG(-1);
+$('friendBtn').addEventListener('click',()=>{$('frH').innerHTML=myOpt()+clubOpts();const h=prof()?100:LG.s?LG.s.club:Math.min(G.set.home,CLUBS.length-1);$('frH').value=h;$('frA').value=(G.set.away!==h?G.set.away:(h+1)%CLUBS.length);$('friendly').hidden=false;});
 $('frBack').addEventListener('click',()=>{$('friendly').hidden=true;});
 $('frGo').addEventListener('click',()=>{
   const h=+$('frH').value,a=+$('frA').value;
@@ -4142,9 +4367,9 @@ $('rotSkip').addEventListener('click',()=>{G.portraitOK=true;checkOrient();});
 let tmTab='cards',tmSel=-1,tmQ='',tmPos='',tmClub=-1,tmDel=0,tmMsg='';
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const pct=v=>Math.round(v*100);
-function tmSlots(){const t=prof().team,a=t.cards.slice();for(let i=0;i<7;i++)a.push(t.bench[i]||null);return a;}
+function tmSlots(){const t=prof().team,a=t.cards.slice();for(let i=0;i<BENCH_MAX;i++)a.push(t.bench[i]||null);return a;}
 function tmStore(a){const t=prof().team;t.cards=a.slice(0,11);t.bench=a.slice(11).filter(Boolean);accCommit();}
-function accCommit(){const p=prof();if(p)p.team=cleanSpec(p.team);accSave();applyProfile();if(p&&p.srv)srvQueue();}
+function accCommit(){const p=prof();if(p)p.team=cleanSpec(p.team,profClub(p),p.club);accSave();applyProfile();if(p&&p.srv)srvQueue();}
 /* ---- online accounts: log in with an id + password and the team is kept in the server's database,
    so it follows you to any device. The logged-in account sits in ACC.list as '@id' (srv:true) and every
    change to it is saved back a moment later. Accounts without login still work as before (this browser only) */
@@ -4163,10 +4388,10 @@ async function api(path,opt={}){
   if(!r.ok)throw new Error(d.error||('서버 오류 ('+r.status+')'));
   return d;
 }
-const profOut=p=>({name:p.name,team:cleanSpec(p.team),skills:cleanSk(p.skills)});
+const profOut=p=>({name:p.name,club:p.club,team:cleanSpec(p.team),skills:cleanSk(p.skills)});
 function srvAdopt(user,data){
   const k='@'+user,fallback=prof();
-  ACC.list[k]=data&&data.team?{name:String(data.name||user).slice(0,12),team:cleanSpec(data.team),skills:cleanSk(data.skills),made:Date.now(),srv:true}
+  ACC.list[k]=data&&data.team?{name:String(data.name||user).slice(0,12),club:data.club,team:cleanSpec(data.team),skills:cleanSk(data.skills),made:Date.now(),srv:true}
     :Object.assign(fallback&&!fallback.srv?JSON.parse(JSON.stringify(fallback)):newProfile(user,0),{srv:true});
   ACC.cur=k;accSave();applyProfile();
   if(!data||!data.team)srvQueue(0);
@@ -4189,6 +4414,7 @@ async function authBoot(){
   catch(e){AUTH.state=e.message;}
   if(!$('team').hidden)renderTeam();if(G.state==='menu'){renderHubAcc();}
 }
+addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&AUTH.dirty){clearTimeout(AUTH.timer);srvFlush();}});
 function tmAuthLine(){const el=document.getElementById('authLine');if(el)el.textContent=AUTH.state;}
 async function authDo(kind){
   const u=($('authU').value||'').trim(),pw=$('authP').value||'';
@@ -4220,7 +4446,7 @@ function authBox(){
     <span class="note">로그인하면 팀이 서버 DB에 저장돼서 폰·PC 어디서든 같은 팀으로 플레이해요.</span>
     <div class="two"><input id="authU" maxlength="16" placeholder="아이디" autocomplete="username" autocapitalize="off"><input id="authP" type="password" maxlength="72" placeholder="비밀번호 (6자 이상)" autocomplete="current-password"></div>
     <div class="two"><button class="btn pri" data-act="login"${AUTH.busy?' disabled':''}>로그인</button><button class="btn" data-act="register"${AUTH.busy?' disabled':''}>회원가입</button></div>
-    <label>회원가입 시작 클럽 <span class="note">(지금 쓰는 이 기기 계정이 있으면 그 팀을 그대로 가져가요)</span><select id="authC">${CLUBS.map((c,i)=>`<option value="${i}">${c.name}</option>`).join('')}</select></label></div>`;
+    <label>회원가입 시작 클럽 <span class="note">(지금 쓰는 이 기기 계정이 있으면 그 팀을 그대로 가져가요)</span><select id="authC">${clubOptsG(0)}</select></label></div>`;
 }
 function cardLine(cd){const m=baseRoster(cd.ci)[cd.k],s=m.st;return m.nat==='GK'?`골키퍼 · 선방 능력은 OVR을 따라요 · 패스 ${pct(s.pass)} · 피지컬 ${pct(s.phy||0.75)}`:`속도 ${pct(s.pace)} 슈팅 ${pct(s.shoot)} 패스 ${pct(s.pass)} 드리블 ${pct(s.drib)} 태클 ${pct(s.tackle)} 피지컬 ${pct(s.phy||0.75)} · 개인기 ${'★'.repeat(m.stars||1)}`;}
 function openTeam(tab){tmTab=prof()?(tab||tmTab):'acc';tmSel=-1;tmMsg='';renderTeam();$('team').hidden=false;}
@@ -4233,10 +4459,10 @@ function renderTeam(){
   $('tmMeta').innerHTML=`${esc(p.name)} · OVR <b>${ct.rating}</b> · ${t.form} · ${MENTS.find(m=>m.v===t.ment).n} · `+(one>=0?`<span class="bon">단일팀 +3 (${CLUBS[one].name})</span>`:'단일팀 아님');
   let h='<div class="tp-lines"></div>';
   slots.forEach((f,k)=>{const cd=cardById(all[k]),x=6+(f.p[0]+0.95)/1.07*86,y=50+f.p[1]*46,mis=baseRoster(cd.ci)[cd.k].nat!==f.r;
-    h+=`<button class="tp${k===tmSel?' sel':''}${mis?' mis':''}" data-s="${k}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%;--kit:${k?kc.shirt:kc.gk};--num:${k?kc.num:'#fff'}"><b>${cd.ovr+(one>=0?3:0)}</b><span>${esc(cd.name)}</span><em>${f.l}</em></button>`;});
+    h+=`<button class="tp cardy" data-s="${k}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%" aria-label="${f.l} ${esc(cd.name)}">${cardHTML(cd,{size:'s',bonus:one>=0,cls:(k===tmSel?'sel':'')+(mis?' mis':'')})}<em>${f.l}</em></button>`;});
   $('tmPitch').innerHTML=h;
   $('tmBench').innerHTML='<i>교체</i>'+all.slice(11).map((id,i)=>{const cd=id&&cardById(id),k=11+i;
-    return cd?`<button class="bs full${k===tmSel?' sel':''}" data-s="${k}" style="--kit:${kc.shirt};--num:${kc.num}"><b>${cd.ovr}</b><span>${esc(cd.name)}</span><em>${cd.pos}</em></button>`
+    return cd?`<button class="bs full${k===tmSel?' sel':''}" data-s="${k}" aria-label="교체 ${esc(cd.name)}">${cardHTML(cd,{size:'xs'})}<em>${cd.pos}</em></button>`
       :`<button class="bs${k===tmSel?' sel':''}" data-s="${k}" aria-label="빈 교체 자리"><em>비어 있음</em></button>`;}).join('');
   renderTmBody();
 }
@@ -4246,18 +4472,18 @@ function renderTmBody(){
     const all=tmSlots(),inSt=new Set(all.slice(0,11)),inBn=new Set(all.slice(11).filter(Boolean));
     const sid=tmSel>=0?all[tmSel]:null,sc=sid&&cardById(sid);
     let top=tmSel<0?'<div class="tm-sel">경기장이나 교체 자리에서 <b>자리를 먼저 고르세요.</b> 그다음 다른 자리를 누르면 서로 바뀌고, 아래 카드를 누르면 그 선수가 들어가요.</div>'
-      :sc?`<div class="tm-sel"><b>${esc(sc.name)}</b> · ${sc.club.name} · ${sc.pos} · OVR ${sc.ovr}<br>${cardLine(sc)}${tmSel>=11?'<br><button class="btn" data-act="clear" style="margin-top:6px">교체 자리 비우기</button>':''}</div>`
+      :sc?`<div class="tm-card">${cardHTML(sc,{tag:'div',bonus:tmSel<11&&CUSTOM[0].single>=0})}<div class="tm-sel"><b>${esc(sc.name)}</b><br>${sc.club.name} · ${sc.pos} · 베이스 카드<br><span class="note">${tmSel<11?'선발':'교체'} 자리 · 다른 자리나 아래 카드를 누르면 바뀌어요</span>${tmSel>=11?'<br><button class="btn" data-act="clear" style="margin-top:6px">교체 자리 비우기</button>':''}</div></div>`
       :'<div class="tm-sel">빈 교체 자리예요. 아래에서 선수를 고르세요.</div>';
-    const q=tmQ.trim(),list=cards().filter(cd=>(!tmPos||baseRoster(cd.ci)[cd.k].nat===tmPos)&&(tmClub<0||cd.ci===tmClub)&&(!q||cd.name.includes(q)||cd.club.name.includes(q)));
+    const own=ownedCards(p),q=tmQ.trim(),list=own.filter(cd=>(!tmPos||baseRoster(cd.ci)[cd.k].nat===tmPos)&&(!q||cd.name.includes(q)));
     list.sort((a,c)=>c.ovr-a.ovr);
-    b.innerHTML=top+`<div class="cf"><input id="tmQ" placeholder="이름·클럽 검색" value="${esc(tmQ)}" aria-label="선수 검색"><select id="tmClubF" aria-label="클럽"><option value="-1">모든 클럽</option>${CLUBS.map((c,i)=>`<option value="${i}"${i===tmClub?' selected':''}>${c.name}</option>`).join('')}</select></div>
+    b.innerHTML=top+`<div class="cf" style="grid-template-columns:1fr"><input id="tmQ" placeholder="이름 검색" value="${esc(tmQ)}" aria-label="선수 검색"></div>
       <div class="seg" id="tmPosF">${[['','전체'],['GK','GK'],['DF','DF'],['MF','MF'],['FW','FW']].map(([v,n])=>`<button data-p="${v}" aria-pressed="${v===tmPos}">${n}</button>`).join('')}</div>
-      <p class="note">베이스 카드 ${cards().length}장 보유 · ${list.length}장 표시</p>
-      <div class="cl" id="tmList">${list.map(cd=>`<button class="cr${inSt.has(cd.id)?' in':inBn.has(cd.id)?' bn':''}" data-c="${esc(cd.id)}">${crestHTML(cd.club)}<span>${esc(cd.name)}<small>${cd.club.name}</small></span><em>${cd.pos}</em><strong>${cd.ovr}</strong></button>`).join('')}</div>`;
+      <p class="note">${own[0]?own[0].club.name:''} 베이스 카드 ${own.length}장 보유 · ${list.length}장 표시</p>
+      <div class="cg" id="tmList">${list.map(cd=>cardHTML(cd,{attr:`data-c="${esc(cd.id)}" aria-label="${esc(cd.name)} ${cd.club.name} ${cd.pos} ${cd.ovr}"`,cls:inSt.has(cd.id)?'in':'',tagTxt:inSt.has(cd.id)?'선발':inBn.has(cd.id)?'후보':'',tagCls:inBn.has(cd.id)?'bn':''})).join('')}</div>`;
   }else if(tmTab==='team'){
     const t=p.team;
     b.innerHTML=`<div class="two"><label>팀 이름<input id="tmTn" maxlength="16" value="${esc(t.name)}"></label><label>약칭 (영문 3자)<input id="tmTg" maxlength="3" value="${esc(t.tag)}"></label></div>
-      <label>유니폼<select id="tmKit">${CLUBS.map((c,i)=>`<option value="${i}"${i===t.kit?' selected':''}>${c.name} 유니폼</option>`).join('')}</select></label>
+      <label>유니폼<select id="tmKit">${clubOptsG(t.kit,c=>c.name+' 유니폼')}</select></label>
       <div class="tac-row"><label>포메이션</label><div class="seg" id="tmForm">${FORM_KEYS.map(k=>`<button data-f="${k}" aria-pressed="${k===t.form}">${k}</button>`).join('')}</div></div>
       <div class="tac-row"><label>운영</label><div class="seg" id="tmMent">${MENTS.map(m=>`<button data-m="${m.v}" aria-pressed="${m.v===t.ment}">${m.n}</button>`).join('')}</div></div>
       <p class="note">포메이션을 바꾸면 선수들이 가장 비슷한 자리로 옮겨 가요. 선발 11명이 모두 같은 클럽이면 <b>단일팀 보너스로 모든 능력치 +3</b>.</p>`;
@@ -4268,10 +4494,10 @@ function renderTmBody(){
       <div class="cl">${SK_DIRS.map(([k,a])=>`<div class="tm-sel"><b>${a} ${SKILLS[sk[k]].n}</b> ★${SKILLS[sk[k]].star}<br>${SKILLS[sk[k]].d}</div>`).join('')}</div>`;
   }else{
     const ids=Object.keys(ACC.list).filter(id=>!ACC.list[id].srv);
-    b.innerHTML=authBox()+'<p class="note" style="margin-top:4px"><b>이 기기 계정</b> · 로그인 없이 이 브라우저에만 저장돼요.</p>'+(p?'':`<p class="note">계정을 만들면 <b>모든 선수의 베이스 카드 ${cards().length}장</b>을 하나씩 받아요. 고른 클럽의 주전 11명으로 시작하고, 언제든 바꿀 수 있어요.</p>`)
+    b.innerHTML=authBox()+'<p class="note" style="margin-top:4px"><b>이 기기 계정</b> · 로그인 없이 이 브라우저에만 저장돼요.</p>'+(p?'':`<p class="note">계정을 만들면 고른 <b>클럽 선수 20명의 베이스 카드</b>를 받아요. 주전 11명이 선발, 나머지 9명이 교체 명단으로 시작해요.</p>`)
       +(ids.length?`<div class="cl">${ids.map(id=>{const a=ACC.list[id];return `<div class="acc-row${id===ACC.cur?' cur':''}"><span><b>${a.srv?'☁ @'+esc(AUTH.user||''):esc(a.name)}</b> · ${esc(a.team.name)}</span>${id===ACC.cur?'<em>사용 중</em>':`<button class="btn" data-use="${id}">이 계정 쓰기</button>`}</div>`;}).join('')}</div>`:'')
       +`<label>${ids.length?'새 계정 ':''}이름<input id="accN" maxlength="12" placeholder="예: 민수"></label>
-      <label>시작 클럽 (주전 11명으로 팀이 짜여요)<select id="accC">${CLUBS.map((c,i)=>`<option value="${i}">${c.name}</option>`).join('')}</select></label>
+      <label>시작 클럽 (이 팀 선수 20명의 베이스 카드를 받아요)<select id="accC">${clubOptsG(0)}</select></label>
       <button class="btn pri" data-act="new">계정 만들기</button>`
       +(p?`<p class="note" style="margin-top:6px">계정은 이 브라우저에 저장돼요. 다른 기기로 옮기려면 코드를 복사해 그쪽에서 가져오세요.</p>
       <div class="two"><button class="btn" data-act="export">내보내기 코드</button><button class="btn warn" data-act="del"${p.srv?' hidden':''}>${tmDel&&performance.now()-tmDel<3000?'정말 삭제?':'이 계정 삭제'}</button></div>`:'')
@@ -4281,7 +4507,7 @@ function renderTmBody(){
   if(tmMsg)b.insertAdjacentHTML('afterbegin',`<p class="note" style="color:var(--flood)">${esc(tmMsg)}</p>`);
 }
 function tmPick(k){
-  if(tmSel<0||tmSel===k){tmSel=tmSel===k?-1:k;tmTab='cards';renderTeam();return;}
+  if(tmSel<0||tmSel===k){tmSel=tmSel===k?-1:k;tmTab='cards';renderTeam();$('tmBody').scrollTop=0;return;}
   const a=tmSlots();
   if((tmSel<11&&!a[k])||(k<11&&!a[tmSel])){tmMsg='선발 자리는 비워 둘 수 없어요.';tmSel=k;renderTeam();tmMsg='';return;}
   [a[tmSel],a[k]]=[a[k],a[tmSel]];tmSel=-1;tmStore(a);renderTeam();
@@ -4293,7 +4519,20 @@ function tmPut(id){
   else a[tmSel]=id;
   tmSel=-1;tmStore(a);renderTeam();
 }
-const accCode=a=>btoa(unescape(encodeURIComponent(JSON.stringify({v:1,name:a.name,team:a.team,skills:a.skills}))));
+// one card: s = the small one for the pitch and bench, otherwise the full card with the six ratings
+function cardHTML(cd,o={}){
+  const m=baseRoster(cd.ci)[cd.k],b=o.bonus?3:0,st=m.st,v=x=>Math.min(99,Math.round(x*100)+b);
+  const gk=m.nat==='GK',ovr=cd.ovr+b,cls=`pc${o.size?' '+o.size:''}${o.cls?' '+o.cls:''}${b?' bonus':''}`;
+  const attr=o.attr||'';
+  if(o.size==='s'||o.size==='xs')return `<span class="${cls}" ${attr}><b class="pc-ovr">${ovr}</b><span class="pc-name">${esc(cd.name)}</span></span>`;
+  const rows=gk?[['DIV',ovr],['HAN',ovr-2],['KIC',v(st.pass)],['REF',ovr+1],['SPD',v(st.pace)],['POS',ovr-1]]
+    :[['PAC',v(st.pace)],['SHO',v(st.shoot)],['PAS',v(st.pass)],['DRI',v(st.drib)],['DEF',v(st.tackle)],['PHY',v(st.phy||0.75)]];
+  return `<${o.tag||'button'} class="${cls}" ${attr} style="--kit:${gk?cd.club.gk:cd.club.shirt};--num:${gk?'#fff':cd.club.num}">
+    <span class="pc-top"><span class="pc-l"><b class="pc-ovr">${ovr}</b><i class="pc-pos">${o.pos||cd.pos}</i>${crestHTML(cd.club)}</span><span class="pc-shirt">${cd.num}</span></span>
+    <span class="pc-name">${esc(cd.name)}</span>
+    <span class="pc-st">${rows.map(([k,x])=>`<span><b>${x}</b>${k}</span>`).join('')}</span>${o.tagTxt?`<span class="pc-tag${o.tagCls?' '+o.tagCls:''}">${o.tagTxt}</span>`:''}</${o.tag||'button'}>`;
+}
+const accCode=a=>btoa(unescape(encodeURIComponent(JSON.stringify({v:1,name:a.name,club:a.club,team:a.team,skills:a.skills}))));
 $('tmPitch').addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(b&&prof())tmPick(+b.dataset.s);});
 $('tmBench').addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(b&&prof())tmPick(+b.dataset.s);});
 $('tmTabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.disabled)return;tmTab=b.dataset.t;renderTeam();});
@@ -4324,10 +4563,10 @@ $('tmBody').addEventListener('click',e=>{
   if(act==='srvdel'){authDelete();return;}
   if(act==='clear'){const a=tmSlots();a[tmSel]=null;tmSel=-1;tmStore(a);renderTeam();}
   else if(act==='new'){const n=$('accN').value.trim();if(!n){tmMsg='계정 이름을 적어 주세요.';renderTmBody();tmMsg='';return;}
-    const id='a'+Date.now().toString(36);ACC.list[id]=newProfile(n.slice(0,12),+$('accC').value);ACC.cur=id;accSave();applyProfile();tmTab='cards';tmMsg=`${n} 계정을 만들었어요. 베이스 카드 ${cards().length}장을 받았어요!`;renderTeam();tmMsg='';}
+    const id='a'+Date.now().toString(36);ACC.list[id]=newProfile(n.slice(0,12),+$('accC').value);ACC.cur=id;accSave();applyProfile();tmTab='cards';tmMsg=`${n} 계정을 만들었어요. ${prof()?CLUBS[profClub(prof())].name:''} 베이스 카드 20장을 받았어요!`;renderTeam();tmMsg='';}
   else if(act==='export'){const c=accCode(p);$('accCode').value=c;$('accCode').select();try{navigator.clipboard.writeText(c).then(()=>{tmMsg='코드를 복사했어요.';},()=>{});}catch(err){}}
   else if(act==='import'){try{const d=JSON.parse(decodeURIComponent(escape(atob($('accCode').value.trim()))));if(!d||!d.team)throw 0;
-      const id='a'+Date.now().toString(36);ACC.list[id]={name:String(d.name||'가져온 계정').slice(0,12),team:cleanSpec(d.team),skills:cleanSk(d.skills),made:Date.now()};ACC.cur=id;accSave();applyProfile();tmTab='cards';tmMsg='계정을 가져왔어요.';renderTeam();tmMsg='';}
+      const id='a'+Date.now().toString(36);ACC.list[id]={name:String(d.name||'가져온 계정').slice(0,12),club:d.club,team:cleanSpec(d.team),skills:cleanSk(d.skills),made:Date.now()};ACC.cur=id;accSave();applyProfile();tmTab='cards';tmMsg='계정을 가져왔어요.';renderTeam();tmMsg='';}
     catch(err){tmMsg='코드를 읽지 못했어요. 전체를 빠짐없이 붙여 넣었는지 확인해 주세요.';renderTmBody();tmMsg='';}}
   else if(act==='del'){if(!tmDel||performance.now()-tmDel>3000){tmDel=performance.now();renderTmBody();return;}
     tmDel=0;delete ACC.list[ACC.cur];ACC.cur=Object.keys(ACC.list)[0]||null;accSave();applyProfile();tmTab=prof()?'cards':'acc';renderTeam();}
@@ -4347,6 +4586,7 @@ function cardEntry(id,bonus){const cd=cardById(id),m=baseRoster(cd.ci)[cd.k],st=
 function applySub(ti,k,id){
   const team=G.teams[ti],e=team&&team.players[k];if(!e||e.off||team.subs>=SUB_MAX)return false;
   const bi=team.bench.indexOf(id);if(bi<0||!cardById(id))return false;
+  if((cardById(id).nat==='GK')!==!!e.isGK)return false;
   const m=cardEntry(id,team.bonus),outName=e.name;
   team.bench.splice(bi,1);team.subs++;
   e.name=m.name;e.num=m.num;e.st=m.st;e.stars=m.stars;e.hid=m.hid;e.card=id;e.stamina=1;e.phase=m.phase;
@@ -4357,6 +4597,24 @@ function applySub(ti,k,id){
   if(NET.role!=='guest'){say(`교체 · ${team.club.id}  ${outName} → ${m.name}`);netEv('sub',[ti,k,id]);}
   return true;
 }
+// the computer's side changes things around the hour: at a stoppage after 58', 70' and 80' the most tired
+// outfield players make way for bench players of the same kind (two, then one, then one)
+const AI_SUB_AT=[[58,2],[70,1],[80,1]];
+function aiSubs(){
+  if(NET.online||NET.role==='guest')return;
+  for(const t of G.teams){
+    if(t.human||!t.bench.length||t.subs>=SUB_MAX)continue;
+    t.subW=t.subW||0;const w=AI_SUB_AT[t.subW];if(!w||G.clock<w[0]+(G.half===2?0:999))continue;
+    t.subW++;
+    const out=t.players.filter(e=>!e.isGK&&!e.off&&B.owner!==e).sort((a,b)=>(a.stamina-b.stamina)||(a.st.pace-b.st.pace)).slice(0,w[1]);
+    for(const e of out){
+      const nat=e.role==='DF'?'DF':e.role==='FW'?'FW':'MF';
+      const cand=t.bench.map(id=>cardById(id)).filter(cd=>cd&&baseRoster(cd.ci)[cd.k].nat!=='GK');
+      const pick=cand.find(cd=>baseRoster(cd.ci)[cd.k].nat===nat)||cand[0];
+      if(pick)applySub(t.i,e.k,pick.id);
+    }
+  }
+}
 let subA=-1,subB=-1;
 const myTeam=()=>G.teams[NET.online?NET.localTi:0];
 function openSubs(){subA=subB=-1;renderSubs();$('subs').hidden=false;}
@@ -4365,7 +4623,9 @@ function renderSubs(){
   $('subMsg').textContent=t.bench.length?`남은 교체 ${left}/${SUB_MAX} · 경기 중인 선수와 벤치 선수를 하나씩 고르세요.`:'벤치에 선수가 없어요. 팀 설정에서 교체 선수를 넣어 두세요.';
   $('subOn').innerHTML=t.players.map((e,k)=>{const s=e.stamina,c=s>0.6?'#7be39a':s>0.3?'#f0d25a':'#ff8c96';
     return `<button class="sp${k===subA?' sel':''}" data-on="${k}"${e.off||!left?' disabled':''}><em>${e.lbl}</em><span>${esc(e.name)}</span><i style="--s:${pct(s)}%;--c:${c}" title="체력 ${pct(s)}%"></i></button>`;}).join('');
-  $('subBench').innerHTML=t.bench.map(id=>{const cd=cardById(id);return `<button class="sp${id===subB?' sel':''}" data-bn="${esc(id)}"${!left?' disabled':''}><em>${cd.pos}</em><span>${esc(cd.name)}</span><em>${cd.ovr+Math.round(t.bonus*100)}</em></button>`;}).join('')||'<p class="note">없음</p>';
+  // keepers come on for keepers, outfield players for outfield players
+  const selGK=subA>=0&&t.players[subA].isGK;
+  $('subBench').innerHTML=t.bench.map(id=>{const cd=cardById(id),gk=cd.nat==='GK',no=!left||(subA>=0&&gk!==selGK);if(no&&id===subB)subB=null;return `<button class="sp${id===subB?' sel':''}" data-bn="${esc(id)}"${no?' disabled':''}><em>${cd.pos}</em><span>${esc(cd.name)}</span><em>${cd.ovr+Math.round(t.bonus*100)}</em></button>`;}).join('')||'<p class="note">없음</p>';
   $('subGo').disabled=!(subA>=0&&subB);
 }
 $('subOn').addEventListener('click',e=>{const b=e.target.closest('[data-on]');if(!b||b.disabled)return;subA=+b.dataset.on;renderSubs();});
@@ -4546,7 +4806,7 @@ function frame(now){
     else if(G.state==='replay'){replayFrame(dt);}
     else if(G.state==='menu'||G.state==='boot'){G.t+=dt;for(const e of G.ents){e.speed=0;}}
     else if(G.state==='intro'){G.t+=dt;}
-    else if(G.state!=='half'&&G.state!=='full'){acc+=dt;let n=0;while(acc>=STEP&&n<4){step(STEP);acc-=STEP;n++;}if(n>=4)acc=0;}
+    else if(G.state!=='half'&&G.state!=='full'){acc+=dt;let n=0;try{while(acc>=STEP&&n<4){step(STEP);acc-=STEP;n++;}}catch(err){acc=0;if(!frame.errN){frame.errN=1;console.error('step',err);}if(B.owner&&!B.owner.team){B.owner=null;}}if(n>=4)acc=0;}
     updateCam(dt);
     updateVisuals(dt);
     if(G.state!=='menu'&&G.state!=='boot')hudFrame();
@@ -4561,7 +4821,8 @@ function frame(now){
 /* ================= boot ================= */
 function boot(data){
   try{const s=JSON.parse(lsGet('fl11-set')||'null');if(s){G.set.diff=clamp(s.diff|0,0,2);G.set.len=clamp(s.len|0,0,2);G.set.cam=clamp(s.cam|0,0,2);G.set.stick=s.stick===1?1:0;
-    if(s.tacs&&typeof s.tacs==='object')for(const k in s.tacs)if(CLUBS[k])G.set.tacs[k]=cleanTac(s.tacs[k]);G.set.skills=cleanSk(s.skills);}}catch(e){}
+    // club tactics are kept by club index; the club list changed with the 2026-27 squads (dv 2), so older ones are dropped
+    if(s.dv===2&&s.tacs&&typeof s.tacs==='object')for(const k in s.tacs)if(CLUBS[k])G.set.tacs[k]=cleanTac(s.tacs[k]);G.set.skills=cleanSk(s.skills);}}catch(e){}
   G.set.skills=cleanSk(G.set.skills);
   accLoad();authLoad();applyProfile();
   lgLoad();
