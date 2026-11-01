@@ -775,8 +775,7 @@ const CLUBS=[
   sub:[['메레트', 1, 'GK', 81], ['라파 마린', 5, 'CB', 76], ['베우케마', 31, 'CB', 78], ['스피나촐라', 37, 'LB', 80], ['길모어', 6, 'CM', 75], ['앙귀사', 99, 'CM', 82], ['네레스', 7, 'RW', 81], ['폴로룬쇼', 90, 'CM', 74], ['루카', 27, 'ST', 75]]}
 ];
 const posNat=l=>l==='GK'?'GK':/^(CB|LB|RB|LWB|RWB)$/.test(l)?'DF':/^(CDM|CM|CAM|LM|RM)$/.test(l)?'MF':'FW';
-// the league is the Premier League (the first 20 clubs); the other leagues' clubs can be picked for friendlies,
-// online and as an account's starting club
+// Seasons use the 20 Premier League slots; a selected club from another league replaces the last PL slot.
 const LEAGUES=[['PL','프리미어리그'],['LL','라리가'],['BL','분데스리가'],['L1','리그 1'],['SA','세리에 A']];
 const PL_IDX=[];
 for(const [i,c] of CLUBS.entries()){c.rating=Math.round(c.xi.reduce((a,p)=>a+p[3],0)/11);c.sp='';c.spc='#ffffff';c.bench=(c.sub||[]).map(p=>c.id+'|'+p[0]);if(c.lg==='PL')PL_IDX.push(i);}
@@ -825,8 +824,8 @@ NAP|밀린코비치사비치:43,25,80,40,30,81,1|올리베라:73,51,69,72,77,70,
 `;
 const PSTAT={};
 /* ================= cards, your own team, accounts =================
-   Every account owns one base card of every player above. A team is 11 starters (slot order of its formation) plus up
-   to 7 on the bench, a formation and mentality, a kit borrowed from any club, a name and a 3-letter tag. If all 11
+   Every account owns only its selected club's 20 base cards. A team is 11 starters (slot order of its formation) plus up
+   to 9 on the bench, a formation and mentality, a kit borrowed from any club, a name and a 3-letter tag. If all 11
    starters come from the same club they play together better: +3 to every rating (and the keeper's overall).
    Custom teams live at index 100 (yours) and 101 (an online opponent's) so the match code can treat them like clubs */
 const CUSTOM=[null,null];
@@ -880,7 +879,7 @@ function profClub(p){
     ci=best?CLUBS.findIndex(c=>c.id===best):0;p.club=CLUBS[ci].id;}
   return ci;
 }
-const ownedCards=p=>cards().filter(cd=>cd.club.id===p.club);
+const ownedCards=p=>{const ci=profClub(p);return cards().filter(cd=>cd.ci===ci);};
 function applyProfile(){const p=prof();if(!p){CUSTOM[0]=null;return;}const ci=profClub(p);p.team=cleanSpec(p.team,ci,p.club);CUSTOM[0]=teamFromSpec(p.team);G.set.skills=cleanSk(p.skills);}
 
 for(const line of PSTAT_SRC.trim().split('\n')){const [id,...ps]=line.split('|');for(const p of ps){const [n,v]=p.split(':');const a=v.split(',').map(Number);PSTAT[id+'|'+n]={pace:a[0]/100,shoot:a[1]/100,pass:a[2]/100,drib:a[3]/100,tackle:a[4]/100,phy:a[5]/100,stars:a[6]};}}
@@ -4114,10 +4113,11 @@ const clubOvr=ci=>lgClub(ci).rating;
 /* the league season: 20 clubs, 38 rounds, kept in this browser */
 const LG={s:null};
 function lgSave(){if(LG.s)lsSet('fl11-season',JSON.stringify(LG.s));}
-function lgLoad(){try{const s=JSON.parse(lsGet('fl11-season')||'null');if(s&&s.v===2&&CLUBS[s.club]&&CLUBS[s.club].lg==='PL'&&Array.isArray(s.fx)&&s.fx.length===38)LG.s=s;}catch(e){}}
-function makeFixtures(seed){
+function lgLoad(){try{const s=JSON.parse(lsGet('fl11-season')||'null');if(s&&s.v===2&&CLUBS[s.club]&&Array.isArray(s.fx)&&s.fx.length===38)LG.s=s;}catch(e){}}
+function makeFixtures(seed,entrant){
   // circle method: every club meets every other club once per half, home and away swapped in the second half
   const rr=seeded(seed),t=PL_IDX.slice();
+  if(CLUBS[entrant]&&!t.includes(entrant))t[t.length-1]=entrant;
   for(let i=t.length-1;i>0;i--){const j=Math.floor(rr()*(i+1));[t[i],t[j]]=[t[j],t[i]];}
   const first=[];let arr=t.slice();
   for(let r=0;r<19;r++){
@@ -4127,7 +4127,7 @@ function makeFixtures(seed){
   }
   return first.concat(first.map(p=>p.map(([h,a])=>[a,h])));
 }
-function newSeason(club,custom){const seed=(Date.now()%2147483647)>>>0;LG.s={v:2,club,custom:!!custom,md:0,seed,fx:makeFixtures(seed),res:{},goals:{}};lgSave();}
+function newSeason(club,custom){const seed=(Date.now()%2147483647)>>>0;LG.s={v:2,club,custom:!!custom,md:0,seed,fx:makeFixtures(seed,club),res:{},goals:{}};lgSave();}
 const resKey=(md,h,a)=>md+':'+h+':'+a;
 function poisson(l){const L=Math.exp(-l);let k=0,p=1;do{k++;p*=Math.random();}while(p>L);return k-1;}
 // a simulated score: goal expectation from the gap in squad overall, plus home advantage
@@ -4142,7 +4142,8 @@ function recordResult(md,h,a,gh,ga,scorers){LG.s.res[resKey(md,h,a)]=[gh,ga];if(
 function userFixture(md){const s=LG.s;if(!s||md>=38)return null;const p=s.fx[md].find(([h,a])=>h===s.club||a===s.club);return p?{h:p[0],a:p[1],home:p[0]===s.club,opp:p[0]===s.club?p[1]:p[0]}:null;}
 function finishRound(){const s=LG.s,md=s.md;for(const [h,a] of s.fx[md])if(!s.res[resKey(md,h,a)]){const [gh,ga]=simGoals(h,a);recordResult(md,h,a,gh,ga);}s.md++;lgSave();}
 function leagueTable(){
-  const T=PL_IDX.map(i=>({i,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0})),s=LG.s,TI={};T.forEach(r=>TI[r.i]=r);
+  const s=LG.s,teams=s?s.fx[0].flat():PL_IDX;
+  const T=teams.map(i=>({i,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0})),TI={};T.forEach(r=>TI[r.i]=r);
   if(s)for(const k in s.res){const [,h,a]=k.split(':').map(Number),[gh,ga]=s.res[k],H=TI[h],A=TI[a];if(!H||!A)continue;H.p++;A.p++;H.gf+=gh;H.ga+=ga;A.gf+=ga;A.ga+=gh;
     if(gh>ga){H.w++;H.pts+=3;A.l++;}else if(gh<ga){A.w++;A.pts+=3;H.l++;}else{H.d++;A.d++;H.pts++;A.pts++;}}
   return T.sort((x,y)=>y.pts-x.pts||(y.gf-y.ga)-(x.gf-x.ga)||y.gf-x.gf||x.i-y.i);
@@ -4189,8 +4190,8 @@ function scorersHTML(){
 function renderPick(canBack){
   const p=prof();
   $('pickMine').hidden=!p;if(p){$('pickMineT').innerHTML=`<b>★ 내 팀으로 참가</b> · ${esc(CUSTOM[0].name)} (OVR ${CUSTOM[0].rating})`;$('pickMineC').checked=pickMine;}
-  $('pickSub').textContent=p&&pickMine?'내 팀이 대신 들어갈 클럽 자리를 고르세요. 그 클럽의 일정을 내 팀이 치러요.':'시즌을 함께할 클럽을 고르세요. 38라운드를 치르고 순위표에서 우승을 다퉈요.';
-  $('pickGrid').innerHTML=PL_IDX.map(i=>{const c=CLUBS[i];return `<button class="club" data-i="${i}">${crestHTML(c)}<span>${c.name}</span><em>OVR ${c.rating}</em></button>`;}).join('');
+  $('pickSub').textContent=(p&&pickMine?'내 팀이 대신 들어갈 클럽 자리를 고르세요. 그 클럽의 일정을 내 팀이 치러요.':'시즌을 함께할 클럽을 고르세요. 38라운드를 치르고 순위표에서 우승을 다퉈요.')+` 타 리그 구단 선택 시 ${CLUBS[PL_IDX[PL_IDX.length-1]].name} 자리를 대신해 참가해요.`;
+  $('pickGrid').innerHTML=LEAGUES.map(([lg,name])=>`<h3 style="grid-column:1 / -1;margin:12px 0 0">${name}</h3>`+CLUBS.map((c,i)=>c.lg===lg?`<button class="club" data-i="${i}">${crestHTML(c)}<span>${c.name}</span><em>OVR ${c.rating}</em></button>`:'').join('')).join('');
   $('pickBack').hidden=!canBack;$('pickNote').hidden=!canBack;$('pick').hidden=false;
 }
 let pickMine=true;
@@ -4388,12 +4389,12 @@ async function api(path,opt={}){
   if(!r.ok)throw new Error(d.error||('서버 오류 ('+r.status+')'));
   return d;
 }
-const profOut=p=>({name:p.name,club:p.club,team:cleanSpec(p.team),skills:cleanSk(p.skills)});
+const profOut=p=>{const ci=profClub(p);return{name:p.name,club:p.club,team:cleanSpec(p.team,ci,p.club),skills:cleanSk(p.skills)};};
 function srvAdopt(user,data){
   const k='@'+user,fallback=prof();
   ACC.list[k]=data&&data.team?{name:String(data.name||user).slice(0,12),club:data.club,team:cleanSpec(data.team),skills:cleanSk(data.skills),made:Date.now(),srv:true}
     :Object.assign(fallback&&!fallback.srv?JSON.parse(JSON.stringify(fallback)):newProfile(user,0),{srv:true});
-  ACC.cur=k;accSave();applyProfile();
+  ACC.cur=k;applyProfile();accSave();
   if(!data||!data.team)srvQueue(0);
 }
 function authDrop(){const k=srvKey();if(k){delete ACC.list[k];if(ACC.cur===k)ACC.cur=Object.keys(ACC.list).find(i=>!ACC.list[i].srv)||null;}
@@ -4422,8 +4423,8 @@ async function authDo(kind){
   const startCi=+(($('authC')||{}).value||0);
   AUTH.busy=true;renderTmBody();
   try{
-    const lp=prof(),body={username:u,password:pw};
-    if(kind==='register')body.profile=lp&&!lp.srv?profOut(lp):profOut(newProfile(u,startCi));
+    const body={username:u,password:pw};
+    if(kind==='register')body.profile=profOut(newProfile(u,startCi));
     const d=await api(kind==='register'?'/auth/register':'/auth/login',{method:'POST',body});
     AUTH.token=d.token;AUTH.user=d.user.username;authSave();srvAdopt(d.user.username,d.profile);AUTH.state='저장됨';
     tmMsg=kind==='register'?`회원가입 완료! @${d.user.username} 으로 로그인했어요. 팀이 서버에 저장돼요.`:`@${d.user.username} 으로 로그인했어요.`;tmTab='cards';
@@ -4446,7 +4447,7 @@ function authBox(){
     <span class="note">로그인하면 팀이 서버 DB에 저장돼서 폰·PC 어디서든 같은 팀으로 플레이해요.</span>
     <div class="two"><input id="authU" maxlength="16" placeholder="아이디" autocomplete="username" autocapitalize="off"><input id="authP" type="password" maxlength="72" placeholder="비밀번호 (6자 이상)" autocomplete="current-password"></div>
     <div class="two"><button class="btn pri" data-act="login"${AUTH.busy?' disabled':''}>로그인</button><button class="btn" data-act="register"${AUTH.busy?' disabled':''}>회원가입</button></div>
-    <label>회원가입 시작 클럽 <span class="note">(지금 쓰는 이 기기 계정이 있으면 그 팀을 그대로 가져가요)</span><select id="authC">${clubOptsG(0)}</select></label></div>`;
+    <label>회원가입 시작 클럽 <span class="note">(선택한 구단 선수 20명의 베이스 카드만 받아요)</span><select id="authC">${clubOptsG(0)}</select></label></div>`;
 }
 function cardLine(cd){const m=baseRoster(cd.ci)[cd.k],s=m.st;return m.nat==='GK'?`골키퍼 · 선방 능력은 OVR을 따라요 · 패스 ${pct(s.pass)} · 피지컬 ${pct(s.phy||0.75)}`:`속도 ${pct(s.pace)} 슈팅 ${pct(s.shoot)} 패스 ${pct(s.pass)} 드리블 ${pct(s.drib)} 태클 ${pct(s.tackle)} 피지컬 ${pct(s.phy||0.75)} · 개인기 ${'★'.repeat(m.stars||1)}`;}
 function openTeam(tab){tmTab=prof()?(tab||tmTab):'acc';tmSel=-1;tmMsg='';renderTeam();$('team').hidden=false;}
