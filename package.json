@@ -6,7 +6,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node --test tests/gameplay.test.cjs tests/accounts-league.test.cjs tests/profile-sync.test.cjs tests/admin.test.cjs tests/shop.test.cjs tests/league-rewards.test.cjs tests/class-designs.test.cjs",
+    "test": "node --test tests/gameplay.test.cjs tests/accounts-league.test.cjs tests/profile-sync.test.cjs tests/admin.test.cjs tests/shop.test.cjs tests/league-rewards.test.cjs tests/class-designs.test.cjs tests/direct-cards.test.cjs",
     "admin:create": "node scripts/create-admin.cjs"
   },
   "engines": {
