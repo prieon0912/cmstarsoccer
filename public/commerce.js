@@ -9,11 +9,12 @@
     function message(text){$('shopMessage').textContent=text;}
     function buttons(){return '<button class="btn" data-shop="packs">패키지 목록</button>';}
     async function open(){
+      root.FL11PackReveal?.preload();
       clearTimeout(boundaryTimer);
       $('team').hidden=true;$('account').hidden=true;$('shop').hidden=false;message('상점을 불러오고 있어요.');
       if(!hooks.user()){$('shopContent').innerHTML='<p class="note">선수 뽑기는 로그인한 계정에서 이용할 수 있어요.</p><button class="btn pri" data-shop="login">로그인 / 회원가입</button>';$('shopCoins').textContent='로그인 필요';message('');return;}
       try{await hooks.loadCatalog();const data=await hooks.api('/shop/');packs=data.packs;serverTime=Date.parse(data.serverNow);clockBase=performance.now();hooks.inventory(data);$('shopCoins').textContent=data.coins.toLocaleString()+' 코인';renderPacks();
-        const pending=localStorage.getItem(pendingKey());message(pending?'응답을 받지 못한 뽑기가 있어요. 같은 패키지의 뽑기를 누르면 결과를 이어서 확인해요.':'최초 1,000코인 지급 · 추가 수급처는 추후 추가됩니다.');
+        const pending=localStorage.getItem(pendingKey());message(pending?'응답을 받지 못한 뽑기가 있어요. 같은 패키지의 뽑기를 누르면 결과를 이어서 확인해요.':'');
       }catch(e){message(e.message);}
     }
     function renderPacks(){
@@ -33,6 +34,7 @@
       const cls=hooks.classFor(featured),board=cls.boardArt?`background-image:linear-gradient(#0005,#0008),url('${cls.boardArt}')`:'';
       $('shopContent').innerHTML=`<div class="reveal-board" style="--class-accent:${cls.accent};${board}"><div><p class="board-name">${esc(cls.boardName||cls.name)}</p>${hooks.cardHTML(featured,{tag:'div'})}<h3>${esc(featured.name)}</h3><p>${esc(featured.club.name)} · OVR ${featured.ovr}</p></div></div><div class="reveal-results">${cards.map(c=>`<div class="reveal-item">${hooks.cardHTML(c,{tag:'div'})}<p>${esc(hooks.classFor(c).name)} · 보유 ${hooks.quantity(c.id)}장</p></div>`).join('')}</div><div class="r-b">${buttons()}<button class="btn pri" data-shop="team">팀에서 선수 변경</button></div>`;
       message(result.count+'회 뽑기 완료 · '+result.cost.toLocaleString()+' 코인 사용');
+      if(root.FL11PackReveal)root.FL11PackReveal.play({classInfo:cls,card:featured,cardHTML:hooks.cardHTML(featured,{tag:'div'})});
     }
     async function draw(id){if(busy)return;const pack=packs.find(p=>p.id===id);if(!pack)return;
       let pending;try{pending=JSON.parse(localStorage.getItem(pendingKey())||'null');}catch(e){}

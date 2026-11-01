@@ -7,6 +7,7 @@ const { WebSocketServer } = require('ws');
 const auth = require('./lib/auth');
 const admin = require('./lib/admin');
 const shop = require('./lib/shop');
+const league = require('./lib/league');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,6 +18,7 @@ app.set('trust proxy', 1);
 app.get('/healthz', (req, res) => res.send('ok'));
 app.use('/api/admin', admin.router);
 app.use('/api/shop', shop.router);
+app.use('/api/league', league.router);
 app.use('/api', auth.router);
 app.use(express.static(PUBLIC_DIR, { maxAge: '1h' }));
 

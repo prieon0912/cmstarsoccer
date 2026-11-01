@@ -413,8 +413,8 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
 }
 </style>
 
-<link rel="stylesheet" href="/commerce.css">
-<script src="/data/card-classes.js"></script><script src="/data/player-catalog.js"></script><script src="/commerce.js"></script>
+<link rel="stylesheet" href="/commerce.css?v=classes-6"><link rel="stylesheet" href="/pack-reveal.css?v=classes-6">
+<script src="/data/class-designs.js?v=classes-6"></script><script src="/data/card-classes.js?v=classes-6"></script><script src="/data/player-catalog.js?v=classes-6"></script><script src="/pack-reveal.js?v=classes-6"></script><script src="/commerce.js?v=classes-6"></script><script src="/league-rewards.js?v=classes-6"></script>
 </head>
 <body>
 <div id="app">
@@ -4280,6 +4280,12 @@ const lgHome=()=>lgMine()?100:LG.s.club;
 const clubOvr=ci=>lgClub(ci).rating;
 /* the league season: 20 clubs, 38 rounds, kept in this browser */
 const LG={s:null};
+let leagueRewardsClient=null;
+function syncLeagueRewards(){
+  if(typeof FL11LeagueRewards!=='function')return;
+  if(!leagueRewardsClient)leagueRewardsClient=FL11LeagueRewards({user:()=>AUTH.user,api,get:lsGet,set:lsSet,season:()=>LG.s,save:lgSave,inventory:receiveInventory});
+  return leagueRewardsClient.sync(LG.s);
+}
 function lgSave(){if(LG.s)lsSet('fl11-season',JSON.stringify(LG.s));}
 function lgLoad(){try{const s=JSON.parse(lsGet('fl11-season')||'null');if(s&&s.v===2&&CLUBS[s.club]&&Array.isArray(s.fx)&&s.fx.length===38)LG.s=s;}catch(e){}}
 function makeFixtures(seed,entrant){
@@ -4295,7 +4301,7 @@ function makeFixtures(seed,entrant){
   }
   return first.concat(first.map(p=>p.map(([h,a])=>[a,h])));
 }
-function newSeason(club,custom){const seed=(Date.now()%2147483647)>>>0;LG.s={v:2,club,custom:!!custom,md:0,seed,fx:makeFixtures(seed,club),res:{},goals:{}};lgSave();}
+function newSeason(club,custom){const seed=(Date.now()%2147483647)>>>0;LG.s={v:2,club,custom:!!custom,md:0,seed,fx:makeFixtures(seed,club),res:{},goals:{}};lgSave();syncLeagueRewards();}
 const resKey=(md,h,a)=>md+':'+h+':'+a;
 function poisson(l){const L=Math.exp(-l);let k=0,p=1;do{k++;p*=Math.random();}while(p>L);return k-1;}
 // a simulated score: goal expectation from the gap in squad overall, plus home advantage
@@ -4308,7 +4314,7 @@ function simScorers(ci,n){
 }
 function recordResult(md,h,a,gh,ga,scorers){LG.s.res[resKey(md,h,a)]=[gh,ga];if(scorers)scorers.forEach(s=>addScorer(s.ci>=100?LG.s.club:s.ci,s.name));else{simScorers(h,gh);simScorers(a,ga);}}
 function userFixture(md){const s=LG.s;if(!s||md>=38)return null;const p=s.fx[md].find(([h,a])=>h===s.club||a===s.club);return p?{h:p[0],a:p[1],home:p[0]===s.club,opp:p[0]===s.club?p[1]:p[0]}:null;}
-function finishRound(){const s=LG.s,md=s.md;for(const [h,a] of s.fx[md])if(!s.res[resKey(md,h,a)]){const [gh,ga]=simGoals(h,a);recordResult(md,h,a,gh,ga);}s.md++;lgSave();}
+function finishRound(){const s=LG.s,md=s.md;for(const [h,a] of s.fx[md])if(!s.res[resKey(md,h,a)]){const [gh,ga]=simGoals(h,a);recordResult(md,h,a,gh,ga);}s.md++;lgSave();syncLeagueRewards();}
 function leagueTable(){
   const s=LG.s,teams=s?s.fx[0].flat():PL_IDX;
   const T=teams.map(i=>({i,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0})),TI={};T.forEach(r=>TI[r.i]=r);
@@ -4397,6 +4403,7 @@ function lineup(){
   B.x=0;B.z=0.6;B.y=BR;B.owner=null;
 }
 function goMenu(){
+  syncLeagueRewards();
   if(AUTH.token)setTimeout(srvRefresh,0);
   if(NET.ws||NET.online)netLeave();
   PADS[0]=PADS[1]=null;$('online').hidden=true;
@@ -4573,7 +4580,7 @@ const profOut=p=>{const ci=profClub(p);return{name:p.name,club:p.club,team:clean
 function srvAdopt(user,data,revision=0,select=true){
   const k='@'+user,legacyTacs=ACC.list[k]&&ACC.list[k].tacs||G.set.tacs,migrate=!!(data&&data.team&&data.tacs===undefined),p=data&&data.team?{name:String(data.name||user).slice(0,12),club:data.club,team:cleanSpec(data.team),skills:cleanSk(data.skills),inventory:Array.isArray(data.inventory)?data.inventory:undefined,coins:data.coins,tacs:cleanAccountTacs(migrate?legacyTacs:data.tacs),made:Date.now()}:newProfile(user,0);
   Object.assign(p,{srv:true,_revision:revision,_pending:false,_edit:0});ACC.list[k]=p;
-  if(select)ACC.cur=k;if(ACC.cur===k)applyProfile();accSave();AUTH.dirty=false;
+  if(select)ACC.cur=k;if(ACC.cur===k)applyProfile();accSave();AUTH.dirty=false;syncLeagueRewards();
   if(!data||!data.team||migrate){p._pending=true;AUTH.dirty=true;accSave();clearTimeout(AUTH.timer);AUTH.timer=setTimeout(srvFlush,0);}
 }
 function srvBackup(p){
@@ -4600,7 +4607,8 @@ async function srvFlush(){
       p._revision=d.revision;p._pending=(p._edit||0)!==edit;AUTH.dirty=p._pending;AUTH.state=p._pending?'저장 대기':'저장됨';accSave();ok=true;
     }catch(e){
       if(AUTH.token!==token||ACC.list[k]!==p)return false;
-      if(e.status===409){
+      if(e.status===401){authDrop();AUTH.state='로그인이 필요해요.';if(G.state==='menu')renderHubAcc();}
+      else if(e.status===409){
         if(sameProfile(payload,e.data.profile?profOut(e.data.profile):null)){
           p._revision=e.data.revision;p._pending=(p._edit||0)!==edit;AUTH.dirty=p._pending;AUTH.state=p._pending?'저장 대기':'저장됨';accSave();ok=true;
         }else{
@@ -4633,7 +4641,7 @@ async function srvRefresh(){
     if(before&&before._pending)srvBackup(before);
     srvAdopt(d.user.username,d.profile,d.revision,ACC.cur===k||!prof());AUTH.state='저장됨';
     if(!$('team').hidden)renderTeam();if(G.state==='menu')renderHubAcc();
-  }catch(e){if(AUTH.token===token)AUTH.state=e.message;}
+  }catch(e){if(AUTH.token===token){AUTH.state=e.message;if(e.status===401){authDrop();if(G.state==='menu')renderHubAcc();if(!$('account').hidden)renderAccount();}}}
   finally{AUTH.refreshing=false;tmAuthLine();}
 }
 async function authBoot(){
@@ -4668,9 +4676,10 @@ async function authDo(kind){
   AUTH.busy=false;renderTeam();tmMsg='';
 }
 async function authLogout(){
-  if(!await srvEnsureSaved()){tmMsg='저장을 완료하지 못했어요. 연결을 확인한 뒤 다시 로그아웃해 주세요.';renderTeam();tmMsg='';return;}
-  try{await api('/auth/logout',{method:'POST'});}catch(e){tmMsg=e.message;renderTeam();tmMsg='';return;}
-  authDrop();tmMsg='로그아웃했어요.';renderTeam();tmMsg='';
+  const saved=await srvEnsureSaved();if(!AUTH.token){renderHubAcc();return true;}
+  if(!saved){tmMsg='저장을 완료하지 못했어요. 연결을 확인한 뒤 다시 로그아웃해 주세요.';openAccount();tmMsg='';return false;}
+  try{await api('/auth/logout',{method:'POST'});}catch(e){if(e.status!==401){tmMsg=e.message;openAccount();tmMsg='';return false;}}
+  authDrop();tmMsg='로그아웃했어요.';renderTeam();renderHubAcc();tmMsg='';return true;
 }
 
 async function authDelete(){
@@ -4698,10 +4707,10 @@ function renderTeam(){
   $('tmMeta').innerHTML=`${esc(p.name)} · OVR <b>${ct.rating}</b> · ${t.form} · ${MENTS.find(m=>m.v===t.ment).n} · `+(one>=0?`<span class="bon">단일팀 +3 (${CLUBS[one].name})</span>`:'단일팀 아님');
   let h='<div class="tp-lines"></div>';
   slots.forEach((f,k)=>{const cd=cardById(all[k]),skin=cardClass(cd),x=6+(f.p[0]+0.95)/1.07*86,y=50+f.p[1]*46,mis=cardRoster(cd).nat!==f.r;
-    h+=`<button class="tp${skin.id!=='BASE'?' classed':''}${k===tmSel?' sel':''}${mis?' mis':''}" data-s="${k}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%;--kit:${kc.shirt};--num:${kc.num};--class-accent:${skin.accent};--slot-art:${skin.slotArt?`url('${skin.slotArt}')`:'none'}" aria-label="${f.l} ${esc(cd.name)}" aria-pressed="${k===tmSel}"><b>${cd.num}</b><span>${esc(cd.name)}</span><em>${f.l}</em>${skin.id!=='BASE'?`<i class="slot-class">${esc(skin.name)}</i>`:''}</button>`;});
+    h+=`<button class="tp${skin.id!=='BASE'?' classed':''}${k===tmSel?' sel':''}${mis?' mis':''}" data-s="${k}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%;--kit:${kc.shirt};--num:${kc.num};--class-accent:${skin.accent};--slot-ink:${skin.ink||'#fff'};--slot-art:${skin.slotArt?`url('${skin.slotArt}')`:'none'}" aria-label="${f.l} ${esc(cd.name)}" aria-pressed="${k===tmSel}"><b>${cd.num}</b><span>${esc(cd.name)}</span><em>${f.l}</em>${skin.id!=='BASE'?`<i class="slot-class">${esc(skin.name)}</i>`:''}</button>`;});
   $('tmPitch').innerHTML=h;
   $('tmBench').innerHTML='<i>교체</i>'+all.slice(11).map((id,i)=>{const cd=id&&cardById(id),k=11+i,skin=cardClass(cd);
-    return cd?`<button class="bs full${skin.id!=='BASE'?' classed':''}${k===tmSel?' sel':''}" data-s="${k}" style="--kit:${kc.shirt};--num:${kc.num};--class-accent:${skin.accent};--slot-art:${skin.slotArt?`url('${skin.slotArt}')`:'none'}" aria-label="교체 ${esc(cd.name)}" aria-pressed="${k===tmSel}"><b>${cd.num}</b><span>${esc(cd.name)}</span><em>${cd.pos}</em></button>`
+    return cd?`<button class="bs full${skin.id!=='BASE'?' classed':''}${k===tmSel?' sel':''}" data-s="${k}" style="--kit:${kc.shirt};--num:${kc.num};--class-accent:${skin.accent};--slot-ink:${skin.ink||'#fff'};--slot-art:${skin.slotArt?`url('${skin.slotArt}')`:'none'}" aria-label="교체 ${esc(cd.name)}" aria-pressed="${k===tmSel}"><b>${cd.num}</b><span>${esc(cd.name)}</span><em>${cd.pos}</em></button>`
       :`<button class="bs${k===tmSel?' sel':''}" data-s="${k}" aria-label="빈 교체 자리"><em>비어 있음</em></button>`;}).join('');
   renderTmBody();
 }
@@ -4758,7 +4767,7 @@ function cardHTML(cd,o={}){
   if(o.size==='s'||o.size==='xs')return `<span class="${cls}" ${attr}><b class="pc-ovr">${ovr}</b><span class="pc-name">${esc(cd.name)}</span></span>`;
   const rows=gk?[['DIV',ovr],['HAN',ovr-2],['KIC',v(st.pass)],['REF',ovr+1],['SPD',v(st.pace)],['POS',ovr-1]]
     :[['PAC',v(st.pace)],['SHO',v(st.shoot)],['PAS',v(st.pass)],['DRI',v(st.drib)],['DEF',v(st.tackle)],['PHY',v(st.phy||0.75)]];
-  return `<${o.tag||'button'} class="${cls}" ${attr} title="${esc(footLabel(m))}" style="--class-accent:${def.accent};--kit:${gk?cd.club.gk:cd.club.shirt};--num:${gk?'#fff':cd.club.num}">${def.cardArt?`<span class="class-art" style="background-image:url('${def.cardArt}')"></span>`:''}
+  return `<${o.tag||'button'} class="${cls}" ${attr} title="${esc(footLabel(m))}" style="--class-accent:${def.accent};--card-ink:${def.ink||'#1b222c'};--kit:${gk?cd.club.gk:cd.club.shirt};--num:${gk?'#fff':cd.club.num}">${def.cardArt?`<span class="class-art" style="background-image:url('${def.cardArt}')"></span>`:''}
     <span class="pc-top"><span class="pc-l"><b class="pc-ovr">${ovr}</b><i class="pc-pos">${o.pos||cd.pos}</i>${crestHTML(cd.club)}</span><span class="pc-shirt">${cd.num}</span></span>
     <span class="pc-name">${esc(cd.name)}</span>
     <span class="pc-st">${rows.map(([k,x])=>`<span><b>${x}</b>${k}</span>`).join('')}</span>${def.id!=='BASE'?`<span class="class-label">${esc(def.name)}</span>`:''}${o.tagTxt?`<span class="pc-tag${o.tagCls?' '+o.tagCls:''}">${o.tagTxt}</span>`:''}</${o.tag||'button'}>`;
@@ -4806,12 +4815,12 @@ $('tmBody').addEventListener('click',teamAction);
 $('accountBody').addEventListener('click',teamAction);
 $('accountBody').addEventListener('click',e=>{const b=e.target.closest('[data-auth-mode]');if(b){authMode=b.dataset.authMode;renderAccount();}});
 $('accountBody').addEventListener('keydown',e=>{e.stopPropagation();if(e.key==='Enter'&&(e.target.id==='authP'||e.target.id==='authU'))authDo(authMode);});
-$('accountBtn').addEventListener('click',()=>openAccount());
+$('accountBtn').addEventListener('click',async()=>{if(!AUTH.user){openAccount();return;}const b=$('accountBtn');b.disabled=true;try{if(await authLogout()){$('account').hidden=true;goMenu();}}finally{b.disabled=false;}});
 $('accountDone').addEventListener('click',()=>{$('account').hidden=true;goMenu();});
 $('tmDone').addEventListener('click',()=>{$('team').hidden=true;if(!$('online').hidden){$('olClub').innerHTML=myOpt()+clubOpts();$('olClub').value=prof()&&G.set.home>=100?100:Math.min(G.set.home,CLUBS.length-1);G.set.home=+$('olClub').value;olTacLabel();}else goMenu();});
 $('teamBtn').addEventListener('click',()=>openTeam());
 function renderHubAcc(){
-  const p=prof();$('accountBtn').textContent=AUTH.user?'계정 관리':'로그인 / 회원가입';$('teamBtn').textContent='팀 관리';$('teamBtn').classList.toggle('pri',!p);
+  const p=prof();$('accountBtn').textContent=AUTH.user?'로그아웃':'로그인 / 회원가입';$('teamBtn').textContent='팀 관리';$('teamBtn').classList.toggle('pri',!p);
   $('hubAcc').innerHTML=p?`계정 <b>${p.srv?'☁ @'+esc(AUTH.user||''):esc(p.name)}</b> · ${esc(p.team.name)} · OVR <b>${CUSTOM[0].rating}</b>${CUSTOM[0].single>=0?' · 단일팀 +3':''}`:'계정을 만들면 선택한 구단 선수 20명의 베이스 카드를 받아 내 팀을 짤 수 있어요.';
 }
 
@@ -5035,7 +5044,7 @@ async function loadLiveCatalog(){
   LIVE_CATALOG=d.cards;LIVE_CATALOG_READY=true;LIVE_MAP.clear();for(const c of d.cards)LIVE_MAP.set(c.id,c);for(const c of d.classes)CARD_CLASSES[c.id]=c;CARDS=null;CARD_MAP=null;
   if(prof())applyProfile();
 }
-function receiveInventory(data){const p=ACC.list[srvKey()];if(!p)return;p.inventory=data.inventory;p.coins=data.coins;accSave();if(prof()===p)applyProfile();}
+function receiveInventory(data){const p=ACC.list[srvKey()];if(!p)return;p.inventory=data.inventory;p.coins=data.coins;accSave();if(prof()===p)applyProfile();if(!$('shop').hidden&&Number.isFinite(p.coins))$('shopCoins').textContent=p.coins.toLocaleString()+' 코인';}
 let commerce=null;
 function openShop(){if(AUTH.user&&ACC.list[srvKey()]&&ACC.cur!==srvKey()){ACC.cur=srvKey();applyProfile();accSave();renderHubAcc();}if(!commerce)commerce=FL11Commerce({user:()=>AUTH.user,api,loadCatalog:loadLiveCatalog,inventory:receiveInventory,card:cardById,cardHTML,classFor:cardClass,quantity:id=>(ACC.list[srvKey()]?.inventory||[]).find(c=>c.cardId===id)?.quantity||0,flush:srvEnsureSaved,openAccount,openTeam});commerce.open();}
 $('shopBtn').addEventListener('click',openShop);

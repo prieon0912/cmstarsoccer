@@ -55,16 +55,30 @@ test('PostgreSQL migration, concurrent profile revisions, persistence after rest
     const economy=await db.economyState(1);assert.equal(economy.coins,700);assert.equal(economy.inventory.reduce((n,c)=>n+c.quantity,0),5);
     await assert.rejects(db.purchasePack(1,'too-expensive',800,result),/부족/);
     assert.equal((await db.economyState(1)).coins,700);
+    const leagueId='postgres-league-season',meta={club:0,seed:1,custom:true},settlement={seasonId:leagueId,rank:1,amount:100};
+    await db.startLeague(1,leagueId,meta);
+    const simultaneous=await Promise.all([db.settleLeague(1,leagueId,{},settlement),db.settleLeague(1,leagueId,{},settlement),db.purchasePack(1,'parallel-league-draw',100,()=>({packId:'base',count:1,cost:100,cardIds:['a']}))]);
+    assert.equal(simultaneous[0].amount,100);assert.equal(simultaneous[1].amount,100);
+    const rewarded=await db.economyState(1);assert.equal(rewarded.coins,700);assert.equal(rewarded.inventory.reduce((n,c)=>n+c.quantity,0),6);
     const snapshot = await pg.dumpDataDir();
     await db.close(); pg = new PGlite({ loadDataDir: snapshot }); db = loadStore(); await db.init();
     assert.deepEqual(JSON.parse(JSON.stringify(await db.getProfile(1))), JSON.parse(JSON.stringify(saved)));
-    assert.deepEqual(JSON.parse(JSON.stringify(await db.economyState(1))),JSON.parse(JSON.stringify(economy)));
+    assert.deepEqual(JSON.parse(JSON.stringify(await db.economyState(1))),JSON.parse(JSON.stringify(rewarded)));
+    assert.equal((await db.getLeague(1,leagueId)).settlement.amount,100);await db.settleLeague(1,leagueId,{},settlement);assert.equal((await db.economyState(1)).coins,700);
     assert.equal((await db.listCards()).length,2);assert.equal((await db.listClasses())[0].id,'BASE');
     const restoredPacks=await db.listPackages();assert.equal(restoredPacks.length,1);assert.equal(restoredPacks[0].startsAt,scheduled.startsAt);assert.equal(restoredPacks[0].endsAt,scheduled.endsAt);
     const u = await db.createUser('fresh', 'fresh', 'test');
     assert.equal((await db.putProfile(u.id, a, 0)).revision, 1);
     assert.equal(await db.putProfile(u.id, b, 0), null);
     assert.equal(await db.putProfile(999, a, 9), null);
+    const admin=await db.createAdmin('keeper','keeper','fixture-hash');await db.addAdminSession('keeper-session',admin.id,new Date(Date.now()+60000));
+    assert.equal(await db.clearUsers(),2);assert.equal((await db.adminOverview()).users,0);assert.ok(await db.adminSession('keeper-session'));
+    assert.equal(await db.getLeague(1,leagueId),null);assert.equal((await db.listCards()).length,2);assert.equal((await db.listPackages()).length,1);
+    const classCards=[{id:'ICON|a',playerId:'a',classId:'ICON'},{id:'ICON|b',playerId:'b',classId:'ICON'}];
+    const batches=await Promise.all([db.addClassCards(classCards,admin.id),db.addClassCards(classCards,admin.id)]);assert.equal(batches.flat().length,2);
+    await assert.rejects(db.addClassCards([{id:'ROLLBACK|a',classId:'ROLLBACK'}],999999));assert.ok(!(await db.listCards()).some(c=>c.id==='ROLLBACK|a'));
+    const classSnapshot=await pg.dumpDataDir();await db.close();pg=new PGlite({loadDataDir:classSnapshot});db=loadStore();await db.init();
+    assert.equal((await db.listCards()).filter(c=>c.classId==='ICON').length,2);assert.equal((await db.addClassCards(classCards,admin.id)).length,0);
     await db.close(); pg = null;
   } finally {
     if (pg) await pg.close();
@@ -94,7 +108,7 @@ test('separate browser sessions share squad/team/skills; stale and interrupted s
     vm.runInContext([
       part('const PI=', '/* ================= renderer & scene'),
       `const G={state:'menu',set:{}};const SKINS=Array(5),HAIRS=Array(6),BOOTS=Array(6);let tmTab='cards',tmMsg='',lastMessage='';
-      function renderTeam(){if(tmMsg)lastMessage=tmMsg;}function renderTmBody(){}function renderHubAcc(){}`,
+      function renderTeam(){if(tmMsg)lastMessage=tmMsg;}function renderTmBody(){}function renderHubAcc(){}function syncLeagueRewards(){}function openAccount(){renderTeam();}`,
       part('function makeRoster(ci)', 'const LV='),
       part('function tmSlots()', 'const AUTH='),
       part('const AUTH=', 'async function authDelete()'),
@@ -142,6 +156,11 @@ test('separate browser sessions share squad/team/skills; stale and interrupted s
     assert.equal(stale.status,428);
     const status=await fetch(base+'/api/status');assert.match(status.headers.get('cache-control'),/no-store/);assert.equal((await status.json()).profileSync,2);
     const denied=await fetch(base+'/api/me');assert.equal(denied.status,401);
+    // Expired/revoked sessions must return the UI to logged-out state and keep unsaved edits recoverable.
+    await fetch(base+'/api/auth/logout',{method:'POST',headers:{Authorization:'Bearer '+token}});
+    await d.run(`prof().team.name='세션 만료 전 편집';accCommit();srvRefresh()`);
+    assert.equal(d.run('AUTH.token'),null);assert.equal(d.run('AUTH.user'),null);
+    assert.ok(d.json('Object.values(ACC.list).filter(p=>!p.srv)').some(p=>p.team.name==='세션 만료 전 편집'));
   } finally { await new Promise(resolve=>server.close(resolve));await db.close(); }
 });
 
