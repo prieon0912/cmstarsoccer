@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: cmstarsoccer
+    runtime: node
+    plan: free
+    # closest Render region to Korea (pick a Neon project in Singapore too)
+    region: singapore
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      # Postgres connection string (Neon recommended: free and does not expire).
+      # Render asks for this value when the Blueprint is created.
+      - key: DATABASE_URL
+        sync: false
+      - key: NODE_VERSION
+        value: "22"
