@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow"><title>Floodlight Eleven · 관리자</title>
+  <link rel="stylesheet" href="/admin/admin.css"><script src="/admin/manage.js" defer></script>
+</head>
+<body>
+  <main>
+    <header><a href="/">FLOODLIGHT ELEVEN</a><span>관리자 전용</span></header>
+    <section id="login" class="card" hidden>
+      <p class="eyebrow">OPERATIONS</p><h1>운영자 로그인</h1><p class="muted">게임 계정과 분리된 관리자 계정으로 로그인하세요.</p>
+      <form id="loginForm">
+        <label for="username">관리자 아이디</label><input id="username" name="username" value="prieon_auth" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="32" required>
+        <label for="password">비밀번호</label><input id="password" name="password" type="password" autocomplete="current-password" maxlength="72" required>
+        <button id="loginButton" type="submit">관리자 로그인</button>
+      </form>
+    </section>
+    <section id="dashboard" hidden>
+      <div class="dashboard-head"><div><p class="eyebrow">CONTROL ROOM</p><h1>운영 대시보드</h1><p id="adminName" class="muted"></p></div><button id="logout" class="secondary">로그아웃</button></div>
+      <p id="storage" class="badge"></p>
+      <div class="stats"><article><span>게임 계정</span><strong id="users">—</strong></article><article><span>저장된 팀</span><strong id="profiles">—</strong></article><article><span>계정 권한</span><strong class="role">운영자</strong></article></div>
+      <nav class="admin-tabs"><button data-tab="packages">패키지·확률 관리</button><button data-tab="cards">선수 카드·히든 관리</button><button data-tab="classes">클래스 디자인</button></nav>
+      <section id="management"></section><section id="editor" class="card" hidden></section>
+
+    </section>
+    <p id="message" role="status" aria-live="polite">로그인 상태를 확인하고 있어요.</p>
+    <footer>일반 회원가입으로는 관리자 권한이 부여되지 않습니다.</footer>
+  </main>
+</body>
+</html>
+

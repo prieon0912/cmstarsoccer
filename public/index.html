@@ -99,7 +99,7 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
   #ctl #stickArea{width:50%;top:25%}
 }
 #knob{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#fff 0,#dfe5ee 40%,#9aa6b8 100%);box-shadow:0 4px 12px rgba(0,0,0,.45)}
-#pad{position:absolute;right:var(--sr);bottom:calc(8px + var(--sbm));width:190px;height:184px;pointer-events:none}
+#pad{position:absolute;right:var(--sr);bottom:calc(8px + var(--sbm));width:240px;height:184px;pointer-events:none}
 .bt{position:absolute;border-radius:50%;border:none;pointer-events:auto;display:grid;place-items:center;align-content:center;gap:0;padding:0;background:radial-gradient(circle at 50% 30%,rgba(255,255,255,.22),rgba(255,255,255,.06) 70%);box-shadow:inset 0 0 0 2px rgba(255,255,255,.35),0 6px 16px rgba(0,0,0,.35);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);transition:transform .06s}
 .bt b{font-size:15px;font-weight:900;letter-spacing:.02em;text-shadow:0 1px 3px rgba(0,0,0,.6)}
 .bt small{font-family:var(--f-num);font-size:10px;letter-spacing:.14em;opacity:.7}
@@ -111,6 +111,8 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
 #bShoot b{font-size:18px}
 #bThru{right:94px;bottom:88px;width:66px;height:66px;box-shadow:inset 0 0 0 3px rgba(240,210,90,.75),0 6px 16px rgba(0,0,0,.35)}
 #bPass{right:104px;bottom:0;width:68px;height:68px;box-shadow:inset 0 0 0 3px rgba(110,190,240,.75),0 6px 16px rgba(0,0,0,.35)}
+#bCross{right:178px;bottom:60px;width:58px;height:58px;--c:#bca2ff;box-shadow:inset 0 0 0 2px #bca2ff,0 6px 16px rgba(0,0,0,.35)}
+#bCross b{font-size:12px}
 /* little arrows round a button show it takes swipes */
 .bt .ar{position:absolute;width:0;height:0;border:5px solid transparent;opacity:.85;pointer-events:none}
 .bt .ar.u{top:-9px;left:50%;margin-left:-5px;border-bottom-color:var(--c)}
@@ -371,15 +373,7 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
 .cg .pc{--w:84px}
 .tm-card{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center}
 .tm-card .pc{--w:92px;cursor:default}
-.tp.cardy{min-width:0}
-.tp.cardy em{margin-top:1px}
 .bs .pc{--w:36px}
-.tp.cardy .pc-ovr,.bs .pc-ovr{display:block;width:auto;height:auto;border-radius:0;background:none;box-shadow:none;color:inherit;place-items:initial}
-.tp.cardy .pc-ovr,.bs .pc .pc-ovr{font-size:calc(var(--w)*0.34)}
-.tp.cardy span,.bs span{text-shadow:none}
-.tp.cardy .pc-name,.bs .pc .pc-name{font-size:calc(var(--w)*0.2);max-width:calc(var(--w) - 6px);font-weight:800;color:#1b222c}
-.bs.full{padding:2px}
-.bs.sel .pc{filter:drop-shadow(0 0 5px rgba(255,212,71,.95))}
 /* substitutions */
 .sub-card{width:min(640px,100%)}
 .sub-cols{display:grid;grid-template-columns:1fr 1fr;gap:10px;min-height:0}
@@ -419,6 +413,8 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
 }
 </style>
 
+<link rel="stylesheet" href="/commerce.css">
+<script src="/data/card-classes.js"></script><script src="/data/player-catalog.js"></script><script src="/commerce.js"></script>
 </head>
 <body>
 <div id="app">
@@ -453,6 +449,7 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
         <button class="bt" id="bShoot" data-k="shoot"><b>슛</b><small class="keyhint">L</small><i class="ar u"></i><i class="ar d"></i><i class="ar l"></i><i class="ar r"></i></button>
         <button class="bt" id="bThru" data-k="thru"><b>스루</b><small class="keyhint">K</small><i class="ar u"></i></button>
         <button class="bt" id="bPass" data-k="pass"><b>패스</b><small class="keyhint">J</small><i class="ar u"></i></button>
+        <button class="bt" id="bCross" data-k="lob" aria-label="크로스 또는 롱패스"><b>크로스</b><small class="keyhint">U</small></button>
         <button class="bt" id="bSprint" data-k="sprint"><b>질주</b><small class="keyhint">SHIFT</small><i class="ar u"></i><i class="ar d"></i><i class="ar l"></i><i class="ar r"></i></button>
       </div>
     </div>
@@ -469,7 +466,7 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
         <div class="row"><label>난이도</label><div class="seg" id="segD"></div></div>
         <div class="row"><label>경기 시간</label><div class="seg" id="segL"></div></div>
         <div class="hub-acc" id="hubAcc"></div>
-        <div class="hub-more"><button id="teamBtn">팀 설정</button><button id="friendBtn">친선 경기</button><button id="olBtn">1대1 온라인</button><button id="newSeasonBtn">새 시즌</button></div>
+        <div class="hub-more"><button id="accountBtn">로그인 / 회원가입</button><button id="shopBtn">상점</button><button id="teamBtn">팀 설정</button><button id="friendBtn">친선 경기</button><button id="olBtn">1대1 온라인</button><button id="newSeasonBtn">새 시즌</button></div>
       </div>
       <div class="hub-r">
         <div class="hub-tabs" id="hubTabs"><button data-tab="table">순위</button><button data-tab="fix">일정·결과</button><button data-tab="sc">득점</button></div>
@@ -538,13 +535,19 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
         <div class="tm-bench" id="tmBench"></div>
       </div>
       <div class="tac-side tm-side">
-        <div class="tm-tabs" id="tmTabs" role="tablist"><button data-t="cards" role="tab">선수</button><button data-t="team" role="tab">팀</button><button data-t="skills" role="tab">개인기</button><button data-t="acc" role="tab">계정</button></div>
+        <div class="tm-tabs" id="tmTabs" role="tablist"><button data-t="cards" role="tab">선수</button><button data-t="team" role="tab">팀</button><button data-t="skills" role="tab">개인기</button></div>
         <div class="tm-body" id="tmBody"></div>
         <div class="r-b"><button class="pri" id="tmDone">완료</button></div>
       </div>
     </div>
   </section>
 
+  <section id="account" class="ov" hidden>
+    <div class="card account-card"><h2>ACCOUNT</h2><div class="tm-body" id="accountBody"></div><div class="r-b"><button id="accountDone">닫기</button></div></div>
+  </section>
+  <section id="shop" class="ov" hidden>
+    <div class="card shop-card"><div class="shop-head"><h2>PLAYER SHOP</h2><span class="coin-pill" id="shopCoins">— 코인</span><button id="shopClose">닫기</button></div><div class="shop-scroll" id="shopContent"></div><p class="note" id="shopMessage" role="status"></p></div>
+  </section>
   <section id="subs" class="ov" hidden>
     <div class="card sub-card">
       <h2>SUBSTITUTION</h2>
@@ -646,7 +649,7 @@ const SKILLS=[null,
  {n:'레인보우 플릭',T:0.66,star:4,d:'공을 머리 위로 넘김',tw:[[0,0.66]]},{n:'볼 롤',T:0.5,star:2,d:'발바닥으로 옆으로 굴림',tw:[[0,1]]},{n:'엘라스티코',T:0.52,star:5,d:'바깥으로 밀었다 안으로 꺾기',tw:[[0.05,0.78]]},
  {n:'레인 체인지',T:0.46,star:3,d:'속도 유지한 채 옆 레인으로',tw:[[0.08,0.45]]},{n:'룰렛',T:0.7,star:4,d:'몸으로 가리며 돌아 전진',tw:[[0,0.95]]},{n:'힐 투 힐',T:0.44,star:3,d:'멈칫했다 폭발적 전진',tw:[[0,0.42]]},
  {n:'페이크 슛',T:0.56,star:1,d:'슛 동작으로 속이고 옆으로',tw:[[0,0.85]]},{n:'급정지',T:0.36,star:1,d:'발바닥으로 세우고 멈춤',tw:[[0,1]]},
- {n:'라 크로케타',T:0.42,star:3,d:'안쪽으로 툭 옮겨 반대발로 받기',tw:[[0.04,0.62]]}];
+ {n:'라 크로케타',T:0.50,star:3,d:'양발 안쪽 두 번 터치로 옆으로 크게 빠져나가기',tw:[[0.02,0.82]]}];
 // a player short of stars does the simpler move instead
 const SK_FALL=[0,4,6,0,0,4,4,1,6,2,4,0,0,6];
 // the body pose each move borrows (the newer moves reuse the closest drawn one where the footwork matches)
@@ -781,6 +784,48 @@ const PL_IDX=[];
 for(const [i,c] of CLUBS.entries()){c.rating=Math.round(c.xi.reduce((a,p)=>a+p[3],0)/11);c.sp='';c.spc='#ffffff';c.bench=(c.sub||[]).map(p=>c.id+'|'+p[0]);if(c.lg==='PL')PL_IDX.push(i);}
 // <option>s for every club, grouped by league
 const clubOptsG=(sel,label)=>LEAGUES.map(([k,n])=>`<optgroup label="${n}">${CLUBS.map((c,i)=>c.lg===k?`<option value="${i}"${i===sel?' selected':''}>${label?label(c):c.name}</option>`:'').join('')}</optgroup>`).join('');
+// Real-player footedness: EA FC 27 base ratings snapshot, with sourced identity overrides.
+// See assets/foot-sources.json for player IDs, references and retrieval date.
+const FOOT_DATA={
+  "ARS|라야":{"foot":"R","wf":3,"id":220901},"ARS|칼라피오리":{"foot":"L","wf":5,"id":257711},"ARS|가브리엘":{"foot":"L","wf":2,"id":232580},"ARS|살리바":{"foot":"R","wf":3,"id":243715},"ARS|팀버":{"foot":"R","wf":3,"id":251805},"ARS|라이스":{"foot":"R","wf":3,"id":234378},"ARS|기마랑이스":{"foot":"R","wf":3,"id":247851},"ARS|외데고르":{"foot":"L","wf":2,"id":222665},"ARS|에제":{"foot":"R","wf":4,"id":235794},"ARS|요케레스":{"foot":"R","wf":4,"id":241651},"ARS|사카":{"foot":"L","wf":4,"id":246669},"ARS|케파":{"foot":"R","wf":4,"id":206585},"ARS|콘사":{"foot":"R","wf":3,"id":227678},"ARS|화이트":{"foot":"R","wf":4,"id":231936},"ARS|인카피에":{"foot":"L","wf":2,"id":256197},"ARS|모스케라":{"foot":"R","wf":3,"id":264846},"ARS|수비멘디":{"foot":"R","wf":4,"id":248148},"ARS|메리노":{"foot":"L","wf":3,"id":225193},"ARS|하베르츠":{"foot":"L","wf":4,"id":235790},"ARS|마두에케":{"foot":"L","wf":3,"id":254796},
+  "AVL|스즈키":{"foot":"R","wf":3,"id":255981},"AVL|마트선":{"foot":"L","wf":2,"id":248465},"AVL|파우 토레스":{"foot":"L","wf":2,"id":241464},"AVL|린델뢰프":{"foot":"R","wf":4,"id":221660},"AVL|캐시":{"foot":"R","wf":3,"id":227174},"AVL|카마라":{"foot":"R","wf":3,"id":236987},"AVL|고레츠카":{"foot":"R","wf":4,"id":209658},"AVL|맥긴":{"foot":"L","wf":2,"id":210881},"AVL|만잠비":{"foot":"R","wf":3,"id":276694},"AVL|N.잭슨":{"foot":"R","wf":3,"id":259197},"AVL|베일리":{"foot":"L","wf":2,"id":229906},"AVL|비조":{"foot":"R","wf":2,"id":200110},"AVL|밍스":{"foot":"L","wf":2,"id":212419},"AVL|보가르드":{"foot":"R","wf":4,"id":264209},"AVL|키바 시세":{"foot":"R","wf":2,"id":77524},"AVL|오나나":{"foot":"R","wf":4,"id":257057},"AVL|조앙 고메스":{"foot":"R","wf":3,"id":273463},"AVL|가르나초":{"foot":"R","wf":4,"id":268438},"AVL|왓킨스":{"foot":"R","wf":4,"id":221697},"AVL|에이브러햄":{"foot":"R","wf":3,"id":231352},
+  "BOU|페트로비치":{"foot":"R","wf":2,"id":269626},"BOU|트뤼페르":{"foot":"L","wf":3,"id":256769},"BOU|힐":{"foot":"R","wf":3,"id":248492},"BOU|실바":{"foot":"R","wf":2,"id":270086},"BOU|A.스미스":{"foot":"R","wf":3,"id":190885},"BOU|크리스티":{"foot":"L","wf":4,"id":213884},"BOU|애덤스":{"foot":"R","wf":3,"id":232999},"BOU|클라위버르트":{"foot":"R","wf":4,"id":236920},"BOU|타베르니에":{"foot":"L","wf":3,"id":237477},"BOU|에바니우송":{"foot":"R","wf":4,"id":256612},"BOU|하이앙":{"foot":"L","wf":2,"id":83494},"BOU|포스터":{"foot":"R","wf":5,"id":172203},"BOU|디아키테":{"foot":"R","wf":4,"id":246565},"BOU|후안루":{"foot":"R","wf":3,"id":264174},"BOU|A.스콧":{"foot":"R","wf":3,"id":261299},"BOU|브룩스":{"foot":"L","wf":3,"id":220196},"BOU|개넌도크":{"foot":"R","wf":4,"id":266815},"BOU|크루피":{"foot":"R","wf":3,"id":277909},"BOU|아들리":{"foot":"L","wf":3,"id":255223},"BOU|아라우호":{"foot":"R","wf":2,"id":247678},
+  "BRE|켈러허":{"foot":"R","wf":4,"id":240913},"BRE|루이스포터":{"foot":"R","wf":4,"id":243606},"BRE|판덴베르흐":{"foot":"R","wf":3,"id":242453},"BRE|아예르":{"foot":"R","wf":3,"id":224258},"BRE|카요데":{"foot":"R","wf":3,"id":277869},"BRE|야넬트":{"foot":"L","wf":3,"id":235167},"BRE|상가레":{"foot":"L","wf":4,"id":258601},"BRE|옌센":{"foot":"R","wf":4,"id":229723},"BRE|와타라":{"foot":"L","wf":3,"id":265552},"BRE|이고르 티아구":{"foot":"R","wf":4,"id":275771},"BRE|샤데":{"foot":"R","wf":4,"id":260926},"BRE|발디마르손":{"foot":"R","wf":3,"id":264133},"BRE|콜린스":{"foot":"R","wf":3,"id":248484},"BRE|히키":{"foot":"R","wf":5,"id":248808},"BRE|김지수":{"foot":"R","wf":4,"id":267844},"BRE|야르몰류크":{"foot":"R","wf":3,"id":270608},"BRE|담스고르":{"foot":"R","wf":3,"id":241508},"BRE|앤서니":{"foot":"R","wf":3,"id":243669},"BRE|F.카르발류":{"foot":"R","wf":4,"id":256725},"BRE|밀람보":{"foot":"R","wf":3,"id":263640},
+  "BHA|페르브뤼헌":{"foot":"R","wf":4,"id":258498},"BHA|보스칼리":{"foot":"L","wf":3,"id":225863},"BHA|부슈코비치":{"foot":"R","wf":3,"id":275192},"BHA|덩크":{"foot":"R","wf":2,"id":199915},"BHA|코스티냐":{"foot":"R","wf":3,"id":251942},"BHA|체마 안드레스":{"foot":"R","wf":3,"id":75056},"BHA|그로스":{"foot":"R","wf":4,"id":190765},"BHA|아야리":{"foot":"R","wf":3,"id":257400},"BHA|더카위퍼르":{"foot":"L","wf":4,"id":251479},"BHA|코스툴라스":{"foot":"R","wf":3,"id":73885},"BHA|디에고 고메스":{"foot":"R","wf":3,"id":269278},"BHA|스틸":{"foot":"R","wf":2,"id":188836},"BHA|하잠":{"foot":"L","wf":3,"id":258230},"BHA|카디오을루":{"foot":"R","wf":4,"id":235152},"BHA|스보보다":{"foot":"R","wf":3,"id":250779},"BHA|힌셜우드":{"foot":"R","wf":4,"id":277283},"BHA|오라일리":{"foot":"L","wf":4,"id":240734},"BHA|얄쿠예":{"foot":"R","wf":2,"id":70841},"BHA|뤼테르":{"foot":"L","wf":5,"id":245637},"BHA|미토마":{"foot":"R","wf":4,"id":255565},
+  "CHE|펜더스":{"foot":"L","wf":2,"id":270821},"CHE|콜윌":{"foot":"L","wf":3,"id":262859},"CHE|포파나":{"foot":"R","wf":3,"id":248695},"CHE|아체암퐁":{"foot":"R","wf":3,"id":71651},"CHE|네투":{"foot":"L","wf":4,"id":238616},"CHE|라비아":{"foot":"R","wf":3,"id":263620},"CHE|카이세도":{"foot":"R","wf":3,"id":256079},"CHE|팔레스트라":{"foot":"R","wf":4,"id":278339},"CHE|로저스":{"foot":"R","wf":4,"id":260247},"CHE|주앙 페드루":{"foot":"R","wf":4,"id":252042},"CHE|파머":{"foot":"L","wf":3,"id":257534},"CHE|E.마르티네스":{"foot":"R","wf":4,"id":202811},"CHE|귀스토":{"foot":"R","wf":3,"id":259307},"CHE|라크루아":{"foot":"R","wf":2,"id":244067},"CHE|하토":{"foot":"L","wf":3,"id":272978},"CHE|헨더슨":{"foot":"R","wf":3,"id":183711},"CHE|바르코":{"foot":"L","wf":3,"id":263370},"CHE|이스테방":{"foot":"L","wf":3,"id":76687},"CHE|웰벡":{"foot":"R","wf":4,"id":186146},"CHE|켄다":{"foot":"L","wf":4,"id":279044},
+  "COV|러시워스":{"foot":"L","wf":2,"id":263339},"COV|다실바":{"foot":"L","wf":3,"id":232755},"COV|음푸니":{"foot":"L","wf":2,"id":81538},"COV|피넉":{"foot":"L","wf":3,"id":238717},"COV|판에바이크":{"foot":"R","wf":3,"id":251626},"COV|토르프":{"foot":"R","wf":4,"id":241645},"COV|이렌키":{"foot":"R","wf":4,"id":73638},"COV|루도니":{"foot":"L","wf":4,"id":251690},"COV|그보호":{"foot":"R","wf":3,"id":252937},"COV|아워니이":{"foot":"R","wf":2,"id":230978},"COV|사카모토":{"foot":"L","wf":4,"id":254910},"COV|벤틀리":{"foot":"R","wf":3,"id":198350},"COV|B.토머스":{"foot":"R","wf":3,"id":257253},"COV|키칭":{"foot":"L","wf":3,"id":246873},"COV|오녜카":{"foot":"R","wf":3,"id":239529},"COV|토머스아산테":{"foot":"R","wf":4,"id":235744},"COV|심스":{"foot":"R","wf":4,"id":251198},"COV|셰리프":{"foot":"R","wf":3,"id":277485},"COV|H.라이트":{"foot":"R","wf":4,"id":238743},"COV|메이슨클라크":{"foot":"R","wf":4,"id":236784},
+  "CRY|헨더슨":{"foot":"R","wf":3,"id":233306},"CRY|리처즈":{"foot":"R","wf":3,"id":250954},"CRY|디사시":{"foot":"R","wf":2,"id":229942},"CRY|캉보":{"foot":"R","wf":3,"id":74133},"CRY|미첼":{"foot":"L","wf":3,"id":240947},"CRY|워튼":{"foot":"L","wf":3,"id":259240},"CRY|가마다":{"foot":"R","wf":3,"id":232730},"CRY|밍게사":{"foot":"R","wf":3,"id":259694},"CRY|맥닐":{"foot":"L","wf":2,"id":243282},"CRY|마테타":{"foot":"R","wf":5,"id":236461},"CRY|피노":{"foot":"R","wf":4,"id":259377},"CRY|매슈스":{"foot":"R","wf":3,"id":203824},"CRY|리아드":{"foot":"L","wf":3,"id":258490},"CRY|토미야스":{"foot":"R","wf":5,"id":232938},"CRY|레르마":{"foot":"R","wf":3,"id":213991},"CRY|휴스":{"foot":"L","wf":3,"id":206516},"CRY|에세":{"foot":"L","wf":2,"id":273616},"CRY|사르":{"foot":"R","wf":2,"id":235353},"CRY|스트란 라르센":{"foot":"R","wf":3,"id":238756},"CRY|데브니":{"foot":"L","wf":2,"id":73895},
+  "EVE|픽퍼드":{"foot":"L","wf":4,"id":204935},"EVE|미콜렌코":{"foot":"L","wf":2,"id":244380},"EVE|오브라이언":{"foot":"R","wf":3,"id":253510},"EVE|타코우스키":{"foot":"R","wf":4,"id":202695},"EVE|뢸":{"foot":"R","wf":4,"id":259714},"EVE|가너":{"foot":"R","wf":3,"id":243657},"EVE|암스트롱":{"foot":"R","wf":3,"id":74413},"EVE|듀스버리홀":{"foot":"L","wf":3,"id":237386},"EVE|T.조지":{"foot":"R","wf":4,"id":71998},"EVE|배리":{"foot":"R","wf":4,"id":276295},"EVE|B.존슨":{"foot":"R","wf":4,"id":251421},"EVE|트래버스":{"foot":"R","wf":2,"id":232284},"EVE|패터슨":{"foot":"R","wf":2,"id":257896},"EVE|브랜스웨이트":{"foot":"L","wf":5,"id":247649},"EVE|킨":{"foot":"R","wf":3,"id":207599},"EVE|뇌르고르":{"foot":"R","wf":3,"id":210697},"EVE|알카라스":{"foot":"R","wf":3,"id":256402},"EVE|디블링":{"foot":"L","wf":3,"id":279497},"EVE|베투":{"foot":"R","wf":3,"id":251892},"EVE|아즈누":{"foot":"L","wf":3,"id":70448},
+  "FUL|레노":{"foot":"R","wf":3,"id":192563},"FUL|로빈슨":{"foot":"L","wf":3,"id":229348},"FUL|아펜그루버":{"foot":"R","wf":3,"id":261264},"FUL|배시":{"foot":"L","wf":3,"id":241436},"FUL|카스타뉴":{"foot":"R","wf":3,"id":222501},"FUL|샤를":{"foot":"R","wf":3,"id":276695},"FUL|베리":{"foot":"R","wf":3,"id":228092},"FUL|킹":{"foot":"R","wf":4,"id":70786},"FUL|이워비":{"foot":"R","wf":3,"id":213655},"FUL|가르시아":{"foot":"R","wf":4,"id":278399},"FUL|보브":{"foot":"L","wf":3,"id":277295},"FUL|르콩트":{"foot":"L","wf":3,"id":200726},"FUL|안데르센":{"foot":"R","wf":4,"id":224221},"FUL|테테":{"foot":"R","wf":2,"id":216266},"FUL|쿠엔카":{"foot":"L","wf":3,"id":237522},"FUL|케어니":{"foot":"L","wf":2,"id":195202},"FUL|스미스 로":{"foot":"R","wf":4,"id":240273},"FUL|세세뇽":{"foot":"L","wf":3,"id":235883},"FUL|무니스":{"foot":"R","wf":3,"id":264337},"FUL|케빈":{"foot":"R","wf":3,"id":70571},
+  "HUL|촐라키스":{"foot":"R","wf":3,"id":252552},"HUL|아자이":{"foot":"R","wf":2,"id":207952},"HUL|이건":{"foot":"R","wf":3,"id":204936},"HUL|멘디":{"foot":"L","wf":3,"id":276633},"HUL|자일스":{"foot":"L","wf":2,"id":243608},"HUL|슬레이터":{"foot":"R","wf":3,"id":241953},"HUL|이로에그부남":{"foot":"R","wf":4,"id":266609},"HUL|코일":{"foot":"R","wf":3,"id":224099},"HUL|스트라우드":{"foot":"L","wf":3,"id":272712},"HUL|맥버니":{"foot":"R","wf":3,"id":220031},"HUL|벨루미":{"foot":"L","wf":3,"id":277663},"HUL|버틀랜드":{"foot":"R","wf":4,"id":203042},"HUL|헤링턴":{"foot":"R","wf":3,"id":75145},"HUL|드라메":{"foot":"R","wf":3,"id":254529},"HUL|크룩스":{"foot":"R","wf":2,"id":202693},"HUL|모리타":{"foot":"R","wf":5,"id":242087},"HUL|밀러":{"foot":"R","wf":3,"id":240925},"HUL|겔하르트":{"foot":"L","wf":3,"id":246053},"HUL|오뮈르":{"foot":"L","wf":3,"id":231777},"HUL|휴스":{"foot":"R","wf":3,"id":272895},
+  "IPS|월턴":{"foot":"L","wf":2,"id":206561},"IPS|데이비스":{"foot":"L","wf":2,"id":246685},"IPS|디오프":{"foot":"R","wf":3,"id":231633},"IPS|오셰이":{"foot":"R","wf":3,"id":235405},"IPS|와타라":{"foot":"R","wf":2,"id":75318},"IPS|플로렌티노":{"foot":"R","wf":3,"id":234569},"IPS|루키치":{"foot":"R","wf":3,"id":236699},"IPS|엔시소":{"foot":"R","wf":3,"id":255434},"IPS|필로젠":{"foot":"R","wf":5,"id":261336},"IPS|에메르손":{"foot":"R","wf":3,"id":76803},"IPS|파타우":{"foot":"L","wf":4,"id":267680},"IPS|A.파머":{"foot":"R","wf":3,"id":223909},"IPS|그리브스":{"foot":"L","wf":2,"id":248602},"IPS|펄롱":{"foot":"R","wf":3,"id":223877},"IPS|테일러":{"foot":"R","wf":4,"id":233851},"IPS|마투시와":{"foot":"R","wf":3,"id":239356},"IPS|마에다":{"foot":"R","wf":4,"id":246321},"IPS|아크폼":{"foot":"R","wf":3,"id":213418},"IPS|메흐메티":{"foot":"R","wf":3,"id":250816},"IPS|클라크":{"foot":"R","wf":4,"id":242908},
+  "LEE|트래퍼드":{"foot":"R","wf":3,"id":263063},"LEE|무하레모비치":{"foot":"L","wf":3,"id":262027},"LEE|엘베디":{"foot":"R","wf":3,"id":221491},"LEE|쥐스탱":{"foot":"R","wf":4,"id":231554},"LEE|구드문드손":{"foot":"L","wf":3,"id":236822},"LEE|암파두":{"foot":"R","wf":4,"id":235735},"LEE|다나카":{"foot":"R","wf":3,"id":236764},"LEE|보글":{"foot":"R","wf":3,"id":244591},"LEE|H.윌슨":{"foot":"L","wf":2,"id":220710},"LEE|캘버트르윈":{"foot":"R","wf":2,"id":221479},"LEE|D.제임스":{"foot":"R","wf":4,"id":232104},"LEE|페리":{"foot":"R","wf":2,"id":230670},"LEE|비욜":{"foot":"R","wf":3,"id":244238},"LEE|로던":{"foot":"R","wf":3,"id":229266},"LEE|그루에프":{"foot":"L","wf":3,"id":248384},"LEE|슈타흐":{"foot":"R","wf":4,"id":257191},"LEE|에런슨":{"foot":"R","wf":3,"id":247361},"LEE|오카포르":{"foot":"R","wf":4,"id":242530},"LEE|은메차":{"foot":"R","wf":4,"id":230084},"LEE|뇬토":{"foot":"R","wf":4,"id":258906},
+  "LIV|알리송":{"foot":"R","wf":3,"id":212831},"LIV|케르케즈":{"foot":"L","wf":3,"id":260908},"LIV|반다이크":{"foot":"R","wf":3,"id":203376},"LIV|아라우호":{"foot":"R","wf":3,"id":253163},"LIV|프림퐁":{"foot":"R","wf":3,"id":253149},"LIV|흐라번베르흐":{"foot":"R","wf":4,"id":246104},"LIV|맥알리스터":{"foot":"R","wf":3,"id":239837},"LIV|비르츠":{"foot":"R","wf":4,"id":256630},"LIV|각포":{"foot":"R","wf":4,"id":242516},"LIV|이사크":{"foot":"R","wf":4,"id":233731},"LIV|소보슬라이":{"foot":"R","wf":4,"id":236772},"LIV|마마르다슈빌리":{"foot":"L","wf":3,"id":262621},"LIV|자케":{"foot":"R","wf":2,"id":278903},"LIV|고메스":{"foot":"R","wf":3,"id":225100},"LIV|브래들리":{"foot":"R","wf":3,"id":264298},"LIV|치미카스":{"foot":"L","wf":3,"id":232223},"LIV|엔도":{"foot":"R","wf":4,"id":232487},"LIV|에키티케":{"foot":"R","wf":3,"id":257289},"LIV|키에사":{"foot":"R","wf":4,"id":235805},"LIV|응구모하":{"foot":"R","wf":3,"id":80376},
+  "MCI|돈나룸마":{"foot":"R","wf":3,"id":230621},"MCI|그바르디올":{"foot":"L","wf":5,"id":251517},"MCI|디아스":{"foot":"R","wf":4,"id":239818},"MCI|쿠사노프":{"foot":"R","wf":3,"id":277031},"MCI|누네스":{"foot":"R","wf":3,"id":253124},"MCI|엔소":{"foot":"R","wf":4,"id":247090},"MCI|E.앤더슨":{"foot":"R","wf":4,"id":254243},"MCI|포든":{"foot":"L","wf":2,"id":237692},"MCI|도쿠":{"foot":"R","wf":4,"id":246420},"MCI|홀란":{"foot":"L","wf":3,"id":239085},"MCI|은디아예":{"foot":"R","wf":4,"id":261188},"MCI|룰리":{"foot":"R","wf":3,"id":215316},"MCI|게히":{"foot":"R","wf":5,"id":241159},"MCI|아이트누리":{"foot":"L","wf":3,"id":242641},"MCI|루이스":{"foot":"R","wf":3,"id":271574},"MCI|코바치치":{"foot":"R","wf":4,"id":207410},"MCI|부아디":{"foot":"R","wf":3,"id":278901},"MCI|셰르키":{"foot":"L","wf":5,"id":251570},"MCI|세메뇨":{"foot":"R","wf":5,"id":241236},"MCI|맥에이두":{"foot":"L","wf":3,"id":81685},
+  "MUN|라먼스":{"foot":"R","wf":4,"id":254803},"MUN|달로트":{"foot":"R","wf":4,"id":234574},"MUN|리산드로 마르티네스":{"foot":"L","wf":3,"id":239301},"MUN|매과이어":{"foot":"R","wf":3,"id":203263},"MUN|요로":{"foot":"R","wf":3,"id":269087},"MUN|발레바":{"foot":"L","wf":3,"id":272500},"MUN|마이누":{"foot":"R","wf":3,"id":269136},"MUN|브루누 페르난드스":{"foot":"R","wf":4,"id":212198},"MUN|쿠냐":{"foot":"R","wf":4,"id":240243},"MUN|셰슈코":{"foot":"R","wf":4,"id":260592},"MUN|음뵈모":{"foot":"L","wf":2,"id":243014},"MUN|달로":{"foot":"R","wf":2,"id":193331},"MUN|더리흐트":{"foot":"R","wf":3,"id":235243},"MUN|마즈라위":{"foot":"R","wf":3,"id":236401},"MUN|쇼":{"foot":"L","wf":2,"id":205988},"MUN|틸레만스":{"foot":"R","wf":4,"id":216393},"MUN|안드레이 산투스":{"foot":"R","wf":3,"id":273018},"MUN|마운트":{"foot":"R","wf":4,"id":233064},"MUN|디알로":{"foot":"L","wf":4,"id":254088},"MUN|래시퍼드":{"foot":"R","wf":3,"id":231677},
+  "NEW|호르니체크":{"foot":"R","wf":2,"id":258936},"NEW|홀":{"foot":"L","wf":3,"id":266127},"NEW|번":{"foot":"L","wf":3,"id":198032},"NEW|셰어":{"foot":"R","wf":3,"id":210047},"NEW|데디치":{"foot":"R","wf":4,"id":257345},"NEW|조엘린통":{"foot":"R","wf":3,"id":223334},"NEW|N.곤살레스":{"foot":"R","wf":2,"id":255069},"NEW|윌록":{"foot":"R","wf":3,"id":237329},"NEW|반스":{"foot":"R","wf":4,"id":234742},"NEW|오술라":{"foot":"R","wf":4,"id":270519},"NEW|엘랑가":{"foot":"R","wf":5,"id":257470},"NEW|포프":{"foot":"R","wf":3,"id":203841},"NEW|티아우":{"foot":"R","wf":4,"id":256261},"NEW|보트만":{"foot":"L","wf":3,"id":251809},"NEW|리브라멘투":{"foot":"R","wf":4,"id":262118},"NEW|마일리":{"foot":"R","wf":4,"id":274246},"NEW|J.램지":{"foot":"R","wf":4,"id":246923},"NEW|머피":{"foot":"R","wf":4,"id":206085},"NEW|위사":{"foot":"R","wf":3,"id":234824},"NEW|박승수":{"foot":"R","wf":3,"id":71236},
+  "NFO|셀스":{"foot":"R","wf":2,"id":199641},"NFO|무리요":{"foot":"L","wf":3,"id":278016},"NFO|밀렌코비치":{"foot":"R","wf":3,"id":238095},"NFO|자이르":{"foot":"R","wf":4,"id":79629},"NFO|N.윌리엄스":{"foot":"R","wf":4,"id":243057},"NFO|슐라거":{"foot":"L","wf":3,"id":233195},"NFO|매커티":{"foot":"L","wf":3,"id":264349},"NFO|아이나":{"foot":"R","wf":4,"id":224656},"NFO|은도예":{"foot":"R","wf":3,"id":257980},"NFO|들랩":{"foot":"R","wf":5,"id":259031},"NFO|깁스화이트":{"foot":"R","wf":3,"id":236015},"NFO|빅토르":{"foot":"R","wf":1,"id":234724},"NFO|모라투":{"foot":"L","wf":2,"id":256008},"NFO|애벗":{"foot":"R","wf":3,"id":74242},"NFO|도밍게스":{"foot":"R","wf":4,"id":237819},"NFO|예이츠":{"foot":"R","wf":3,"id":235642},"NFO|허드슨오도이":{"foot":"R","wf":3,"id":240740},"NFO|바크와":{"foot":"L","wf":2,"id":250789},"NFO|우드":{"foot":"R","wf":3,"id":192123},"NFO|이고르 제주스":{"foot":"R","wf":3,"id":79402},
+  "SUN|루프스":{"foot":"L","wf":3,"id":263798},"SUN|레이니우두":{"foot":"L","wf":3,"id":236045},"SUN|알데레테":{"foot":"L","wf":3,"id":240359},"SUN|오닌":{"foot":"R","wf":4,"id":215700},"SUN|흄":{"foot":"R","wf":3,"id":266400},"SUN|자카":{"foot":"L","wf":3,"id":199503},"SUN|사디키":{"foot":"R","wf":3,"id":269230},"SUN|르페":{"foot":"R","wf":3,"id":246350},"SUN|앙굴로":{"foot":"R","wf":4,"id":264205},"SUN|브로베이":{"foot":"R","wf":4,"id":251810},"SUN|리그":{"foot":"L","wf":3,"id":273459},"SUN|엘보리":{"foot":"R","wf":1,"id":259987},"SUN|무키엘레":{"foot":"R","wf":3,"id":226166},"SUN|밸러드":{"foot":"R","wf":3,"id":243908},"SUN|셀트":{"foot":"R","wf":3,"id":266467},"SUN|디아라":{"foot":"R","wf":2,"id":264293},"SUN|탈비":{"foot":"R","wf":4,"id":275048},"SUN|아딩그라":{"foot":"R","wf":3,"id":260779},"SUN|이시도르":{"foot":"R","wf":3,"id":247335},"SUN|메우니에":{"foot":"R","wf":4,"id":202371},
+  "TOT|킨스키":{"foot":"R","wf":4,"id":73580},"TOT|로버트슨":{"foot":"L","wf":2,"id":216267},"TOT|판헤케":{"foot":"R","wf":3,"id":258908},"TOT|판더벤":{"foot":"L","wf":3,"id":264453},"TOT|그레이":{"foot":"R","wf":4,"id":270208},"TOT|토날리":{"foot":"R","wf":4,"id":241096},"TOT|마테우스 페르난드스":{"foot":"R","wf":4,"id":270857},"TOT|마르무시":{"foot":"R","wf":3,"id":256675},"TOT|텔":{"foot":"R","wf":4,"id":268421},"TOT|솔랑케":{"foot":"R","wf":2,"id":225539},"TOT|쿠두스":{"foot":"L","wf":3,"id":245155},"TOT|오스틴":{"foot":"R","wf":2,"id":236568},"TOT|세네시":{"foot":"L","wf":4,"id":236506},"TOT|포로":{"foot":"R","wf":3,"id":243576},"TOT|우도기":{"foot":"L","wf":3,"id":259583},"TOT|벤탄쿠르":{"foot":"R","wf":4,"id":227535},"TOT|사르":{"foot":"R","wf":3,"id":259868},"TOT|베리발":{"foot":"R","wf":3,"id":272926},"TOT|시몬스":{"foot":"R","wf":3,"id":245367},"TOT|히샤를리송":{"foot":"R","wf":4,"id":231943},
+  "RMA|쿠르투아":{"foot":"L","wf":3,"id":192119},"RMA|쿠쿠레야":{"foot":"L","wf":3,"id":239231},"RMA|하위선":{"foot":"R","wf":5,"id":278349},"RMA|코나테":{"foot":"R","wf":3,"id":237678},"RMA|알렉산더아널드":{"foot":"R","wf":4,"id":231281},"RMA|추아메니":{"foot":"R","wf":3,"id":241637},"RMA|B.실바":{"foot":"L","wf":2,"id":218667},"RMA|벨링엄":{"foot":"R","wf":4,"id":252371},"RMA|비니시우스":{"foot":"R","wf":4,"id":238794},"RMA|음바페":{"foot":"R","wf":4,"id":231747},"RMA|귈레르":{"foot":"L","wf":3,"id":264309},"RMA|루닌":{"foot":"R","wf":3,"id":243952},"RMA|뤼디거":{"foot":"R","wf":3,"id":205452},"RMA|밀리탕":{"foot":"R","wf":3,"id":240130},"RMA|둠프리스":{"foot":"R","wf":3,"id":233096},"RMA|발베르데":{"foot":"R","wf":4,"id":239053},"RMA|카마빙가":{"foot":"L","wf":3,"id":248243},"RMA|브라임":{"foot":"R","wf":5,"id":231410},"RMA|호드리구":{"foot":"R","wf":4,"id":243812},"RMA|Y.디오망데":{"foot":"R","wf":4,"id":78012},
+  "BAR|호안 가르시아":{"foot":"R","wf":3,"id":259532},"BAR|칸셀루":{"foot":"R","wf":4,"id":210514},"BAR|쿠바르시":{"foot":"R","wf":4,"id":278046},"BAR|G.마르틴":{"foot":"L","wf":3,"id":74462},"BAR|쿤데":{"foot":"R","wf":3,"id":241486},"BAR|페드리":{"foot":"R","wf":4,"id":251854},"BAR|로드리":{"foot":"R","wf":4,"id":231866},"BAR|더용":{"foot":"R","wf":3,"id":228702},"BAR|고든":{"foot":"R","wf":3,"id":242964},"BAR|하피냐":{"foot":"L","wf":4,"id":233419},"BAR|야말":{"foot":"L","wf":3,"id":277643},"BAR|슈쳉스니":{"foot":"R","wf":3,"id":186153},"BAR|발데":{"foot":"L","wf":4,"id":263578},"BAR|크리스텐센":{"foot":"R","wf":3,"id":213661},"BAR|에릭 가르시아":{"foot":"R","wf":3,"id":245037},"BAR|가비":{"foot":"R","wf":3,"id":264240},"BAR|페르민":{"foot":"R","wf":4,"id":277179},"BAR|올모":{"foot":"R","wf":4,"id":244260},"BAR|아데예미":{"foot":"L","wf":3,"id":251852},"BAR|가브리에우 제주스":{"foot":"R","wf":3,"id":230666},
+  "ATM|오블락":{"foot":"R","wf":3,"id":200389},"ATM|그리말도":{"foot":"L","wf":2,"id":210035},"ATM|한초":{"foot":"L","wf":3,"id":247103},"ATM|푸빌":{"foot":"R","wf":3,"id":266039},"ATM|요렌테":{"foot":"R","wf":4,"id":226161},"ATM|바에나":{"foot":"R","wf":4,"id":257279},"ATM|바리오스":{"foot":"R","wf":3,"id":272449},"ATM|히울만":{"foot":"R","wf":4,"id":244669},"ATM|줄리아노":{"foot":"R","wf":3,"id":253396},"ATM|이강인":{"foot":"L","wf":3,"id":243780},"ATM|알바레스":{"foot":"R","wf":4,"id":246191},"ATM|무소":{"foot":"R","wf":3,"id":214979},"ATM|르노르망":{"foot":"R","wf":3,"id":233486},"ATM|히메네스":{"foot":"R","wf":3,"id":216460},"ATM|로메로":{"foot":"R","wf":2,"id":232488},"ATM|코케":{"foot":"R","wf":4,"id":193747},"ATM|카르도주":{"foot":"R","wf":2,"id":259516},"ATM|루크먼":{"foot":"R","wf":4,"id":230899},"ATM|쇠를로트":{"foot":"L","wf":4,"id":216549},"ATM|르마르":{"foot":"L","wf":3,"id":213565},
+  "ATH|우나이 시몬":{"foot":"R","wf":3,"id":230869},"ATH|유리":{"foot":"L","wf":3,"id":183512},"ATH|비비안":{"foot":"R","wf":2,"id":248550},"ATH|파레데스":{"foot":"R","wf":3,"id":259524},"ATH|링콘":{"foot":"R","wf":2,"id":279026},"ATH|하우레기사르":{"foot":"R","wf":4,"id":279604},"ATH|루이스 데 갈라레타":{"foot":"R","wf":3,"id":205157},"ATH|산세트":{"foot":"R","wf":4,"id":244675},"ATH|N.윌리엄스":{"foot":"R","wf":5,"id":256516},"ATH|구루세타":{"foot":"R","wf":4,"id":231184},"ATH|I.윌리엄스":{"foot":"R","wf":3,"id":216201},"ATH|파디야":{"foot":"R","wf":3,"id":271034},"ATH|라포르트":{"foot":"L","wf":3,"id":212218},"ATH|아레소":{"foot":"R","wf":2,"id":239614},"ATH|보이로":{"foot":"L","wf":3,"id":70344},"ATH|프라도스":{"foot":"R","wf":3,"id":263617},"ATH|예라이":{"foot":"R","wf":3,"id":227950},"ATH|베렝게르":{"foot":"R","wf":4,"id":225201},"ATH|산나디":{"foot":"R","wf":3,"id":76945},"ATH|나바로":{"foot":"R","wf":3,"id":253130},
+  "FCB|우르비히":{"foot":"R","wf":4,"id":263887},"FCB|데이비스":{"foot":"L","wf":3,"id":234396},"FCB|김민재":{"foot":"R","wf":3,"id":237086},"FCB|우파메카노":{"foot":"R","wf":3,"id":229558},"FCB|라이머":{"foot":"R","wf":3,"id":225375},"FCB|키미히":{"foot":"R","wf":4,"id":212622},"FCB|파블로비치":{"foot":"R","wf":4,"id":275298},"FCB|무시알라":{"foot":"R","wf":4,"id":256790},"FCB|루이스 디아스":{"foot":"R","wf":3,"id":241084},"FCB|케인":{"foot":"R","wf":4,"id":202126},"FCB|올리세":{"foot":"L","wf":3,"id":247827},"FCB|울라이히":{"foot":"R","wf":2,"id":186569},"FCB|타":{"foot":"R","wf":3,"id":213331},"FCB|이토":{"foot":"L","wf":3,"id":234205},"FCB|스타니시치":{"foot":"R","wf":4,"id":250955},"FCB|브라운":{"foot":"L","wf":3,"id":269701},"FCB|비쇼프":{"foot":"L","wf":3,"id":263765},"FCB|사이바리":{"foot":"R","wf":4,"id":259480},"FCB|카를":{"foot":"L","wf":2,"id":78063},"FCB|그나브리":{"foot":"R","wf":4,"id":206113},
+  "BVB|코벨":{"foot":"R","wf":3,"id":235073},"BVB|슐로터베크":{"foot":"L","wf":2,"id":247819},"BVB|안톤":{"foot":"R","wf":3,"id":229476},"BVB|가두":{"foot":"R","wf":2,"id":71350},"BVB|스벤손":{"foot":"L","wf":4,"id":259716},"BVB|은메차":{"foot":"R","wf":2,"id":246863},"BVB|조브 벨링엄":{"foot":"R","wf":3,"id":270964},"BVB|라이어슨":{"foot":"R","wf":3,"id":229891},"BVB|추쿠에메카":{"foot":"R","wf":3,"id":259356},"BVB|기라시":{"foot":"R","wf":4,"id":215441},"BVB|바이어":{"foot":"R","wf":3,"id":254117},"BVB|마이어":{"foot":"R","wf":3,"id":241050},"BVB|벤세바이니":{"foot":"L","wf":4,"id":224196},"BVB|레지아니":{"foot":"R","wf":3,"id":83751},"BVB|프라치스":{"foot":"L","wf":3,"id":83476},"BVB|베이르만":{"foot":"R","wf":2,"id":253109},"BVB|자비처":{"foot":"R","wf":4,"id":204923},"BVB|엠레 잔":{"foot":"R","wf":4,"id":208333},"BVB|은와네리":{"foot":"L","wf":3,"id":271807},"BVB|파비우 시우바":{"foot":"R","wf":3,"id":252037},
+  "B04|플레컨":{"foot":"R","wf":4,"id":211738},"B04|구티에레스":{"foot":"L","wf":3,"id":261865},"B04|메디나":{"foot":"L","wf":3,"id":236804},"B04|탑소바":{"foot":"R","wf":4,"id":247263},"B04|콴사":{"foot":"R","wf":3,"id":273651},"B04|알레익스 가르시아":{"foot":"R","wf":4,"id":228813},"B04|팔라시오스":{"foot":"R","wf":4,"id":231521},"B04|마자":{"foot":"R","wf":4,"id":275029},"B04|틸만":{"foot":"R","wf":3,"id":256853},"B04|시크":{"foot":"L","wf":3,"id":234236},"B04|모레이라":{"foot":"R","wf":3,"id":276901},"B04|블라스비치":{"foot":"R","wf":3,"id":204092},"B04|바데":{"foot":"R","wf":3,"id":255106},"B04|아르투르":{"foot":"R","wf":3,"id":275028},"B04|안드리히":{"foot":"R","wf":4,"id":212242},"B04|호프만":{"foot":"R","wf":4,"id":210324},"B04|벤세기르":{"foot":"R","wf":3,"id":272781},"B04|텔라":{"foot":"R","wf":3,"id":237328},"B04|포쿠":{"foot":"R","wf":5,"id":264219},"B04|코판":{"foot":"R","wf":3,"id":76416},
+  "RBL|반더보르트":{"foot":"R","wf":3,"id":242879},"RBL|라움":{"foot":"L","wf":2,"id":236703},"RBL|루케바":{"foot":"L","wf":2,"id":262138},"RBL|오르반":{"foot":"R","wf":3,"id":204638},"RBL|헨리히스":{"foot":"R","wf":4,"id":228579},"RBL|페르메이런":{"foot":"R","wf":4,"id":269859},"RBL|반주지":{"foot":"R","wf":3,"id":276216},"RBL|라이츠":{"foot":"R","wf":4,"id":257919},"RBL|그루다":{"foot":"L","wf":3,"id":272612},"RBL|호물루":{"foot":"R","wf":3,"id":73398},"RBL|누사":{"foot":"R","wf":3,"id":262863},"RBL|칭에를레":{"foot":"R","wf":3,"id":222546},"RBL|클로스터만":{"foot":"R","wf":3,"id":222331},"RBL|비샤부":{"foot":"L","wf":3,"id":263193},"RBL|바쿠":{"foot":"R","wf":4,"id":240709},"RBL|자이발트":{"foot":"R","wf":3,"id":257876},"RBL|우에드라오고":{"foot":"R","wf":4,"id":276602},"RBL|바움가르트너":{"foot":"R","wf":3,"id":242187},"RBL|바카요코":{"foot":"L","wf":3,"id":265450},"RBL|하르더":{"foot":"L","wf":3,"id":277689},
+  "PSG|슈발리에":{"foot":"R","wf":3,"id":251752},"PSG|누누 멘드스":{"foot":"L","wf":4,"id":252145},"PSG|파초":{"foot":"L","wf":3,"id":256196},"PSG|마르키뉴스":{"foot":"R","wf":3,"id":207865},"PSG|하키미":{"foot":"R","wf":4,"id":235212},"PSG|비티냐":{"foot":"R","wf":3,"id":255253},"PSG|주앙 네베스":{"foot":"R","wf":4,"id":272834},"PSG|자이르에메리":{"foot":"R","wf":4,"id":270673},"PSG|크바라츠헬리아":{"foot":"R","wf":5,"id":247635},"PSG|뎀벨레":{"foot":"L","wf":5,"id":231443},"PSG|두에":{"foot":"R","wf":4,"id":271421},"PSG|사포노프":{"foot":"R","wf":2,"id":240225},"PSG|자바르니":{"foot":"R","wf":3,"id":258781},"PSG|L.에르난데스":{"foot":"L","wf":2,"id":220814},"PSG|디뉴":{"foot":"L","wf":3,"id":200458},"PSG|마율루":{"foot":"L","wf":5,"id":70004},"PSG|파비안 루이스":{"foot":"L","wf":3,"id":226271},"PSG|바르콜라":{"foot":"R","wf":4,"id":264652},"PSG|베랄도":{"foot":"L","wf":2,"id":279709},"PSG|아클리우슈":{"foot":"L","wf":3,"id":264862},
+  "OM|더랑어":{"foot":"R","wf":3,"id":239559},"OM|에메르송":{"foot":"L","wf":2,"id":210736},"OM|콘도그비아":{"foot":"L","wf":3,"id":201455},"OM|이건라일리":{"foot":"R","wf":3,"id":268131},"OM|웨아":{"foot":"R","wf":3,"id":241496},"OM|카미소코":{"foot":"R","wf":3,"id":85290},"OM|응나디":{"foot":"R","wf":3,"id":78424},"OM|압델리":{"foot":"R","wf":3,"id":246297},"OM|파이상":{"foot":"R","wf":3,"id":271400},"OM|구이리":{"foot":"R","wf":3,"id":240753},"OM|아리트":{"foot":"R","wf":3,"id":232097},"OM|판넥":{"foot":"R","wf":3,"id":278095},"OM|발레르디":{"foot":"R","wf":3,"id":242835},"OM|아게르드":{"foot":"L","wf":3,"id":244749},"OM|Q.팀버":{"foot":"R","wf":3,"id":251806},"OM|호이비에르":{"foot":"R","wf":3,"id":213648},"OM|A.고메스":{"foot":"R","wf":4,"id":240507},"OM|모페":{"foot":"R","wf":3,"id":211784},"OM|뭄바냐":{"foot":"L","wf":3,"id":256669},"OM|울리세스":{"foot":"L","wf":2,"id":223143},
+  "ASM|흐라데키":{"foot":"R","wf":3,"id":190941},"ASM|나지뉴":{"foot":"L","wf":2,"id":261531},"ASM|케러":{"foot":"R","wf":5,"id":226229},"ASM|테제":{"foot":"R","wf":2,"id":245211},"ASM|반데르송":{"foot":"R","wf":3,"id":263781},"ASM|카마라":{"foot":"R","wf":3,"id":275138},"ASM|자카리아":{"foot":"R","wf":3,"id":229261},"ASM|골로빈":{"foot":"R","wf":4,"id":225663},"ASM|안수 파티":{"foot":"R","wf":4,"id":253004},"ASM|비어레트":{"foot":"R","wf":3,"id":270050},"ASM|미나미노":{"foot":"R","wf":4,"id":226627},"ASM|쾬":{"foot":"R","wf":2,"id":239364},"ASM|다이어":{"foot":"R","wf":2,"id":202335},"ASM|마위사":{"foot":"L","wf":5,"id":272785},"ASM|살리수":{"foot":"L","wf":3,"id":244915},"ASM|아블린":{"foot":"R","wf":3,"id":264422},"ASM|디오프":{"foot":"R","wf":3,"id":275019},"ASM|쿨리발리":{"foot":"L","wf":2,"id":279700},"ASM|발로건":{"foot":"R","wf":4,"id":247463},"ASM|브루너":{"foot":"R","wf":4,"id":274126},
+  "OL|그라이프":{"foot":"R","wf":3,"id":263139},"OL|아브네르":{"foot":"L","wf":2,"id":263815},"OL|니아카테":{"foot":"L","wf":3,"id":225859},"OL|마타":{"foot":"R","wf":3,"id":208364},"OL|메이틀랜드나일스":{"foot":"R","wf":3,"id":225782},"OL|테스만":{"foot":"R","wf":4,"id":256104},"OL|모턴":{"foot":"R","wf":3,"id":265459},"OL|톨리소":{"foot":"R","wf":2,"id":219683},"OL|말리크 포파나":{"foot":"R","wf":5,"id":256420},"OL|슐츠":{"foot":"R","wf":3,"id":247050},"OL|누아마":{"foot":"L","wf":3,"id":268763},"OL|데캉":{"foot":"L","wf":4,"id":234371},"OL|R.클라위버르트":{"foot":"R","wf":3,"id":262102},"OL|바허":{"foot":"R","wf":3,"id":262404},"OL|비드스트루프":{"foot":"R","wf":3,"id":246402},"OL|오펜다":{"foot":"R","wf":4,"id":243580},"OL|찰레타차르":{"foot":"R","wf":4,"id":225263},"OL|메라":{"foot":"R","wf":3,"id":80067},"OL|뒤랑빌":{"foot":"R","wf":3,"id":262105},"OL|타글리아피코":{"foot":"L","wf":2,"id":211256},
+  "INT|호셉 마르티네스":{"foot":"R","wf":3,"id":243311},"INT|바스토니":{"foot":"L","wf":2,"id":237383},"INT|아칸지":{"foot":"R","wf":4,"id":229237},"INT|비세크":{"foot":"R","wf":3,"id":241736},"INT|디마르코":{"foot":"L","wf":2,"id":226268},"INT|바렐라":{"foot":"R","wf":4,"id":224232},"INT|찰하놀루":{"foot":"R","wf":5,"id":208128},"INT|수치치":{"foot":"R","wf":4,"id":276278},"INT|스펜스":{"foot":"R","wf":4,"id":243702},"INT|라우타로":{"foot":"R","wf":4,"id":231478},"INT|튀랑":{"foot":"R","wf":4,"id":228093},"INT|프로베델":{"foot":"R","wf":2,"id":224987},"INT|스톤스":{"foot":"R","wf":4,"id":203574},"INT|카를루스 아우구스투":{"foot":"L","wf":2,"id":258648},"INT|루이스 엔히키":{"foot":"R","wf":3,"id":256632},"INT|므키타리안":{"foot":"R","wf":5,"id":192883},"INT|지엘린스키":{"foot":"R","wf":4,"id":210406},"INT|디우프":{"foot":"L","wf":3,"id":268534},"INT|에스포지토":{"foot":"R","wf":3,"id":277327},"INT|보니":{"foot":"R","wf":3,"id":259565},
+  "MIL|메냥":{"foot":"R","wf":4,"id":215698},"MIL|에스투피냔":{"foot":"L","wf":3,"id":237942},"MIL|파블로비치":{"foot":"L","wf":3,"id":254840},"MIL|힐라":{"foot":"R","wf":4,"id":268804},"MIL|더빈터":{"foot":"R","wf":3,"id":265774},"MIL|모드리치":{"foot":"R","wf":4,"id":177003},"MIL|라비오":{"foot":"L","wf":3,"id":210008},"MIL|풀리식":{"foot":"R","wf":5,"id":227796},"MIL|디에고 모레이라":{"foot":"L","wf":3,"id":270039},"MIL|곤살루 하무스":{"foot":"R","wf":4,"id":256903},"MIL|무사":{"foot":"R","wf":3,"id":253177},"MIL|테라차노":{"foot":"R","wf":2,"id":205812},"MIL|토모리":{"foot":"R","wf":4,"id":232756},"MIL|바르테사기":{"foot":"L","wf":2,"id":278237},"MIL|아테카메":{"foot":"R","wf":3,"id":279782},"MIL|자샤리":{"foot":"L","wf":4,"id":257186},"MIL|포파나":{"foot":"R","wf":3,"id":245630},"MIL|로프터스치크":{"foot":"R","wf":4,"id":213666},"MIL|레앙":{"foot":"R","wf":4,"id":241721},"MIL|은쿤쿠":{"foot":"R","wf":3,"id":232411},
+  "JUV|비카리오":{"foot":"R","wf":4,"id":240091},"JUV|루쿠미":{"foot":"L","wf":3,"id":231207},"JUV|브레메르":{"foot":"R","wf":2,"id":239580},"JUV|가티":{"foot":"R","wf":3,"id":266872},"JUV|캄비아소":{"foot":"L","wf":4,"id":258966},"JUV|로카텔리":{"foot":"R","wf":4,"id":222077},"JUV|K.튀랑":{"foot":"R","wf":4,"id":247246},"JUV|칼룰루":{"foot":"R","wf":3,"id":255654},"JUV|이을드즈":{"foot":"R","wf":5,"id":277954},"JUV|볼테마데":{"foot":"R","wf":3,"id":254022},"JUV|콘세이상":{"foot":"L","wf":2,"id":261050},"JUV|디그레고리오":{"foot":"R","wf":3,"id":235840},"JUV|켈리":{"foot":"L","wf":3,"id":231512},"JUV|카발":{"foot":"L","wf":3,"id":251870},"JUV|첼리크":{"foot":"R","wf":3,"id":224490},"JUV|코프메이너르스":{"foot":"L","wf":2,"id":240679},"JUV|매케니":{"foot":"R","wf":4,"id":238744},"JUV|두글라스 루이스":{"foot":"R","wf":2,"id":236499},"JUV|콜로 무아니":{"foot":"R","wf":4,"id":237679},"JUV|제그로바":{"foot":"L","wf":2,"id":239763},
+  "NAP|밀린코비치사비치":{"foot":"R","wf":3,"id":224836},"NAP|올리베라":{"foot":"L","wf":3,"id":240716},"NAP|부온조르노":{"foot":"L","wf":3,"id":243241},"NAP|라흐마니":{"foot":"R","wf":4,"id":244263},"NAP|디로렌초":{"foot":"R","wf":4,"id":217870},"NAP|맥토미니":{"foot":"R","wf":3,"id":237238},"NAP|로보트카":{"foot":"R","wf":4,"id":216435},"NAP|더브라위너":{"foot":"R","wf":5,"id":192985},"NAP|랑":{"foot":"R","wf":3,"id":239380},"NAP|회일룬":{"foot":"L","wf":3,"id":259399},"NAP|폴리타노":{"foot":"L","wf":4,"id":216409},"NAP|메레트":{"foot":"L","wf":3,"id":225116},"NAP|라파 마린":{"foot":"R","wf":3,"id":277244},"NAP|베우케마":{"foot":"R","wf":3,"id":262394},"NAP|스피나촐라":{"foot":"R","wf":4,"id":202884},"NAP|길모어":{"foot":"R","wf":3,"id":245992},"NAP|앙귀사":{"foot":"R","wf":3,"id":227236},"NAP|네레스":{"foot":"L","wf":3,"id":236632},"NAP|폴로룬쇼":{"foot":"R","wf":4,"id":268683},"NAP|루카":{"foot":"R","wf":3,"id":268474},
+};
+const footLabel=m=>{const f=m.feet;return f?(f.wf===5?'양발':'주발 '+(f.foot==='L'?'왼발':'오른발'))+' · 약발 '+f.wf+'/5':'';};
+
 // Player ratings, one line per club in the XI order above: name:pace,shooting,passing,dribbling,defending,physical,skill stars.
 // These are estimates in the style of FC ratings (not official data) so each player plays like himself; edit freely.
 // Keepers' shooting/defending don't matter; their passing is distribution and physical is presence in the air.
@@ -831,10 +876,20 @@ const PSTAT={};
 const CUSTOM=[null,null];
 const club=ci=>ci>=100?CUSTOM[ci-100]:CLUBS[ci];
 const BASE_RO=[];const baseRoster=ci=>BASE_RO[ci]||(BASE_RO[ci]=makeRoster(ci));
+const CARD_CLASSES=typeof FL11_CLASSES==='undefined'?{BASE:{id:'BASE',name:'베이스',accent:'#dce3eb',shape:'hex',boardName:'SILVER REVEAL'}}:FL11_CLASSES;
+let LIVE_CATALOG=typeof FL11_CATALOG==='undefined'?[]:FL11_CATALOG;
+let LIVE_CATALOG_READY=false;
+const LIVE_MAP=new Map(LIVE_CATALOG.map(c=>[c.id,c]));
+const cardClass=cd=>CARD_CLASSES[cd&&cd.classId]||CARD_CLASSES.BASE;
+const cardRoster=cd=>cd.roster||baseRoster(cd.ci)[cd.k];
+const cardAllowance=p=>p.srv&&Array.isArray(p.inventory)?new Set(p.inventory.filter(c=>c.quantity>0).map(c=>c.cardId)):p.club;
 let CARDS=null,CARD_MAP=null;
 function cards(){
   if(CARDS)return CARDS;CARDS=[];CARD_MAP=new Map();
-  CLUBS.forEach((c,ci)=>{const sl=FORMS[c.form]||FORMS['4-3-3'];baseRoster(ci).forEach((m,k)=>{const cd={id:c.id+'|'+m.name,ci,k,name:m.name,num:m.num,nat:m.nat,pos:k<11?sl[k].l:c.sub[k-11][2],ovr:m.ovr,stars:m.stars,club:c};CARDS.push(cd);CARD_MAP.set(cd.id,cd);});});
+  const add=(cd)=>{CARDS.push(cd);CARD_MAP.set(cd.id,cd);};
+  CLUBS.forEach((c,ci)=>{const sl=FORMS[c.form]||FORMS['4-3-3'];baseRoster(ci).forEach((m,k)=>{const id=c.id+'|'+c.xi.concat(c.sub||[])[k][0],meta=LIVE_MAP.get(id),ro=meta&&meta.roster||m,nci=meta?meta.clubIndex:ci;
+    add({id,playerId:meta?meta.playerId:id,classId:meta?meta.classId:'BASE',ci:nci,k,name:meta?meta.name:m.name,num:ro.num,nat:ro.nat,pos:meta?meta.pos:k<11?sl[k].l:c.sub[k-11][2],ovr:meta?meta.ovr:m.ovr,stars:ro.stars,club:CLUBS[nci],roster:ro});});});
+  for(const meta of LIVE_CATALOG){if(CARD_MAP.has(meta.id)||!CLUBS[meta.clubIndex])continue;const m=meta.roster;add({id:meta.id,playerId:meta.playerId,classId:meta.classId,ci:meta.clubIndex,k:0,name:meta.name,num:m.num,nat:m.nat,pos:meta.pos,ovr:meta.ovr,stars:m.stars,club:CLUBS[meta.clubIndex],roster:m});}
   return CARDS;
 }
 const cardById=id=>(cards(),CARD_MAP.get(id));
@@ -842,18 +897,18 @@ const cardById=id=>(cards(),CARD_MAP.get(id));
 function singleClub(ids){let ci=-2;for(const id of ids.slice(0,11)){const cd=cardById(id);if(!cd)return -1;if(ci===-2)ci=cd.ci;else if(ci!==cd.ci)return -1;}return ci<0?-1:ci;}
 function customRoster(cl){
   const one=singleClub(cl.cards)>=0,b=one?0.03:0;
-  return cl.cards.map((id,k)=>{const cd=cardById(id)||cards()[k];const m=baseRoster(cd.ci)[cd.k],st={};for(const key in m.st)st[key]=Math.min(0.99,m.st[key]+b);
+  return cl.cards.map((id,k)=>{const cd=cardById(id)||cards()[k];const m=cardRoster(cd),st={};for(const key in m.st)st[key]=Math.min(0.99,m.st[key]+b);
     return Object.assign({},m,{k,st,ovr:m.ovr+(one?3:0),card:cd.id});});
 }
 // a team spec checked over: 11 different real cards (keeper first if one is there), bench without repeats
 const BENCH_MAX=9;
 // own: the club whose cards may be used (an account's club); without it any real card is accepted (an online opponent's team)
 function cleanSpec(sp,fallbackCi,own){
-  const fb=CLUBS[fallbackCi|0]||CLUBS[0],ids=new Set(),ok=id=>{const cd=cardById(id);return !!cd&&(!own||cd.club.id===own);};
-  let st=Array.isArray(sp&&sp.cards)?sp.cards.filter(id=>ok(id)&&!ids.has(id)&&ids.add(id)).slice(0,11):[];
-  for(const p of fb.xi){if(st.length>=11)break;const id=fb.id+'|'+p[0];if(!ids.has(id)&&ok(id)){ids.add(id);st.push(id);}}
-  for(const cd of cards()){if(st.length>=11)break;if(!ids.has(cd.id)&&ok(cd.id)){ids.add(cd.id);st.push(cd.id);}}
-  const bench=(Array.isArray(sp&&sp.bench)?sp.bench:[]).filter(id=>id&&ok(id)&&!ids.has(id)&&ids.add(id)).slice(0,BENCH_MAX);
+  const fb=CLUBS[fallbackCi|0]||CLUBS[0],ids=new Set(),players=new Set(),ok=id=>{const cd=cardById(id);return !!cd&&(!own||(own instanceof Set?own.has(id):cd.club.id===own));},take=id=>{const cd=cardById(id);if(!ok(id)||ids.has(id)||players.has(cd.playerId))return false;ids.add(id);players.add(cd.playerId);return true;};
+  let st=Array.isArray(sp&&sp.cards)?sp.cards.filter(id=>take(id)).slice(0,11):[];
+  for(const p of fb.xi){if(st.length>=11)break;const id=fb.id+'|'+p[0];if(take(id))st.push(id);}
+  for(const cd of cards()){if(st.length>=11)break;if(take(cd.id))st.push(cd.id);}
+  const bench=(Array.isArray(sp&&sp.bench)?sp.bench:[]).filter(id=>id&&take(id)).slice(0,BENCH_MAX);
   const kit=clamp((sp&&sp.kit)|0,0,CLUBS.length-1);
   return{name:String(sp&&sp.name||'내 팀').slice(0,16),tag:String(sp&&sp.tag||'MYT').replace(/[^A-Za-z0-9]/g,'').slice(0,3).toUpperCase()||'MYT',kit,
     form:sp&&FORMS[sp.form]?sp.form:'4-3-3',ment:clamp((sp&&sp.ment)|0,-1,1),cards:st,bench};
@@ -870,7 +925,7 @@ function accSave(){lsSet('fl11-acc',JSON.stringify({list:ACC.list,cur:ACC.cur}))
 const prof=()=>ACC.cur?ACC.list[ACC.cur]:null;
 // a new account starts with its favourite club's real XI in their usual shape (so the one-club bonus is on)
 // a new account receives the base cards of the one club it picks (its 20 players): the real XI starts, the rest are on the bench
-function newProfile(name,ci){const c=CLUBS[ci]||CLUBS[0];return{name,club:c.id,team:cleanSpec({name:c.name.slice(0,10)+' 드림',tag:c.id,kit:ci,form:FORMS[c.form]?c.form:'4-3-3',ment:0,cards:c.xi.map(p=>c.id+'|'+p[0]),bench:c.bench},ci,c.id),skills:cleanSk(null),made:Date.now()};}
+function newProfile(name,ci){const c=CLUBS[ci]||CLUBS[0];return{name,club:c.id,team:cleanSpec({name:c.name.slice(0,10)+' 드림',tag:c.id,kit:ci,form:FORMS[c.form]?c.form:'4-3-3',ment:0,cards:c.xi.map(p=>c.id+'|'+p[0]),bench:c.bench},ci,c.id),skills:cleanSk(null),tacs:{},made:Date.now()};}
 // the club an account owns (older accounts without one take their kit's club)
 function profClub(p){
   let ci=CLUBS.findIndex(c=>c.id===p.club);
@@ -879,8 +934,11 @@ function profClub(p){
     ci=best?CLUBS.findIndex(c=>c.id===best):0;p.club=CLUBS[ci].id;}
   return ci;
 }
-const ownedCards=p=>{const ci=profClub(p);return cards().filter(cd=>cd.ci===ci);};
-function applyProfile(){const p=prof();if(!p){CUSTOM[0]=null;return;}const ci=profClub(p);p.team=cleanSpec(p.team,ci,p.club);CUSTOM[0]=teamFromSpec(p.team);G.set.skills=cleanSk(p.skills);}
+const ownedCards=p=>{const ci=profClub(p);if(p.srv&&Array.isArray(p.inventory)){const own=cardAllowance(p);return cards().filter(cd=>own.has(cd.id));}return cards().filter(cd=>cd.ci===ci);};
+function applyProfile(){const p=prof();if(!p){CUSTOM[0]=null;return;}const ci=profClub(p),clean=cleanSpec(p.team,ci,cardAllowance(p));
+  // Keep pending class-card selections intact until the server catalog has arrived.
+  const waiting=p.srv&&!LIVE_CATALOG_READY&&[...(p.team?.cards||[]),...(p.team?.bench||[])].some(id=>!cardById(id));
+  if(!waiting)p.team=clean;CUSTOM[0]=teamFromSpec(clean);G.set.skills=cleanSk(p.skills);if(p.tacs===undefined)p.tacs=cleanAccountTacs(G.set.tacs);G.set.tacs=cleanAccountTacs(p.tacs);}
 
 for(const line of PSTAT_SRC.trim().split('\n')){const [id,...ps]=line.split('|');for(const p of ps){const [n,v]=p.split(':');const a=v.split(',').map(Number);PSTAT[id+'|'+n]={pace:a[0]/100,shoot:a[1]/100,pass:a[2]/100,drib:a[3]/100,tackle:a[4]/100,phy:a[5]/100,stars:a[6]};}}
 
@@ -1511,6 +1569,11 @@ function actionPose(e,P){
       P[HRZ]=-0.05;P[AR]=-0.45;
       P[PRY]=0.18-0.42*sw*str;P[SY]=-P[PRY]*0.6;P[SX]=0.12-0.22*str;P[SZ]=0.12;
       P[ALZ]=0.65+0.45*str;P[ALX]=-0.35;P[ARZ]=-0.35;P[ARX]=0.4-0.8*sw;P[EL]=P[ER]=-0.35;
+      if(e.ap3<0){
+        // Mirror the right-foot strike; ap3 is already carried by replays and online snapshots.
+        for(const [a,b,sg] of [[TL,TR,1],[KL,KR,1],[AL,AR,1],[HLZ,HRZ,-1],[ALX,ARX,1],[ALZ,ARZ,-1],[EL,ER,1]]){const v=P[a];P[a]=P[b]*sg;P[b]=v*sg;}
+        for(const k of [PX,PRY,PRZ,SY,SZ,HY])P[k]=-P[k];
+      }
       return fadeW(t,actEnd(e),0.05,0.16);
     }
     case ACT.TRAP:{const k=Math.sin(Math.min(1,t/0.28)*PI);P[TR]=lerp(P[TR],-0.45,k);P[KR]=lerp(P[KR],0.5,k);P[AR]=lerp(P[AR],0.25,k);P[SX]+=0.15*k;P[HX]=0.4;return fadeW(t,0.3,0.04,0.1);}
@@ -1853,8 +1916,9 @@ function makeRoster(ci){
       stars=r==='GK'?1:clamp(Math.round((st.drib-0.62)/0.07)+(sk?1:0)-(slots[k].l==='ST'&&!sk?1:0),1,5);}
     // own random stream, so the players' looks (drawn from rr below) stay exactly as before
     const hid=hiddenTraits(slots[k].l,r,st,sk,seeded(7000+ci*131+k*17));
-    return{k,nat:r,num,name,ovr,st,stars,hid,
-      phase:rr()*TAU,skin:Math.floor(rr()*SKINS.length),hair:Math.floor(rr()*HAIRS.length),boot:Math.floor(rr()*BOOTS.length)};});
+    const original={k,nat:r,num,name,ovr,st,stars,hid,feet:FOOT_DATA[club.id+'|'+name],
+      phase:rr()*TAU,skin:Math.floor(rr()*SKINS.length),hair:Math.floor(rr()*HAIRS.length),boot:Math.floor(rr()*BOOTS.length)};
+    const live=LIVE_MAP.get(club.id+'|'+name);return live?Object.assign({},original,live.roster,{k,name:live.name,ovr:live.ovr}):original;});
 }
 /* hidden traits: what a player tends to do, as opposed to how well he does it (that is the stats).
    att/def: work rate going forward / getting back (0 low, 1 medium, 2 high); run: 'runner' goes in behind, 'link' drops
@@ -1879,7 +1943,7 @@ function hiddenTraits(lbl,r,st,skiller,rr){
   return{att,def,run,roam,press,focus,read};
 }
 const LV=['낮음','보통','높음'];
-const hidTags=h=>h?[h.run==='runner'?'침투형':h.run==='link'?'연결형':'균형형','공격 가담 '+LV[h.att],'수비 가담 '+LV[h.def],h.press==='aggr'?'적극 압박':'버티는 수비',...(h.read===2?['태클 타이밍 좋음']:h.read===0?['태클 타이밍 늦음']:[])].join(' · '):'';
+const hidTags=h=>h?[h.run==='runner'?'침투형':h.run==='link'?'연결형':'균형형','공격 가담 '+LV[h.att],'수비 가담 '+LV[h.def],'자유 이동 '+LV[h.roam],h.press==='aggr'?'적극 압박':'버티는 수비','후반 집중력 '+LV[h.focus],'태클 판단 '+LV[h.read]].join(' · '):'';
 const gkQ=o=>clamp(0.88+(o-82)*0.008,0.8,0.95);
 const myTac=()=>tacOf(G.set.home);
 // the CPU lines up in its usual shape; a stronger side goes for it, a weaker one sits deeper
@@ -1911,7 +1975,7 @@ function buildTeams(){
       mats,bench:(club.bench||[]).slice(),subs:0,bonus:club.cards&&club.single>=0?0.03:0};
     slots.forEach((f,k)=>{
       const m=roster[tac.order[k]],gk=k===0,st=m.st;
-      const e={team,i:ti*11+k,k,role:f.r,isGK:gk,num:m.num,lbl:f.l,name:m.name,st,stars:m.stars,hid:m.hid,base:f.p,off:false,yellow:0,pbx:0,pbz:0,
+      const e={team,i:ti*11+k,k,role:f.r,isGK:gk,num:m.num,lbl:f.l,name:m.name,st,stars:m.stars,hid:m.hid,feet:m.feet,base:f.p,off:false,yellow:0,pbx:0,pbz:0,
         x:0,z:0,vx:0,vz:0,mx:0,mz:0,face:0,speed:0,phase:m.phase,act:0,actT:0,actD:0,
         sprint:false,cool:0,stun:0,tackleCd:0,decT:0,run:0,stamina:1,ipx:0,ipz:0,ipt:9,save:null,holdT:0,slideHit:false,kick:null,ap1:0,ap2:0,ap3:0,
         // zone first: centre-backs hold the line, full-backs pick up whoever enters their zone, midfielders screen lanes
@@ -2009,10 +2073,22 @@ function laneClear(ax,az,bx,bz,team){
   return m;
 }
 // every strike gets a short wind-up so the swing of the leg and the ball leaving the foot line up
+function chooseKickFoot(p){
+  const pref=p.feet?p.feet.foot:'R';
+  // Model-local positive x is the left side. A central ball is played with the preferred foot.
+  const side=Math.cos(p.face)*(B.x-p.x)-Math.sin(p.face)*(B.z-p.z);
+  return Math.abs(side)>0.18?(side>0?'L':'R'):pref;
+}
+function kickQuality(p){
+  const f=p.feet;if(!f)return 1;
+  const foot=p.act===ACT.KICK&&p.ap3?(p.ap3<0?'L':'R'):chooseKickFoot(p);
+  return foot===f.foot?1:[0,0.55,0.68,0.80,0.92,1][f.wf];
+}
 function scheduleKick(p,wind,str,fn,act){
   p.kick={at:G.t+wind,fn};
   if(act){p.act=act;p.actT=0;}
   p.actD=str;p.ap1=wind;
+  if(act===ACT.KICK)p.ap3=chooseKickFoot(p)==='L'?-1:1;
 }
 // pw: how long the button was held (0-1), or null for the automatic weight
 function passTo(p,r,kind,pt,pw){
@@ -2066,7 +2142,8 @@ function passVel(p,r,kind,pt,pw,exact){
   if(kind==='throw')d=Math.min(d,24);
   const [,pres]=nearestOpp(p);
   // passing skill, pressure, distance, and a pass played across or behind the body
-  let err=(1-p.st.pass)*0.09+(human?0.02:D.passErr)+(pres<2?0.03:0)+d*0.0006+Math.max(0,(p.passAng||0)-0.9)*0.035;
+  const quality=kind==='throw'?1:kickQuality(p);
+  let err=((1-p.st.pass)*0.09+(human?0.02:D.passErr)+(pres<2?0.03:0)+d*0.0006+Math.max(0,(p.passAng||0)-0.9)*0.035)*(1+(1-quality)*1.6);
   if(kind==='through'||kind==='throughLob'||kind==='cross')err*=1.2;
   const ang=Math.atan2(dx,dz)+g()*err*0.6;
   const hard=pw!=null&&pw>0.7,lofted=kind==='lob'||kind==='cross'||kind==='throw'||kind==='throughLob'||(kind!=='ground'&&kind!=='through'&&d>30)||(kind==='through'&&d>40)||(kind==='ground'&&d>(hard?46:34));
@@ -2153,7 +2230,8 @@ function shotVel(p,power,aimZ,kind,fixed,exact){
   if(az==null||(!fixed&&Math.abs(az)<0.25)){az=gk.z>B.z*0.15?-0.72:0.72;if(!exact)az+=rnd(-0.2,0.2);}
   const dist=hyp(gx-B.x,B.z);
   const [,pres]=nearestOpp(p);
-  const errScale=(p.team.human?1:D.shoot)*(kind==='finesse'?0.62:kind==='chip'?0.8:kind==='power'?1.3:1)*(fixed?0.55:1);
+  const quality=kickQuality(p);
+  const errScale=(p.team.human?1:D.shoot)*(kind==='finesse'?0.62:kind==='chip'?0.8:kind==='power'?1.3:1)*(fixed?0.55:1)*(1+(1-quality)*2);
   const errZ=g()*(0.25+(1-p.st.shoot)*1.4+dist*0.028+(pres<1.6?0.5:0))*errScale;
   const tz=clamp(az,-1,1)*(GW/2-0.45)+errZ;
   if(kind==='chip'){
@@ -2167,7 +2245,7 @@ function shotVel(p,power,aimZ,kind,fixed,exact){
     let ty=(kind==='finesse'?0.35+power*1.0:kind==='power'?0.2+power*0.95:0.22+power*1.45)+g()*0.28*(1+dist/28)*errScale;
     if(power>0.86)ty+=(power-0.86)*(kind==='power'?6:10);
     ty=Math.max(0.15,ty);
-    const speed=(14+power*18*(0.9+p.st.shoot*0.15))*(kind==='finesse'?0.84:kind==='power'?1.14:1);
+    const speed=(14+power*18*(0.9+p.st.shoot*0.15))*(kind==='finesse'?0.84:kind==='power'?1.14:1)*(0.82+0.18*quality);
     let az2=tz,spin=power<0.55?-Math.sign(tz-B.z)*2.5:g()*0.8;
     if(kind==='finesse'){
       // start it outside the far post and let it bend back in
@@ -2446,7 +2524,8 @@ function slotSkill(c,slot,jx,jy,sk,mir){
   return{id,side,dir};
 }
 function startSkill(c,s){
-  if(c.kick||B.owner!==c||B.held||c.act===ACT.SKILL||c.stun>0)return false;
+  if(c.kick||B.owner!==c||B.held||c.act===ACT.SKILL||c.stun>0||(s.id===13&&G.t<(c.croquetaUntil||0)))return false;
+  if(s.id===13)c.croquetaUntil=G.t+1.0;
   c.act=ACT.SKILL;c.actT=0;c.actD=s.id;c.ap1=s.side;c.ap2=s.dir;c.ap3=c.face;c.aimFace=null;
   c.sk={id:s.id,side:s.side,dir:s.dir,f0:c.face,beat:false,launched:false,v0:Math.max(0,c.vx*Math.sin(c.face)+c.vz*Math.cos(c.face)),evx:c.vx,evz:c.vz};
   c.skillCd=G.t+SKILLS[s.id].T+0.35;
@@ -2518,11 +2597,12 @@ function skillStep(e,dt){
       if(u<0.42)vf=Math.max(0.6,s.v0*0.2);else{vf=2.2;vl=s.side*5.2*Math.sin(PI*clamp((u-0.42)/0.58,0,1));}
       if(!s.beat&&u>0.4){s.beat=true;skillBeat(e,4.0,0.16,0.7,-s.side);}break;}
     case 13:{
-      // La Croqueta: inside of one foot slips it across, the other foot takes it on in the same stride
-      // he keeps running through it: the ball and body shift a full stride across in one movement
-      vf=Math.max(4.4,s.v0*0.95);vl=s.side*4.6*Math.sin(PI*clamp(u/0.8,0,1));face=f0+s.side*0.16*Math.sin(PI*u);
-      if(!s.launched&&u>0.5){s.launched=true;e.burst=G.t+0.8;}
-      if(!s.beat&&u>0.3){s.beat=true;skillBeat(e,2.9,0.12,0.52,-s.side);}break;}
+      // Check the forward run, transfer across the body, then the receiving foot accelerates away.
+      const transfer=clamp((u-0.12)/0.58,0,1),exit=easeOut(clamp((u-0.56)/0.44,0,1));
+      vf=lerp(clamp(s.v0*0.32,1.2,3),Math.min(e.vmax*1.08,8.5),exit);
+      vl=s.side*(9.5*Math.sin(PI*transfer)+2.2*exit);face=f0+s.side*0.45*exit;
+      if(!s.launched&&u>0.56){s.launched=true;e.burst=G.t+0.65;}
+      if(!s.beat&&u>0.38){s.beat=true;skillBeat(e,2.5,0.1,0.38,-s.side);}break;}
     case 12:{
       // hard stop: sole on the ball, a defender at full tilt runs past
       vf=0;vl=0;
@@ -2534,7 +2614,7 @@ function skillStep(e,dt){
   // the facing follows quickly but never jumps
   let tvx=fx*vf+fz*vl,tvz=fz*vf-fx*vl;const ein=easeIO(clamp(e.actT/(T*0.22),0,1));
   tvx=lerp(s.evx,tvx,ein);tvz=lerp(s.evz,tvz,ein);
-  const k=1-Math.exp(-dt*(ein<1?14:10));
+  const k=1-Math.exp(-dt*(s.id===13?26:ein<1?14:10));
   e.vx+=(tvx-e.vx)*k;e.vz+=(tvz-e.vz)*k;
   const st=angD(e.face,face)*Math.min(1,dt*24);e.turnRate=st/Math.max(dt,1e-3);e.face+=st;
 }
@@ -2553,7 +2633,9 @@ function skillBall(o){
     case 10:return u<0.32?[0,0.36,BR]:[sd*0.1,lerp(0.36,0.9,easeOut(clamp((u-0.32)/0.35,0,1))),BR];
     case 11:return u<0.42?[0,0.5,BR]:[sd*lerp(0,0.32,easeIO(clamp((u-0.42)/0.4,0,1))),0.45,BR];
     case 12:return[0,0.36,BR];
-    case 13:return[lerp(-sd*0.2,sd*0.45,easeIO(clamp((u-0.08)/0.34,0,1))),0.5+0.1*u,BR];
+    case 13:{
+      const across=easeIO(clamp((u-0.1)/0.42,0,1)),exit=easeOut(clamp((u-0.56)/0.44,0,1));
+      return[sd*lerp(-0.34,0.68,across)*(1-0.5*exit),lerp(0.4,0.98,exit),BR+0.025*Math.sin(PI*across)];}
   }
   return[0,0.45,BR];
 }
@@ -2565,7 +2647,7 @@ const lineFor=bx=>clamp(bx-0.16-clamp((-bx-0.25)*0.6,0,0.25),-0.86,0.08);
 function formTarget(e){
   const t=e.team,dir=t.dir,poss=t.inPoss,h=e.hid||{att:1,def:1};
   // where this player thinks the ball is: reactions lag a little behind the real thing (see step)
-  const PBx=e.pbx??B.x,PBz=e.pbz??B.z;
+  const PBx=poss?(e.pbx??B.x):(t.defBallX??B.x),PBz=poss?(e.pbz??B.z):(t.defBallZ??B.z);
   const bx=clamp(PBx*dir/HL,-1,1),bz=clamp(PBz*dir/HW,-1,1);
   let ax=e.base[0]+bx*(poss?0.6:0.5)+(poss?0.25:-0.1)+t.ment*0.07;
   let az=e.base[1]*(poss?1.08:0.8)+bz*(poss?0.22:0.34);
@@ -2611,13 +2693,13 @@ function supportSpot(e){
   else if(L==='CM'){                                              // angles either side; in the final third one to the edge of the box, one arriving
     ax=fin?(same?0.6:0.76):bx+0.22;az=fin?(same?ballSide*0.4:-ballSide*0.12):e.base[1]*1.2+bz*0.3;ax+=push;
     if(e.run>0){ax=Math.min(0.86,line+0.06);az=bz*0.2;}}
-  else if(L==='CAM'){ax=fin?0.8:Math.min(line-0.03,bx+0.34);az=fin?bz*0.2:bz*0.45+e.base[1]*0.3;}   // in the pocket, then the box
+  else if(L==='CAM'){ax=fin?0.68:Math.min(line-0.03,bx+0.34);az=fin?bz*0.2+e.base[1]*0.7:bz*0.45+e.base[1]*0.6;}   // hold the pocket behind the striker
   else if(WIDE.has(L)){                                           // hug the touchline, go in behind; in the final third the far one attacks the far post
     ax=Math.max(bx+0.28,e.base[0]+0.3);az=side*0.84;
-    if(fin){if(same){ax=Math.max(bx-0.05,0.6);az=side*0.8;}else{ax=0.86;az=-ballSide*0.18;}}
+    if(fin){if(same){ax=Math.max(bx-0.05,0.6);az=side*0.8;}else{ax=0.82;az=-ballSide*0.34;}}
     if(e.run>0){ax=Math.min(0.9,line+0.15);az=side*0.6;}}
   else{                                                           // striker: on the last man's shoulder, in the box when the ball gets there
-    ax=fin?0.88:line-0.02;az=fin?(Math.abs(bz)>0.35?ballSide*0.12:bz*0.3):bz*0.3+e.base[1]*0.6;
+    ax=fin?0.88:line-0.02;az=(fin?(Math.abs(bz)>0.35?ballSide*0.12:bz*0.3):bz*0.3)+e.base[1]*0.9;
     if(e.run>0){ax=Math.min(0.92,line+0.18);az=bz*0.2+e.base[1]*0.3;}}
   const boxMan=fin&&(L==='ST'||L==='CAM'||(WIDE.has(L)&&!same)||(L==='CM'&&!same));
   if(!(e.run>0))ax=Math.min(ax,Math.max(line-0.01,bx-0.02,boxMan?0.72:-1));
@@ -2629,15 +2711,20 @@ function findSpace(e,tx,tz){
   for(let k=0;k<7;k++){
     const a=k*TAU/6,r=k?rr:0,x=clamp(tx+Math.cos(a)*r,-HL+1.5,HL-1.5),z=clamp(tz+Math.sin(a)*r,-HW+1.5,HW-1.5);
     let open=9;for(const o of oppOf(e.team).players){if(o.off)continue;const d=hyp(o.x-x,o.z-z);if(d<open)open=d;}
-    let crowd=0;for(const m of e.team.players){if(m===e||m.off)continue;const d=hyp(m.x-x,m.z-z);if(d<7)crowd+=7-d;}
+    let crowd=0;for(const m of e.team.players){if(m===e||m.off)continue;
+      const d=hyp(m.x-x,m.z-z),planned=m.spT>G.t?hyp(m.spX-x,m.spZ-z):99;
+      if(d<7)crowd+=7-d;if(planned<7)crowd+=(7-planned)*1.2;}
     const lane=c&&c!==e?Math.min(3,laneClear(c.x,c.z,x,z,e.team)):2;
-    const sc=Math.min(open,7)*0.45+lane*0.5-crowd*0.15-r*0.06;
+    const sc=Math.min(open,7)*0.45+lane*0.5-crowd*0.5-r*0.1;
     if(sc>bs){bs=sc;best=[x,z];}
   }
   return best;
 }
 function teamThink(t,dt){
   const o=oppOf(t);
+  // A shared picture of the ball keeps the defensive block moving together.
+  const dk=1-Math.exp(-dt*6);
+  t.defBallX=lerp(t.defBallX??B.x,B.x,dk);t.defBallZ=lerp(t.defBallZ??B.z,B.z,dk);
   t.inPoss=B.owner?B.owner.team===t:(B.lastTeam===t.i);
   if(B.owner)t.possT=B.owner.team===t?(t.possT||0)+dt:0;
   let ll=-1;for(const p of o.players){if(p.isGK)continue;const v=p.x*t.dir/HL;if(v>ll)ll=v;}t.lastLine=ll;
@@ -2674,6 +2761,8 @@ function teamThink(t,dt){
       // he is steering at it, or the stick is free and he is the quickest (then he collects it himself, see userStep)
       if((toward&&uc.ipt<bt+0.35)||(jm<0.06&&uc.ipt<=bt+0.1))best=null;
     }
+    // A pass has one receiver; do not send another team-mate to the same landing point.
+    if(t.recv&&!t.recv.off&&B.target&&B.target.r===t.recv&&G.t-B.kickT<3.5)best=t.recv===uc?null:t.recv;
     t.chaser=best;
   }
   t.helper=null;
@@ -2693,12 +2782,33 @@ function teamThink(t,dt){
         const p=cand[i];p.run=rnd(2.4,3.6);p.runCd=G.t+p.run+rnd(1.5,3);}
     }
   }
-  t.press1=t.press2=null;
+  const oldPress=t.press1;t.press1=t.press2=null;t.defMarks=new Map();
   if(B.owner&&B.owner.team!==t){
-    const c=B.owner,arr=t.players.filter(p=>!p.isGK&&!p.off&&p.stun<=0&&p.act!==ACT.FALL).sort((a,b)=>hyp(a.x-c.x,a.z-c.z)-hyp(b.x-c.x,b.z-c.z));
-    t.press1=arr[0];t.press2=arr[1];
+    const c=B.owner,score=p=>hyp(p.x-c.x,p.z-c.z)+(p.role==='DF'&&p.lbl==='CB'&&hyp(p.x-c.x,p.z-c.z)>9?6:0);
+    const arr=t.players.filter(p=>p!==uc&&p!==t.helper&&!p.isGK&&!p.off&&p.stun<=0&&p.act!==ACT.FALL).sort((a,b)=>score(a)-score(b));
+    t.press1=arr[0]||null;
+    if(arr.includes(oldPress)&&G.t<(t.pressUntil||0)&&score(oldPress)<=score(t.press1)+3)t.press1=oldPress;
+    if(t.press1!==oldPress)t.pressUntil=G.t+0.8;
+    t.press2=arr.find(p=>p!==t.press1)||null;
+    assignDefMarks(t,c,uc);
   }
   if(t.recv&&(B.owner||G.t-B.kickT>3.5))t.recv=null;
+}
+// Assign each passing threat to at most one marker; the others protect their formation zone.
+function assignDefMarks(t,c,uc){
+  const pairs=[],used=new Set(),taken=new Set();
+  for(const e of t.players){
+    if(e===uc||e===t.press1||e===t.press2||e===t.helper||e.isGK||e.off||e.stun>0||e.role==='FW')continue;
+    const [fx,fz]=formTarget(e);
+    for(const m of c.team.players){
+      if(m===c||m.isGK||m.off)continue;
+      const d=hyp(m.x-fx,m.z-fz);if(d>22)continue;
+      const danger=clamp((fx-m.x)*t.dir,0,12)*0.22,keep=e.mark===m?1.5:0;
+      pairs.push({e,m,cost:d+hyp(e.x-m.x,e.z-m.z)*0.18-danger-keep});
+    }
+  }
+  pairs.sort((a,b)=>a.cost-b.cost);
+  for(const {e,m} of pairs)if(!used.has(e)&&!taken.has(m)){used.add(e);taken.add(m);t.defMarks.set(e,m);}
 }
 // smooth (formation) targets are low-passed and settle with hysteresis so players stop fidgeting
 function setMove(e,tx,tz,sprint,smooth){
@@ -2729,12 +2839,30 @@ function setMove(e,tx,tz,sprint,smooth){
     const want=Math.min(sp,d*ease+0.3);
     e.mx=d>0.001?dx/d*want:0;e.mz=d>0.001?dz/d*want:0;e.sprint=(sprint||e.sprintReq)&&want>e.vmax*0.75;e.sprintReq=false;
   }
+  keepTeamSpacing(e);
   // at a jog players keep their eyes on the ball and shuffle; only a long run turns their back
   if(!e.sprint&&B.owner!==e){
     const bx=B.x-e.x,bz=B.z-e.z,bl=hyp(bx,bz)||1,cosA=d>0.01?(dx*bx+dz*bz)/(d*bl):1,v=hyp(e.mx,e.mz);
     // shuffle sideways or back only at a walk or slow jog; anything quicker, turn and run
     e.strafe=v<3.3&&(d<7||cosA>-0.25)&&!(cosA<-0.3&&v>2.2);if(e.strafe&&!e.faceTgt)e.faceTgt=B;
   }else e.strafe=false;
+}
+// Steer AI around team-mates before bodies collide; never add movement to the manually steered player.
+function keepTeamSpacing(e){
+  if(!e.team||e.isGK||B.owner===e)return;
+  const pd=padOf(e.team);if(pd&&pd.ctrl===e&&!pd.lock)return;
+  let ax=0,az=0;
+  for(const m of e.team.players){
+    if(m===e||m.off||m.isGK)continue;
+    let dx=e.x+e.mx*0.2-m.x-(m.mx||0)*0.2,dz=e.z+e.mz*0.2-m.z-(m.mz||0)*0.2,d=hyp(dx,dz);
+    if(d>=4)continue;
+    if(d<0.01){dx=e.k<m.k?-1:1;dz=0;d=1;}
+    const w=(4-d)*0.9;ax+=dx/d*w;az+=dz/d*w;
+  }
+  const push=hyp(ax,az);if(push>3){ax*=3/push;az*=3/push;}
+  e.mx+=ax;e.mz+=az;
+  const speed=hyp(e.mx,e.mz);if(speed>e.vmax){e.mx*=e.vmax/speed;e.mz*=e.vmax/speed;}
+  if(push>0.1)e.settled=false;
 }
 // staying with a carrier: his velocity plus a closing speed toward the spot, so a marker keeps pace with a dribbler
 // instead of jogging beside him (setMove's walking speeds are for repositioning, not for pressing)
@@ -2750,8 +2878,10 @@ function trackMove(e,tx,tz,c){
 // still turn onto it and aim just ahead of it, so he arrives with it instead of overrunning and circling round
 function chaseBall(e){
   const db=hyp(B.x-e.x,B.z-e.z),bs=hyp(B.vx,B.vz);
-  if(db<4.5&&bs<7&&B.y<0.8){
-    const tx=B.x+B.vx*0.18,tz=B.z+B.vz*0.18;setMove(e,tx,tz,false,false);
+  if(db<6&&B.y<1.35){
+    // Meet the nearby ball instead of circling a distant interception point.
+    const lead=clamp(db/Math.max(bs+e.vmax,1),0.03,0.16);
+    const tx=B.x+B.vx*lead,tz=B.z+B.vz*lead;setMove(e,tx,tz,db>2.5,false);
     const want=Math.max(bs+2.4,3.4),v=hyp(e.mx,e.mz);if(v>want){e.mx*=want/v;e.mz*=want/v;}
     e.sprint=false;if(db<1.8){e.strafe=true;e.faceTgt=B;}
   }else{const d=hyp(e.ipx-e.x,e.ipz-e.z);setMove(e,e.ipx,e.ipz,d>1.8,false);if(d<1.8){e.strafe=true;e.faceTgt=B;}}
@@ -2793,13 +2923,13 @@ function think(e,dt){
     if(d<7)trackMove(e,tx,tz,c);else setMove(e,tx,tz,true,false);
     return;
   }
-  const cp=G.t<(t.cpUntil||0)&&(!e.hid||e.hid.def>0);
-  if((e===t.press1&&!userClose)||(cp&&e===t.press2&&hyp(c.x-e.x,c.z-e.z)<10&&!userClose)){
+  if(e===t.press1&&!userClose){
     // close down goal-side, curving in so the body shadows the carrier's most dangerous forward pass,
     // then jockey and only dive in when he turns his back or lets the ball run from his feet
     // goal-side of the ball itself (it runs ahead of the carrier's feet), close enough to reach it with a stride
     const gx=ownGoalX(t),vx=gx-B.x,vz=-B.z,vl=hyp(vx,vz)||1,d=hyp(c.x-e.x,c.z-e.z),aggr=e.hid&&e.hid.press==='aggr';
-    let off=(t.human?1.25:1.0)+(aggr?-0.2:0.15);if(e!==t.press1)off=0.85;
+    const cp=G.t<(t.cpUntil||0)&&(!e.hid||e.hid.def>0);
+    let off=(t.human?1.25:1.0)+(aggr?-0.2:0.15)-(cp?0.15:0);
     let sx=0,sz=0;
     {let bm=null,bv=-1;for(const m of c.team.players){if(m===c||m.off||m.isGK)continue;const ahead=(m.x-c.x)*c.team.dir,dm=hyp(m.x-c.x,m.z-c.z);if(ahead<2||dm>28)continue;const v=zoneVal(c.team,m.x,m.z);if(v>bv){bv=v;bm=m;}}
       if(bm){const lx=bm.x-c.x,lz=bm.z-c.z,ll=hyp(lx,lz)||1;sx=lx/ll*0.7;sz=lz/ll*0.7;}}
@@ -2807,23 +2937,26 @@ function think(e,dt){
     if(d<7)trackMove(e,tx,tz,c);else setMove(e,tx,tz,true,false);
     return;
   }
-  if(e===t.press2&&(!t.human?D.press2:!userClose)&&hyp(c.x-e.x,c.z-e.z)<20){
+  if(e===t.press2&&hyp(c.x-e.x,c.z-e.z)<24){
     const gx=ownGoalX(t),vx=gx-c.x,vz=-c.z,vl=hyp(vx,vz)||1;
-    setMove(e,c.x+vx/vl*5,c.z+vz/vl*5,hyp(c.x-e.x,c.z-e.z)>12);if(e.strafe)e.faceTgt=c;return;
+    setMove(e,c.x+vx/vl*6,c.z+vz/vl*6,hyp(c.x-e.x,c.z-e.z)>12);if(e.strafe)e.faceTgt=c;return;
   }
   let [fx,fz]=formTarget(e);
   // marking
   // each player has a habit: tight man-marking, cutting the passing lane to his man, or holding the zone
   if(e.role!=='FW'){
     const man=e.style==='man',lane=e.style==='lane';
-    let m=e.mark&&!e.mark.off&&e.mark!==c&&hyp(e.mark.x-e.x,e.mark.z-e.z)<(man?22:15)?e.mark:null;
-    if(!m){let md=man?18:13;for(const o of oppOf(t).players){if(o.isGK||o===c||o.off)continue;const d=hyp(o.x-fx,o.z-fz);if(d<md){md=d;m=o;}}}
+    let m=t.defMarks&&t.defMarks.get(e);
     if(m&&e.role==='DF'&&(m.x*dir/HL)-clamp(B.x*dir/HL-0.16-clamp((-B.x*dir/HL-0.25)*0.6,0,0.25),-0.86,0.08)>0.22)m=null;
     e.mark=m;
     if(m){
+      const zoneX=fx,zoneZ=fz;
       const gx=ownGoalX(t),vx=gx-m.x,vz=-m.z,vl=hyp(vx,vz)||1;
       if(lane&&hyp(m.x-c.x,m.z-c.z)<30){fx=lerp(fx,c.x+(m.x-c.x)*0.62+vx/vl*0.6,0.8);fz=lerp(fz,c.z+(m.z-c.z)*0.62+vz/vl*0.6,0.8);}
-      else{const w=man?0.9:e.role==='DF'?0.6:0.42,off=man?1.1:1.6;fx=lerp(fx,m.x+vx/vl*off+m.vx*0.2,w);fz=lerp(fz,m.z+vz/vl*off+m.vz*0.2,w);}
+      else{const w=man?0.75:e.role==='DF'?0.55:0.42,off=man?1.1:1.6;fx=lerp(fx,m.x+vx/vl*off+m.vx*0.2,w);fz=lerp(fz,m.z+vz/vl*off+m.vz*0.2,w);}
+      // Mark inside a corridor: full-backs can cover wider, centre-backs keep the middle.
+      fz=clamp(fz,zoneZ-(e.wide?10:6),zoneZ+(e.wide?10:6));
+      if(e.role==='DF')fx=clamp(fx,zoneX-6,zoneX+5);
     }
   }
   setMove(e,fx,fz,hyp(fx-e.x,fz-e.z)>(e.style==='man'?9:13));
@@ -3071,8 +3204,15 @@ function gkDistribute(e){
 function celebrateThink(e){
   const gl=G.goal;if(!gl){e.mx=e.mz=0;return;}
   const sc=gl.scorer;
-  if(e===sc){const cx=sc.team.dir*(HL-2),cz=Math.sign(sc.z||1)*(HW-3);setMove(e,cx,cz,true,false);if(G.timer>0.4){e.act=ACT.CELEB;e.actT=G.timer;}return;}
-  if(e.team.i===gl.team&&!e.isGK){setMove(e,sc.x-Math.sin(e.k)*1.5,sc.z-Math.cos(e.k)*1.5,G.timer>0.6,false);return;}
+  if(!sc){e.mx=e.mz=0;return;}
+  // Fixed, spaced destinations: following a moving scorer at 1.5 m made the whole group orbit.
+  gl.celebrateAt=gl.celebrateAt||{x:sc.team.dir*(HL-4),z:Math.sign(sc.z||1)*(HW-6)};
+  const at=gl.celebrateAt;
+  if(e===sc){setMove(e,at.x,at.z,false,true);if(G.timer>0.4){e.act=ACT.CELEB;e.actT=G.timer;}return;}
+  if(e.team.i===gl.team&&!e.isGK){
+    const rank=e.team.players.filter(p=>p!==sc&&!p.isGK&&!p.off).indexOf(e),row=Math.floor(rank/4),col=rank%4;
+    setMove(e,at.x-sc.team.dir*(3+row*3),clamp(at.z+(col-1.5)*3,-HW+2,HW-2),false,true);return;
+  }
   e.mx*=0.9;e.mz*=0.9;
 }
 function setpieceThink(e){
@@ -3437,7 +3577,8 @@ const padOf=t=>t?PADS[t.i]:null;
 const NOPAD={ti:0,inp:IN,ctrl:null,lock:null,switchFx:-9};
 const LP=()=>PADS[NET.localTi]||NOPAD;
 function setCtrl(pd,e,why){
-  if(!pd||!e||e===pd.ctrl)return;
+  if(!pd||!e)return;
+  if(e===pd.ctrl){if(why==='recv')pd.lock={t:G.t,jx:pd.inp.jx,jy:pd.inp.jy,why,rel:false};return;}
   if(pd.ctrl&&!pd.ctrl.kick)pd.ctrl.aimFace=null;
   pd.ctrl=e;pd.lastSwitch=G.t;pd.switchFx=G.t;
   // after an automatic switch the AI keeps steering until the thumb asks for something new
@@ -3448,7 +3589,10 @@ function lockActive(pd){
   const L=pd.lock;if(!L)return false;
   const c=pd.ctrl,inp=pd.inp,jm=hyp(inp.jx,inp.jy),lm=hyp(L.jx,L.jy);
   if(!c||B.owner===c){pd.lock=null;return false;}
-  if(L.why==='recv'){if(!B.target||B.target.r!==c){pd.lock=null;return false;}}
+  if(L.why==='recv'){
+    if(B.owner||!B.target||B.target.r!==c||G.t-B.kickT>3.5){pd.lock=null;return false;}
+    return true;
+  }
   else if(G.t-L.t>1.0){pd.lock=null;return false;}
   if(jm<0.2)L.rel=true;
   else if(jm>0.35){
@@ -3492,9 +3636,10 @@ function idealPower(c,r,kind){
 }
 // long ball: lofted to the receiver the stick and the press pick. From wide in the final third (and at corners)
 // it is a cross, and the press picks the zone: near post, penalty spot or far post
+const inCrossZone=c=>Math.abs(c.z)>10&&c.x*c.team.dir/HL>0.35;
 function longPlan(c,inp,pw,corner){
   const dir=c.team.dir,lx=c.x*dir/HL;
-  if(corner||(Math.abs(c.z)>11&&lx>0.5)){
+  if(corner||inCrossZone(c)){
     const p=pw==null?0.5:pw,gx=dir*HL,side=Math.sign(c.z)||1;
     const pt=p<0.38?{x:gx-dir*5.5,z:side*2.2}:p<0.7?{x:gx-dir*11,z:side*0.5}:{x:gx-dir*6.5,z:-side*3.2};
     let r=null,bd=1e9;for(const m of c.team.players){if(m===c||m.isGK||m.off)continue;const d=hyp(m.x-pt.x,m.z-pt.z);if(d<bd){bd=d;r=m;}}
@@ -3583,6 +3728,13 @@ const padSkills=pd=>NET.online&&pd&&pd.ti!==NET.localTi?(NET.guestSk||SK_DEF):G.
 function padHint(pd,text){if(pd===LP())showHint(text);else if(pd)netEv('hint',[text]);}
 function padHideHint(pd){if(pd===LP())hideHint();else if(pd)netEv('hhint',[]);}
 function clearEdges(inp){const E=inp.edge;for(const k of EDGE_KEYS)E[k]=false;}
+function shouldCollectLoose(c){
+  if(B.owner||B.held||c.off||c.stun>0||c.cool>0||c.isGK)return false;
+  if(B.target&&B.target.r===c&&G.t-B.kickT<3.5)return true;
+  if(B.target&&B.target.r&&B.target.r.team===c.team&&G.t-B.kickT<3.5)return false;
+  const d=hyp(B.x-c.x,B.z-c.z);if(d>7||B.y>2.4)return false;
+  return c.team.players.every(p=>p===c||p.off||p.isGK||p.stun>0||hyp(B.x-p.x,B.z-p.z)>=d-0.4);
+}
 function userStep(pd,dt){
   const c=pd.ctrl;if(!c)return;
   const inp=pd.inp,mode=userMode(pd),E=inp.edge,jm=hyp(inp.jx,inp.jy);
@@ -3639,6 +3791,8 @@ function userStep(pd,dt){
       const o=opp,gx=ownGoalX(c.team),vx=gx-o.x,vz=-o.z,vl=hyp(vx,vz)||1,d=hyp(o.x-c.x,o.z-c.z);
       const tx=o.x+vx/vl*1.2+o.vx*0.25,tz=o.z+vz/vl*1.2+o.vz*0.25;
       if(d<7)trackMove(c,tx,tz,o);else setMove(c,tx,tz,true,false);
+    }else if(shouldCollectLoose(c)){
+      chaseBall(c);
     }else if(jm>0.05){
       const sprint=inp.btn.sprint&&c.stamina>0.04;
       const sp=sprint?c.vmax:c.vmax*lerp(0.32,0.72,clamp(jm,0,1));
@@ -3925,6 +4079,8 @@ function hudFrame(){
   if(str!==lastClk){$('clk').textContent=str;lastClk=str;$('hlf').textContent=G.half===1?'전반':'후반';}
   const lc=LP().ctrl,mode=G.state==='play'||G.state==='setpiece'||G.state==='kickoff'?userMode(LP()):'atk';
   const spk=mode==='sp'?(G.state==='kickoff'?'kickoff':G.sp&&G.sp.type)||'kickoff':'',key=mode+spk;
+  $('bCross').hidden=mode==='def'||spk==='penalty'||spk==='throw';
+  $('bCross').querySelector('b').textContent=lc&&(spk==='corner'||inCrossZone(lc))?'크로스':'롱패스';
   if(key!==lastMode){lastMode=key;
     const L=mode==='def'?['교체','압박','태클']:mode==='sp'?SP_LABELS[spk]||SP_LABELS.kickoff:['패스','스루','슛'];
     $('bPass').querySelector('b').textContent=L[0];$('bThru').querySelector('b').textContent=L[1];$('bShoot').querySelector('b').textContent=L[2];
@@ -3933,7 +4089,7 @@ function hudFrame(){
   // power bar; for a pass or a through ball the white mark shows the natural weight for the man the stick is on
   const pw=$('power');
   if(IN.charging&&lc&&mode!=='def'&&(G.state==='play'||G.state==='setpiece'||G.state==='kickoff')){
-    const k=IN.chargeK,cr=lc&&(spk==='corner'||(Math.abs(lc.z)>11&&lc.x*lc.team.dir/HL>0.5));
+    const k=IN.chargeK,cr=lc&&(spk==='corner'||inCrossZone(lc));
     const lifted=(k==='pass'&&IN.lift.pass)||k==='lob',tl=k==='thru'&&IN.lift.thru;
     pw.className=lifted?'lob':k;
     pw.dataset.l=k==='shoot'?({chip:'칩슛',finesse:'감아차기',power:'파워 슛',fake:'페이크 슛'}[IN.shotKind]||'슛'):lifted?(cr?'크로스':'롱패스'):k==='pass'?'패스':tl?'로빙 스루':'스루';
@@ -3961,7 +4117,18 @@ function banner(big,sub,ms,cls){netEv('banner',[big,sub,ms,cls]);$('bBig').textC
 function bannerOff(){netEv('boff',[]);$('banner').classList.remove('on');}
 function showHint(t){const h=$('hint');h.textContent=t;h.hidden=false;}
 function hideHint(){$('hint').hidden=true;}
+function stopMatchMotion(){
+  for(const e of G.ents){
+    e.vx=e.vz=e.mx=e.mz=e.speed=e.turnRate=0;
+    e.act=e.actT=e.actD=e.ap1=e.ap2=e.ap3=0;
+    e.kick=e.sk=e.save=e.aimFace=e.faceTgt=null;e.sprint=e.strafe=false;e.yawL=0;
+  }
+  B.vx=B.vy=B.vz=B.spin=0;
+  for(const pd of PADS)if(pd){pd.lock=pd.queue=null;clearEdges(pd.inp);}
+  for(const k in IN.chg)IN.chg[k]=false;IN.charging=false;IN.power=0;
+}
 function showResult(full){
+  stopMatchMotion();
   const h=club(G.set.home),a=club(G.set.away),st=G.stats;
   $('rK').textContent=full?'FULL TIME':'HALF TIME';
   $('rH').textContent=h.name;$('rA').textContent=a.name;$('rV').textContent=G.score[0]+' : '+G.score[1];
@@ -4067,8 +4234,9 @@ function btnUp(k){
   }
   if(NET.role==='guest')guestInput(true);
 }
-// one charge curve for every gauge (the shot's): full after 0.85 s. A pass or through ball let go before 0.2 still gets the automatic weight
-function chargePower(k){k=k||IN.chargeK;const ms=performance.now()-IN.t0[k];return clamp(ms/850,0.08,1);}
+// All shots, passes, through balls and lobs reach full charge in 0.60 s (was 0.85 s).
+const CHARGE_MS=600;
+function chargePower(k){k=k||IN.chargeK;const ms=performance.now()-IN.t0[k];return clamp(ms/CHARGE_MS,0.08,1);}
 function skillSwipe(dir){const ek='sk'+dir;IN.edge[ek]=true;if(NET.role==='guest'){NET.ec[ek]++;guestInput(true);}if(navigator.vibrate&&matchMedia('(pointer:coarse)').matches)try{navigator.vibrate(14);}catch(_){}}
 // shoot button: slide up before letting go for a chip, down to curl it, right for a driven shot, left to fake it
 const SW={};
@@ -4150,7 +4318,13 @@ function leagueTable(){
 }
 let hubTab='table';
 function renderHub(){
-  const s=LG.s;if(!s){renderPick(false);return;}
+  const s=LG.s;if(!s){
+    $('hubSeason').textContent='FLOODLIGHT ELEVEN';$('hubClub').innerHTML='<div><b>나만의 팀을 만들어 보세요</b><span>로그인·회원가입과 선수 영입은 각각의 메뉴에서 이용할 수 있어요.</span></div>';
+    $('hubNext').innerHTML='<span class="hn-k">시즌을 시작하면 20팀·38라운드 리그에 참가해요.</span>';
+    $('hubBody').innerHTML='<p class="fx-h">로그인하거나 상점에서 선수를 영입한 뒤 새 시즌을 시작해 보세요.</p>';
+    $('goBtn').hidden=false;$('goBtn').textContent='시즌 시작';$('simBtn').hidden=true;return;
+  }
+  $('goBtn').textContent='경기 시작';
   const c=lgClub(s.club),T=leagueTable(),pos=T.findIndex(r=>r.i===s.club)+1,me=T[pos-1];
   $('hubSeason').textContent=s.md<38?`2026-27 시즌 · ${s.md+1}라운드`:'2026-27 시즌 종료';
   $('hubClub').innerHTML=`${crestHTML(c,true)}<div><b>${c.name}</b><span>${pos}위 · 승점 ${me.pts} · ${me.w}승 ${me.d}무 ${me.l}패 · OVR ${c.rating}</span></div>`;
@@ -4192,7 +4366,7 @@ function renderPick(canBack){
   $('pickMine').hidden=!p;if(p){$('pickMineT').innerHTML=`<b>★ 내 팀으로 참가</b> · ${esc(CUSTOM[0].name)} (OVR ${CUSTOM[0].rating})`;$('pickMineC').checked=pickMine;}
   $('pickSub').textContent=(p&&pickMine?'내 팀이 대신 들어갈 클럽 자리를 고르세요. 그 클럽의 일정을 내 팀이 치러요.':'시즌을 함께할 클럽을 고르세요. 38라운드를 치르고 순위표에서 우승을 다퉈요.')+` 타 리그 구단 선택 시 ${CLUBS[PL_IDX[PL_IDX.length-1]].name} 자리를 대신해 참가해요.`;
   $('pickGrid').innerHTML=LEAGUES.map(([lg,name])=>`<h3 style="grid-column:1 / -1;margin:12px 0 0">${name}</h3>`+CLUBS.map((c,i)=>c.lg===lg?`<button class="club" data-i="${i}">${crestHTML(c)}<span>${c.name}</span><em>OVR ${c.rating}</em></button>`:'').join('')).join('');
-  $('pickBack').hidden=!canBack;$('pickNote').hidden=!canBack;$('pick').hidden=false;
+  $('pickBack').hidden=!canBack;$('pickNote').hidden=!canBack||!LG.s;$('pick').hidden=false;
 }
 let pickMine=true;
 $('pickMineC').addEventListener('change',e=>{pickMine=e.target.checked;renderPick(!$('pickBack').hidden);});
@@ -4223,6 +4397,7 @@ function lineup(){
   B.x=0;B.z=0.6;B.y=BR;B.owner=null;
 }
 function goMenu(){
+  if(AUTH.token)setTimeout(srvRefresh,0);
   if(NET.ws||NET.online)netLeave();
   PADS[0]=PADS[1]=null;$('online').hidden=true;
   G.state='menu';$('menu').hidden=false;$('hud').hidden=true;$('result').hidden=true;$('pause').hidden=true;$('app').classList.remove('replay');
@@ -4240,6 +4415,7 @@ function goFullscreen(){
   if(matchMedia('(pointer:coarse)').matches&&el.requestFullscreen&&!document.fullscreenElement){el.requestFullscreen({navigationUI:'hide'}).then(()=>{try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock('landscape').catch(()=>{});}catch(e){}}).catch(()=>{});}
 }
 $('goBtn').addEventListener('click',()=>{
+  if(!LG.s){renderPick(true);return;}
   AU.start();goFullscreen();
   const f=LG.s&&userFixture(LG.s.md);if(!f)return;
   G.mode='league';G.set.home=lgHome();G.set.away=f.opp;G.venue=f.home?0:1;
@@ -4289,12 +4465,13 @@ function renderTac(){
   $('segF').innerHTML=FORM_KEYS.map(k=>`<button data-f="${k}" aria-pressed="${k===T.form}">${k}</button>`).join('');
   $('segM').innerHTML=MENTS.map(m=>`<button data-m="${m.v}" aria-pressed="${m.v===T.ment}">${m.n}</button>`).join('');
   let info='선수 두 명을 차례로 누르면 자리를 바꿔요. 주황 테두리는 원래 포지션이 아닌 선수예요.';
-  if(tacSel>=0){const m=roster[order[tacSel]],s=m.st,pct=v=>Math.round(v*100);info=`${m.num} ${m.name} · OVR ${m.ovr}${m.nat==='GK'?'':' · 개인기 '+'★'.repeat(m.stars)} · 속도 ${pct(s.pace)} 슈팅 ${pct(s.shoot)} 패스 ${pct(s.pass)} 태클 ${pct(s.tackle)} 드리블 ${pct(s.drib)} 피지컬 ${pct(s.phy||0.75)}${m.nat==='GK'?'':' · 성향: '+hidTags(m.hid)}`;}
+  if(tacSel>=0){const m=roster[order[tacSel]],s=m.st,pct=v=>Math.round(v*100);info=`${m.num} ${m.name} · OVR ${m.ovr} · ${footLabel(m)}${m.nat==='GK'?'':' · 개인기 '+'★'.repeat(m.stars)} · 속도 ${pct(s.pace)} 슈팅 ${pct(s.shoot)} 패스 ${pct(s.pass)} 태클 ${pct(s.tackle)} 드리블 ${pct(s.drib)} 피지컬 ${pct(s.phy||0.75)}${m.nat==='GK'?'':' · 성향: '+hidTags(m.hid)}`;}
   $('tacInfo').textContent=info;
   $('tacOpp').innerHTML=tacMode==='solo'?`<span>${G.mode==='league'?(G.venue===0?'홈 · ':'원정 · '):'친선 · '}상대 <b>${CLUBS[G.set.away].name}</b></span><span>${G.oppTac.form} · ${MENTS.find(m=>m.v===G.oppTac.ment).n}</span>`:'<span>온라인 경기에서 이 전술로 나가요</span>';
   $('tacTitle').textContent=CLUBS[G.set.home].name;
   $('tacGo').textContent=tacMode==='solo'?'경기 시작':'저장';
   lsSet('fl11-set',JSON.stringify(G.set));
+  const p=prof();if(p){const next=cleanAccountTacs(G.set.tacs);if(JSON.stringify(next)!==JSON.stringify(cleanAccountTacs(p.tacs))){p.tacs=next;accCommit();}}
 }
 $('tacPitch').addEventListener('click',e=>{
   const b=e.target.closest('.tp');if(!b)return;const k=+b.dataset.k;
@@ -4370,88 +4547,149 @@ const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const pct=v=>Math.round(v*100);
 function tmSlots(){const t=prof().team,a=t.cards.slice();for(let i=0;i<BENCH_MAX;i++)a.push(t.bench[i]||null);return a;}
 function tmStore(a){const t=prof().team;t.cards=a.slice(0,11);t.bench=a.slice(11).filter(Boolean);accCommit();}
-function accCommit(){const p=prof();if(p)p.team=cleanSpec(p.team,profClub(p),p.club);accSave();applyProfile();if(p&&p.srv)srvQueue();}
+function accCommit(){const p=prof();if(p)p.team=cleanSpec(p.team,profClub(p),cardAllowance(p));accSave();applyProfile();if(p&&p.srv)srvQueue();}
 /* ---- online accounts: log in with an id + password and the team is kept in the server's database,
    so it follows you to any device. The logged-in account sits in ACC.list as '@id' (srv:true) and every
    change to it is saved back a moment later. Accounts without login still work as before (this browser only) */
-const AUTH={token:null,user:null,state:'',saving:false,dirty:false,timer:0,ok:null};
+const AUTH={token:null,user:null,state:'',saving:false,dirty:false,timer:0,ok:null,flushPromise:null,refreshing:false};
 const srvKey=()=>AUTH.user?'@'+AUTH.user:null;
 function authLoad(){try{const a=JSON.parse(lsGet('fl11-auth')||'null');if(a&&a.token&&a.user){AUTH.token=a.token;AUTH.user=a.user;}}catch(e){}
-  // a cached copy of a server account without a login is dropped
-  for(const k in ACC.list)if(ACC.list[k].srv&&k!==srvKey())delete ACC.list[k];if(ACC.cur&&!ACC.list[ACC.cur])ACC.cur=Object.keys(ACC.list)[0]||null;}
+  for(const k in ACC.list)if(ACC.list[k].srv&&k!==srvKey())delete ACC.list[k];
+  if(ACC.cur&&!ACC.list[ACC.cur])ACC.cur=Object.keys(ACC.list)[0]||null;
+  AUTH.dirty=!!(ACC.list[srvKey()]&&ACC.list[srvKey()]._pending);
+}
 function authSave(){lsSet('fl11-auth',JSON.stringify(AUTH.token?{token:AUTH.token,user:AUTH.user}:null));}
 async function api(path,opt={}){
-  const h={'Content-Type':'application/json'};if(AUTH.token)h.Authorization='Bearer '+AUTH.token;
-  let r;try{r=await fetch('/api'+path,{method:opt.method||'GET',headers:h,body:opt.body?JSON.stringify(opt.body):undefined});}
+  const token=opt.token===undefined?AUTH.token:opt.token,h={'Content-Type':'application/json'};if(token)h.Authorization='Bearer '+token;
+  let r;try{r=await fetch('/api'+path,{method:opt.method||'GET',headers:h,cache:'no-store',keepalive:!!opt.keepalive,body:opt.body?JSON.stringify(opt.body):undefined});}
   catch(e){throw new Error('서버에 연결할 수 없어요. 인터넷 연결을 확인해 주세요.');}
   let d={};try{d=await r.json();}catch(e){}
-  if(r.status===401&&AUTH.token&&path!=='/auth/login'){authDrop();}
-  if(!r.ok)throw new Error(d.error||('서버 오류 ('+r.status+')'));
+  if(r.status===401&&token&&token===AUTH.token&&path!=='/auth/login')authDrop();
+  if(!r.ok){const e=new Error(d.error||('서버 오류 ('+r.status+')'));e.status=r.status;e.data=d;throw e;}
   return d;
 }
-const profOut=p=>{const ci=profClub(p);return{name:p.name,club:p.club,team:cleanSpec(p.team,ci,p.club),skills:cleanSk(p.skills)};};
-function srvAdopt(user,data){
-  const k='@'+user,fallback=prof();
-  ACC.list[k]=data&&data.team?{name:String(data.name||user).slice(0,12),club:data.club,team:cleanSpec(data.team),skills:cleanSk(data.skills),made:Date.now(),srv:true}
-    :Object.assign(fallback&&!fallback.srv?JSON.parse(JSON.stringify(fallback)):newProfile(user,0),{srv:true});
-  ACC.cur=k;applyProfile();accSave();
-  if(!data||!data.team)srvQueue(0);
+const cleanAccountTacs=t=>{const out={};if(t&&typeof t==='object')for(const k of Object.keys(t))if(/^(0|[1-9][0-9]*)$/.test(k)&&CLUBS[+k])out[k]=cleanTac(t[k]);return out;};
+const profOut=p=>{const ci=profClub(p);return{name:p.name,club:p.club,team:cleanSpec(p.team,ci,cardAllowance(p)),skills:cleanSk(p.skills),tacs:cleanAccountTacs(p.tacs)};};
+function srvAdopt(user,data,revision=0,select=true){
+  const k='@'+user,legacyTacs=ACC.list[k]&&ACC.list[k].tacs||G.set.tacs,migrate=!!(data&&data.team&&data.tacs===undefined),p=data&&data.team?{name:String(data.name||user).slice(0,12),club:data.club,team:cleanSpec(data.team),skills:cleanSk(data.skills),inventory:Array.isArray(data.inventory)?data.inventory:undefined,coins:data.coins,tacs:cleanAccountTacs(migrate?legacyTacs:data.tacs),made:Date.now()}:newProfile(user,0);
+  Object.assign(p,{srv:true,_revision:revision,_pending:false,_edit:0});ACC.list[k]=p;
+  if(select)ACC.cur=k;if(ACC.cur===k)applyProfile();accSave();AUTH.dirty=false;
+  if(!data||!data.team||migrate){p._pending=true;AUTH.dirty=true;accSave();clearTimeout(AUTH.timer);AUTH.timer=setTimeout(srvFlush,0);}
 }
-function authDrop(){const k=srvKey();if(k){delete ACC.list[k];if(ACC.cur===k)ACC.cur=Object.keys(ACC.list).find(i=>!ACC.list[i].srv)||null;}
+function srvBackup(p){
+  if(!p||!p._pending)return;
+  const id='recovery-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,6);
+  ACC.list[id]=Object.assign(profOut(p),{name:('복구용 '+p.name).slice(0,12),made:Date.now()});accSave();
+}
+function authDrop(){const k=srvKey(),p=ACC.list[k];if(p)srvBackup(p);if(k){delete ACC.list[k];if(ACC.cur===k)ACC.cur=Object.keys(ACC.list).find(i=>!ACC.list[i].srv)||null;}
   AUTH.token=null;AUTH.user=null;AUTH.dirty=false;clearTimeout(AUTH.timer);authSave();accSave();applyProfile();}
-function srvQueue(delay=900){const p=prof();if(!p||!p.srv||!AUTH.token)return;AUTH.dirty=true;AUTH.state='저장 대기';clearTimeout(AUTH.timer);AUTH.timer=setTimeout(srvFlush,delay);tmAuthLine();}
+function srvQueue(delay=200){const p=prof();if(!p||!p.srv||ACC.cur!==srvKey()||!AUTH.token)return;
+  p._pending=true;p._edit=(p._edit||0)+1;AUTH.dirty=true;AUTH.state='저장 대기';accSave();clearTimeout(AUTH.timer);AUTH.timer=setTimeout(srvFlush,delay);tmAuthLine();}
+function sameProfile(a,b){const canonical=v=>v&&typeof v==='object'?(Array.isArray(v)?v.map(canonical):Object.fromEntries(Object.keys(v).sort().map(k=>[k,canonical(v[k])]))):v;return JSON.stringify(canonical(a))===JSON.stringify(canonical(b));}
 async function srvFlush(){
-  const k=srvKey(),p=k&&ACC.list[k];if(!p||!AUTH.token||AUTH.saving)return;
-  AUTH.saving=true;AUTH.dirty=false;AUTH.state='저장 중…';tmAuthLine();
-  try{await api('/profile',{method:'PUT',body:{profile:profOut(p)}});AUTH.state=AUTH.dirty?'저장 대기':'저장됨';}
-  catch(e){AUTH.state='저장 실패 · '+e.message;AUTH.dirty=true;clearTimeout(AUTH.timer);AUTH.timer=setTimeout(srvFlush,15000);}
-  AUTH.saving=false;tmAuthLine();if(AUTH.dirty&&AUTH.state==='저장 대기'){clearTimeout(AUTH.timer);AUTH.timer=setTimeout(srvFlush,400);}
+  if(AUTH.flushPromise)return AUTH.flushPromise;
+  const k=srvKey(),p=ACC.list[k],token=AUTH.token,user=AUTH.user;
+  if(!p||!token||!p._pending)return true;
+  if(!Number.isSafeInteger(p._revision)){AUTH.state='서버 정보를 먼저 불러와 주세요.';return false;}
+  const edit=p._edit||0,payload=profOut(p);AUTH.saving=true;AUTH.state='저장 중…';tmAuthLine();
+  const run=(async()=>{
+    let ok=false;
+    try{
+      const d=await api('/profile',{method:'PUT',token,keepalive:true,body:{profile:payload,revision:p._revision}});
+      if(AUTH.token!==token||ACC.list[k]!==p)return false;
+      p._revision=d.revision;p._pending=(p._edit||0)!==edit;AUTH.dirty=p._pending;AUTH.state=p._pending?'저장 대기':'저장됨';accSave();ok=true;
+    }catch(e){
+      if(AUTH.token!==token||ACC.list[k]!==p)return false;
+      if(e.status===409){
+        if(sameProfile(payload,e.data.profile?profOut(e.data.profile):null)){
+          p._revision=e.data.revision;p._pending=(p._edit||0)!==edit;AUTH.dirty=p._pending;AUTH.state=p._pending?'저장 대기':'저장됨';accSave();ok=true;
+        }else{
+          srvBackup(p);srvAdopt(user,e.data.profile,e.data.revision,ACC.cur===k);
+          AUTH.state='다른 브라우저의 최신 설정을 불러왔어요. 이 기기의 미저장 변경은 복구용 계정에 보관했어요.';
+          if(!$('team').hidden)renderTeam();
+        }
+      }else{AUTH.dirty=true;AUTH.state='저장 실패 · '+e.message;accSave();clearTimeout(AUTH.timer);AUTH.timer=setTimeout(srvFlush,5000);}
+    }finally{
+      AUTH.saving=false;AUTH.flushPromise=null;tmAuthLine();
+      if(AUTH.token===token&&AUTH.dirty&&AUTH.state==='저장 대기'){clearTimeout(AUTH.timer);AUTH.timer=setTimeout(srvFlush,0);}
+    }
+    return ok;
+  })();
+  AUTH.flushPromise=run;return run;
 }
-// on start: refresh the logged-in account from the server
+async function srvEnsureSaved(){
+  clearTimeout(AUTH.timer);
+  for(let i=0;i<4;i++){const p=ACC.list[srvKey()];if(!p||!p._pending)return true;if(!await srvFlush())return false;}
+  return false;
+}
+async function srvRefresh(){
+  if(!AUTH.token||AUTH.refreshing||!['menu','boot','half','full'].includes(G.state))return;
+  AUTH.refreshing=true;const token=AUTH.token,k=srvKey();
+  try{
+    const cached=ACC.list[k];
+    if(cached&&cached._pending&&Number.isSafeInteger(cached._revision)&&!await srvEnsureSaved())return;
+    const before=ACC.list[k],edit=before&&(before._edit||0),d=await api('/me',{token});
+    if(AUTH.token!==token||ACC.list[k]!==before||(before&&((before._edit||0)!==edit||before._pending&&Number.isSafeInteger(before._revision))))return;
+    if(before&&before._pending)srvBackup(before);
+    srvAdopt(d.user.username,d.profile,d.revision,ACC.cur===k||!prof());AUTH.state='저장됨';
+    if(!$('team').hidden)renderTeam();if(G.state==='menu')renderHubAcc();
+  }catch(e){if(AUTH.token===token)AUTH.state=e.message;}
+  finally{AUTH.refreshing=false;tmAuthLine();}
+}
 async function authBoot(){
+  try{await loadLiveCatalog();}catch(e){}
   try{const st=await api('/status');AUTH.ok=true;AUTH.store=st.store;}catch(e){AUTH.ok=false;}
   if(!AUTH.token||!AUTH.ok){if(!$('team').hidden)renderTeam();return;}
-  try{const d=await api('/me');if(AUTH.token){srvAdopt(d.user.username,d.profile);AUTH.state='저장됨';}}
-  catch(e){AUTH.state=e.message;}
-  if(!$('team').hidden)renderTeam();if(G.state==='menu'){renderHubAcc();}
+  await srvRefresh();
 }
-addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&AUTH.dirty){clearTimeout(AUTH.timer);srvFlush();}});
+addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){accSave();if(AUTH.dirty){clearTimeout(AUTH.timer);srvFlush();}}else srvRefresh();});
+addEventListener('pagehide',()=>{accSave();if(AUTH.dirty){clearTimeout(AUTH.timer);srvFlush();}});
+addEventListener('focus',()=>srvRefresh());
+addEventListener('online',()=>{if(AUTH.dirty)srvFlush();else srvRefresh();});
 function tmAuthLine(){const el=document.getElementById('authLine');if(el)el.textContent=AUTH.state;}
 async function authDo(kind){
   const u=($('authU').value||'').trim(),pw=$('authP').value||'';
   if(!u||!pw){tmMsg='아이디와 비밀번호를 입력해 주세요.';renderTmBody();tmMsg='';return;}
-  const startCi=+(($('authC')||{}).value||0);
-  AUTH.busy=true;renderTmBody();
+  let adminWindow=null;
+  if(kind==='login'&&u.toLowerCase()==='prieon_auth')try{adminWindow=window.open('about:blank','fl11-admin');if(adminWindow)adminWindow.opener=null;}catch(e){}
+  const startCi=+(($('authC')||{}).value||0);AUTH.busy=true;renderTmBody();
   try{
-    const body={username:u,password:pw};
-    if(kind==='register')body.profile=profOut(newProfile(u,startCi));
-    const d=await api(kind==='register'?'/auth/register':'/auth/login',{method:'POST',body});
-    AUTH.token=d.token;AUTH.user=d.user.username;authSave();srvAdopt(d.user.username,d.profile);AUTH.state='저장됨';
-    tmMsg=kind==='register'?`회원가입 완료! @${d.user.username} 으로 로그인했어요. 팀이 서버에 저장돼요.`:`@${d.user.username} 으로 로그인했어요.`;tmTab='cards';
-  }catch(e){tmMsg=e.message;}
+    if(AUTH.token&&!await srvEnsureSaved())throw new Error('현재 계정의 저장을 마친 뒤 다시 시도해 주세요.');
+    const body={username:u,password:pw};if(kind==='register')body.profile=profOut(newProfile(u,startCi));
+    const d=await api(kind==='register'?'/auth/register':'/auth/login',{method:'POST',body,token:null});
+    if(d.kind==='admin'){
+      if(adminWindow&&!adminWindow.closed){adminWindow.location.replace('/admin/');adminWindow.focus();}else window.location.assign('/admin/');
+      tmMsg='관리자 화면을 열었어요.';AUTH.busy=false;renderTeam();tmMsg='';return;
+    }
+    try{await loadLiveCatalog();}catch(e){}
+    AUTH.token=d.token;AUTH.user=d.user.username;authSave();srvAdopt(d.user.username,d.profile,d.revision);AUTH.state='저장됨';
+    tmMsg=kind==='register'?`회원가입 완료! @${d.user.username} 으로 로그인했어요. 팀이 서버에 저장돼요.`:`@${d.user.username} 으로 로그인했어요. 서버의 팀·선수단·개인기를 불러왔어요.`;tmTab='cards';
+  }catch(e){if(adminWindow&&!adminWindow.closed)adminWindow.close();tmMsg=e.message;}
   AUTH.busy=false;renderTeam();tmMsg='';
 }
-async function authLogout(){try{await api('/auth/logout',{method:'POST'});}catch(e){}authDrop();tmMsg='로그아웃했어요.';renderTeam();tmMsg='';}
+async function authLogout(){
+  if(!await srvEnsureSaved()){tmMsg='저장을 완료하지 못했어요. 연결을 확인한 뒤 다시 로그아웃해 주세요.';renderTeam();tmMsg='';return;}
+  try{await api('/auth/logout',{method:'POST'});}catch(e){tmMsg=e.message;renderTeam();tmMsg='';return;}
+  authDrop();tmMsg='로그아웃했어요.';renderTeam();tmMsg='';
+}
+
 async function authDelete(){
   const pw=($('srvPw')||{}).value||'';if(!pw){tmMsg='계정을 지우려면 비밀번호를 입력해 주세요.';renderTmBody();tmMsg='';return;}
   try{await api('/me/delete',{method:'POST',body:{password:pw}});authDrop();tmMsg='온라인 계정을 삭제했어요.';}catch(e){tmMsg=e.message;}
   renderTeam();tmMsg='';
 }
+let authMode='login';
+function openAccount(mode){authMode=mode||'login';$('team').hidden=true;$('shop').hidden=true;$('account').hidden=false;renderAccount();}
+function renderAccount(){const b=$('accountBody');b.innerHTML=authBox();if(tmMsg)b.insertAdjacentHTML('afterbegin',`<p class="note" style="color:var(--flood)">${esc(tmMsg)}</p>`);}
 function authBox(){
-  if(AUTH.ok===false)return `<div class="tm-sel"><b>온라인 계정</b><br>로그인 서버에 연결할 수 없어요. 게임 서버 주소로 접속했는지 확인해 주세요. 지금은 이 기기 계정만 쓸 수 있어요.</div>`;
-  if(AUTH.token)return `<div class="tm-sel"><b>@${esc(AUTH.user)}</b> 로그인됨 · <span id="authLine">${esc(AUTH.state||'')}</span><br>팀과 개인기가 서버에 저장돼서 다른 기기에서 로그인해도 그대로예요.
-    ${ACC.cur!==srvKey()?`<button class="btn pri" data-use="${esc(srvKey())}" style="margin-top:6px;width:100%">이 계정으로 플레이 (지금은 이 기기 계정 사용 중)</button>`:''}
-    <div class="two" style="margin-top:6px"><button class="btn" data-act="logout">로그아웃</button><button class="btn" data-act="srvsave">지금 저장</button></div>
-    <details style="margin-top:6px"><summary class="note">온라인 계정 삭제</summary><div class="cf" style="margin-top:6px"><input id="srvPw" type="password" placeholder="비밀번호 확인" autocomplete="current-password"><button class="btn warn" data-act="srvdel">삭제</button></div></details></div>`;
-  return `<div class="tm-sel" style="display:grid;gap:7px"><b>온라인 계정 로그인</b>
-    <span class="note">로그인하면 팀이 서버 DB에 저장돼서 폰·PC 어디서든 같은 팀으로 플레이해요.</span>
-    <div class="two"><input id="authU" maxlength="16" placeholder="아이디" autocomplete="username" autocapitalize="off"><input id="authP" type="password" maxlength="72" placeholder="비밀번호 (6자 이상)" autocomplete="current-password"></div>
-    <div class="two"><button class="btn pri" data-act="login"${AUTH.busy?' disabled':''}>로그인</button><button class="btn" data-act="register"${AUTH.busy?' disabled':''}>회원가입</button></div>
-    <label>회원가입 시작 클럽 <span class="note">(선택한 구단 선수 20명의 베이스 카드만 받아요)</span><select id="authC">${clubOptsG(0)}</select></label></div>`;
+  if(AUTH.token)return `<div class="tm-sel"><b>@${esc(AUTH.user)}</b> 로그인됨 · <span id="authLine">${esc(AUTH.state||'')}</span><p class="note">선수단·팀·개인기는 서버에 저장돼요.</p>${ACC.cur!==srvKey()?`<button class="btn pri" data-use="${esc(srvKey())}">온라인 계정으로 플레이</button>`:''}<div class="two"><button class="btn" data-act="logout">로그아웃</button><button class="btn" data-act="srvsave">지금 저장</button></div></div>`+localAccountBox();
+  return `<div class="auth-modes" role="tablist"><button class="btn" data-auth-mode="login" aria-selected="${authMode==='login'}">로그인</button><button class="btn" data-auth-mode="register" aria-selected="${authMode==='register'}">회원가입</button></div><label>아이디<input id="authU" maxlength="16" autocomplete="username" autocapitalize="off" placeholder="아이디"></label><label>비밀번호<input id="authP" type="password" maxlength="72" autocomplete="${authMode==='register'?'new-password':'current-password'}" placeholder="비밀번호 (6자 이상)"></label>${authMode==='register'?`<label>시작 구단<select id="authC">${clubOptsG(0)}</select></label><p class="note">선택한 구단의 실버 베이스 카드 20장과 최초 1,000코인으로 시작해요.</p>`:''}<button class="btn pri" data-act="${authMode}" ${AUTH.busy?'disabled':''}>${AUTH.busy?'처리 중…':authMode==='register'?'회원가입':'로그인'}</button><p class="note">관리자 계정으로 로그인하면 관리자 화면이 별도 창으로 열려요.</p>`+localAccountBox();
 }
-function cardLine(cd){const m=baseRoster(cd.ci)[cd.k],s=m.st;return m.nat==='GK'?`골키퍼 · 선방 능력은 OVR을 따라요 · 패스 ${pct(s.pass)} · 피지컬 ${pct(s.phy||0.75)}`:`속도 ${pct(s.pace)} 슈팅 ${pct(s.shoot)} 패스 ${pct(s.pass)} 드리블 ${pct(s.drib)} 태클 ${pct(s.tackle)} 피지컬 ${pct(s.phy||0.75)} · 개인기 ${'★'.repeat(m.stars||1)}`;}
-function openTeam(tab){tmTab=prof()?(tab||tmTab):'acc';tmSel=-1;tmMsg='';renderTeam();$('team').hidden=false;}
+function localAccountBox(){const p=prof(),ids=Object.keys(ACC.list).filter(id=>!ACC.list[id].srv);return `<details><summary class="note">이 기기 계정 / 복구 코드</summary><div class="cl">${ids.map(id=>`<div class="acc-row"><span>${esc(ACC.list[id].name)}</span><button class="btn" data-use="${esc(id)}">사용</button></div>`).join('')}</div>${p?'<button class="btn" data-act="export">내보내기 코드</button>':''}<label>가져오기 / 내보내기 코드<textarea id="accCode" placeholder="복구 코드를 붙여 넣으세요"></textarea></label><button class="btn" data-act="import">이 기기 계정으로 가져오기</button></details>`;}
+function cardLine(cd){const m=cardRoster(cd),s=m.st;return m.nat==='GK'?`골키퍼 · 선방 능력은 OVR을 따라요 · 패스 ${pct(s.pass)} · 피지컬 ${pct(s.phy||0.75)}`:`속도 ${pct(s.pace)} 슈팅 ${pct(s.shoot)} 패스 ${pct(s.pass)} 드리블 ${pct(s.drib)} 태클 ${pct(s.tackle)} 피지컬 ${pct(s.phy||0.75)} · 개인기 ${'★'.repeat(m.stars||1)}`;}
+function openTeam(tab){if(!prof()){openAccount();return;}tmTab=tab||(['cards','team','skills'].includes(tmTab)?tmTab:'cards');tmSel=-1;tmMsg='';renderTeam();$('team').hidden=false;}
 function renderTeam(){
+  if(!$('account').hidden)renderAccount();
   const p=prof();
   $('tmTabs').querySelectorAll('button').forEach(b=>{b.setAttribute('aria-selected',b.dataset.t===tmTab);b.disabled=!p&&b.dataset.t!=='acc';});
   if(!p){$('tmName').textContent='계정 만들기';$('tmMeta').textContent='';$('tmPitch').innerHTML='<div class="tp-lines"></div>';$('tmBench').innerHTML='';renderTmBody();return;}
@@ -4459,27 +4697,28 @@ function renderTeam(){
   $('tmName').textContent=t.name;
   $('tmMeta').innerHTML=`${esc(p.name)} · OVR <b>${ct.rating}</b> · ${t.form} · ${MENTS.find(m=>m.v===t.ment).n} · `+(one>=0?`<span class="bon">단일팀 +3 (${CLUBS[one].name})</span>`:'단일팀 아님');
   let h='<div class="tp-lines"></div>';
-  slots.forEach((f,k)=>{const cd=cardById(all[k]),x=6+(f.p[0]+0.95)/1.07*86,y=50+f.p[1]*46,mis=baseRoster(cd.ci)[cd.k].nat!==f.r;
-    h+=`<button class="tp cardy" data-s="${k}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%" aria-label="${f.l} ${esc(cd.name)}">${cardHTML(cd,{size:'s',bonus:one>=0,cls:(k===tmSel?'sel':'')+(mis?' mis':'')})}<em>${f.l}</em></button>`;});
+  slots.forEach((f,k)=>{const cd=cardById(all[k]),skin=cardClass(cd),x=6+(f.p[0]+0.95)/1.07*86,y=50+f.p[1]*46,mis=cardRoster(cd).nat!==f.r;
+    h+=`<button class="tp${skin.id!=='BASE'?' classed':''}${k===tmSel?' sel':''}${mis?' mis':''}" data-s="${k}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%;--kit:${kc.shirt};--num:${kc.num};--class-accent:${skin.accent};--slot-art:${skin.slotArt?`url('${skin.slotArt}')`:'none'}" aria-label="${f.l} ${esc(cd.name)}" aria-pressed="${k===tmSel}"><b>${cd.num}</b><span>${esc(cd.name)}</span><em>${f.l}</em>${skin.id!=='BASE'?`<i class="slot-class">${esc(skin.name)}</i>`:''}</button>`;});
   $('tmPitch').innerHTML=h;
-  $('tmBench').innerHTML='<i>교체</i>'+all.slice(11).map((id,i)=>{const cd=id&&cardById(id),k=11+i;
-    return cd?`<button class="bs full${k===tmSel?' sel':''}" data-s="${k}" aria-label="교체 ${esc(cd.name)}">${cardHTML(cd,{size:'xs'})}<em>${cd.pos}</em></button>`
+  $('tmBench').innerHTML='<i>교체</i>'+all.slice(11).map((id,i)=>{const cd=id&&cardById(id),k=11+i,skin=cardClass(cd);
+    return cd?`<button class="bs full${skin.id!=='BASE'?' classed':''}${k===tmSel?' sel':''}" data-s="${k}" style="--kit:${kc.shirt};--num:${kc.num};--class-accent:${skin.accent};--slot-art:${skin.slotArt?`url('${skin.slotArt}')`:'none'}" aria-label="교체 ${esc(cd.name)}" aria-pressed="${k===tmSel}"><b>${cd.num}</b><span>${esc(cd.name)}</span><em>${cd.pos}</em></button>`
       :`<button class="bs${k===tmSel?' sel':''}" data-s="${k}" aria-label="빈 교체 자리"><em>비어 있음</em></button>`;}).join('');
   renderTmBody();
 }
 function renderTmBody(){
   const p=prof(),b=$('tmBody');
+  if(!$('account').hidden)renderAccount();if(!p){b.innerHTML='<p class="note">로그인 후 팀을 관리할 수 있어요.</p>';return;}
   if(tmTab==='cards'){
     const all=tmSlots(),inSt=new Set(all.slice(0,11)),inBn=new Set(all.slice(11).filter(Boolean));
     const sid=tmSel>=0?all[tmSel]:null,sc=sid&&cardById(sid);
     let top=tmSel<0?'<div class="tm-sel">경기장이나 교체 자리에서 <b>자리를 먼저 고르세요.</b> 그다음 다른 자리를 누르면 서로 바뀌고, 아래 카드를 누르면 그 선수가 들어가요.</div>'
-      :sc?`<div class="tm-card">${cardHTML(sc,{tag:'div',bonus:tmSel<11&&CUSTOM[0].single>=0})}<div class="tm-sel"><b>${esc(sc.name)}</b><br>${sc.club.name} · ${sc.pos} · 베이스 카드<br><span class="note">${tmSel<11?'선발':'교체'} 자리 · 다른 자리나 아래 카드를 누르면 바뀌어요</span>${tmSel>=11?'<br><button class="btn" data-act="clear" style="margin-top:6px">교체 자리 비우기</button>':''}</div></div>`
+      :sc?`<div class="tm-card">${cardHTML(sc,{tag:'div',bonus:tmSel<11&&CUSTOM[0].single>=0})}<div class="tm-sel"><b>${esc(sc.name)}</b><br>${sc.club.name} · ${sc.pos} · ${esc(cardClass(sc).name)} 카드<br>${esc(footLabel(cardRoster(sc)))}<br><span class="note">성향: ${esc(hidTags(cardRoster(sc).hid))}</span><br><span class="note">${tmSel<11?'선발':'교체'} 자리 · 다른 자리나 아래 카드를 누르면 바뀌어요</span>${tmSel>=11?'<br><button class="btn" data-act="clear" style="margin-top:6px">교체 자리 비우기</button>':''}</div></div>`
       :'<div class="tm-sel">빈 교체 자리예요. 아래에서 선수를 고르세요.</div>';
-    const own=ownedCards(p),q=tmQ.trim(),list=own.filter(cd=>(!tmPos||baseRoster(cd.ci)[cd.k].nat===tmPos)&&(!q||cd.name.includes(q)));
+    const own=ownedCards(p),q=tmQ.trim(),list=own.filter(cd=>(!tmPos||cardRoster(cd).nat===tmPos)&&(!q||cd.name.includes(q)));
     list.sort((a,c)=>c.ovr-a.ovr);
     b.innerHTML=top+`<div class="cf" style="grid-template-columns:1fr"><input id="tmQ" placeholder="이름 검색" value="${esc(tmQ)}" aria-label="선수 검색"></div>
       <div class="seg" id="tmPosF">${[['','전체'],['GK','GK'],['DF','DF'],['MF','MF'],['FW','FW']].map(([v,n])=>`<button data-p="${v}" aria-pressed="${v===tmPos}">${n}</button>`).join('')}</div>
-      <p class="note">${own[0]?own[0].club.name:''} 베이스 카드 ${own.length}장 보유 · ${list.length}장 표시</p>
+      <p class="note">보유 카드 ${own.length}종 · ${list.length}장 표시</p>
       <div class="cg" id="tmList">${list.map(cd=>cardHTML(cd,{attr:`data-c="${esc(cd.id)}" aria-label="${esc(cd.name)} ${cd.club.name} ${cd.pos} ${cd.ovr}"`,cls:inSt.has(cd.id)?'in':'',tagTxt:inSt.has(cd.id)?'선발':inBn.has(cd.id)?'후보':'',tagCls:inBn.has(cd.id)?'bn':''})).join('')}</div>`;
   }else if(tmTab==='team'){
     const t=p.team;
@@ -4493,18 +4732,8 @@ function renderTmBody(){
     b.innerHTML=`<p class="note">경기 중 <b>질주를 누른 채 스와이프</b>한 방향의 개인기가 나가요. 선수의 개인기 별이 개인기 난이도보다 낮으면 실패하기 쉬워요.</p>
       <div class="sk-slots" id="tmSk">${SK_DIRS.map(([k,a])=>`<label>${a}<select data-sk="${k}" aria-label="${a} 스와이프 개인기">${SKILLS.map((s,i)=>i?`<option value="${i}"${sk[k]===i?' selected':''}>${s.n} ★${s.star}</option>`:'').join('')}</select></label>`).join('')}</div>
       <div class="cl">${SK_DIRS.map(([k,a])=>`<div class="tm-sel"><b>${a} ${SKILLS[sk[k]].n}</b> ★${SKILLS[sk[k]].star}<br>${SKILLS[sk[k]].d}</div>`).join('')}</div>`;
-  }else{
-    const ids=Object.keys(ACC.list).filter(id=>!ACC.list[id].srv);
-    b.innerHTML=authBox()+'<p class="note" style="margin-top:4px"><b>이 기기 계정</b> · 로그인 없이 이 브라우저에만 저장돼요.</p>'+(p?'':`<p class="note">계정을 만들면 고른 <b>클럽 선수 20명의 베이스 카드</b>를 받아요. 주전 11명이 선발, 나머지 9명이 교체 명단으로 시작해요.</p>`)
-      +(ids.length?`<div class="cl">${ids.map(id=>{const a=ACC.list[id];return `<div class="acc-row${id===ACC.cur?' cur':''}"><span><b>${a.srv?'☁ @'+esc(AUTH.user||''):esc(a.name)}</b> · ${esc(a.team.name)}</span>${id===ACC.cur?'<em>사용 중</em>':`<button class="btn" data-use="${id}">이 계정 쓰기</button>`}</div>`;}).join('')}</div>`:'')
-      +`<label>${ids.length?'새 계정 ':''}이름<input id="accN" maxlength="12" placeholder="예: 민수"></label>
-      <label>시작 클럽 (이 팀 선수 20명의 베이스 카드를 받아요)<select id="accC">${clubOptsG(0)}</select></label>
-      <button class="btn pri" data-act="new">계정 만들기</button>`
-      +(p?`<p class="note" style="margin-top:6px">계정은 이 브라우저에 저장돼요. 다른 기기로 옮기려면 코드를 복사해 그쪽에서 가져오세요.</p>
-      <div class="two"><button class="btn" data-act="export">내보내기 코드</button><button class="btn warn" data-act="del"${p.srv?' hidden':''}>${tmDel&&performance.now()-tmDel<3000?'정말 삭제?':'이 계정 삭제'}</button></div>`:'')
-      +`<label>가져오기 / 내보내기 코드<textarea id="accCode" placeholder="코드를 붙여 넣고 가져오기"></textarea></label>
-      <button class="btn" data-act="import">코드로 계정 가져오기</button>`;
   }
+
   if(tmMsg)b.insertAdjacentHTML('afterbegin',`<p class="note" style="color:var(--flood)">${esc(tmMsg)}</p>`);
 }
 function tmPick(k){
@@ -4515,23 +4744,24 @@ function tmPick(k){
 }
 function tmPut(id){
   if(tmSel<0){tmMsg='먼저 바꿀 자리를 고르세요.';renderTmBody();tmMsg='';return;}
-  const a=tmSlots(),j=a.indexOf(id);
-  if(j>=0){if(j<11&&!a[tmSel]){tmMsg='선발 자리는 비워 둘 수 없어요.';renderTmBody();tmMsg='';return;}[a[tmSel],a[j]]=[a[j],a[tmSel]];}
+  const a=tmSlots(),j=a.findIndex(x=>x&&cardById(x).playerId===cardById(id).playerId);
+  if(j>=0){if(j<11&&!a[tmSel]){tmMsg='선발 자리는 비워 둘 수 없어요.';renderTmBody();tmMsg='';return;}if(j!==tmSel)a[j]=a[tmSel];a[tmSel]=id;}
   else a[tmSel]=id;
   tmSel=-1;tmStore(a);renderTeam();
 }
 // one card: s = the small one for the pitch and bench, otherwise the full card with the six ratings
 function cardHTML(cd,o={}){
-  const m=baseRoster(cd.ci)[cd.k],b=o.bonus?3:0,st=m.st,v=x=>Math.min(99,Math.round(x*100)+b);
-  const gk=m.nat==='GK',ovr=cd.ovr+b,cls=`pc${o.size?' '+o.size:''}${o.cls?' '+o.cls:''}${b?' bonus':''}`;
+  const m=cardRoster(cd),b=o.bonus?3:0,st=m.st,v=x=>Math.min(99,Math.round(x*100)+b);
+  const def=cardClass(cd);
+  const gk=m.nat==='GK',ovr=cd.ovr+b,cls=`pc ${def.id!=='BASE'?'class-card ':''}shape-${def.shape||'hex'}${o.size?' '+o.size:''}${o.cls?' '+o.cls:''}${b?' bonus':''}`;
   const attr=o.attr||'';
   if(o.size==='s'||o.size==='xs')return `<span class="${cls}" ${attr}><b class="pc-ovr">${ovr}</b><span class="pc-name">${esc(cd.name)}</span></span>`;
   const rows=gk?[['DIV',ovr],['HAN',ovr-2],['KIC',v(st.pass)],['REF',ovr+1],['SPD',v(st.pace)],['POS',ovr-1]]
     :[['PAC',v(st.pace)],['SHO',v(st.shoot)],['PAS',v(st.pass)],['DRI',v(st.drib)],['DEF',v(st.tackle)],['PHY',v(st.phy||0.75)]];
-  return `<${o.tag||'button'} class="${cls}" ${attr} style="--kit:${gk?cd.club.gk:cd.club.shirt};--num:${gk?'#fff':cd.club.num}">
+  return `<${o.tag||'button'} class="${cls}" ${attr} title="${esc(footLabel(m))}" style="--class-accent:${def.accent};--kit:${gk?cd.club.gk:cd.club.shirt};--num:${gk?'#fff':cd.club.num}">${def.cardArt?`<span class="class-art" style="background-image:url('${def.cardArt}')"></span>`:''}
     <span class="pc-top"><span class="pc-l"><b class="pc-ovr">${ovr}</b><i class="pc-pos">${o.pos||cd.pos}</i>${crestHTML(cd.club)}</span><span class="pc-shirt">${cd.num}</span></span>
     <span class="pc-name">${esc(cd.name)}</span>
-    <span class="pc-st">${rows.map(([k,x])=>`<span><b>${x}</b>${k}</span>`).join('')}</span>${o.tagTxt?`<span class="pc-tag${o.tagCls?' '+o.tagCls:''}">${o.tagTxt}</span>`:''}</${o.tag||'button'}>`;
+    <span class="pc-st">${rows.map(([k,x])=>`<span><b>${x}</b>${k}</span>`).join('')}</span>${def.id!=='BASE'?`<span class="class-label">${esc(def.name)}</span>`:''}${o.tagTxt?`<span class="pc-tag${o.tagCls?' '+o.tagCls:''}">${o.tagTxt}</span>`:''}</${o.tag||'button'}>`;
 }
 const accCode=a=>btoa(unescape(encodeURIComponent(JSON.stringify({v:1,name:a.name,club:a.club,team:a.team,skills:a.skills}))));
 $('tmPitch').addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(b&&prof())tmPick(+b.dataset.s);});
@@ -4550,11 +4780,11 @@ $('tmBody').addEventListener('change',e=>{
   else if(e.target.dataset.sk){p.skills=cleanSk(p.skills);p.skills[e.target.dataset.sk]=+e.target.value;accCommit();renderTmBody();}
 });
 $('tmBody').addEventListener('keydown',e=>{e.stopPropagation();if(e.key==='Enter'&&(e.target.id==='authP'||e.target.id==='authU'))authDo('login');});
-$('tmBody').addEventListener('click',e=>{
+function teamAction(e){
   const t=e.target.closest('button');if(!t)return;const p=prof();
   if(t.dataset.c){tmPut(t.dataset.c);return;}
   if(t.dataset.p!=null&&t.closest('#tmPosF')){tmPos=t.dataset.p;renderTmBody();return;}
-  if(t.dataset.f){const tt=p.team,o=fitOrder(tt.cards.map(id=>{const cd=cardById(id);return baseRoster(cd.ci)[cd.k].nat;}),FORMS[tt.form],FORMS[t.dataset.f]);tt.cards=o.map(i=>tt.cards[i]);tt.form=t.dataset.f;accCommit();renderTeam();return;}
+  if(t.dataset.f){const tt=p.team,o=fitOrder(tt.cards.map(id=>{const cd=cardById(id);return cardRoster(cd).nat;}),FORMS[tt.form],FORMS[t.dataset.f]);tt.cards=o.map(i=>tt.cards[i]);tt.form=t.dataset.f;accCommit();renderTeam();return;}
   if(t.dataset.m!=null&&t.closest('#tmMent')){p.team.ment=+t.dataset.m;accCommit();renderTeam();return;}
   if(t.dataset.use){ACC.cur=t.dataset.use;accSave();applyProfile();tmMsg='계정을 바꿨어요.';renderTeam();tmMsg='';return;}
   const act=t.dataset.act;
@@ -4571,26 +4801,32 @@ $('tmBody').addEventListener('click',e=>{
     catch(err){tmMsg='코드를 읽지 못했어요. 전체를 빠짐없이 붙여 넣었는지 확인해 주세요.';renderTmBody();tmMsg='';}}
   else if(act==='del'){if(!tmDel||performance.now()-tmDel>3000){tmDel=performance.now();renderTmBody();return;}
     tmDel=0;delete ACC.list[ACC.cur];ACC.cur=Object.keys(ACC.list)[0]||null;accSave();applyProfile();tmTab=prof()?'cards':'acc';renderTeam();}
-});
+}
+$('tmBody').addEventListener('click',teamAction);
+$('accountBody').addEventListener('click',teamAction);
+$('accountBody').addEventListener('click',e=>{const b=e.target.closest('[data-auth-mode]');if(b){authMode=b.dataset.authMode;renderAccount();}});
+$('accountBody').addEventListener('keydown',e=>{e.stopPropagation();if(e.key==='Enter'&&(e.target.id==='authP'||e.target.id==='authU'))authDo(authMode);});
+$('accountBtn').addEventListener('click',()=>openAccount());
+$('accountDone').addEventListener('click',()=>{$('account').hidden=true;goMenu();});
 $('tmDone').addEventListener('click',()=>{$('team').hidden=true;if(!$('online').hidden){$('olClub').innerHTML=myOpt()+clubOpts();$('olClub').value=prof()&&G.set.home>=100?100:Math.min(G.set.home,CLUBS.length-1);G.set.home=+$('olClub').value;olTacLabel();}else goMenu();});
 $('teamBtn').addEventListener('click',()=>openTeam());
 function renderHubAcc(){
-  const p=prof();$('teamBtn').textContent=p?'팀 설정':'내 팀 만들기';$('teamBtn').classList.toggle('pri',!p);
-  $('hubAcc').innerHTML=p?`계정 <b>${p.srv?'☁ @'+esc(AUTH.user||''):esc(p.name)}</b> · ${esc(p.team.name)} · OVR <b>${CUSTOM[0].rating}</b>${CUSTOM[0].single>=0?' · 단일팀 +3':''}`:'계정을 만들면 모든 선수의 베이스 카드를 받아 나만의 팀을 짤 수 있어요.';
+  const p=prof();$('accountBtn').textContent=AUTH.user?'계정 관리':'로그인 / 회원가입';$('teamBtn').textContent='팀 관리';$('teamBtn').classList.toggle('pri',!p);
+  $('hubAcc').innerHTML=p?`계정 <b>${p.srv?'☁ @'+esc(AUTH.user||''):esc(p.name)}</b> · ${esc(p.team.name)} · OVR <b>${CUSTOM[0].rating}</b>${CUSTOM[0].single>=0?' · 단일팀 +3':''}`:'계정을 만들면 선택한 구단 선수 20명의 베이스 카드를 받아 내 팀을 짤 수 있어요.';
 }
 
 /* ================= substitutions =================
    Up to five per match, from the bench of your own team. The player coming on takes over the body slot in the
    formation (fresh legs, his own ratings and look); whoever goes off cannot return */
 const SUB_MAX=5;
-function cardEntry(id,bonus){const cd=cardById(id),m=baseRoster(cd.ci)[cd.k],st={};for(const key in m.st)st[key]=Math.min(0.99,m.st[key]+bonus);return Object.assign({},m,{st,ovr:m.ovr+Math.round(bonus*100),card:id});}
+function cardEntry(id,bonus){const cd=cardById(id),m=cardRoster(cd),st={};for(const key in m.st)st[key]=Math.min(0.99,m.st[key]+bonus);return Object.assign({},m,{st,ovr:m.ovr+Math.round(bonus*100),card:id});}
 function applySub(ti,k,id){
   const team=G.teams[ti],e=team&&team.players[k];if(!e||e.off||team.subs>=SUB_MAX)return false;
   const bi=team.bench.indexOf(id);if(bi<0||!cardById(id))return false;
   if((cardById(id).nat==='GK')!==!!e.isGK)return false;
   const m=cardEntry(id,team.bonus),outName=e.name;
   team.bench.splice(bi,1);team.subs++;
-  e.name=m.name;e.num=m.num;e.st=m.st;e.stars=m.stars;e.hid=m.hid;e.card=id;e.stamina=1;e.phase=m.phase;
+  e.name=m.name;e.num=m.num;e.st=m.st;e.stars=m.stars;e.hid=m.hid;e.feet=m.feet;e.card=id;e.stamina=1;e.phase=m.phase;
   e.vmax=(7.35+m.st.pace*1.75)*(ti===1&&!NET.online?D.spd:1);e.gkSkill=(e.isGK?gkQ(m.ovr):0.88)*(ti===1&&!NET.online?D.gk/0.88:1);
   const old=e.rig;S.remove(old.root);if(old.mat){const i=KIT_MATS.indexOf(old.mat);if(i>=0)KIT_MATS.splice(i,1);old.mat.dispose();}
   e.rig=rigFor(team.club,team.mats,m,e.isGK);S.add(e.rig.root);
@@ -4610,8 +4846,8 @@ function aiSubs(){
     const out=t.players.filter(e=>!e.isGK&&!e.off&&B.owner!==e).sort((a,b)=>(a.stamina-b.stamina)||(a.st.pace-b.st.pace)).slice(0,w[1]);
     for(const e of out){
       const nat=e.role==='DF'?'DF':e.role==='FW'?'FW':'MF';
-      const cand=t.bench.map(id=>cardById(id)).filter(cd=>cd&&baseRoster(cd.ci)[cd.k].nat!=='GK');
-      const pick=cand.find(cd=>baseRoster(cd.ci)[cd.k].nat===nat)||cand[0];
+      const cand=t.bench.map(id=>cardById(id)).filter(cd=>cd&&cardRoster(cd).nat!=='GK');
+      const pick=cand.find(cd=>cardRoster(cd).nat===nat)||cand[0];
       if(pick)applySub(t.i,e.k,pick.id);
     }
   }
@@ -4794,6 +5030,17 @@ addEventListener('resize',resize);
 addEventListener('orientationchange',()=>setTimeout(resize,250));
 
 /* ================= loop ================= */
+async function loadLiveCatalog(){
+  const d=await api('/shop/catalog');if(!Array.isArray(d.cards)||!Array.isArray(d.classes))return;
+  LIVE_CATALOG=d.cards;LIVE_CATALOG_READY=true;LIVE_MAP.clear();for(const c of d.cards)LIVE_MAP.set(c.id,c);for(const c of d.classes)CARD_CLASSES[c.id]=c;CARDS=null;CARD_MAP=null;
+  if(prof())applyProfile();
+}
+function receiveInventory(data){const p=ACC.list[srvKey()];if(!p)return;p.inventory=data.inventory;p.coins=data.coins;accSave();if(prof()===p)applyProfile();}
+let commerce=null;
+function openShop(){if(AUTH.user&&ACC.list[srvKey()]&&ACC.cur!==srvKey()){ACC.cur=srvKey();applyProfile();accSave();renderHubAcc();}if(!commerce)commerce=FL11Commerce({user:()=>AUTH.user,api,loadCatalog:loadLiveCatalog,inventory:receiveInventory,card:cardById,cardHTML,classFor:cardClass,quantity:id=>(ACC.list[srvKey()]?.inventory||[]).find(c=>c.cardId===id)?.quantity||0,flush:srvEnsureSaved,openAccount,openTeam});commerce.open();}
+$('shopBtn').addEventListener('click',openShop);
+$('shop').addEventListener('keydown',e=>e.stopPropagation());
+
 let last=performance.now(),acc=0,fpsAcc=0,fpsN=0,fpsCheck=0;
 const STEP=1/60;
 function frame(now){
@@ -4834,6 +5081,7 @@ function boot(data){
   loadSkinned().then(ok=>{if(ok&&G.state==='menu'){buildTeams();lineup();}});
   buildMenu();resize();
   goMenu();authBoot();
+  setInterval(()=>{if(document.visibilityState==='visible')srvRefresh();},15000);
   $('loading').hidden=true;
   if(data&&data.inMatch){startMatch();G.score=data.score||[0,0];G.clock=data.clock||0;G.half=data.half||1;hudScore();}
   requestAnimationFrame(t=>{last=t;frame(t);});

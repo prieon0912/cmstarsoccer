@@ -1,0 +1,112 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const {hashPassword}=require('../lib/password');
+test('OVR probabilities and per-player multipliers are normalized consistently',()=>{
+  const {compilePack,draw,starterIds}=require('../lib/economy');
+  const legacyStarters=starterIds({team:{cards:['RMA|음바페','RMA|쿠르투아','ARS|사카']}});
+  assert.equal(legacyStarters.length,20);assert.ok(legacyStarters.every(id=>id.startsWith('RMA|')));
+  assert.ok(starterIds({club:'BAR',team:{cards:['RMA|음바페']}}).every(id=>id.startsWith('BAR|')));
+  const cards=[{id:'a',name:'A',classId:'BASE',ovr:90},{id:'b',name:'B',classId:'BASE',ovr:90},{id:'c',name:'C',classId:'BASE',ovr:80}];
+  const pack={id:'test',classIds:['BASE'],price:100,weights:{90:80,80:20},multipliers:{a:3,b:1}};
+  const c=compilePack(pack,cards),odds=Object.fromEntries(c.odds.map(o=>[o.cardId,o.probability]));
+  assert.ok(Math.abs(odds.a-.6)<1e-12);assert.ok(Math.abs(odds.b-.2)<1e-12);assert.ok(Math.abs(odds.c-.2)<1e-12);
+  assert.ok(draw(c,100).every(id=>['a','b','c'].includes(id)));
+  assert.throws(()=>compilePack({...pack,weights:{99:100}},cards),/99/);
+  assert.notEqual(c.quote,compilePack({...pack,multipliers:{a:4}},cards).quote);
+});
+test('package availability uses inclusive start and exclusive end, and rejects invalid periods',()=>{
+  const {validatePackage,packagePeriod}=require('../lib/economy');
+  const cards=[{id:'a',name:'A',classId:'BASE',ovr:90}],classes=[{id:'BASE'}];
+  const input={name:'Timed',price:100,classIds:['BASE'],weights:{90:100},startsAt:'2026-11-01T12:00:00+09:00',endsAt:'2026-11-01T13:00:00+09:00'};
+  const pack=validatePackage(input,classes,cards),start=Date.parse(pack.startsAt),end=Date.parse(pack.endsAt);
+  assert.equal(pack.startsAt,'2026-11-01T03:00:00.000Z');
+  assert.equal(packagePeriod(pack,start-1).state,'upcoming');assert.equal(packagePeriod(pack,start).state,'open');
+  assert.equal(packagePeriod(pack,end-1).state,'open');assert.equal(packagePeriod(pack,end).state,'ended');
+  assert.equal(packagePeriod({}).state,'open');assert.equal(packagePeriod({endsAt:pack.endsAt},end).state,'ended');
+  assert.equal(validatePackage({...input,startsAt:'',endsAt:null},classes,cards).startsAt,null);
+  assert.throws(()=>validatePackage({...input,endsAt:input.startsAt},classes,cards),/종료/);
+  assert.throws(()=>validatePackage({...input,startsAt:input.endsAt,endsAt:input.startsAt},classes,cards),/종료/);
+  assert.throws(()=>validatePackage({...input,startsAt:'not-a-date'},classes,cards),/날짜/);
+  assert.throws(()=>validatePackage({...input,startsAt:'2026-11-01T12:00'},classes,cards),/날짜/);
+});
+test('shop draws, authoritative wallet/inventory, administrator catalog edits and cross-browser team use',async()=>{
+  const previous=process.env.DATABASE_URL;delete process.env.DATABASE_URL;
+  const db=require('../lib/db');if(previous!==undefined)process.env.DATABASE_URL=previous;
+  const config=require('../lib/admin-bootstrap.json'),oldHash=config.passwordHash;config.passwordHash=await hashPassword('local-test-admin-password');
+  const auth=require('../lib/auth'),admin=require('../lib/admin'),shop=require('../lib/shop'),econ=require('../lib/economy'),express=require('express');
+  await auth.init();const app=express();app.use('/api/admin',admin.router);app.use('/api/shop',shop.router);app.use('/api',auth.router);
+  const server=app.listen(0,'127.0.0.1');await new Promise(resolve=>server.once('listening',resolve));const base=`http://127.0.0.1:${server.address().port}`;
+  const call=async(url,body,headers={})=>{const r=await fetch(base+url,{method:body?'POST':'GET',headers:{'Content-Type':'application/json',...headers},body:body?JSON.stringify(body):undefined});let data={};try{data=await r.json();}catch(e){}return {status:r.status,data,headers:r.headers};};
+  try{
+    const seed=require('../public/data/player-catalog'),starter=seed.filter(c=>c.clubId==='ARS');
+    const profile={name:'shopper',club:'ARS',team:{name:'Test',tag:'TST',kit:0,form:'4-3-3',ment:0,cards:starter.filter(c=>c.starter).map(c=>c.id),bench:starter.filter(c=>!c.starter).map(c=>c.id)},skills:{u:13,d:3,l:1,r:2},tacs:{}};
+    const reg=await call('/api/auth/register',{username:'shopper',password:'shopper-password',profile:{...profile,coins:999999}});assert.equal(reg.status,201);const bearer={Authorization:'Bearer '+reg.data.token};assert.equal(reg.data.profile.coins,1000);assert.equal(reg.data.profile.inventory.length,20);
+    assert.equal((await call('/api/shop/')).status,401);
+    let snapshot=(await call('/api/shop/',undefined,bearer)).data;assert.equal(snapshot.coins,1000);assert.equal(snapshot.inventory.reduce((n,c)=>n+c.quantity,0),20);
+    assert.deepEqual(snapshot.packs,[]);
+    assert.equal((await call('/api/shop/draw',{packId:'base-silver',count:1,requestId:crypto.randomUUID(),quote:'removed'},bearer)).status,404);
+    const login=await call('/api/auth/login',{username:'prieon_auth',password:'local-test-admin-password'});const owner={Cookie:login.headers.get('set-cookie').split(';')[0],'X-CSRF-Token':login.data.csrfToken};
+    const weights={};for(const c of seed)weights[c.ovr]=(weights[c.ovr]||0)+1;
+    const fixturePack={id:'fixture-base',name:'관리자가 만든 테스트 팩',price:100,classIds:['BASE'],weights,multipliers:{},published:true};
+    assert.equal((await call('/api/admin/packages',fixturePack,owner)).status,200);
+    snapshot=(await call('/api/shop/',undefined,bearer)).data;
+    const pack=snapshot.packs[0];assert.ok(Math.abs(pack.odds.reduce((n,c)=>n+c.probability,0)-1)<1e-10);
+    assert.equal((await call('/api/shop/draw',{packId:pack.id,count:11,requestId:crypto.randomUUID(),quote:pack.quote},bearer)).status,400);
+    assert.equal((await call('/api/shop/draw',{packId:pack.id,count:1,requestId:crypto.randomUUID(),quote:'outdated'},bearer)).status,409);
+    const key=crypto.randomUUID(),body={packId:pack.id,count:3,requestId:key,quote:pack.quote};
+    const [first,retry]=await Promise.all([call('/api/shop/draw',body,bearer),call('/api/shop/draw',body,bearer)]);assert.equal(first.status,200);assert.equal(retry.status,200);assert.deepEqual(first.data.result.cardIds,retry.data.result.cardIds);
+    snapshot=(await call('/api/shop/',undefined,bearer)).data;assert.equal(snapshot.coins,700);assert.equal(snapshot.inventory.reduce((n,c)=>n+c.quantity,0),23);
+    assert.equal((await call('/api/shop/draw',{...body,requestId:crypto.randomUUID(),count:10},bearer)).status,400);
+    const b=await call('/api/auth/login',{username:'shopper',password:'shopper-password'});assert.equal(b.data.profile.coins,700);assert.deepEqual(b.data.profile.inventory,snapshot.inventory);
+    const search=await call('/api/admin/cards?q='+encodeURIComponent('사카'),undefined,owner);assert.ok(search.data.cards.some(c=>c.name==='사카'&&c.roster.hid.read!==undefined));
+    const cls={id:'TEST',name:'테스트 클래스',accent:'#e2ad65',shape:'shield',cardArt:'/assets/test-card.png',boardArt:'/assets/test-board.png',slotArt:'/assets/test-slot.png',boardName:'TEST BOARD'};
+    assert.equal((await call('/api/admin/classes',cls,owner)).status,200);
+    assert.equal((await call('/api/admin/classes',{...cls,id:'BASE'},owner)).status,400);
+    assert.equal((await call('/api/admin/classes',{...cls,id:'BAD',cardArt:'/assets/../lib/admin-bootstrap.json'},owner)).status,400);
+    const source=starter[8],newCard={...source,id:undefined,classId:'TEST',ovr:99,roster:{...source.roster,hid:{...source.roster.hid,att:2,focus:2,read:2}}};
+    const added=await call('/api/admin/cards',newCard,owner);assert.equal(added.status,200);const card=added.data.card;assert.notEqual(card.id,source.id);assert.equal(card.playerId,source.playerId);
+    const special={id:'test-pack',name:'테스트 클래스 팩',price:100,classIds:['TEST'],weights:{99:100},multipliers:{[card.id]:5},published:true};
+    const preview=await call('/api/admin/packages/preview',special,owner);assert.equal(preview.status,200);assert.equal(preview.data.odds[0].probability,1);
+    assert.equal((await call('/api/admin/packages',special,owner)).status,200);
+    assert.equal((await call('/api/admin/packages',special,bearer)).status,401);
+    const specials=(await call('/api/shop/',undefined,bearer)).data.packs.find(p=>p.id===special.id);
+    const got=await call('/api/shop/draw',{packId:special.id,count:1,quote:specials.quote,requestId:crypto.randomUUID()},bearer);assert.equal(got.status,200);assert.deepEqual(got.data.result.cardIds,[card.id]);assert.equal(got.data.coins,600);
+    const save=async(data,revision)=>{const r=await fetch(base+'/api/profile',{method:'PUT',headers:{...bearer,'Content-Type':'application/json'},body:JSON.stringify({profile:data,revision})});return {status:r.status,data:await r.json()};};
+    const composed=structuredClone(profile);composed.team.cards[8]=card.id;
+    const saved=await save({...composed,coins:99999,inventory:seed.slice(0,5).map(c=>({cardId:c.id,quantity:999}))},reg.data.revision);assert.equal(saved.status,200);
+    const next=await call('/api/me',undefined,bearer);assert.equal(next.data.profile.coins,600);assert.equal(next.data.profile.team.cards[8],card.id);assert.equal(next.data.profile.inventory.find(c=>c.cardId===card.id).quantity,1);
+    const duplicate=structuredClone(composed);duplicate.team.cards[7]=source.id;assert.equal((await save(duplicate,saved.data.revision)).status,400);
+    assert.equal((await call('/api/shop/catalog')).data.classes.find(c=>c.id==='TEST').boardArt,cls.boardArt);
+    // A published probability change invalidates an old quote before any charge.
+    assert.equal((await call('/api/admin/packages',{...special,price:110},owner)).status,200);
+    assert.equal((await call('/api/shop/draw',{packId:special.id,count:1,quote:specials.quote,requestId:crypto.randomUUID()},bearer)).status,409);
+    assert.equal((await call('/api/shop/',undefined,bearer)).data.coins,600);
+    const now=Date.now(),iso=offset=>new Date(now+offset).toISOString(),hour=3600000;
+    const upcoming={...special,id:'future-pack',startsAt:iso(hour),endsAt:iso(2*hour)};
+    const ended={...special,id:'ended-pack',startsAt:iso(-2*hour),endsAt:iso(-hour)};
+    assert.equal((await call('/api/admin/packages',upcoming,owner)).status,200);
+    assert.equal((await call('/api/admin/packages',ended,owner)).status,200);
+    const timedShop=(await call('/api/shop/',undefined,bearer)).data;assert.ok(Number.isFinite(Date.parse(timedShop.serverNow)));
+    for(const [id,state] of [['future-pack','upcoming'],['ended-pack','ended']]){
+      const p=timedShop.packs.find(p=>p.id===id);assert.equal(p.available,false);assert.equal(p.period,state);assert.equal(p.odds[0].probability,1);
+      assert.equal((await call('/api/shop/draw',{packId:id,count:1,quote:p.quote,requestId:crypto.randomUUID(),startsAt:iso(-hour),endsAt:iso(hour)},bearer)).status,409);
+    }
+    assert.equal((await call('/api/shop/',undefined,bearer)).data.coins,600);
+    assert.equal((await call('/api/admin/packages',{...special,id:'bad-time',startsAt:iso(hour),endsAt:iso(-hour)},owner)).status,400);
+    const active={...special,id:'active-pack',startsAt:iso(-2*hour),endsAt:iso(hour)};
+    assert.equal((await call('/api/admin/packages',active,owner)).status,200);
+    const activeSnapshot=(await call('/api/shop/',undefined,bearer)).data.packs.find(p=>p.id===active.id);assert.equal(activeSnapshot.available,true);
+    const activeRequest={packId:active.id,count:1,quote:activeSnapshot.quote,requestId:crypto.randomUUID()};
+    const activeDraw=await call('/api/shop/draw',activeRequest,bearer);assert.equal(activeDraw.status,200);assert.equal(activeDraw.data.coins,500);
+    assert.equal((await call('/api/admin/packages',{...active,endsAt:iso(-1000)},owner)).status,200);
+    const expiredRetry=await call('/api/shop/draw',activeRequest,bearer);assert.equal(expiredRetry.status,200);assert.equal(expiredRetry.data.coins,500);assert.deepEqual(expiredRetry.data.result,activeDraw.data.result);
+    assert.equal((await call('/api/shop/draw',{...activeRequest,requestId:crypto.randomUUID()},bearer)).status,409);
+    // Migrate an old automatic package without resetting other packages, coins or owned cards.
+    assert.equal((await call('/api/admin/packages',{...fixturePack,id:'base-silver'},owner)).status,200);
+    const beforeRestart=(await call('/api/shop/',undefined,bearer)).data;
+    await econ.init();await econ.init();
+    const afterRestart=(await call('/api/shop/',undefined,bearer)).data;
+    assert.ok(!afterRestart.packs.some(p=>p.id==='base-silver'));assert.ok(afterRestart.packs.some(p=>p.id===fixturePack.id));
+    assert.equal(afterRestart.coins,beforeRestart.coins);assert.deepEqual(afterRestart.inventory,beforeRestart.inventory);
+  }finally{await new Promise(resolve=>server.close(resolve));config.passwordHash=oldHash;await db.close();}
+});
+

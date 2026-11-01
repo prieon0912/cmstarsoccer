@@ -1,0 +1,1 @@
+(function(root){const data={BASE:{id:'BASE',name:'베이스',accent:'#dce3eb',shape:'hex',cardArt:'',boardArt:'',slotArt:'',boardName:'SILVER REVEAL'}};if(typeof module!=='undefined'&&module.exports)module.exports=data;else root.FL11_CLASSES=data;})(globalThis);

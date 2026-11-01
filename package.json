@@ -5,7 +5,9 @@
   "description": "Floodlight Eleven — 3D night soccer game",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "node --test tests/gameplay.test.cjs tests/accounts-league.test.cjs tests/profile-sync.test.cjs tests/admin.test.cjs tests/shop.test.cjs",
+    "admin:create": "node scripts/create-admin.cjs"
   },
   "engines": {
     "node": ">=20"
@@ -14,5 +16,8 @@
     "express": "4.21.2",
     "pg": "8.13.1",
     "ws": "8.18.0"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.3.14"
   }
 }

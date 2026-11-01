@@ -1,0 +1,5767 @@
+{
+  "retrieved": "2026-11-01",
+  "note": "Preferred foot is player data; weak-foot stars are EA game ratings, not a real-world standardized measurement. 718 records from the public FC27 snapshot and 2 sourced identity records. No randomized assignments.",
+  "dataset": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS",
+  "players": [
+    {
+      "card": "ARS|라야",
+      "player": "David Raya Martín",
+      "eaId": 220901,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|칼라피오리",
+      "player": "Riccardo Calafiori",
+      "eaId": 257711,
+      "foot": "L",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|가브리엘",
+      "player": "Gabriel dos S. Magalhães",
+      "eaId": 232580,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|살리바",
+      "player": "William Saliba",
+      "eaId": 243715,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|팀버",
+      "player": "Jurriën Timber",
+      "eaId": 251805,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|라이스",
+      "player": "Declan Rice",
+      "eaId": 234378,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|기마랑이스",
+      "player": "Bruno Guimarães Moura",
+      "eaId": 247851,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|외데고르",
+      "player": "Martin Ødegaard",
+      "eaId": 222665,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|에제",
+      "player": "Eberechi Eze",
+      "eaId": 235794,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|요케레스",
+      "player": "Viktor Gyökeres",
+      "eaId": 241651,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|사카",
+      "player": "Bukayo Saka",
+      "eaId": 246669,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|케파",
+      "player": "Kepa Arrizabalaga",
+      "eaId": 206585,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|콘사",
+      "player": "Ezri Konsa",
+      "eaId": 227678,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|화이트",
+      "player": "Benjamin White",
+      "eaId": 231936,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|인카피에",
+      "player": "Piero Hincapié",
+      "eaId": 256197,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|모스케라",
+      "player": "Cristhian Mosquera Ibargüen",
+      "eaId": 264846,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|수비멘디",
+      "player": "Martín Zubimendi Ibáñez",
+      "eaId": 248148,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|메리노",
+      "player": "Mikel Merino Zazón",
+      "eaId": 225193,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|하베르츠",
+      "player": "Kai Havertz",
+      "eaId": 235790,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ARS|마두에케",
+      "player": "Noni Madueke",
+      "eaId": 254796,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|스즈키",
+      "player": "Zion Suzuki",
+      "eaId": 255981,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|마트선",
+      "player": "Ian Maatsen",
+      "eaId": 248465,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|파우 토레스",
+      "player": "Pau Francisco Torres",
+      "eaId": 241464,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|린델뢰프",
+      "player": "Victor Lindelöf",
+      "eaId": 221660,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|캐시",
+      "player": "Matty Cash",
+      "eaId": 227174,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|카마라",
+      "player": "Boubacar Kamara",
+      "eaId": 236987,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|고레츠카",
+      "player": "Leon Goretzka",
+      "eaId": 209658,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://www.fifacm.com/player/209658/leon-goretzka"
+    },
+    {
+      "card": "AVL|맥긴",
+      "player": "John McGinn",
+      "eaId": 210881,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|만잠비",
+      "player": "Johan Manzambi",
+      "eaId": 276694,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|N.잭슨",
+      "player": "Nicolas Jackson",
+      "eaId": 259197,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|베일리",
+      "player": "Leon Bailey",
+      "eaId": 229906,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|비조",
+      "player": "Marco Bizot",
+      "eaId": 200110,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|밍스",
+      "player": "Tyrone Mings",
+      "eaId": 212419,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|보가르드",
+      "player": "Lamare Bogarde",
+      "eaId": 264209,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|키바 시세",
+      "player": "Modou Kéba Cissé",
+      "eaId": 77524,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|오나나",
+      "player": "Amadou Onana",
+      "eaId": 257057,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|조앙 고메스",
+      "player": "João Victor Gomes da Silva",
+      "eaId": 273463,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|가르나초",
+      "player": "Alejandro Garnacho",
+      "eaId": 268438,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|왓킨스",
+      "player": "Ollie Watkins",
+      "eaId": 221697,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "AVL|에이브러햄",
+      "player": "Tammy Abraham",
+      "eaId": 231352,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|페트로비치",
+      "player": "Đorđe Petrović",
+      "eaId": 269626,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|트뤼페르",
+      "player": "Adrien Truffert",
+      "eaId": 256769,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|힐",
+      "player": "James Hill",
+      "eaId": 248492,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|실바",
+      "player": "António João Tavares Silva",
+      "eaId": 270086,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|A.스미스",
+      "player": "Adam Smith",
+      "eaId": 190885,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|크리스티",
+      "player": "Ryan Christie",
+      "eaId": 213884,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|애덤스",
+      "player": "Tyler Adams",
+      "eaId": 232999,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|클라위버르트",
+      "player": "Justin Kluivert",
+      "eaId": 236920,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|타베르니에",
+      "player": "Marcus Tavernier",
+      "eaId": 237477,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|에바니우송",
+      "player": "F. Evanilson de Lima Barbosa",
+      "eaId": 256612,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|하이앙",
+      "player": "Rayan Vitor Simplício Rocha",
+      "eaId": 83494,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|포스터",
+      "player": "Fraser Forster",
+      "eaId": 172203,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|디아키테",
+      "player": "Bafodé Diakité",
+      "eaId": 246565,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|후안루",
+      "player": "Juan Luis Sánchez Velasco",
+      "eaId": 264174,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|A.스콧",
+      "player": "Alex Scott",
+      "eaId": 261299,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|브룩스",
+      "player": "David Brooks",
+      "eaId": 220196,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|개넌도크",
+      "player": "Ben Gannon-Doak",
+      "eaId": 266815,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|크루피",
+      "player": "Eli Junior Kroupi",
+      "eaId": 277909,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|아들리",
+      "player": "Amine Adli",
+      "eaId": 255223,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BOU|아라우호",
+      "player": "Julián Araujo",
+      "eaId": 247678,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|켈러허",
+      "player": "Caoimhín Kelleher",
+      "eaId": 240913,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|루이스포터",
+      "player": "Keane Lewis-Potter",
+      "eaId": 243606,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|판덴베르흐",
+      "player": "Sepp van den Berg",
+      "eaId": 242453,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|아예르",
+      "player": "Kristoffer Ajer",
+      "eaId": 224258,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|카요데",
+      "player": "Michael Kayode",
+      "eaId": 277869,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|야넬트",
+      "player": "Vitaly Janelt",
+      "eaId": 235167,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|상가레",
+      "player": "Mamadou Sangaré",
+      "eaId": 258601,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|옌센",
+      "player": "Mathias Jensen",
+      "eaId": 229723,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|와타라",
+      "player": "Dango Ouattara",
+      "eaId": 265552,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|이고르 티아구",
+      "player": "Igor Thiago Rodrigues",
+      "eaId": 275771,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|샤데",
+      "player": "Kevin Schade",
+      "eaId": 260926,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|발디마르손",
+      "player": "Hákon Valdimarsson",
+      "eaId": 264133,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|콜린스",
+      "player": "Nathan Collins",
+      "eaId": 248484,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|히키",
+      "player": "Aaron Hickey",
+      "eaId": 248808,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|김지수",
+      "player": "Ji Soo Kim",
+      "eaId": 267844,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|야르몰류크",
+      "player": "Yehor Yarmoliuk",
+      "eaId": 270608,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|담스고르",
+      "player": "Mikkel Damsgaard",
+      "eaId": 241508,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|앤서니",
+      "player": "Jaidon Anthony",
+      "eaId": 243669,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|F.카르발류",
+      "player": "Fábio Leandro Carvalho",
+      "eaId": 256725,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BRE|밀람보",
+      "player": "Antoni Milambo",
+      "eaId": 263640,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|페르브뤼헌",
+      "player": "Bart Verbruggen",
+      "eaId": 258498,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|보스칼리",
+      "player": "Olivier Boscagli",
+      "eaId": 225863,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|부슈코비치",
+      "player": "Luka Vušković",
+      "eaId": 275192,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|덩크",
+      "player": "Lewis Dunk",
+      "eaId": 199915,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|코스티냐",
+      "player": "João Pedro Loureiro da Costa",
+      "eaId": 251942,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|체마 안드레스",
+      "player": "José María Andrés Baixauli",
+      "eaId": 75056,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|그로스",
+      "player": "Pascal Groß",
+      "eaId": 190765,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|아야리",
+      "player": "Yasin Ayari",
+      "eaId": 257400,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|더카위퍼르",
+      "player": "Maxim De Cuyper",
+      "eaId": 251479,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|코스툴라스",
+      "player": "Charalampos Kostoulas",
+      "eaId": 73885,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|디에고 고메스",
+      "player": "Diego Gómez",
+      "eaId": 269278,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|스틸",
+      "player": "Jason Steele",
+      "eaId": 188836,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|하잠",
+      "player": "Jaouen Hadjam",
+      "eaId": 258230,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|카디오을루",
+      "player": "Ferdi Kadıoğlu",
+      "eaId": 235152,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|스보보다",
+      "player": "Michael Svoboda",
+      "eaId": 250779,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|힌셜우드",
+      "player": "Jack Hinshelwood",
+      "eaId": 277283,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|오라일리",
+      "player": "Matt O'Riley",
+      "eaId": 240734,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|얄쿠예",
+      "player": "Malick Yalcouyé",
+      "eaId": 70841,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|뤼테르",
+      "player": "Georginio Rutter",
+      "eaId": 245637,
+      "foot": "L",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BHA|미토마",
+      "player": "Kaoru Mitoma",
+      "eaId": 255565,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|펜더스",
+      "player": "Mike Penders",
+      "eaId": 270821,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|콜윌",
+      "player": "Levi Colwill",
+      "eaId": 262859,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|포파나",
+      "player": "Wesley Fofana",
+      "eaId": 248695,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|아체암퐁",
+      "player": "Josh Acheampong",
+      "eaId": 71651,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|네투",
+      "player": "Pedro Lomba Neto",
+      "eaId": 238616,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|라비아",
+      "player": "Roméo Lavia",
+      "eaId": 263620,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|카이세도",
+      "player": "Moisés Caicedo",
+      "eaId": 256079,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|팔레스트라",
+      "player": "Marco Palestra",
+      "eaId": 278339,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|로저스",
+      "player": "Morgan Rogers",
+      "eaId": 260247,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|주앙 페드루",
+      "player": "João Pedro Junqueira de Jesus",
+      "eaId": 252042,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|파머",
+      "player": "Cole Palmer",
+      "eaId": 257534,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|E.마르티네스",
+      "player": "Emiliano Martínez",
+      "eaId": 202811,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|귀스토",
+      "player": "Malo Gusto",
+      "eaId": 259307,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|라크루아",
+      "player": "Maxence Lacroix",
+      "eaId": 244067,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|하토",
+      "player": "Jorrel Hato",
+      "eaId": 272978,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|헨더슨",
+      "player": "Jordan Henderson",
+      "eaId": 183711,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|바르코",
+      "player": "Valentín Barco",
+      "eaId": 263370,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|이스테방",
+      "player": "Estêvão Willian Almeida",
+      "eaId": 76687,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|웰벡",
+      "player": "Danny Welbeck",
+      "eaId": 186146,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CHE|켄다",
+      "player": "Geovany Tcherno Quenda",
+      "eaId": 279044,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|러시워스",
+      "player": "Carl Rushworth",
+      "eaId": 263339,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|다실바",
+      "player": "Jay Dasilva",
+      "eaId": 232755,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|음푸니",
+      "player": "Stephen Mfuni",
+      "eaId": 81538,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|피넉",
+      "player": "Ethan Pinnock",
+      "eaId": 238717,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|판에바이크",
+      "player": "Milan van Ewijk",
+      "eaId": 251626,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|토르프",
+      "player": "Victor Torp",
+      "eaId": 241645,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|이렌키",
+      "player": "Caleb Yirenkyi",
+      "eaId": 73638,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|루도니",
+      "player": "Jack Rudoni",
+      "eaId": 251690,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|그보호",
+      "player": "Yann Gboho",
+      "eaId": 252937,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|아워니이",
+      "player": "Taiwo Awoniyi",
+      "eaId": 230978,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|사카모토",
+      "player": "Tatsuhiro Sakamoto",
+      "eaId": 254910,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|벤틀리",
+      "player": "Daniel Bentley",
+      "eaId": 198350,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|B.토머스",
+      "player": "Bobby Thomas",
+      "eaId": 257253,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|키칭",
+      "player": "Liam Kitching",
+      "eaId": 246873,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|오녜카",
+      "player": "Frank Onyeka",
+      "eaId": 239529,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|토머스아산테",
+      "player": "Brandon Thomas-Asante",
+      "eaId": 235744,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|심스",
+      "player": "Ellis Simms",
+      "eaId": 251198,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|셰리프",
+      "player": "Sidiki Chérif",
+      "eaId": 277485,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|H.라이트",
+      "player": "Haji Wright",
+      "eaId": 238743,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "COV|메이슨클라크",
+      "player": "Ephron Mason-Clark",
+      "eaId": 236784,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|헨더슨",
+      "player": "Dean Henderson",
+      "eaId": 233306,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|리처즈",
+      "player": "Chris Richards",
+      "eaId": 250954,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|디사시",
+      "player": "Axel Disasi",
+      "eaId": 229942,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|캉보",
+      "player": "Jaydee Canvot",
+      "eaId": 74133,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|미첼",
+      "player": "Tyrick Mitchell",
+      "eaId": 240947,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|워튼",
+      "player": "Adam Wharton",
+      "eaId": 259240,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|가마다",
+      "player": "Daichi Kamada",
+      "eaId": 232730,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|밍게사",
+      "player": "Óscar Mingueza García",
+      "eaId": 259694,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|맥닐",
+      "player": "Dwight McNeil",
+      "eaId": 243282,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|마테타",
+      "player": "Jean-Philippe Mateta",
+      "eaId": 236461,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|피노",
+      "player": "Yeremy Jesús Pino Santos",
+      "eaId": 259377,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|매슈스",
+      "player": "Remi Matthews",
+      "eaId": 203824,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|리아드",
+      "player": "Chadi Riad",
+      "eaId": 258490,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|토미야스",
+      "player": "Takehiro Tomiyasu",
+      "eaId": 232938,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|레르마",
+      "player": "Jefferson Lerma",
+      "eaId": 213991,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|휴스",
+      "player": "Will Hughes",
+      "eaId": 206516,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|에세",
+      "player": "Romain Esse",
+      "eaId": 273616,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|사르",
+      "player": "Ismaïla Sarr",
+      "eaId": 235353,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|스트란 라르센",
+      "player": "Jørgen Strand Larsen",
+      "eaId": 238756,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "CRY|데브니",
+      "player": "Justin Devenny",
+      "eaId": 73895,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|픽퍼드",
+      "player": "Jordan Pickford",
+      "eaId": 204935,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|미콜렌코",
+      "player": "Vitaliy Mykolenko",
+      "eaId": 244380,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|오브라이언",
+      "player": "Jake O'Brien",
+      "eaId": 253510,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|타코우스키",
+      "player": "James Tarkowski",
+      "eaId": 202695,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|뢸",
+      "player": "Merlin Röhl",
+      "eaId": 259714,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|가너",
+      "player": "James Garner",
+      "eaId": 243657,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|암스트롱",
+      "player": "Harrison Armstrong",
+      "eaId": 74413,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|듀스버리홀",
+      "player": "Kiernan Dewsbury-Hall",
+      "eaId": 237386,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|T.조지",
+      "player": "Tyrique George",
+      "eaId": 71998,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|배리",
+      "player": "Thierno Barry",
+      "eaId": 276295,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|B.존슨",
+      "player": "Brennan Johnson",
+      "eaId": 251421,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|트래버스",
+      "player": "Mark Travers",
+      "eaId": 232284,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|패터슨",
+      "player": "Nathan Patterson",
+      "eaId": 257896,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|브랜스웨이트",
+      "player": "Jarrad Branthwaite",
+      "eaId": 247649,
+      "foot": "L",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|킨",
+      "player": "Michael Keane",
+      "eaId": 207599,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|뇌르고르",
+      "player": "Christian Nørgaard",
+      "eaId": 210697,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|알카라스",
+      "player": "Carlos Alcaraz",
+      "eaId": 256402,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|디블링",
+      "player": "Tyler Dibling",
+      "eaId": 279497,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|베투",
+      "player": "Norberto Gomes Betuncal",
+      "eaId": 251892,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "EVE|아즈누",
+      "player": "Adam Aznou",
+      "eaId": 70448,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|레노",
+      "player": "Bernd Leno",
+      "eaId": 192563,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|로빈슨",
+      "player": "Antonee Robinson",
+      "eaId": 229348,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|아펜그루버",
+      "player": "David Affengruber",
+      "eaId": 261264,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|배시",
+      "player": "Calvin Bassey",
+      "eaId": 241436,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|카스타뉴",
+      "player": "Timothy Castagne",
+      "eaId": 222501,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|샤를",
+      "player": "Shea Charles",
+      "eaId": 276695,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|베리",
+      "player": "Sander Berge",
+      "eaId": 228092,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|킹",
+      "player": "Josh King",
+      "eaId": 70786,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|이워비",
+      "player": "Alex Iwobi",
+      "eaId": 213655,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|가르시아",
+      "player": "Gonzalo García Torres",
+      "eaId": 278399,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|보브",
+      "player": "Oscar Bobb",
+      "eaId": 277295,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|르콩트",
+      "player": "Benjamin Lecomte",
+      "eaId": 200726,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|안데르센",
+      "player": "Joachim Andersen",
+      "eaId": 224221,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|테테",
+      "player": "Kenny Tete",
+      "eaId": 216266,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|쿠엔카",
+      "player": "Jorge Cuenca Barreno",
+      "eaId": 237522,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|케어니",
+      "player": "Tom Cairney",
+      "eaId": 195202,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|스미스 로",
+      "player": "Emile Smith Rowe",
+      "eaId": 240273,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|세세뇽",
+      "player": "Ryan Sessegnon",
+      "eaId": 235883,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|무니스",
+      "player": "Rodrigo Muniz Carvalho",
+      "eaId": 264337,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FUL|케빈",
+      "player": "Kevin Santos",
+      "eaId": 70571,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|촐라키스",
+      "player": "Konstantinos Tzolakis",
+      "eaId": 252552,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|아자이",
+      "player": "Semi Ajayi",
+      "eaId": 207952,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|이건",
+      "player": "John Egan",
+      "eaId": 204936,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|멘디",
+      "player": "Nobel Mendy",
+      "eaId": 276633,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|자일스",
+      "player": "Ryan Giles",
+      "eaId": 243608,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|슬레이터",
+      "player": "Regan Slater",
+      "eaId": 241953,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|이로에그부남",
+      "player": "Tim Iroegbunam",
+      "eaId": 266609,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|코일",
+      "player": "Lewie Coyle",
+      "eaId": 224099,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|스트라우드",
+      "player": "Elliot Stroud",
+      "eaId": 272712,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|맥버니",
+      "player": "Oli McBurnie",
+      "eaId": 220031,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|벨루미",
+      "player": "Mohamed Belloumi",
+      "eaId": 277663,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|버틀랜드",
+      "player": "Jack Butland",
+      "eaId": 203042,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|헤링턴",
+      "player": "Lucas Herrington",
+      "eaId": 75145,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|드라메",
+      "player": "Cody Drameh",
+      "eaId": 254529,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|크룩스",
+      "player": "Matt Crooks",
+      "eaId": 202693,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|모리타",
+      "player": "Hidemasa Morita",
+      "eaId": 242087,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|밀러",
+      "player": "Liam Millar",
+      "eaId": 240925,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|겔하르트",
+      "player": "Joe Gelhardt",
+      "eaId": 246053,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|오뮈르",
+      "player": "Abdülkadir Ömür",
+      "eaId": 231777,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "HUL|휴스",
+      "player": "Charlie Hughes",
+      "eaId": 272895,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|월턴",
+      "player": "Christian Walton",
+      "eaId": 206561,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|데이비스",
+      "player": "Leif Davis",
+      "eaId": 246685,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|디오프",
+      "player": "Issa Diop",
+      "eaId": 231633,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|오셰이",
+      "player": "Dara O'Shea",
+      "eaId": 235405,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|와타라",
+      "player": "Abdoul Ouattara",
+      "eaId": 75318,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|플로렌티노",
+      "player": "Florentino Morris Luís",
+      "eaId": 234569,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|루키치",
+      "player": "Saša Lukić",
+      "eaId": 236699,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|엔시소",
+      "player": "Julio César Enciso",
+      "eaId": 255434,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|필로젠",
+      "player": "Jaden Philogene",
+      "eaId": 261336,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|에메르손",
+      "player": "Emersonn Correia da Silva",
+      "eaId": 76803,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|파타우",
+      "player": "Abdul Fatawu",
+      "eaId": 267680,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|A.파머",
+      "player": "Alex Palmer",
+      "eaId": 223909,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|그리브스",
+      "player": "Jacob Greaves",
+      "eaId": 248602,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|펄롱",
+      "player": "Darnell Furlong",
+      "eaId": 223877,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|테일러",
+      "player": "Jack Taylor",
+      "eaId": 233851,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|마투시와",
+      "player": "Azor Matusiwa",
+      "eaId": 239356,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|마에다",
+      "player": "Daizen Maeda",
+      "eaId": 246321,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|아크폼",
+      "player": "Chuba Akpom",
+      "eaId": 213418,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|메흐메티",
+      "player": "Anis Mehmeti",
+      "eaId": 250816,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "IPS|클라크",
+      "player": "Jack Clarke",
+      "eaId": 242908,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|트래퍼드",
+      "player": "James Trafford",
+      "eaId": 263063,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|무하레모비치",
+      "player": "Tarik Muharemović",
+      "eaId": 262027,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|엘베디",
+      "player": "Nico Elvedi",
+      "eaId": 221491,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|쥐스탱",
+      "player": "James Justin",
+      "eaId": 231554,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|구드문드손",
+      "player": "Gabriel Gudmundsson",
+      "eaId": 236822,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|암파두",
+      "player": "Ethan Ampadu",
+      "eaId": 235735,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|다나카",
+      "player": "Ao Tanaka",
+      "eaId": 236764,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|보글",
+      "player": "Jayden Bogle",
+      "eaId": 244591,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|H.윌슨",
+      "player": "Harry Wilson",
+      "eaId": 220710,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|캘버트르윈",
+      "player": "Dominic Calvert-Lewin",
+      "eaId": 221479,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|D.제임스",
+      "player": "Daniel James",
+      "eaId": 232104,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|페리",
+      "player": "Lucas Estella Perri",
+      "eaId": 230670,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|비욜",
+      "player": "Jaka Bijol",
+      "eaId": 244238,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|로던",
+      "player": "Joe Rodon",
+      "eaId": 229266,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|그루에프",
+      "player": "Ilia Gruev",
+      "eaId": 248384,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|슈타흐",
+      "player": "Anton Stach",
+      "eaId": 257191,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|에런슨",
+      "player": "Brenden Aaronson",
+      "eaId": 247361,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|오카포르",
+      "player": "Noah Okafor",
+      "eaId": 242530,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|은메차",
+      "player": "Lukas Nmecha",
+      "eaId": 230084,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LEE|뇬토",
+      "player": "Wilfried Gnonto",
+      "eaId": 258906,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|알리송",
+      "player": "Alisson Ramses Becker",
+      "eaId": 212831,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|케르케즈",
+      "player": "Milos Kerkez",
+      "eaId": 260908,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|반다이크",
+      "player": "Virgil van Dijk",
+      "eaId": 203376,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|아라우호",
+      "player": "Ronald Araujo",
+      "eaId": 253163,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|프림퐁",
+      "player": "Jeremie Frimpong",
+      "eaId": 253149,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|흐라번베르흐",
+      "player": "Ryan Gravenberch",
+      "eaId": 246104,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|맥알리스터",
+      "player": "Alexis Mac Allister",
+      "eaId": 239837,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|비르츠",
+      "player": "Florian Wirtz",
+      "eaId": 256630,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|각포",
+      "player": "Cody Gakpo",
+      "eaId": 242516,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|이사크",
+      "player": "Alexander Isak",
+      "eaId": 233731,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|소보슬라이",
+      "player": "Dominik Szoboszlai",
+      "eaId": 236772,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|마마르다슈빌리",
+      "player": "Giorgi Mamardashvili",
+      "eaId": 262621,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|자케",
+      "player": "Jérémy Jacquet",
+      "eaId": 278903,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|고메스",
+      "player": "Joe Gomez",
+      "eaId": 225100,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|브래들리",
+      "player": "Conor Bradley",
+      "eaId": 264298,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|치미카스",
+      "player": "Kostas Tsimikas",
+      "eaId": 232223,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|엔도",
+      "player": "Wataru Endo",
+      "eaId": 232487,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|에키티케",
+      "player": "Hugo Ekitiké",
+      "eaId": 257289,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|키에사",
+      "player": "Federico Chiesa",
+      "eaId": 235805,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "LIV|응구모하",
+      "player": "Rio Ngumoha",
+      "eaId": 80376,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|돈나룸마",
+      "player": "Gianluigi Donnarumma",
+      "eaId": 230621,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|그바르디올",
+      "player": "Joško Gvardiol",
+      "eaId": 251517,
+      "foot": "L",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|디아스",
+      "player": "Rúben Santos Gato Alves Dias",
+      "eaId": 239818,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|쿠사노프",
+      "player": "Abdukodir Khusanov",
+      "eaId": 277031,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|누네스",
+      "player": "Matheus Luiz Nunes",
+      "eaId": 253124,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|엔소",
+      "player": "Enzo Fernández",
+      "eaId": 247090,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|E.앤더슨",
+      "player": "Elliot Anderson",
+      "eaId": 254243,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|포든",
+      "player": "Phil Foden",
+      "eaId": 237692,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|도쿠",
+      "player": "Jérémy Doku",
+      "eaId": 246420,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|홀란",
+      "player": "Erling Haaland",
+      "eaId": 239085,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|은디아예",
+      "player": "Iliman Ndiaye",
+      "eaId": 261188,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|룰리",
+      "player": "Gerónimo Rulli",
+      "eaId": 215316,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|게히",
+      "player": "Marc Guéhi",
+      "eaId": 241159,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|아이트누리",
+      "player": "Rayan Aït-Nouri",
+      "eaId": 242641,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|루이스",
+      "player": "Rico Lewis",
+      "eaId": 271574,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|코바치치",
+      "player": "Mateo Kovačić",
+      "eaId": 207410,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|부아디",
+      "player": "Ayyoub Bouaddi",
+      "eaId": 278901,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|셰르키",
+      "player": "Rayan Cherki",
+      "eaId": 251570,
+      "foot": "L",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|세메뇨",
+      "player": "Antoine Semenyo",
+      "eaId": 241236,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MCI|맥에이두",
+      "player": "Ryan McAidoo",
+      "eaId": 81685,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://www.fifacm.com/player/81685/ryan"
+    },
+    {
+      "card": "MUN|라먼스",
+      "player": "Senne Lammens",
+      "eaId": 254803,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|달로트",
+      "player": "José Diogo Dalot Teixeira",
+      "eaId": 234574,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|리산드로 마르티네스",
+      "player": "Lisandro Martínez",
+      "eaId": 239301,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|매과이어",
+      "player": "Harry Maguire",
+      "eaId": 203263,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|요로",
+      "player": "Leny Yoro",
+      "eaId": 269087,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|발레바",
+      "player": "Carlos Baleba",
+      "eaId": 272500,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|마이누",
+      "player": "Kobbie Mainoo",
+      "eaId": 269136,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|브루누 페르난드스",
+      "player": "Bruno Miguel Borges Fernandes",
+      "eaId": 212198,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|쿠냐",
+      "player": "Matheus Santos Carneiro da Cunha",
+      "eaId": 240243,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|셰슈코",
+      "player": "Benjamin Šeško",
+      "eaId": 260592,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|음뵈모",
+      "player": "Bryan Mbeumo",
+      "eaId": 243014,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|달로",
+      "player": "Karl Darlow",
+      "eaId": 193331,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|더리흐트",
+      "player": "Matthijs de Ligt",
+      "eaId": 235243,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|마즈라위",
+      "player": "Noussair Mazraoui",
+      "eaId": 236401,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|쇼",
+      "player": "Luke Shaw",
+      "eaId": 205988,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|틸레만스",
+      "player": "Youri Tielemans",
+      "eaId": 216393,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|안드레이 산투스",
+      "player": "Andrey N. dos Santos",
+      "eaId": 273018,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|마운트",
+      "player": "Mason Mount",
+      "eaId": 233064,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|디알로",
+      "player": "Amad Diallo",
+      "eaId": 254088,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MUN|래시퍼드",
+      "player": "Marcus Rashford",
+      "eaId": 231677,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|호르니체크",
+      "player": "Lukáš Horníček",
+      "eaId": 258936,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|홀",
+      "player": "Lewis Hall",
+      "eaId": 266127,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|번",
+      "player": "Dan Burn",
+      "eaId": 198032,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|셰어",
+      "player": "Fabian Schär",
+      "eaId": 210047,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|데디치",
+      "player": "Amar Dedić",
+      "eaId": 257345,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|조엘린통",
+      "player": "Joelinton Apolinário de Lira",
+      "eaId": 223334,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|N.곤살레스",
+      "player": "Nicolás González Iglesias",
+      "eaId": 255069,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|윌록",
+      "player": "Joe Willock",
+      "eaId": 237329,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|반스",
+      "player": "Harvey Barnes",
+      "eaId": 234742,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|오술라",
+      "player": "William Osula",
+      "eaId": 270519,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|엘랑가",
+      "player": "Anthony Elanga",
+      "eaId": 257470,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|포프",
+      "player": "Nick Pope",
+      "eaId": 203841,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|티아우",
+      "player": "Malick Thiaw",
+      "eaId": 256261,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|보트만",
+      "player": "Sven Botman",
+      "eaId": 251809,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|리브라멘투",
+      "player": "Tino Livramento",
+      "eaId": 262118,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|마일리",
+      "player": "Lewis Miley",
+      "eaId": 274246,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|J.램지",
+      "player": "Jacob Ramsey",
+      "eaId": 246923,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|머피",
+      "player": "Jacob Murphy",
+      "eaId": 206085,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|위사",
+      "player": "Yoane Wissa",
+      "eaId": 234824,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NEW|박승수",
+      "player": "Seung Soo Park",
+      "eaId": 71236,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|셀스",
+      "player": "Matz Sels",
+      "eaId": 199641,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|무리요",
+      "player": "Murillo Costa dos Santos",
+      "eaId": 278016,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|밀렌코비치",
+      "player": "Nikola Milenković",
+      "eaId": 238095,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|자이르",
+      "player": "Jair Paula da Cunha Filho",
+      "eaId": 79629,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|N.윌리엄스",
+      "player": "Neco Williams",
+      "eaId": 243057,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|슐라거",
+      "player": "Xaver Schlager",
+      "eaId": 233195,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|매커티",
+      "player": "James McAtee",
+      "eaId": 264349,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|아이나",
+      "player": "Ola Aina",
+      "eaId": 224656,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|은도예",
+      "player": "Dan Ndoye",
+      "eaId": 257980,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|들랩",
+      "player": "Liam Delap",
+      "eaId": 259031,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|깁스화이트",
+      "player": "Morgan Gibbs-White",
+      "eaId": 236015,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|빅토르",
+      "player": "John Victor Maciel Furtado",
+      "eaId": 234724,
+      "foot": "R",
+      "weakFoot": 1,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|모라투",
+      "player": "Felipe Rodrigues da Silva",
+      "eaId": 256008,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|애벗",
+      "player": "Zach Abbott",
+      "eaId": 74242,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|도밍게스",
+      "player": "Nicolás Domínguez",
+      "eaId": 237819,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|예이츠",
+      "player": "Ryan Yates",
+      "eaId": 235642,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|허드슨오도이",
+      "player": "Callum Hudson-Odoi",
+      "eaId": 240740,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|바크와",
+      "player": "Dilane Bakwa",
+      "eaId": 250789,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|우드",
+      "player": "Chris Wood",
+      "eaId": 192123,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NFO|이고르 제주스",
+      "player": "Igor Jesus Maciel da Cruz",
+      "eaId": 79402,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|루프스",
+      "player": "Robin Roefs",
+      "eaId": 263798,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|레이니우두",
+      "player": "Reinildo Isnard Mandava",
+      "eaId": 236045,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|알데레테",
+      "player": "Omar Alderete",
+      "eaId": 240359,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|오닌",
+      "player": "Luke O'Nien",
+      "eaId": 215700,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|흄",
+      "player": "Trai Hume",
+      "eaId": 266400,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|자카",
+      "player": "Granit Xhaka",
+      "eaId": 199503,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|사디키",
+      "player": "Noah Sadiki",
+      "eaId": 269230,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|르페",
+      "player": "Enzo Le Fée",
+      "eaId": 246350,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|앙굴로",
+      "player": "Nilson Angulo",
+      "eaId": 264205,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|브로베이",
+      "player": "Brian Brobbey",
+      "eaId": 251810,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|리그",
+      "player": "Chris Rigg",
+      "eaId": 273459,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|엘보리",
+      "player": "Melker Ellborg",
+      "eaId": 259987,
+      "foot": "R",
+      "weakFoot": 1,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|무키엘레",
+      "player": "Nordi Mukiele",
+      "eaId": 226166,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|밸러드",
+      "player": "Daniel Ballard",
+      "eaId": 243908,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|셀트",
+      "player": "Jenson Seelt",
+      "eaId": 266467,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|디아라",
+      "player": "Habib Diarra",
+      "eaId": 264293,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|탈비",
+      "player": "Chemsdine Talbi",
+      "eaId": 275048,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|아딩그라",
+      "player": "Simon Adingra",
+      "eaId": 260779,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|이시도르",
+      "player": "Wilson Isidor",
+      "eaId": 247335,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "SUN|메우니에",
+      "player": "Thomas Meunier",
+      "eaId": 202371,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|킨스키",
+      "player": "Antonín Kinský",
+      "eaId": 73580,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|로버트슨",
+      "player": "Andrew Robertson",
+      "eaId": 216267,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|판헤케",
+      "player": "Jan Paul van Hecke",
+      "eaId": 258908,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|판더벤",
+      "player": "Micky van de Ven",
+      "eaId": 264453,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|그레이",
+      "player": "Archie Gray",
+      "eaId": 270208,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|토날리",
+      "player": "Sandro Tonali",
+      "eaId": 241096,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|마테우스 페르난드스",
+      "player": "Mateus Gonçalo Espanha Fernandes",
+      "eaId": 270857,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|마르무시",
+      "player": "Omar Marmoush",
+      "eaId": 256675,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|텔",
+      "player": "Mathys Tel",
+      "eaId": 268421,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|솔랑케",
+      "player": "Dominic Solanke",
+      "eaId": 225539,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|쿠두스",
+      "player": "Mohammed Kudus",
+      "eaId": 245155,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|오스틴",
+      "player": "Brandon Austin",
+      "eaId": 236568,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|세네시",
+      "player": "Marcos Senesi",
+      "eaId": 236506,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|포로",
+      "player": "Pedro Antonio Porro Sauceda",
+      "eaId": 243576,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|우도기",
+      "player": "Destiny Udogie",
+      "eaId": 259583,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|벤탄쿠르",
+      "player": "Rodrigo Bentancur",
+      "eaId": 227535,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|사르",
+      "player": "Pape Matar Sarr",
+      "eaId": 259868,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|베리발",
+      "player": "Lucas Bergvall",
+      "eaId": 272926,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|시몬스",
+      "player": "Xavi Simons",
+      "eaId": 245367,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "TOT|히샤를리송",
+      "player": "Richarlison de Andrade",
+      "eaId": 231943,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|쿠르투아",
+      "player": "Thibaut Courtois",
+      "eaId": 192119,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|쿠쿠레야",
+      "player": "Marc Cucurella Saseta",
+      "eaId": 239231,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|하위선",
+      "player": "Dean Huijsen",
+      "eaId": 278349,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|코나테",
+      "player": "Ibrahima Konaté",
+      "eaId": 237678,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|알렉산더아널드",
+      "player": "Trent Alexander-Arnold",
+      "eaId": 231281,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|추아메니",
+      "player": "Aurélien Tchouaméni",
+      "eaId": 241637,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|B.실바",
+      "player": "Bernardo Mota Carvalho e Silva",
+      "eaId": 218667,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|벨링엄",
+      "player": "Jude Bellingham",
+      "eaId": 252371,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|비니시우스",
+      "player": "Vinícius José de Oliveira Júnior",
+      "eaId": 238794,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|음바페",
+      "player": "Kylian Mbappé",
+      "eaId": 231747,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|귈레르",
+      "player": "Arda Güler",
+      "eaId": 264309,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|루닌",
+      "player": "Andriy Lunin",
+      "eaId": 243952,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|뤼디거",
+      "player": "Antonio Rüdiger",
+      "eaId": 205452,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|밀리탕",
+      "player": "Éder Gabriel Militão",
+      "eaId": 240130,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|둠프리스",
+      "player": "Denzel Dumfries",
+      "eaId": 233096,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|발베르데",
+      "player": "Federico Valverde",
+      "eaId": 239053,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|카마빙가",
+      "player": "Eduardo Camavinga",
+      "eaId": 248243,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|브라임",
+      "player": "Brahim Díaz",
+      "eaId": 231410,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|호드리구",
+      "player": "Rodrygo Silva de Goes",
+      "eaId": 243812,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RMA|Y.디오망데",
+      "player": "Yan Diomande",
+      "eaId": 78012,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|호안 가르시아",
+      "player": "Joan García Pons",
+      "eaId": 259532,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|칸셀루",
+      "player": "João Pedro Cavaco Cancelo",
+      "eaId": 210514,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|쿠바르시",
+      "player": "Pau Cubarsí Paredes",
+      "eaId": 278046,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|G.마르틴",
+      "player": "Gerard Martín Langreo",
+      "eaId": 74462,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|쿤데",
+      "player": "Jules Koundé",
+      "eaId": 241486,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|페드리",
+      "player": "Pedro González López",
+      "eaId": 251854,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|로드리",
+      "player": "Rodrigo Hernández Cascante",
+      "eaId": 231866,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|더용",
+      "player": "Frenkie de Jong",
+      "eaId": 228702,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|고든",
+      "player": "Anthony Gordon",
+      "eaId": 242964,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|하피냐",
+      "player": "Raphael Dias Belloli",
+      "eaId": 233419,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|야말",
+      "player": "Lamine Yamal Nasraoui Ebana",
+      "eaId": 277643,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|슈쳉스니",
+      "player": "Wojciech Szczęsny",
+      "eaId": 186153,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|발데",
+      "player": "Alejandro Balde Martínez",
+      "eaId": 263578,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|크리스텐센",
+      "player": "Andreas Christensen",
+      "eaId": 213661,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|에릭 가르시아",
+      "player": "Eric García Martret",
+      "eaId": 245037,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|가비",
+      "player": "Pablo Martín Páez Gavira",
+      "eaId": 264240,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|페르민",
+      "player": "Fermín López Marín",
+      "eaId": 277179,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|올모",
+      "player": "Daniel Olmo Carvajal",
+      "eaId": 244260,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|아데예미",
+      "player": "Karim Adeyemi",
+      "eaId": 251852,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BAR|가브리에우 제주스",
+      "player": "Gabriel Fernando de Jesus",
+      "eaId": 230666,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|오블락",
+      "player": "Jan Oblak",
+      "eaId": 200389,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|그리말도",
+      "player": "Alejandro Grimaldo García",
+      "eaId": 210035,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|한초",
+      "player": "Dávid Hancko",
+      "eaId": 247103,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|푸빌",
+      "player": "Marc Pubill Pagès",
+      "eaId": 266039,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|요렌테",
+      "player": "Marcos Llorente Moreno",
+      "eaId": 226161,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|바에나",
+      "player": "Alejandro Baena Rodríguez",
+      "eaId": 257279,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|바리오스",
+      "player": "Pablo Barrios Rivas",
+      "eaId": 272449,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|히울만",
+      "player": "Morten Hjulmand",
+      "eaId": 244669,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|줄리아노",
+      "player": "Giuliano Simeone",
+      "eaId": 253396,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|이강인",
+      "player": "Kang In Lee",
+      "eaId": 243780,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|알바레스",
+      "player": "Julián Alvarez",
+      "eaId": 246191,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|무소",
+      "player": "Juan Musso",
+      "eaId": 214979,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|르노르망",
+      "player": "Robin Le Normand",
+      "eaId": 233486,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|히메네스",
+      "player": "José María Giménez",
+      "eaId": 216460,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|로메로",
+      "player": "Cristian Romero",
+      "eaId": 232488,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|코케",
+      "player": "Jorge Resurrección",
+      "eaId": 193747,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|카르도주",
+      "player": "João Lucas de Souza Cardoso",
+      "eaId": 259516,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|루크먼",
+      "player": "Ademola Lookman",
+      "eaId": 230899,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|쇠를로트",
+      "player": "Alexander Sørloth",
+      "eaId": 216549,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATM|르마르",
+      "player": "Thomas Lemar",
+      "eaId": 213565,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|우나이 시몬",
+      "player": "Unai Simón Mendibil",
+      "eaId": 230869,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|유리",
+      "player": "Yuri Berchiche Izeta",
+      "eaId": 183512,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|비비안",
+      "player": "Daniel Vivian Moreno",
+      "eaId": 248550,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|파레데스",
+      "player": "Aitor Paredes Casamichana",
+      "eaId": 259524,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|링콘",
+      "player": "Hugo Rincón Lumbreras",
+      "eaId": 279026,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|하우레기사르",
+      "player": "Mikel Jauregizar Alboniga",
+      "eaId": 279604,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|루이스 데 갈라레타",
+      "player": "Iñigo Ruiz de Galarreta",
+      "eaId": 205157,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|산세트",
+      "player": "Oihan Sancet Tirapu",
+      "eaId": 244675,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|N.윌리엄스",
+      "player": "Nicholas Williams Arthuer",
+      "eaId": 256516,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|구루세타",
+      "player": "Gorka Guruzeta Rodríguez",
+      "eaId": 231184,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|I.윌리엄스",
+      "player": "Iñaki Williams Arthuer",
+      "eaId": 216201,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|파디야",
+      "player": "Álex Padilla Pérez",
+      "eaId": 271034,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|라포르트",
+      "player": "Aymeric Laporte",
+      "eaId": 212218,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|아레소",
+      "player": "Jesús Areso Blanco",
+      "eaId": 239614,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|보이로",
+      "player": "Adama Boiro",
+      "eaId": 70344,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|프라도스",
+      "player": "Beñat Prados Díaz",
+      "eaId": 263617,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|예라이",
+      "player": "Yeray Álvarez López",
+      "eaId": 227950,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|베렝게르",
+      "player": "Alejandro Berenguer Remiro",
+      "eaId": 225201,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|산나디",
+      "player": "Maroan Sannadi Harrouch",
+      "eaId": 76945,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ATH|나바로",
+      "player": "Robert Navarro Muñoz",
+      "eaId": 253130,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|우르비히",
+      "player": "Jonas Urbig",
+      "eaId": 263887,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|데이비스",
+      "player": "Alphonso Davies",
+      "eaId": 234396,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|김민재",
+      "player": "Min Jae Kim",
+      "eaId": 237086,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|우파메카노",
+      "player": "Dayot Upamecano",
+      "eaId": 229558,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|라이머",
+      "player": "Konrad Laimer",
+      "eaId": 225375,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|키미히",
+      "player": "Joshua Kimmich",
+      "eaId": 212622,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|파블로비치",
+      "player": "Aleksandar Pavlović",
+      "eaId": 275298,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|무시알라",
+      "player": "Jamal Musiala",
+      "eaId": 256790,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|루이스 디아스",
+      "player": "Luis Díaz",
+      "eaId": 241084,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|케인",
+      "player": "Harry Kane",
+      "eaId": 202126,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|올리세",
+      "player": "Michael Olise",
+      "eaId": 247827,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|울라이히",
+      "player": "Sven Ulreich",
+      "eaId": 186569,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|타",
+      "player": "Jonathan Tah",
+      "eaId": 213331,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|이토",
+      "player": "Hiroki Ito",
+      "eaId": 234205,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|스타니시치",
+      "player": "Josip Stanišić",
+      "eaId": 250955,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|브라운",
+      "player": "Nathaniel Brown",
+      "eaId": 269701,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|비쇼프",
+      "player": "Tom Bischof",
+      "eaId": 263765,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|사이바리",
+      "player": "Ismael Saibari",
+      "eaId": 259480,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|카를",
+      "player": "Lennart Karl",
+      "eaId": 78063,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "FCB|그나브리",
+      "player": "Serge Gnabry",
+      "eaId": 206113,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|코벨",
+      "player": "Gregor Kobel",
+      "eaId": 235073,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|슐로터베크",
+      "player": "Nico Schlotterbeck",
+      "eaId": 247819,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|안톤",
+      "player": "Waldemar Anton",
+      "eaId": 229476,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|가두",
+      "player": "Joane Gadou",
+      "eaId": 71350,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|스벤손",
+      "player": "Daniel Svensson",
+      "eaId": 259716,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|은메차",
+      "player": "Felix Nmecha",
+      "eaId": 246863,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|조브 벨링엄",
+      "player": "Jobe Bellingham",
+      "eaId": 270964,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|라이어슨",
+      "player": "Julian Ryerson",
+      "eaId": 229891,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|추쿠에메카",
+      "player": "Carney Chukwuemeka",
+      "eaId": 259356,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|기라시",
+      "player": "Serhou Guirassy",
+      "eaId": 215441,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|바이어",
+      "player": "Maximilian Beier",
+      "eaId": 254117,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|마이어",
+      "player": "Alexander Meyer",
+      "eaId": 241050,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|벤세바이니",
+      "player": "Ramy Bensebaini",
+      "eaId": 224196,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|레지아니",
+      "player": "Luca Reggiani",
+      "eaId": 83751,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|프라치스",
+      "player": "Kauã Prates de Almeida",
+      "eaId": 83476,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|베이르만",
+      "player": "Joey Veerman",
+      "eaId": 253109,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|자비처",
+      "player": "Marcel Sabitzer",
+      "eaId": 204923,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|엠레 잔",
+      "player": "Emre Can",
+      "eaId": 208333,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|은와네리",
+      "player": "Ethan Nwaneri",
+      "eaId": 271807,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "BVB|파비우 시우바",
+      "player": "Fábio Daniel Soares Silva",
+      "eaId": 252037,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|플레컨",
+      "player": "Mark Flekken",
+      "eaId": 211738,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|구티에레스",
+      "player": "Miguel Gutiérrez Ortega",
+      "eaId": 261865,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|메디나",
+      "player": "Facundo Medina",
+      "eaId": 236804,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|탑소바",
+      "player": "Edmond Tapsoba",
+      "eaId": 247263,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|콴사",
+      "player": "Jarell Quansah",
+      "eaId": 273651,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|알레익스 가르시아",
+      "player": "Aleix García Serrano",
+      "eaId": 228813,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|팔라시오스",
+      "player": "Exequiel Palacios",
+      "eaId": 231521,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|마자",
+      "player": "Ibrahim Maza",
+      "eaId": 275029,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|틸만",
+      "player": "Malik Tillman",
+      "eaId": 256853,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|시크",
+      "player": "Patrik Schick",
+      "eaId": 234236,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|모레이라",
+      "player": "Afonso Bastardo Moreira",
+      "eaId": 276901,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|블라스비치",
+      "player": "Janis Blaswich",
+      "eaId": 204092,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|바데",
+      "player": "Loïc Badé",
+      "eaId": 255106,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|아르투르",
+      "player": "Arthur Augusto de Matos Soares",
+      "eaId": 275028,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|안드리히",
+      "player": "Robert Andrich",
+      "eaId": 212242,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|호프만",
+      "player": "Jonas Hofmann",
+      "eaId": 210324,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|벤세기르",
+      "player": "Eliesse Ben Seghir",
+      "eaId": 272781,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|텔라",
+      "player": "Nathan Tella",
+      "eaId": 237328,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|포쿠",
+      "player": "Ernest Poku",
+      "eaId": 264219,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "B04|코판",
+      "player": "Christian Kofane",
+      "eaId": 76416,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|반더보르트",
+      "player": "Maarten Vandevoordt",
+      "eaId": 242879,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|라움",
+      "player": "David Raum",
+      "eaId": 236703,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|루케바",
+      "player": "Castello Lukeba",
+      "eaId": 262138,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|오르반",
+      "player": "Willi Orbán",
+      "eaId": 204638,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|헨리히스",
+      "player": "Benjamin Henrichs",
+      "eaId": 228579,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|페르메이런",
+      "player": "Arthur Vermeeren",
+      "eaId": 269859,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|반주지",
+      "player": "Ezechiel Banzuzi",
+      "eaId": 276216,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|라이츠",
+      "player": "Rocco Reitz",
+      "eaId": 257919,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|그루다",
+      "player": "Brajan Gruda",
+      "eaId": 272612,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|호물루",
+      "player": "Rômulo José Cardoso da Cruz",
+      "eaId": 73398,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|누사",
+      "player": "Antonio Nusa",
+      "eaId": 262863,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|칭에를레",
+      "player": "Leopold Zingerle",
+      "eaId": 222546,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|클로스터만",
+      "player": "Lukas Klostermann",
+      "eaId": 222331,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|비샤부",
+      "player": "El Chadaille Bitshiabu",
+      "eaId": 263193,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|바쿠",
+      "player": "Ridle Baku",
+      "eaId": 240709,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|자이발트",
+      "player": "Nicolas Seiwald",
+      "eaId": 257876,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|우에드라오고",
+      "player": "Assan Ouédraogo",
+      "eaId": 276602,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|바움가르트너",
+      "player": "Christoph Baumgartner",
+      "eaId": 242187,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|바카요코",
+      "player": "Johan Bakayoko",
+      "eaId": 265450,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "RBL|하르더",
+      "player": "Conrad Harder",
+      "eaId": 277689,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|슈발리에",
+      "player": "Lucas Chevalier",
+      "eaId": 251752,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|누누 멘드스",
+      "player": "Nuno Alexandre Tavares Mendes",
+      "eaId": 252145,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|파초",
+      "player": "Willian Pacho",
+      "eaId": 256196,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|마르키뉴스",
+      "player": "Marcos Aoás Corrêa",
+      "eaId": 207865,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|하키미",
+      "player": "Achraf Hakimi",
+      "eaId": 235212,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|비티냐",
+      "player": "Vítor Machado Ferreira",
+      "eaId": 255253,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|주앙 네베스",
+      "player": "João Pedro Gonçalves Neves",
+      "eaId": 272834,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|자이르에메리",
+      "player": "Warren Zaïre-Emery",
+      "eaId": 270673,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|크바라츠헬리아",
+      "player": "Khvicha Kvaratskhelia",
+      "eaId": 247635,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|뎀벨레",
+      "player": "Ousmane Dembélé",
+      "eaId": 231443,
+      "foot": "L",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|두에",
+      "player": "Désiré Doué",
+      "eaId": 271421,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|사포노프",
+      "player": "Matvey Safonov",
+      "eaId": 240225,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|자바르니",
+      "player": "Illia Zabarnyi",
+      "eaId": 258781,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|L.에르난데스",
+      "player": "Lucas Hernández",
+      "eaId": 220814,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|디뉴",
+      "player": "Lucas Digne",
+      "eaId": 200458,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|마율루",
+      "player": "Senny Mayulu",
+      "eaId": 70004,
+      "foot": "L",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|파비안 루이스",
+      "player": "Fabián Ruiz Peña",
+      "eaId": 226271,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|바르콜라",
+      "player": "Bradley Barcola",
+      "eaId": 264652,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|베랄도",
+      "player": "Lucas Lopes Beraldo",
+      "eaId": 279709,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "PSG|아클리우슈",
+      "player": "Maghnes Akliouche",
+      "eaId": 264862,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|더랑어",
+      "player": "Jeffrey de Lange",
+      "eaId": 239559,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|에메르송",
+      "player": "Emerson Palmieri dos Santos",
+      "eaId": 210736,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|콘도그비아",
+      "player": "Geoffrey Kondogbia",
+      "eaId": 201455,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|이건라일리",
+      "player": "CJ Egan-Riley",
+      "eaId": 268131,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|웨아",
+      "player": "Timothy Weah",
+      "eaId": 241496,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|카미소코",
+      "player": "Nouhoum Kamissoko",
+      "eaId": 85290,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|응나디",
+      "player": "Tochukwu Nnadi",
+      "eaId": 78424,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|압델리",
+      "player": "Himad Abdelli",
+      "eaId": 246297,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|파이상",
+      "player": "Igor Guilherme Barbosa da Paixão",
+      "eaId": 271400,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|구이리",
+      "player": "Amine Gouiri",
+      "eaId": 240753,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|아리트",
+      "player": "Amine Harit",
+      "eaId": 232097,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|판넥",
+      "player": "Jelle Van Neck",
+      "eaId": 278095,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|발레르디",
+      "player": "Leonardo Balerdi",
+      "eaId": 242835,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|아게르드",
+      "player": "Nayef Aguerd",
+      "eaId": 244749,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|Q.팀버",
+      "player": "Quinten Timber",
+      "eaId": 251806,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|호이비에르",
+      "player": "Pierre-Emile Højbjerg",
+      "eaId": 213648,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|A.고메스",
+      "player": "Angel Gomes",
+      "eaId": 240507,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|모페",
+      "player": "Neal Maupay",
+      "eaId": 211784,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|뭄바냐",
+      "player": "Faris Pemi Moumbagna",
+      "eaId": 256669,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OM|울리세스",
+      "player": "Ulisses Garcia",
+      "eaId": 223143,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|흐라데키",
+      "player": "Lukáš Hrádecký",
+      "eaId": 190941,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|나지뉴",
+      "player": "Flávio B. J. Nazinho",
+      "eaId": 261531,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|케러",
+      "player": "Thilo Kehrer",
+      "eaId": 226229,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|테제",
+      "player": "Jordan Teze",
+      "eaId": 245211,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|반데르송",
+      "player": "Vanderson de Oliveira Campos",
+      "eaId": 263781,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|카마라",
+      "player": "Lamine Camara",
+      "eaId": 275138,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|자카리아",
+      "player": "Denis Zakaria",
+      "eaId": 229261,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|골로빈",
+      "player": "Alexandr Golovin",
+      "eaId": 225663,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|안수 파티",
+      "player": "Anssumane Fati",
+      "eaId": 253004,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|비어레트",
+      "player": "Mika Biereth",
+      "eaId": 270050,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|미나미노",
+      "player": "Takumi Minamino",
+      "eaId": 226627,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|쾬",
+      "player": "Philipp Köhn",
+      "eaId": 239364,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|다이어",
+      "player": "Eric Dier",
+      "eaId": 202335,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|마위사",
+      "player": "Christian Mawissa",
+      "eaId": 272785,
+      "foot": "L",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|살리수",
+      "player": "Mohammed Salisu",
+      "eaId": 244915,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|아블린",
+      "player": "Matthis Abline",
+      "eaId": 264422,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|디오프",
+      "player": "Edan Diop",
+      "eaId": 275019,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|쿨리발리",
+      "player": "Mamadou Coulibaly",
+      "eaId": 279700,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|발로건",
+      "player": "Folarin Balogun",
+      "eaId": 247463,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "ASM|브루너",
+      "player": "Paris Brunner",
+      "eaId": 274126,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|그라이프",
+      "player": "Dominik Greif",
+      "eaId": 263139,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|아브네르",
+      "player": "Abner Vinícius da Silva Santos",
+      "eaId": 263815,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|니아카테",
+      "player": "Moussa Niakhaté",
+      "eaId": 225859,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|마타",
+      "player": "Clinton Mukoni Mata Pedro Lourenço",
+      "eaId": 208364,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|메이틀랜드나일스",
+      "player": "Ainsley Maitland-Niles",
+      "eaId": 225782,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|테스만",
+      "player": "Tanner Tessmann",
+      "eaId": 256104,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|모턴",
+      "player": "Tyler Morton",
+      "eaId": 265459,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|톨리소",
+      "player": "Corentin Tolisso",
+      "eaId": 219683,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|말리크 포파나",
+      "player": "Malick Fofana",
+      "eaId": 256420,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|슐츠",
+      "player": "Pavel Šulc",
+      "eaId": 247050,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|누아마",
+      "player": "Ernest Nuamah",
+      "eaId": 268763,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|데캉",
+      "player": "Rémy Descamps",
+      "eaId": 234371,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|R.클라위버르트",
+      "player": "Ruben Kluivert",
+      "eaId": 262102,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|바허",
+      "player": "Felix Bacher",
+      "eaId": 262404,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|비드스트루프",
+      "player": "Mads Bidstrup",
+      "eaId": 246402,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|오펜다",
+      "player": "Loïs Openda",
+      "eaId": 243580,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|찰레타차르",
+      "player": "Duje Ćaleta-Car",
+      "eaId": 225263,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|메라",
+      "player": "Khalis Merah",
+      "eaId": 80067,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|뒤랑빌",
+      "player": "Julien Duranville",
+      "eaId": 262105,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "OL|타글리아피코",
+      "player": "Nicolás Tagliafico",
+      "eaId": 211256,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|호셉 마르티네스",
+      "player": "Josep Martínez Riera",
+      "eaId": 243311,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|바스토니",
+      "player": "Alessandro Bastoni",
+      "eaId": 237383,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|아칸지",
+      "player": "Manuel Akanji",
+      "eaId": 229237,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|비세크",
+      "player": "Yann Aurel Bisseck",
+      "eaId": 241736,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|디마르코",
+      "player": "Federico Dimarco",
+      "eaId": 226268,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|바렐라",
+      "player": "Nicolò Barella",
+      "eaId": 224232,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|찰하놀루",
+      "player": "Hakan Çalhanoğlu",
+      "eaId": 208128,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|수치치",
+      "player": "Petar Sučić",
+      "eaId": 276278,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|스펜스",
+      "player": "Djed Spence",
+      "eaId": 243702,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|라우타로",
+      "player": "Lautaro Martínez",
+      "eaId": 231478,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|튀랑",
+      "player": "Marcus Thuram",
+      "eaId": 228093,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|프로베델",
+      "player": "Ivan Provedel",
+      "eaId": 224987,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|스톤스",
+      "player": "John Stones",
+      "eaId": 203574,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|카를루스 아우구스투",
+      "player": "Carlos Augusto Zopolato Neves",
+      "eaId": 258648,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|루이스 엔히키",
+      "player": "Luis Henrique Tomaz de Lima",
+      "eaId": 256632,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|므키타리안",
+      "player": "Henrikh Mkhitaryan",
+      "eaId": 192883,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|지엘린스키",
+      "player": "Piotr Zieliński",
+      "eaId": 210406,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|디우프",
+      "player": "Andy Diouf",
+      "eaId": 268534,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|에스포지토",
+      "player": "Francesco Pio Esposito",
+      "eaId": 277327,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "INT|보니",
+      "player": "Yoan Bonny",
+      "eaId": 259565,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|메냥",
+      "player": "Mike Maignan",
+      "eaId": 215698,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|에스투피냔",
+      "player": "Pervis Estupiñán",
+      "eaId": 237942,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|파블로비치",
+      "player": "Strahinja Pavlović",
+      "eaId": 254840,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|힐라",
+      "player": "Mario Gila Fuentes",
+      "eaId": 268804,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|더빈터",
+      "player": "Koni De Winter",
+      "eaId": 265774,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|모드리치",
+      "player": "Luka Modrić",
+      "eaId": 177003,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|라비오",
+      "player": "Adrien Rabiot",
+      "eaId": 210008,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|풀리식",
+      "player": "Christian Pulisic",
+      "eaId": 227796,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|디에고 모레이라",
+      "player": "Diego Manuel J. da Silva Moreira",
+      "eaId": 270039,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|곤살루 하무스",
+      "player": "Gonçalo Matias Ramos",
+      "eaId": 256903,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|무사",
+      "player": "Yunus Musah",
+      "eaId": 253177,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|테라차노",
+      "player": "Pietro Terracciano",
+      "eaId": 205812,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|토모리",
+      "player": "Fikayo Tomori",
+      "eaId": 232756,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|바르테사기",
+      "player": "Davide Bartesaghi",
+      "eaId": 278237,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|아테카메",
+      "player": "Zachary Athekame",
+      "eaId": 279782,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|자샤리",
+      "player": "Ardon Jashari",
+      "eaId": 257186,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|포파나",
+      "player": "Youssouf Fofana",
+      "eaId": 245630,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|로프터스치크",
+      "player": "Ruben Loftus-Cheek",
+      "eaId": 213666,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|레앙",
+      "player": "Rafael da Conceição Leão",
+      "eaId": 241721,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "MIL|은쿤쿠",
+      "player": "Christopher Nkunku",
+      "eaId": 232411,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|비카리오",
+      "player": "Guglielmo Vicario",
+      "eaId": 240091,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|루쿠미",
+      "player": "Jhon Lucumí",
+      "eaId": 231207,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|브레메르",
+      "player": "Gleison Bremer Silva Nascimento",
+      "eaId": 239580,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|가티",
+      "player": "Federico Gatti",
+      "eaId": 266872,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|캄비아소",
+      "player": "Andrea Cambiaso",
+      "eaId": 258966,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|로카텔리",
+      "player": "Manuel Locatelli",
+      "eaId": 222077,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|K.튀랑",
+      "player": "Khéphren Thuram",
+      "eaId": 247246,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|칼룰루",
+      "player": "Pierre Kalulu",
+      "eaId": 255654,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|이을드즈",
+      "player": "Kenan Yıldız",
+      "eaId": 277954,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|볼테마데",
+      "player": "Nick Woltemade",
+      "eaId": 254022,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|콘세이상",
+      "player": "Francisco Conceição",
+      "eaId": 261050,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|디그레고리오",
+      "player": "Michele Di Gregorio",
+      "eaId": 235840,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|켈리",
+      "player": "Lloyd Kelly",
+      "eaId": 231512,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|카발",
+      "player": "Juan David Cabal",
+      "eaId": 251870,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|첼리크",
+      "player": "Zeki Çelik",
+      "eaId": 224490,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|코프메이너르스",
+      "player": "Teun Koopmeiners",
+      "eaId": 240679,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|매케니",
+      "player": "Weston McKennie",
+      "eaId": 238744,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|두글라스 루이스",
+      "player": "Douglas Luiz Soares de Paulo",
+      "eaId": 236499,
+      "foot": "R",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|콜로 무아니",
+      "player": "Randal Kolo Muani",
+      "eaId": 237679,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "JUV|제그로바",
+      "player": "Edon Zhegrova",
+      "eaId": 239763,
+      "foot": "L",
+      "weakFoot": 2,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|밀린코비치사비치",
+      "player": "Vanja Milinković-Savić",
+      "eaId": 224836,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|올리베라",
+      "player": "Mathías Olivera",
+      "eaId": 240716,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|부온조르노",
+      "player": "Alessandro Buongiorno",
+      "eaId": 243241,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|라흐마니",
+      "player": "Amir Rrahmani",
+      "eaId": 244263,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|디로렌초",
+      "player": "Giovanni Di Lorenzo",
+      "eaId": 217870,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|맥토미니",
+      "player": "Scott McTominay",
+      "eaId": 237238,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|로보트카",
+      "player": "Stanislav Lobotka",
+      "eaId": 216435,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|더브라위너",
+      "player": "Kevin De Bruyne",
+      "eaId": 192985,
+      "foot": "R",
+      "weakFoot": 5,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|랑",
+      "player": "Noa Lang",
+      "eaId": 239380,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|회일룬",
+      "player": "Rasmus Højlund",
+      "eaId": 259399,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|폴리타노",
+      "player": "Matteo Politano",
+      "eaId": 216409,
+      "foot": "L",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|메레트",
+      "player": "Alex Meret",
+      "eaId": 225116,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|라파 마린",
+      "player": "Rafael Marín Zamora",
+      "eaId": 277244,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|베우케마",
+      "player": "Sam Beukema",
+      "eaId": 262394,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|스피나촐라",
+      "player": "Leonardo Spinazzola",
+      "eaId": 202884,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|길모어",
+      "player": "Billy Gilmour",
+      "eaId": 245992,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|앙귀사",
+      "player": "André-Franck Zambo Anguissa",
+      "eaId": 227236,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|네레스",
+      "player": "David Neres Campos",
+      "eaId": 236632,
+      "foot": "L",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|폴로룬쇼",
+      "player": "Michael Folorunsho",
+      "eaId": 268683,
+      "foot": "R",
+      "weakFoot": 4,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    },
+    {
+      "card": "NAP|루카",
+      "player": "Lorenzo Lucca",
+      "eaId": 268474,
+      "foot": "R",
+      "weakFoot": 3,
+      "source": "https://github.com/LakshmiKanth11/EA_FC_ANALYSIS/blob/main/EA_FC_PLAYERS_DATASET_AND_%20DASHBOARD/data/players.csv"
+    }
+  ]
+}

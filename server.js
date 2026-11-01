@@ -5,6 +5,8 @@ const http = require('http');
 const express = require('express');
 const { WebSocketServer } = require('ws');
 const auth = require('./lib/auth');
+const admin = require('./lib/admin');
+const shop = require('./lib/shop');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,6 +15,8 @@ const PUBLIC_DIR = process.env.PUBLIC_DIR || path.join(__dirname, 'public');
 // Render sits behind a proxy; this makes req.ip the player's address (used by the login rate limit)
 app.set('trust proxy', 1);
 app.get('/healthz', (req, res) => res.send('ok'));
+app.use('/api/admin', admin.router);
+app.use('/api/shop', shop.router);
 app.use('/api', auth.router);
 app.use(express.static(PUBLIC_DIR, { maxAge: '1h' }));
 
