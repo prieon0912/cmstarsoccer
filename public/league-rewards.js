@@ -12,7 +12,7 @@
     }
     function queue(s){
       const list=read();if(list.some(e=>e.id===s.id&&e.owner===s.owner))return;
-      list.push({id:s.id,owner:s.owner,club:s.club,seed:s.seed,custom:!!s.custom,results:JSON.parse(JSON.stringify(s.res))});write(list);
+      list.push({id:s.id,owner:s.owner,club:s.club,seed:s.seed,custom:!!s.custom,playedRounds:(s.playedRounds||[]).slice(),results:JSON.parse(JSON.stringify(s.res))});write(list);
     }
     function drain(){
       if(draining)return draining;
@@ -21,7 +21,7 @@
           if(s.owner!==hooks.user())continue;
           try{
             await enroll(s);if(s.owner!==hooks.user())break;
-            const data=await hooks.api('/league/finish',{method:'POST',keepalive:true,body:{seasonId:s.id,results:s.results}});
+            const data=await hooks.api('/league/finish',{method:'POST',keepalive:true,body:{seasonId:s.id,results:s.results,playedRounds:s.playedRounds||[]}});
             write(read().filter(e=>e.id!==s.id||e.owner!==s.owner));
             if(s.owner===hooks.user())hooks.inventory(data);
             const current=hooks.season();if(current?.id===s.id&&current.owner===s.owner){current.rewardDone=true;hooks.save();}

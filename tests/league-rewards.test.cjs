@@ -1,17 +1,26 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),crypto=require('node:crypto');
-const rules=require('../lib/league-results');
+const rules=require('../lib/league-results'),allRounds=Array.from({length:38},(_,i)=>i);
 function resultsFor(meta,winner=null){const results={};rules.fixtures(meta.seed,meta.club).forEach((round,md)=>round.forEach(([h,a])=>{results[md+':'+h+':'+a]=h===winner?[3,0]:a===winner?[0,3]:h<a?[3,0]:[0,3];}));return results;}
 test('server fixtures match the game and all final places receive the requested amounts',()=>{
   const html=fs.readFileSync(path.join(__dirname,'../public/index.html'),'utf8'),a=html.indexOf('function makeFixtures('),b=html.indexOf('function newSeason(',a);
   const context=vm.createContext({PL_IDX:Array.from({length:20},(_,i)=>i),CLUBS:Array(36).fill({})});
   vm.runInContext(html.match(/function seeded\(s\)[^\r\n]+/)[0]+'\n'+html.slice(a,b),context);
   for(let club=0;club<36;club++)for(const seed of [0,1,4294967295])assert.deepEqual(JSON.parse(JSON.stringify(vm.runInContext(`makeFixtures(${seed},${club})`,context))),rules.fixtures(seed,club));
-  const amounts=[100,80,50,30,30,20,20,10,10,10,0,0,0,0,0,0,0,0,0,0];
-  for(let club=0;club<20;club++){const meta={club,seed:932,custom:club%2===0};assert.deepEqual(rules.evaluateSeason(meta,resultsFor(meta)),{rank:club+1,amount:amounts[club]});}
-  const foreign={club:25,seed:0,custom:false};assert.equal(rules.evaluateSeason(foreign,resultsFor(foreign,25)).amount,100);
+  const amounts=[200,160,100,60,60,40,40,20,20,20,0,0,0,0,0,0,0,0,0,0];
+  for(let club=0;club<20;club++){const meta={club,seed:932,custom:club%2===0};assert.deepEqual(rules.evaluateSeason(meta,resultsFor(meta),allRounds),{rank:club+1,amount:amounts[club]});}
+  const foreign={club:25,seed:0,custom:false};assert.equal(rules.evaluateSeason(foreign,resultsFor(foreign,25),allRounds).amount,200);
   const incomplete=resultsFor(foreign);delete incomplete[Object.keys(incomplete)[0]];assert.throws(()=>rules.evaluateSeason(foreign,incomplete),/완료/);
   const invalid=resultsFor(foreign);invalid[Object.keys(invalid)[0]]=[-1,0];assert.throws(()=>rules.evaluateSeason(foreign,invalid),/경기/);
 });
+test('doubled league rewards are proportional to unique directly played rounds, rounded down',()=>{
+  const meta={club:0,seed:1,custom:true},results=resultsFor(meta,0);
+  assert.equal(rules.evaluateSeason(meta,results).amount,0);
+  assert.equal(rules.evaluateSeason(meta,results,[0]).amount,5);
+  assert.equal(rules.evaluateSeason(meta,results,allRounds.slice(0,19)).amount,100);
+  assert.equal(rules.evaluateSeason(meta,results,allRounds).amount,200);
+  for(const bad of [[0,0],[-1],[38],[.5],'38',Array(39).fill(1)])assert.throws(()=>rules.evaluateSeason(meta,results,bad),/경기/);
+});
+
 test('league API calculates the rank, credits once across retries and isolates accounts',async()=>{
   const previous=process.env.DATABASE_URL;delete process.env.DATABASE_URL;const db=require('../lib/db');if(previous!==undefined)process.env.DATABASE_URL=previous;
   const auth=require('../lib/auth'),league=require('../lib/league'),express=require('express');await auth.init();
@@ -25,15 +34,15 @@ test('league API calculates the rank, credits once across retries and isolates a
     assert.equal((await call('/api/league/start',season,token)).status,200);
     assert.equal((await call('/api/league/start',{...season,club:0},token)).status,409);
     assert.equal((await call('/api/league/finish',{seasonId:season.seasonId,rank:1,amount:999999,results:{}},token)).status,400);
-    const body={seasonId:season.seasonId,results:resultsFor(season),rank:1,amount:999999};
+    const body={seasonId:season.seasonId,results:resultsFor(season),playedRounds:allRounds,rank:1,amount:999999};
     assert.equal((await call('/api/league/finish',body,second.data.token)).status,404);
     const draws=await Promise.all([call('/api/league/finish',body,token),call('/api/league/finish',body,token)]);
-    assert.ok(draws.every(d=>d.status===200));assert.deepEqual(draws[0].data.result,{seasonId:season.seasonId,rank:10,amount:10});
-    assert.equal((await call('/api/me',undefined,token)).data.profile.coins,1010);
-    assert.equal((await call('/api/league/finish',{seasonId:season.seasonId},token)).data.coins,1010);
+    assert.ok(draws.every(d=>d.status===200));assert.deepEqual(draws[0].data.result,{seasonId:season.seasonId,rank:10,amount:20});
+    assert.equal((await call('/api/me',undefined,token)).data.profile.coins,1020);
+    assert.equal((await call('/api/league/finish',{seasonId:season.seasonId},token)).data.coins,1020);
     const low={seasonId:crypto.randomUUID(),club:19,seed:4,custom:false};await call('/api/league/start',low,token);
     assert.equal((await call('/api/league/finish',{seasonId:low.seasonId,results:resultsFor(low)},token)).data.result.amount,0);
-    assert.equal((await call('/api/me',undefined,token)).data.profile.coins,1010);
+    assert.equal((await call('/api/me',undefined,token)).data.profile.coins,1020);
     const owner=await db.adminByName('prieon_auth');await db.addAdminSession('test-admin-session',owner.id,new Date(Date.now()+60000));
     assert.equal(await db.clearUsers(),2);assert.equal((await db.adminOverview()).users,0);assert.ok(await db.adminSession('test-admin-session'));
     assert.equal((await call('/api/me',undefined,token)).status,401);assert.equal(await db.getLeague(first.data.user.id||1,season.seasonId),null);
