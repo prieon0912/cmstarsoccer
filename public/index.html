@@ -883,6 +883,10 @@ const PSTAT={};
 const CUSTOM=[null,null];
 const club=ci=>ci>=100?CUSTOM[ci-100]:CLUBS[ci];
 const BASE_RO=[];const baseRoster=ci=>BASE_RO[ci]||(BASE_RO[ci]=makeRoster(ci));
+// "기타": cards from clubs that are not in the game (clubIndex -1). They have a neutral kit and never share a club,
+// so a team with any of them in the XI gets no single-club bonus.
+const OTHER_CLUB={id:'ETC',name:'기타',lg:'ETC',shirt:'#5f6a7a',pc:'#8d97a6',pat:'plain',shorts:'#3b4350',socks:'#3b4350',num:'#ffffff',gk:'#c9a227',xi:[],sub:[]};
+const otherClub=meta=>meta&&meta.clubName?{...OTHER_CLUB,name:'기타 · '+meta.clubName}:OTHER_CLUB;
 const CARD_CLASSES=typeof FL11_CLASSES==='undefined'?{BASE:{id:'BASE',name:'베이스',accent:'#dce3eb',shape:'hex',boardName:'SILVER REVEAL'}}:FL11_CLASSES;
 let LIVE_CATALOG=typeof FL11_CATALOG==='undefined'?[]:FL11_CATALOG;
 let LIVE_CATALOG_READY=false;
@@ -896,12 +900,12 @@ function cards(){
   const add=(cd)=>{CARDS.push(cd);CARD_MAP.set(cd.id,cd);};
   CLUBS.forEach((c,ci)=>{const sl=FORMS[c.form]||FORMS['4-3-3'];baseRoster(ci).forEach((m,k)=>{const id=c.id+'|'+c.xi.concat(c.sub||[])[k][0],meta=LIVE_MAP.get(id),ro=meta&&meta.roster||m,nci=meta?meta.clubIndex:ci;
     add({id,playerId:meta?meta.playerId:id,classId:meta?meta.classId:'BASE',ci:nci,k,name:meta?meta.name:m.name,num:ro.num,nat:ro.nat,pos:meta?meta.pos:k<11?sl[k].l:c.sub[k-11][2],ovr:meta?meta.ovr:m.ovr,stars:ro.stars,club:CLUBS[nci],roster:ro});});});
-  for(const meta of LIVE_CATALOG){if(CARD_MAP.has(meta.id)||!CLUBS[meta.clubIndex])continue;const m=meta.roster;add({id:meta.id,playerId:meta.playerId,classId:meta.classId,ci:meta.clubIndex,k:0,name:meta.name,num:m.num,nat:m.nat,pos:meta.pos,ovr:meta.ovr,stars:m.stars,club:CLUBS[meta.clubIndex],roster:m});}
+  for(const meta of LIVE_CATALOG){const other=meta.clubIndex===-1;if(CARD_MAP.has(meta.id)||!other&&!CLUBS[meta.clubIndex])continue;const m=meta.roster;add({id:meta.id,playerId:meta.playerId,classId:meta.classId,ci:other?-1:meta.clubIndex,k:0,name:meta.name,num:m.num,nat:m.nat,pos:meta.pos,ovr:meta.ovr,stars:m.stars,club:other?otherClub(meta):CLUBS[meta.clubIndex],roster:m});}
   return CARDS;
 }
 const cardById=id=>(cards(),CARD_MAP.get(id));
 // the club all 11 starters share, or -1
-function singleClub(ids){let ci=-2;for(const id of ids.slice(0,11)){const cd=cardById(id);if(!cd)return -1;if(ci===-2)ci=cd.ci;else if(ci!==cd.ci)return -1;}return ci<0?-1:ci;}
+function singleClub(ids){let ci=-2;for(const id of ids.slice(0,11)){const cd=cardById(id);if(!cd||cd.ci<0)return -1;if(ci===-2)ci=cd.ci;else if(ci!==cd.ci)return -1;}return ci<0?-1:ci;}
 function customRoster(cl){
   const one=singleClub(cl.cards)>=0,b=one?0.03:0;
   return cl.cards.map((id,k)=>{const cd=cardById(id)||cards()[k];const m=cardRoster(cd),st={};for(const key in m.st)st[key]=Math.min(0.99,m.st[key]+b);
@@ -5356,7 +5360,7 @@ function openShop(){if(AUTH.user&&ACC.list[srvKey()]&&ACC.cur!==srvKey()){ACC.cu
 $('shopBtn').addEventListener('click',openShop);
 $('shop').addEventListener('keydown',e=>e.stopPropagation());
 let collectionBook=null;
-function openCollection(){if(AUTH.user&&ACC.list[srvKey()]&&ACC.cur!==srvKey()){ACC.cur=srvKey();applyProfile();accSave();renderHubAcc();}if(!collectionBook)collectionBook=FL11Collection({user:()=>AUTH.user,api,loadCatalog:loadLiveCatalog,inventory:receiveInventory,card:cardById,cardHTML,classFor:cardClass,club:id=>CLUBS.find(c=>c.id===id),crest:crestHTML,leagues:LEAGUES,openAccount});collectionBook.open();}
+function openCollection(){if(AUTH.user&&ACC.list[srvKey()]&&ACC.cur!==srvKey()){ACC.cur=srvKey();applyProfile();accSave();renderHubAcc();}if(!collectionBook)collectionBook=FL11Collection({user:()=>AUTH.user,api,loadCatalog:loadLiveCatalog,inventory:receiveInventory,card:cardById,cardHTML,classFor:cardClass,club:id=>id==='ETC'?OTHER_CLUB:CLUBS.find(c=>c.id===id),crest:crestHTML,leagues:[...LEAGUES,['ETC','기타']],openAccount});collectionBook.open();}
 $('bookBtn').addEventListener('click',openCollection);
 $('collection').addEventListener('keydown',e=>e.stopPropagation());
 

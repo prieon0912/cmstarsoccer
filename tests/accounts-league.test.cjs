@@ -80,6 +80,13 @@ await vm.runInContext(`(async()=>{
   const duplicateSpec=cleanSpec({...variantProfile.team,bench:[original.id,...variantProfile.team.bench]},0,cardAllowance(variantProfile));
   assert.ok(duplicateSpec.cards.includes(variantId));assert.ok(!duplicateSpec.bench.includes(original.id));
   const variantHTML=cardHTML(cardById(variantId),{tag:'div'});assert.ok(variantHTML.includes('shape-shield'));assert.ok(variantHTML.includes('/assets/test-card.svg'));assert.ok(variantHTML.includes('Test class'));
+  // a "기타" card (club not in the game) is shown with a neutral club and removes the single-club bonus
+  const otherId='ICON|other-club',otherMeta={id:otherId,playerId:'other:1',classId:'TEST',clubId:'ETC',clubIndex:-1,clubName:'갈라타사라이',name:'기타 선수',ovr:90,pos:original.pos,roster:{...cardRoster(original),ovr:90}};
+  LIVE_CATALOG.push(otherMeta);LIVE_MAP.set(otherId,otherMeta);CARDS=null;CARD_MAP=null;
+  const otherCard=cardById(otherId);assert.equal(otherCard.ci,-1);assert.equal(otherCard.club.id,'ETC');assert.equal(otherCard.club.name,'기타 · 갈라타사라이');
+  const arsXI=CLUBS[0].xi.map(p=>'ARS|'+p[0]);assert.equal(singleClub(arsXI),0);
+  assert.equal(singleClub([...arsXI.slice(0,10),otherId]),-1);assert.equal(singleClub(Array(11).fill(otherId)),-1);
+  assert.ok(cardHTML(otherCard,{tag:'div'}).includes('ETC'));
   console.log('PASS: full script syntax; 36 clubs × 20 owned cards; registration with existing local profile; foreign-card cleanup; all 36 clubs × 38 league rounds, results, reload, custom mode; legacy season; selection UI.');
 })()`,context);
 })().catch(e=>{console.error(e);process.exitCode=1;});

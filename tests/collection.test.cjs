@@ -65,3 +65,19 @@ test('Postgres collection claims credit once, survive restart and are removed wi
     await db.deleteUser(user.id);assert.equal((await db.collectionClaims(user.id)).length,0);
   }finally{await pg.close();}
 });
+
+test('기타 cards: admin validation, no club synergy rewards, shown under their own tab',()=>{
+  const econ=require('../lib/economy'),{build}=require('../lib/collection'),seed=require('../public/data/player-catalog');
+  const classes=[{id:'BASE'},{id:'ICON'}],roster={num:10,stars:4,st:{pace:.8,shoot:.8,pass:.8,drib:.8,tackle:.4,phy:.7},hid:{att:1,def:1,roam:1,focus:1,read:1,run:'bal',press:'contain'},feet:{foot:'R',wf:3}};
+  const card=econ.validateCard({name:'기타 선수',classId:'ICON',clubIndex:-1,clubName:' 갈라타사라이 ',pos:'ST',ovr:88,roster},classes,null);
+  assert.equal(card.clubId,'ETC');assert.equal(card.clubIndex,-1);assert.equal(card.clubName,'갈라타사라이');
+  assert.equal(econ.validateCard({...card,roster},classes,card).clubName,'갈라타사라이','editing keeps the club name');
+  assert.equal(econ.validateCard({name:'A',classId:'ICON',clubIndex:0,clubName:'x',pos:'ST',ovr:80,roster},classes,null).clubName,undefined);
+  assert.throws(()=>econ.validateCard({name:'A',classId:'ICON',clubIndex:'',pos:'ST',ovr:80,roster},classes,null),/구단/);
+  assert.throws(()=>econ.validateCard({name:'A',classId:'ICON',clubIndex:-2,pos:'ST',ovr:80,roster},classes,null),/구단/);
+  const base={...card,id:'BASE|other',classId:'BASE'},book=build([...seed,base,card],[{cardId:base.id,quantity:1}],[]);
+  const etc=book.clubs.find(c=>c.clubId==='ETC');assert.equal(etc.league,'ETC');assert.deepEqual(etc.cardIds,['BASE|other']);
+  assert.ok(book.leagues.some(l=>l.league==='ETC'&&l.owned===1));
+  assert.ok(!book.rewards.some(r=>r.id==='club:ETC'||r.id==='league:ETC'));
+  assert.deepEqual(book.classes.find(c=>c.classId==='ICON').cardIds,[card.id]);
+});
