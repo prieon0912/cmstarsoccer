@@ -25,16 +25,18 @@ test('league API calculates the rank, credits once across retries and isolates a
   const previous=process.env.DATABASE_URL;delete process.env.DATABASE_URL;const db=require('../lib/db');if(previous!==undefined)process.env.DATABASE_URL=previous;
   const auth=require('../lib/auth'),league=require('../lib/league'),express=require('express');await auth.init();
   const app=express();app.use('/api/league',league.router);app.use('/api',auth.router);const server=app.listen(0,'127.0.0.1');await new Promise(r=>server.once('listening',r));
-  const base=`http://127.0.0.1:${server.address().port}`,call=async(url,body,token)=>{const r=await fetch(base+url,{method:body?'POST':'GET',headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{})},body:body?JSON.stringify(body):undefined});return {status:r.status,data:await r.json()};};
+  const base=`http://127.0.0.1:${server.address().port}`,call=async(url,body,token)=>{if(body&&url.startsWith('/api/league/'))body={leagueEpoch:1,...body};const r=await fetch(base+url,{method:body?'POST':'GET',headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{})},body:body?JSON.stringify(body):undefined});return {status:r.status,data:await r.json()};};
   try{
     const first=await call('/api/auth/register',{username:'league_one',password:'test-password',profile:{club:'ARS'}}),second=await call('/api/auth/register',{username:'league_two',password:'test-password',profile:{club:'ARS'}}),token=first.data.token;
     const season={seasonId:crypto.randomUUID(),club:9,seed:32,custom:true};
     assert.equal((await call('/api/league/start',season)).status,401);
+    assert.equal((await call('/api/league/start',{...season,leagueEpoch:0},token)).status,409);
     assert.equal((await call('/api/league/start',season,token)).status,200);
     assert.equal((await call('/api/league/start',season,token)).status,200);
     assert.equal((await call('/api/league/start',{...season,club:0},token)).status,409);
     assert.equal((await call('/api/league/finish',{seasonId:season.seasonId,rank:1,amount:999999,results:{}},token)).status,400);
     const body={seasonId:season.seasonId,results:resultsFor(season),playedRounds:allRounds,rank:1,amount:999999};
+    assert.equal((await call('/api/league/finish',{...body,leagueEpoch:0},token)).status,409);
     assert.equal((await call('/api/league/finish',body,second.data.token)).status,404);
     const draws=await Promise.all([call('/api/league/finish',body,token),call('/api/league/finish',body,token)]);
     assert.ok(draws.every(d=>d.status===200));assert.deepEqual(draws[0].data.result,{seasonId:season.seasonId,rank:10,amount:20});
@@ -68,4 +70,11 @@ test('the account menu label and click action follow the login state',async()=>{
   const line=html.split('\n').find(s=>s.startsWith("$('accountBtn').addEventListener"));vm.runInContext(line,context);
   vm.runInContext('renderHubAcc()',context);assert.equal($('accountBtn').textContent,'로그인 / 회원가입');await click();assert.equal(opens,1);
   AUTH.user='first';vm.runInContext('renderHubAcc()',context);assert.equal($('accountBtn').textContent,'로그아웃');await click();assert.equal(logouts,1);assert.equal(menus,1);assert.equal($('accountBtn').disabled,false);
+});
+
+test('a cached pre-reset reward queue is never retried by the new client',async()=>{
+  const context=vm.createContext({crypto,Date,Math,Promise});vm.runInContext(fs.readFileSync(path.join(__dirname,'../public/league-rewards.js'),'utf8'),context);let calls=0;
+  const old=JSON.stringify([{id:'old-reward-season',owner:'first',md:38,results:{}}]);
+  const client=context.FL11LeagueRewards({user:()=> 'first',get:()=>old,set(){},season:()=>null,save(){},inventory(){},api:async()=>{calls++;}});
+  await client.sync(null);assert.equal(calls,0);
 });

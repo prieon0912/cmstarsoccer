@@ -1,7 +1,7 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
 const source=fs.readFileSync(path.join(__dirname,'../public/index.html'),'utf8');
 function part(a,b){const i=source.indexOf(a),j=source.indexOf(b,i);assert.ok(i>=0&&j>i,a);return source.slice(i,j);}
-function context(code='',speed=0.9){const ctx=vm.createContext({assert,console});vm.runInContext(part('const PI=','function seeded').replace('const PLAYER_SPEED=0.9;','const PLAYER_SPEED='+speed+';')+part('const ACT=','// skill moves:')+`const G={t:10,clock:20,half:1,state:'play',stats:[{skill:0},{}],ents:[]},B={x:0,z:0,y:BR,vx:0,vz:0,vy:0,lastTeam:0,spin:0},PADS=[null,null];const STEP=1/60,padOf=t=>PADS[t.i];const oppOf=t=>t.opp;function say(){}const AU={excite(){}},sfx={kick(){}};`+code,ctx);return ctx;}
+function context(code='',speed=0.9){const ctx=vm.createContext({assert,console});vm.runInContext(part('const PI=','function seeded').replace('const PLAYER_SPEED=0.9;','const PLAYER_SPEED='+speed+';')+part('const ACT=','// skill moves:')+`const G={t:10,clock:20,half:1,state:'play',stats:[{skill:0},{}],ents:[]},B={x:0,z:0,y:BR,vx:0,vz:0,vy:0,lastTeam:0,spin:0},PADS=[null,null];const STEP=1/60,padOf=t=>PADS[t.i];const oppOf=t=>t.opp;function say(){}function peekPrepared(){return null;}const AU={excite(){}},sfx={kick(){}};`+code,ctx);return ctx;}
 test('a half continues through passes and deflections, ends on controlled turnover, and caps at game-clock +5',()=>{
   const ctx=context(`let halves=0,fulls=0;function halfTime(){halves++;G.state='half';}function fullTime(){fulls++;G.state='full';}`+part('function periodEndStep()','function halfTime()'));
   vm.runInContext(`for(const half of [1,2]){G.half=half;const limit=half===1?45:90;G.state='play';G.clock=limit-.1;B.owner={team:{i:0}};periodEndStep();G.clock=limit+.1;assert.equal(periodEndStep(),false);B.owner=null;B.lastTeam=1;assert.equal(periodEndStep(),false);B.owner={team:{i:1}};assert.equal(periodEndStep(),true);
@@ -21,6 +21,21 @@ test('the displayed clock freezes at 45 and 90 while internal stoppage time keep
 test('keeper planning reaches the shot sooner without widening physical collision or advancing off the line',()=>{
   const ctx=context(`const HIP_H=.972;function ownGoalX(t){return -t.dir*HL;}function trajAt(){return {x:B.x,z:2.3,y:1.2};}function gkGo(){}`+part('function planSave(e)','function gkGo(e)')+part('function movementAgility(e)','function moveEnt(e,dt)'));
   vm.runInContext(`const e={team:{i:0,dir:1},x:-HL+1.1,z:0,face:PI/2,gkSkill:.9,isGK:true};Object.assign(B,{x:e.x+20,z:0,y:BR,vx:-25,vy:0,vz:0});Math.random=()=>.7;planSave(e);assert.equal(e.save.ok,true);assert.ok(e.save.T1<.32);assert.equal(e.x,-HL+1.1);assert.equal(typeof keeperTouch,'undefined');e.save=null;e.strafe=true;e.faceTgt={x:e.x+10,z:0};e.face=PI/2;e.vx=0;e.vz=4;faceUpdate(e,1/60,4);assert.ok(Math.abs(angD(e.face,PI/2))<1e-9);`,ctx);
+});
+
+test('keepers centre frontal catches, fully attempt reachable dives and begin before close shots pass their gloves',()=>{
+  const ctx=context(`const HIP_H=.972;let targetY=1.2,targetZ=0;function ownGoalX(t){return-t.dir*HL;}function trajAt(t){return{x:B.x+B.vx*t,y:targetY,z:targetZ};}`+part('function planSave(e)','function keeperShapes(e)'));
+  vm.runInContext(`const e={team:{i:0,dir:1},x:-HL+1.1,z:0,face:PI/2,gkSkill:.9};Object.assign(B,{x:e.x+10,z:0,y:1.2,vx:-25,vy:0,vz:0});Math.random=()=>.99;planSave(e);assert.equal(e.save.kind,'catch');assert.equal(e.save.rootZ,0);assert.ok(e.save.t0-G.t<=.08);targetY=.11;targetZ=2.3;planSave(e);assert.equal(e.save.ok,false);assert.ok(e.save.py<=.2);assert.ok(e.save.tilt>1.5);assert.ok(Math.abs(e.save.rootZ-(targetZ-e.save.sideW*e.save.hand*.95))<1e-9);B.x=e.x+2.5;targetZ=1;targetY=.4;planSave(e);assert.ok(e.save.T1<.11);assert.ok(e.save.t0<=G.t+.02);`,ctx);
+});
+
+test('keeper catch poses put the real arm chain at low, waist and high ball heights',()=>{
+  const ctx=context(part('const PX=','function skillW(')+`const HIP_H=.972,ANK=.084,HIPW=.082,LEG=.44;function actEnd(){return 1.8;}`+part('function solveLeg(P,','function actEnd(e)')+part('function keeperCatchArms(P,','function applyPose(e,dt)'));
+  vm.runInContext(`for(const h of [.2,.4,.6,.9,1.2,1.5,1.8,2.3,2.5]){const P=new Float32Array(NCH);P[PY]=HIP_H;actionPose({act:ACT.CATCH,actT:.25,ap1:h},P);const a=P[ALX],b=P[EL],y=-.27*Math.cos(a)-.29*Math.cos(a+b),z=-.27*Math.sin(a)-.29*Math.sin(a+b),cy=Math.cos(P[SX]),sy=Math.sin(P[SX]),handY=P[PY]+.53*cy+y*cy-z*sy,handZ=P[PZ]+.53*sy+y*sy+z*cy;assert.ok(Math.abs(handY-h)<.2,JSON.stringify({h,handY}));assert.ok(handZ>.25&&handZ<.65,JSON.stringify({h,handZ}));}`,ctx);
+});
+
+test('a keeper times the commit to the decelerating trajectory instead of finishing a distant dive too early',()=>{
+  const ctx=context(`const HIP_H=.972;function ownGoalX(t){return-t.dir*HL;}function trajAt(t){return{x:B.x+B.vx*(1-Math.exp(-.36*t))/.36,y:1.2,z:2.3};}`+part('function planSave(e)','function keeperShapes(e)'));
+  vm.runInContext(`const e={team:{i:0,dir:1},x:-HL+1.1,z:0,face:PI/2,gkSkill:.9};Object.assign(B,{x:e.x+20,z:0,y:1.2,vx:-25,vy:0,vz:0});Math.random=()=>.5;planSave(e);const arrival=-Math.log(1-.36*(20-.38)/25)/.36;assert.ok(Math.abs(e.save.tEnd-G.t-arrival)<.002);assert.ok(e.save.t0>G.t+.4);assert.ok(Math.abs(e.save.t0+e.save.T1-e.save.tEnd)<.15);`,ctx);
 });
 
 test('ordinary sprint dribbling stays closer to the feet without pulling the ball through the player',()=>{
@@ -69,6 +84,21 @@ test('a contested loose-ball winner receives a short recovery window even on a t
   vm.runInContext(`const team={i:0,players:[]},other={i:1,players:[]};team.opp=other;other.opp=team;const e={team,x:.2,z:0,st:{phy:1,pace:.9},cool:0,stun:0,act:0},o={team:other,x:.7,z:0,st:{phy:.3,pace:.4},cool:0,stun:0,act:0};team.players=[e];other.players=[o];B.y=BR;B.x=B.z=0;B.lastTeam=0;Math.random=()=>.5;assert.equal(fiftyFifty(e,1),e);assert.equal(e.duelWonAt,G.t);assert.ok(e.duelGuardUntil>G.t+.5);`,ctx);
 });
 function tacticsContext(extra=''){return context(part('const PI=','/* ================= renderer & scene').replace(part('const PI=','function seeded'),'').replace(part('const ACT=','// skill moves:'),'')+part('function toW(t,','function carrierThink(e,dt)')+'function ownGoalX(t){return-t.dir*HL;}'+extra);}
+
+test('selected defending assists marking, lets the stick adjust position, and releases on deliberate sprint or retreat',()=>{
+  const ctx=tacticsContext(`function userMode(){return 'def';}function clearEdges(i){for(const k in i.edge)i.edge[k]=false;}let switches=0;function autoSwitchDef(){switches++;}`+part('function shouldCollectLoose(c)','/* ================= main step'));
+  vm.runInContext(`const t={i:0,dir:1,players:[]},o={team:{i:1},x:-8,z:0,vx:0,vz:0},e={team:t,x:-10,z:0,vx:0,vz:0,vmax:8,face:PI/2,stamina:1,st:{tackle:.8,drib:.7},act:0,stun:0,ipt:9};t.players=[e];const inp={jx:0,jy:0,btn:{},edge:{},chg:{},charging:false},pd={ti:0,ctrl:e,inp,lastSwitch:0,lastManual:0,lock:{}};PADS[0]=pd;B.owner=o;userStep(pd,STEP);assert.equal(pd.marking,true);assert.equal(pd.lock,null);assert.equal(e.mark,o);const idle=hyp(e.mx,e.mz);inp.btn.thru=true;userStep(pd,STEP);assert.ok(hyp(e.mx,e.mz)>idle);inp.btn.thru=false;inp.jy=1;userStep(pd,STEP);assert.equal(pd.marking,true);assert.ok(e.mz>0);inp.jy=0;inp.jx=-1;userStep(pd,STEP);assert.equal(pd.marking,false);assert.ok(e.mx<0);inp.jx=1;inp.btn.sprint=true;userStep(pd,STEP);assert.equal(pd.marking,false);assert.equal(e.sprint,true);assert.equal(e.defJockey,false);assert.equal(switches,0);`,ctx);
+});
+
+test('defensive jockey steps face the carrier and cap backward movement while recovery running stays directional',()=>{
+  const ctx=context(part('function movementAgility(e)','function moveEnt(e,dt)'));
+  vm.runInContext(`const o={x:0,z:3},e={team:{i:0},isGK:false,defJockey:true,faceTgt:o,face:0,x:0,z:0,vx:0,vz:0,mx:0,mz:-8,vmax:8,stamina:1,st:{pace:.8,drib:.7},act:0};B.owner={team:{i:1}};for(let i=0;i<60;i++){locomote(e,STEP);faceUpdate(e,STEP,hyp(e.vx,e.vz));}assert.ok(e.vz<0&&e.vz>=-8*.42-1e-9);assert.ok(Math.abs(e.face)<1e-6);e.defJockey=false;e.mx=8;e.mz=0;for(let i=0;i<120;i++){locomote(e,STEP);faceUpdate(e,STEP,hyp(e.vx,e.vz));}assert.ok(e.vx>7);assert.ok(Math.abs(angD(e.face,PI/2))<.1);`,ctx);
+});
+
+test('automatic control handover never holds an active directional input behind a one-second AI lock',()=>{
+  const ctx=context(part('function lockActive(pd)','function nearestHuman('));
+  vm.runInContext(`const e={team:{i:0}},pd={ctrl:e,inp:{jx:1,jy:0,btn:{},edge:{}},lock:{why:'auto',t:G.t,jx:1,jy:0}};assert.equal(lockActive(pd),false);assert.equal(pd.lock,null);pd.inp.jx=0;pd.lock={why:'auto',t:G.t-.13,jx:0,jy:0};assert.equal(lockActive(pd),false);`,ctx);
+});
 
 test('all nine attack/defence work-rate combinations affect support and recovery for every outfield role',()=>{
   const ctx=tacticsContext();
@@ -240,10 +270,33 @@ test('prepared pass, through and shot inputs survive a long incoming flight and 
   function flight(){G.state='play';B.owner=null;B.shot=null;B.target={r:receiver};B.kicker=sender;B.kickT=G.t;B.lastTeam=0;}
   for(const kind of ['pass','thru','thruLob','lob','shoot']){flight();bufferAction(pd,kind,.8,'power');G.t+=1.8;assert.equal(bufferedValid(pd,pd.queue,receiver),true);const q=takePrepared(pd,receiver);assert.equal(q.kind,kind);assert.equal(q.power,.8);assert.equal(pd.queue,null);}
   flight();bufferAction(pd,'shoot',.9);B.kicker=enemy;assert.equal(takePrepared(pd,receiver),null);
-  flight();bufferAction(pd,'pass',.6);B.target={r:{team}};assert.equal(takePrepared(pd,receiver),null);
+  flight();bufferAction(pd,'pass',.6);B.target={r:{team}};assert.equal(takePrepared(pd,receiver).power,.6);
   flight();bufferAction(pd,'thru',.7);G.state='out';assert.equal(takePrepared(pd,receiver),null);G.state='play';
   inp.charging=true;inp.chg.shoot=true;clearPreparedAgainst(1);assert.equal(pd.queue,null);assert.equal(inp.charging,false);assert.equal(inp.chg.shoot,false);
   `,ctx);
+});
+
+test('every own pass type permits charging without a fixed receiver and possession loss clears held and released input',()=>{
+  const ctx=context(part('// A buffered action belongs','function userMode(pd)')+part('function userMode(pd)','// the receiver:')+`let now=0;const performance={now:()=>now},navigator={},matchMedia=()=>({matches:false}),NET={role:null};AU.start=()=>{};const IN={btn:{},edge:{shoot:false,shootUp:false},chg:{pass:false,thru:false,shoot:false,lob:false},t0:{},lift:{},chargeK:'shoot',power:0};const LP=()=>PADS[0];`+part('function btnDown(k)','function shotKindFrom('));
+  vm.runInContext(`const team={i:0},sender={team},a={team},b={team},enemy={team:{i:1}},pd={ti:0,ctrl:a,inp:IN};PADS[0]=pd;
+  for(const kind of ['ground','through','throughLob','lob','cross','throw']){Object.assign(B,{owner:null,lastTeam:0,kicker:sender,kickT:G.t,shot:null,target:{r:a,kind}});IN.btn.shoot=false;now=0;btnDown('shoot');assert.equal(IN.charging,true);now=480;IN.power=chargePower();btnUp('shoot');assert.equal(IN.edge.shootUp,true);bufferAction(pd,'shoot',IN.power);const old=pd.queue;B.target=kind==='cross'?null:{r:b,kind};B.kicker={team};G.t+=9;assert.equal(bufferedValid(pd,old,b),true);assert.ok(Math.abs(takePrepared(pd,b).power-.8)<1e-9);IN.edge.shootUp=false;}
+  B.owner=sender;sender.kick={pass:{kind:'cross',receiver:a}};B.lastTeam=0;assert.equal(incomingFlight(pd),true);bufferAction(pd,'shoot',.7);const old=pd.queue;IN.btn.shoot=false;btnDown('shoot');IN.power=.9;B.owner=enemy;B.lastTeam=1;syncPreparedInputs();assert.equal(pd.queue,null);assert.equal(IN.charging,false);assert.equal(IN.chg.shoot,false);B.owner=null;B.lastTeam=0;B.kicker=sender;assert.equal(bufferedValid(pd,old,b),false);`,ctx);
+});
+
+test('an anticipated jump heads an own cross with any actual receiver and preserves the charged shot or headed pass',()=>{
+  const ctx=context(`let trapped=0,passed=null;function integ(){}function ballCollide(){}function gainBall(){trapped++;}function offsideHit(){return false;}function aerialDuel(e){return e;}function kickBall(e,vx,vy,vz){Object.assign(B,{owner:null,vx,vy,vz,lastTeam:e.team.i,kicker:e,kickT:G.t,target:null,shot:null});}function pickTarget(){return {best:ally};}function passExec(e,r,kind,pt,power){passed={r,kind,power};kickBall(e,12,0,0);}`+part('// A buffered action belongs','function userMode(pd)')+part('function header(e)','function gainBall(e)')+part('function updateBall(dt)','function checkRules()'));
+  vm.runInContext(`const team={i:0,dir:1},sender={team},e={team,x:HL-10,z:0,isGK:false,cool:0,stun:0,act:ACT.HEAD,actT:.16,headerLead:.22,st:{shoot:.9}},ally={team},pd={ti:0,ctrl:ally,inp:{chg:{},charging:false,jy:0}};PADS[0]=pd;G.ents=[e];G.stats[0].shots=0;function cross(){Object.assign(B,{x:e.x+.2,z:0,y:1.95,vx:10,vy:-1,vz:0,owner:null,target:{r:ally,kind:'cross'},kicker:sender,kickT:G.t,lastTeam:0,shot:null});e.cool=0;}
+  cross();bufferAction(pd,'shoot',.85);updateBall(STEP);assert.equal(B.shot.kind,'header');assert.equal(G.stats[0].shots,1);assert.equal(trapped,0);assert.equal(e.actT,.16);cross();bufferAction(pd,'pass',.65);updateBall(STEP);assert.equal(passed.r,ally);assert.equal(passed.power,.65);assert.equal(B.shot,null);`,ctx);
+});
+
+test('a charged first-time finish is not replaced by a heavy touch or an automatic high-speed deflection',()=>{
+  const ctx=context(`let taken=0;function integ(){}function ballCollide(){}function heavyTouch(){throw Error('unexpected trap');}function gainBall(e){assert.equal(takePrepared(PADS[0],e).power,.8);taken++;}`+part('// A buffered action belongs','function userMode(pd)')+part('function updateBall(dt)','function checkRules()'));
+  vm.runInContext(`const team={i:0},sender={team},e={team,x:0,z:0,act:0,stun:0,cool:0},pd={ti:0,ctrl:e,inp:{charging:false,chg:{}}};PADS[0]=pd;G.ents=[e];Object.assign(B,{x:.3,z:0,y:.5,vx:31,vz:0,vy:0,owner:null,kicker:sender,kickT:G.t,lastTeam:0,shot:null,target:null});bufferAction(pd,'shoot',.8);updateBall(STEP);assert.equal(taken,1);`,ctx);
+});
+
+test('heading prepares the jump before a high incoming cross reaches the player',()=>{
+  const ctx=context(`function trajAt(){return{x:.1,z:0,y:1.95};}`+part('// A buffered action belongs','function userMode(pd)')+part('function anticipateHeader(e)','function moveEnt(e,dt)'));
+  vm.runInContext(`const team={i:0},e={team,x:0,z:0,vx:0,vz:0,cool:0,stun:0,act:0},sender={team},pd={ti:0,ctrl:e,inp:{charging:false,chg:{}}};PADS[0]=pd;Object.assign(B,{x:.6,z:0,y:2.2,owner:null,kicker:sender,lastTeam:0,shot:null});bufferAction(pd,'shoot',.8);anticipateHeader(e);assert.equal(e.act,ACT.HEAD);assert.ok(e.headerLead>=.08&&e.headerLead<=.3);assert.equal(pd.queue.power,.8);`,ctx);
 });
 
 test('a prepared ground-ball shot fires at first contact without trapping or a second windup',()=>{

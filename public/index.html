@@ -938,7 +938,7 @@ function profClub(p){
   return ci;
 }
 const ownedCards=p=>{const ci=profClub(p);if(p.srv&&Array.isArray(p.inventory)){const own=cardAllowance(p);return cards().filter(cd=>own.has(cd.id));}return cards().filter(cd=>cd.ci===ci);};
-function applyProfile(){const p=prof();if(!p){CUSTOM[0]=null;return;}const ci=profClub(p),clean=cleanSpec(p.team,ci,cardAllowance(p));
+function applyProfile(){if(matchActive())return;const p=prof();if(!p){CUSTOM[0]=null;return;}const ci=profClub(p),clean=cleanSpec(p.team,ci,cardAllowance(p));
   // Keep pending class-card selections intact until the server catalog has arrived.
   const waiting=p.srv&&!LIVE_CATALOG_READY&&[...(p.team?.cards||[]),...(p.team?.bench||[])].some(id=>!cardById(id));
   if(!waiting)p.team=clean;CUSTOM[0]=teamFromSpec(clean);G.set.skills=cleanSk(p.skills);if(p.tacs===undefined)p.tacs=cleanAccountTacs(G.set.tacs);G.set.tacs=cleanAccountTacs(p.tacs);}
@@ -1561,6 +1561,11 @@ function locoPose(e,P,dt){
   if(mov<0.15){const b=Math.sin(G.t*2.1+e.i*1.3)*0.02;P[ALZ]+=b;P[ARZ]-=b;P[SX]+=b*0.3;}
   const look=headLook(e,P[SY]+P[PRY],P[SX],dt);P[HX]=look[0];P[HY]=look[1];
 }
+function keeperCatchArms(P,height){
+  const lean=P[SX],cy=Math.cos(lean),sy=Math.sin(lean),dy=height-(P[PY]+0.53*cy),dz=0.48-(P[PZ]+0.53*sy),y=dy*cy+dz*sy,z=-dy*sy+dz*cy;
+  const upper=0.27,lower=0.29,d=clamp(hyp(y,z),0.06,upper+lower-0.004),angle=-Math.atan2(z,-y),alpha=Math.acos(clamp((upper*upper+d*d-lower*lower)/(2*upper*d),-1,1));
+  P[ALX]=P[ARX]=angle+alpha;P[EL]=P[ER]=-(PI-Math.acos(clamp((upper*upper+lower*lower-d*d)/(2*upper*lower),-1,1)));const inward=Math.sign(y||-1)*clamp(0.18/Math.max(0.2,Math.abs(y)),0.12,0.55);P[ALZ]=inward;P[ARZ]=-inward;
+}
 function actionPose(e,P){
   const t=e.actT;
   switch(e.act){
@@ -1605,9 +1610,9 @@ function actionPose(e,P){
     }
     case ACT.DIVE:{
       // keeper: crouch, spring sideways rolling around the hips until the hands meet the ball, land on the side, get up
-      const side=e.actD||1,tilt=e.ap1||1.2,py=e.ap2||0.6,T1=Math.max(0.16,e.ap3||0.3);
+      const side=e.actD||1,tilt=e.ap1||1.2,py=e.ap2||0.6,T1=Math.max(0.09,e.ap3||0.3);
       let r,y,reach=1;
-      if(t<T1){const u=t/T1,v=easeOut(u);r=tilt*v;y=u<0.18?lerp(P[PY],HIP_H-0.2,u/0.18):lerp(HIP_H-0.2,py,easeOut((u-0.18)/0.82));}
+      if(t<T1){const u=clamp(t/Math.max(0.1,T1*0.76),0,1),v=easeOut(u);r=tilt*v;y=lerp(HIP_H-0.1,py,v);}
       else if(t<T1+0.26){const u=(t-T1)/0.26;r=lerp(tilt,1.5,easeIO(u));y=lerp(py,0.2,u*u);}
       else if(t<T1+1.0){r=1.5;y=0.2;reach=Math.max(0,1-(t-T1-0.26)/0.5);}
       else{const u=easeIO(Math.min(1,(t-T1-1.0)/0.55));r=lerp(1.5,0,u);y=lerp(0.2,HIP_H,u);reach=0;}
@@ -1622,10 +1627,11 @@ function actionPose(e,P){
     }
     case ACT.CATCH:{
       const h=e.ap1||1,k=Math.sin(Math.min(1,t/0.5)*PI);
-      if(h>1.6){P[PY]=HIP_H-0.05+0.35*k;P[TL]=P[TR]=-0.25*k;P[KL]=P[KR]=0.15+0.7*k;P[AL]=P[AR]=0;P[ALX]=P[ARX]=-2.85;P[ALZ]=0.12;P[ARZ]=-0.12;P[EL]=P[ER]=-0.35;P[SX]=-0.05;}
-      else if(h<0.55){P[PY]=0.64;solveLeg(P,1,0.17,ANK,-0.05);solveLeg(P,-1,-0.17,ANK,-0.05);P[SX]=0.95;P[ALX]=P[ARX]=-0.55;P[EL]=P[ER]=-0.25;P[ALZ]=0.12;P[ARZ]=-0.12;}
+      if(h>1.6){P[PY]=HIP_H-0.04+clamp(h-(HIP_H+0.53)+0.10,0.24,0.55)*k;P[TL]=P[TR]=-0.25*k;P[KL]=P[KR]=0.15+0.7*k;P[AL]=P[AR]=0;P[ALX]=P[ARX]=-2.85;P[ALZ]=0.12;P[ARZ]=-0.12;P[EL]=P[ER]=-0.35;P[SX]=-0.05;}
+      else if(h<1.1){P[PY]=clamp(h-0.3,0.32,HIP_H-0.08);solveLeg(P,1,0.17,ANK,-0.05);solveLeg(P,-1,-0.17,ANK,-0.05);P[SX]=0.55+0.4*clamp((1.1-h)/0.8,0,1);P[ALX]=P[ARX]=-0.55;P[EL]=P[ER]=-0.25;P[ALZ]=0.12;P[ARZ]=-0.12;}
       else{P[ALX]=P[ARX]=-1.25;P[EL]=P[ER]=-1.05;P[ALZ]=-0.05;P[ARZ]=0.05;P[SX]=0.18;}
-      return fadeW(t,0.55,0.04,0.15);
+      keeperCatchArms(P,h);
+      return fadeW(t,0.55,0.025,0.15);
     }
     case ACT.HOLD:{P[ALX]=P[ARX]=-1.0;P[EL]=P[ER]=-1.05;P[ALZ]=-0.22;P[ARZ]=0.22;P[SX]=Math.max(P[SX],0.08);return Math.min(1,t/0.15);}
     case ACT.TOSS:{
@@ -1641,7 +1647,7 @@ function actionPose(e,P){
       return e.ap2>0?fadeW(t,e.ap2+0.5,0.05,0.15):Math.min(1,t/0.15);
     }
     case ACT.HEAD:{
-      const u=Math.min(1,t/0.5),k=Math.sin(u*PI);
+      const u=Math.min(1,t/Math.max(0.4,(e.headerLead||0.25)*2)),k=Math.sin(u*PI);
       P[PY]=HIP_H+0.42*k;P[SX]=lerp(-0.35,0.45,clamp((u-0.35)/0.25,0,1))*k;P[ALX]=P[ARX]=-0.8*k;P[ALZ]=0.55*k;P[ARZ]=-0.55*k;
       P[TL]=P[TR]=0.2*k;P[KL]=P[KR]=0.15+0.85*k;P[AL]=P[AR]=-0.3*k;P[HX]=-0.2*k;
       return fadeW(t,0.6,0.04,0.1);
@@ -2110,6 +2116,7 @@ function passTo(p,r,kind,pt,pw){
     // passing across or behind the body takes longer to set up and is less clean
     const ang=Math.abs(angD(p.face,a));p.passAng=ang;if(ang>0.6&&p.speed>1.5)wind+=(ang-0.6)*0.08;}
   scheduleKick(p,wind,str,()=>{p.aimFace=null;if(kind==='throw')p.ap2=p.actT;passExec(p,r,kind,pt,pw);},kind==='throw'?0:ACT.KICK);
+  if(p.kick)p.kick.pass={receiver:r,kind};
 }
 // rolling time for a ground ball from v0 down to vEnd (same friction as integ: dv/dt = -(0.36 v + 0.32))
 const rollT=(v0,vEnd)=>Math.log((0.36*v0+0.32)/(0.36*Math.max(0,vEnd)+0.32))/0.36;
@@ -2277,7 +2284,7 @@ function header(e){
   if(B.offside&&offsideHit(e))return;
   clearPreparedAgainst(e.team.i);const pd=padOf(e.team),prepared=takePrepared(pd,e);
   B.offside=null;G.stats[e.team.i].hdr=(G.stats[e.team.i].hdr||0)+1;
-  e.act=ACT.HEAD;e.actT=0;e.cool=0.45;e.kick=null;
+  if(e.act!==ACT.HEAD)e.actT=0;e.act=ACT.HEAD;e.cool=0.45;e.kick=null;
   if(prepared){preparedHeader(e,prepared,pd);return;}
   const dir=e.team.dir,gx=dir*HL,dG=hyp(gx-e.x,e.z);
   let vx,vy,vz;
@@ -2286,7 +2293,7 @@ function header(e){
     const dx=gx+dir*0.3-B.x,dz=tz-B.z,dh=hyp(dx,dz),T=dh/sp;
     vx=dx/dh*sp;vz=dz/dh*sp;vy=(ty-B.y+0.5*GRAV*T*T)/T;
     B.owner=null;B.held=false;B.vx=vx;B.vy=vy;B.vz=vz;B.spin=0;B.last=e;B.lastTeam=e.team.i;B.kicker=e;B.kickT=G.t;B.target=null;
-    B.shot=B.lastShot={by:e,t:G.t,team:e.team.i};G.stats[e.team.i].shots++;say(e.name+'의 헤더!');AU.excite(0.9);
+    B.shot=B.lastShot={by:e,t:G.t,team:e.team.i,kind:'header'};G.stats[e.team.i].shots++;say(e.name+'의 헤더!');AU.excite(0.9);
   }else{
     const a=(dir>0?PI/2:-PI/2)+rnd(-0.7,0.7);const sp=rnd(9,13);
     B.owner=null;B.held=false;B.vx=Math.sin(a)*sp;B.vz=Math.cos(a)*sp;B.vy=rnd(1.5,3.5);B.spin=0;B.last=e;B.lastTeam=e.team.i;B.kicker=e;B.kickT=G.t;B.shot=null;B.target=null;
@@ -2945,7 +2952,7 @@ function trackMove(e,tx,tz,c){
   const dx=tx-e.x,dz=tz-e.z,d=hyp(dx,dz),close=Math.min(d*2.2,4.5);let vx=cvx,vz=cvz;
   if(d>0.05){vx+=dx/d*close;vz+=dz/d*close;}const v=hyp(vx,vz),cap=e.vmax*(e.stamina<0.1?0.85:1);if(v>cap){vx*=cap/v;vz*=cap/v;}
   e.mx=vx;e.mz=vz;e.sprint=hyp(vx,vz)>e.vmax*0.75;e.settled=false;e.sx=tx;e.sz=tz;
-  e.strafe=d<1&&hyp(cvx,cvz)<1.5;if(e.strafe)e.faceTgt=c;
+  e.strafe=d<3&&hyp(cvx,cvz)<5.5&&hyp(vx,vz)<e.vmax*0.68;e.defJockey=e.strafe;if(e.strafe)e.faceTgt=c;
 }
 // going for a loose ball: far off, run to where it can be cut off; near a slow ball, ease down to a speed that can
 // still turn onto it and aim just ahead of it, so he arrives with it instead of overrunning and circling round
@@ -2960,7 +2967,7 @@ function chaseBall(e){
   }else{setMove(e,e.ipx,e.ipz,true,false);e.strafe=false;}
 }
 function think(e,dt){
-  e.strafe=false;e.faceTgt=null;
+  e.strafe=false;e.defJockey=false;e.faceTgt=null;
   if(e.off){e.mx=e.mz=0;return;}
   if(e.stun>0||e.act===ACT.SLIDE||e.act===ACT.FALL||(e.act===ACT.DIVE&&!e.save)){e.mx=e.mz=0;return;}
   const t=e.team,dir=t.dir;
@@ -3124,7 +3131,7 @@ function gkThink(e,dt){
   if(e.save&&(e.save.watch||e.save.pending)&&(B.owner||!B.shot||B.shot.team===t.i))e.save=null;
   if(e.save){e.rushSince=null;gkSaveStep(e);return;}
   if(e.act===ACT.CATCH&&e.actT<0.35){e.mx=e.mz=0;return;}
-  if(!B.owner&&B.shot&&B.shot.team!==t.i&&G.t-B.shot.t>(t.human?0.12:D.react*0.42+0.03)*(B.shot.x0!=null?clamp(hyp(B.shot.x0-e.x,B.shot.z0-e.z)/14,0.35,1):1)){planSave(e);if(e.save){gkSaveStep(e);return;}}
+  if(!B.owner&&B.shot&&B.shot.team!==t.i&&G.t-B.shot.t>(t.human?0.055:D.react*0.25+0.025)*(B.shot.x0!=null?clamp(hyp(B.shot.x0-e.x,B.shot.z0-e.z)/14,0.35,1):1)){planSave(e);if(e.save){gkSaveStep(e);return;}}
   const rush=keeperRushPlan(e);
   if(rush){keeperMove(e,rush.x,rush.z,true);if(!rush.loose&&hyp(B.x-e.x,B.z-e.z)<1.5&&B.y<0.65&&e.tackleCd<=0&&!e.smother&&inOwnBoxP(t,B.x,B.z))startSmother(e);return;}
   // Outside a clear danger cue, hold the goalmouth rather than sweeping midfield.
@@ -3157,7 +3164,8 @@ function goalSideCover(t,c,gx,dg){
     if(p.isGK||p.off||p.stun>0)continue;
     if(hyp(p.x-gx,p.z)>dg-0.6)continue;
     const u=clamp(((p.x-c.x)*vx+(p.z-c.z)*vz)/L2,0,1);
-    if(hyp(p.x-(c.x+vx*u),p.z-(c.z+vz*u))<3.2+u*2)return true;
+    const px=c.x+vx*u,pz=c.z+vz*u,lateral=hyp(p.x-px,p.z-pz),run=Math.max(4,hyp(c.vx||0,c.vz||0)),defenderTime=lateral/Math.max(4,(p.vmax||8)*0.85)+0.12,attackerTime=hyp(px-c.x,pz-c.z)/run;
+    if(lateral<1.4+u*1.2&&defenderTime<attackerTime+0.15)return true;
   }
   return false;
 }
@@ -3206,8 +3214,9 @@ function gkSaveStep(e){
 function inOwnBoxP(t,x,z){return Math.abs(x-ownGoalX(t))<16.5&&Math.abs(z)<20.16;}
 function planSave(e){
   if(Math.abs(B.vx)<1)return;
-  const tP=(e.x-B.x)/B.vx;if(tP<0.03||tP>2.4)return;
-  const gx=ownGoalX(e.team),tG=(gx-B.x)/B.vx;
+  const arrive=plane=>{let previous={x:B.x},before=0;for(let t=0.025;t<=3;t+=0.025){const p=trajAt(t);if((previous.x-plane)*(p.x-plane)<=0&&Math.abs(p.x-previous.x)>1e-5)return before+(t-before)*clamp((plane-previous.x)/(p.x-previous.x),0,1);previous=p;before=t;}return(plane-B.x)/B.vx;};
+  const handPlane=e.x+Math.sign(B.x-e.x)*0.38,tP=arrive(handPlane);if(tP<0.015||tP>2.4)return;
+  const gx=ownGoalX(e.team),tG=arrive(gx);
   const pg=trajAt(Math.min(3,tG));
   if(Math.abs(pg.z)>GW/2+0.3||pg.y>GH+0.3){e.save={watch:true,ok:false,done:true,tEnd:G.t+tP};return;}
   const pt=trajAt(tP);
@@ -3225,17 +3234,17 @@ function planSave(e){
   const sp=hyp(B.vx,B.vy,B.vz),avail=Math.max(0,tP-0.05);
   // a dive rolls the body around the hips (hands ~1.25 m from the pelvis); the pelvis rises for high balls
   let tilt=0,py=HIP_H,hand=0.5,kind='catch';
-  if(al>0.65||h>2.05){py=clamp(0.3+(h-0.35)*0.55,0.28,1.25);tilt=Math.acos(clamp((h-py)/1.25,0.05,0.97));hand=Math.sin(tilt)*1.25+0.1;kind='dive';}
+  if(al>0.65||h>2.05){py=clamp(0.18+(h-0.25)*0.58,0.16,1.25);tilt=Math.acos(clamp((h-py)/1.25,-0.15,0.97));hand=Math.sin(tilt)*1.25+0.1;kind='dive';}
   const move=Math.max(0,al-hand),can=0.42+avail*6.2*PLAYER_SPEED*1.15;
   let ch=0;
   if(move<=can)ch=e.gkSkill*(1.18-(move/Math.max(0.01,can))*0.62-Math.max(0,sp-17)/42-(al>2.5?0.16:0)-(h>2.0&&al>2.0?0.18:0)-(kind==='dive'&&h<0.45&&al>2.0?0.1:0));
   ch=clamp(ch,0,0.94);
   const ok=Math.random()<ch;
-  const reachZ=pt.z-sideW*hand*0.95;
+  const reachZ=kind==='catch'?pt.z:pt.z-sideW*hand*0.95;
   // a real keeper sets himself and goes late with one explosive spring: the dive lasts only as long as the reach needs,
-  // and until it is time to go he shuffles a little toward the ball's line on his toes (the odds above are unchanged)
-  const Td=clamp(0.24+move*0.043+(h>1.8?0.04:0),0.24,0.44),T1=Math.min(Td,Math.max(0.16,tP*0.92))/(PLAYER_SPEED*1.12),delay=Math.max(0,tP-T1-0.03);
-  e.save={ok,done:false,tEnd:G.t+tP,t0:G.t+delay,T1,z0:e.z,rootZ:ok?reachZ:e.z+(reachZ-e.z)*rnd(0.60,0.85),handZ:pt.z,sideW,hand,catch:ok&&((sp<21&&(kind==='catch'||al<1.6)&&Math.random()<0.82)||(sp<28&&al<0.9&&Math.random()<0.58)),
+  // He begins promptly and reaches the ball with his animated hands; probability only affects control, not effort.
+  const Td=clamp(0.24+move*0.043+(h>1.8?0.04:0),0.24,0.44),T1=clamp(tP*0.72,0.09,Td)/(PLAYER_SPEED*1.12),delay=Math.max(0,tP-T1*0.82-0.12);
+  e.save={ok,done:false,tEnd:G.t+tP,t0:G.t+delay,T1,z0:e.z,rootZ:reachZ,handZ:pt.z,sideW,hand,catch:ok&&((sp<21&&(kind==='catch'||al<1.6)&&Math.random()<0.82)||(sp<28&&al<0.9&&Math.random()<0.58)),
     pending:true,kind,tilt,py,sideL,h};
   if(delay<0.02)gkGo(e);
 }
@@ -3362,6 +3371,11 @@ function movementAgility(e){return clamp((e.st?.drib??0.7)*0.65+(e.st?.pace??0.7
 function locomote(e,dt){
   const own=B.owner===e,desired=hyp(e.mx,e.mz),speed=hyp(e.vx,e.vz),agility=movementAgility(e);
   if(e.act===ACT.THROW){e.vx=e.vz=0;return;}
+  if(e.defJockey&&e.faceTgt&&!own&&!e.isGK&&!e.act&&G.state==='play'){
+    const angle=Math.atan2(e.faceTgt.x-e.x,e.faceTgt.z-e.z),delta=clamp(angD(e.face,angle),-(8+agility*5)*dt,(8+agility*5)*dt);e.face+=delta;e.turnRate=delta/Math.max(dt,1e-3);
+    const forward=desired>0.01?(e.mx*Math.sin(e.face)+e.mz*Math.cos(e.face))/desired:1,cap=e.vmax*(forward<0?0.42:0.58),scale=desired>cap?cap/desired:1,dx=e.mx*scale-e.vx,dz=e.mz*scale-e.vz,change=hyp(dx,dz),gain=change>0?Math.min(1,(12+agility*5)*PLAYER_SPEED*dt/change):0;
+    e.vx+=dx*gain;e.vz+=dz*gain;return;
+  }
   if(e.isGK&&e.strafe){const cap=e.vmax*1.15,scale=desired>cap?cap/desired:1,ax=e.mx*scale-e.vx,az=e.mz*scale-e.vz,change=hyp(ax,az),gain=change>0?Math.min(1,28*dt/change):0;e.vx+=ax*gain;e.vz+=az*gain;return;}
   if(desired>0.05){
     const angle=angD(e.face,Math.atan2(e.mx,e.mz)),turn=lerp(6,13,agility)*lerp(1,0.48,clamp(speed/Math.max(1,e.vmax),0,1))*(own?0.95:1),delta=clamp(angle,-turn*dt,turn*dt);
@@ -3372,6 +3386,7 @@ function locomote(e,dt){
   }else{const next=Math.max(0,speed-lerp(12,21,agility)*PLAYER_SPEED*dt);e.vx=Math.sin(e.face)*next;e.vz=Math.cos(e.face)*next;e.turnRate=0;}
 }
 function faceUpdate(e,dt,sp){
+  if(e.defJockey&&e.faceTgt&&B.owner!==e&&!e.isGK&&!e.act&&G.state==='play'){const target=Math.atan2(e.faceTgt.x-e.x,e.faceTgt.z-e.z),delta=clamp(angD(e.face,target),-dt*13,dt*13);e.face+=delta;e.turnRate=delta/Math.max(dt,1e-3);return;}
   if(e.act===ACT.THROW){e.turnRate=0;if(!(e.ap2>0)){const target=e.throwFace??e.aimFace;if(target!=null){const delta=clamp(angD(e.face,target),-dt*8,dt*8);e.face+=delta;e.turnRate=delta/Math.max(dt,1e-3);}}else e.turnRate=0;return;}
   if(e.isGK&&((e.strafe&&e.faceTgt)||(e.save&&!e.save.watch))&&e.act!==ACT.DIVE){const target=e.faceTgt||B,angle=Math.atan2(target.x-e.x,target.z-e.z),delta=clamp(angD(e.face,angle),-dt*12,dt*12);e.face+=delta;e.turnRate=delta/Math.max(dt,1e-3);return;}
   if(e.act===ACT.SKILL&&e.sk)return;if(e.act===ACT.POKE&&e.poke)return;
@@ -3403,9 +3418,18 @@ function containOffBall(e,oldX,oldZ){
     if(Math.abs(previous)<=limit&&Math.abs(e[pos])>limit){e[pos]=Math.sign(e[pos])*limit;if(e[vel]*e[pos]>0)e[vel]=0;}
   }
 }
+function anticipateHeader(e){
+  if(G.state!=='play'||B.owner||!e.team||e.off||e.isGK||e.cool>0||e.stun>0||e.act||B.y<1.25||hyp(B.x-e.x,B.z-e.z)>3)return;
+  const pd=padOf(e.team),manual=pd&&pd.ctrl===e&&!pd.lock;
+  if(manual&&!peekPrepared(pd,e))return;
+  for(let t=0.08;t<=0.30;t+=0.04){const p=trajAt(t),d=hyp(p.x-e.x-e.vx*t,p.z-e.z-e.vz*t);
+    if(p.y>=1.45&&p.y<=2.5&&d<0.85){e.act=ACT.HEAD;e.actT=0;e.headerLead=t;e.headContact=false;break;}
+  }
+}
 function moveEnt(e,dt){
   if(e.off){e.vx=e.vz=0;e.speed=0;return;}
   if(e.cool>0)e.cool-=dt;if(e.tackleCd>0)e.tackleCd-=dt;
+  anticipateHeader(e);
   if(e.act){e.actT+=dt;if(e.actT>actEnd(e)){e.act=0;if(e.isGK&&B.owner===e&&B.held){e.act=ACT.HOLD;e.actT=0;}}}
   if(e.act===ACT.HOLD&&B.owner!==e)e.act=0;
   if(e.act===ACT.THROW&&B.owner!==e&&!(e.ap2>0))e.act=0;
@@ -3493,24 +3517,27 @@ function updateBall(dt){
     const gkHands=e.isGK&&inOwnBox(e);
     const recv=B.target&&B.target.r===e;
     const slowB=hyp(B.vx,B.vz)<5&&B.y<0.5,reach=gkHands?1.3:recv?1.05:slowB?0.9:0.78,hmax=gkHands?2.6:recv?1.35:1.05;
-    if(d<reach&&B.y<hmax){if(d<bd){bd=d;best=e;}}
-    else if(!e.isGK&&d<1.7&&B.y>=1.05&&B.y<2.4){heads.push({e,d});if(d<0.95&&d<hd){hd=d;head=e;}}
+    const jumping=e.act===ACT.HEAD,lift=jumping?0.42*Math.sin(clamp(e.actT/Math.max(0.4,(e.headerLead||0.25)*2),0,1)*PI):0;
+    const headY=1.65+lift,atHead=!e.isGK&&B.y>=1.35&&Math.abs(B.y-headY)<0.36&&(jumping||B.vy<1.5);
+    if(atHead&&d<1.5){heads.push({e,d});if(d<0.95&&d<hd){hd=d;head=e;}}
+    else if(d<reach&&B.y<hmax){if(d<bd){bd=d;best=e;}}
   }
   if(best){
     const sp=hyp(B.vx,B.vy,B.vz);
-    if(!best.isGK&&sp>(best.team.i===B.lastTeam?27:19)){
+    const prepared=!best.isGK&&peekPrepared(padOf(best.team),best);
+    if(!best.isGK&&!prepared&&sp>(best.team.i===B.lastTeam?27:19)){
       // block / deflection
       B.vx=-B.vx*0.25+rnd(-3,3);B.vz=B.vz*0.3+rnd(-4,4);B.vy=Math.abs(B.vy)*0.3+rnd(0,2);
       B.last=best;B.lastTeam=best.team.i;B.kicker=best;B.kickT=G.t;B.shot=null;B.target=null;best.cool=0.3;sfx.kick(8);
       if(Math.random()<0.6)say(best.name+', 몸으로 막아냅니다!');
       return;
     }
-    if(!(B.offside&&B.offside.team===best.team.i&&B.offside.ps.includes(best))&&heavyTouch(best,sp))return;
+    if(!prepared&&!(B.offside&&B.offside.team===best.team.i&&B.offside.ps.includes(best))&&heavyTouch(best,sp))return;
     // contested: someone from the other side is right there too
     if(sp<12&&!(B.target&&B.target.r===best&&B.kicker&&B.kicker.team===best.team&&G.t-B.kickT<3)){const w=fiftyFifty(best,0.9);if(!w)return;best=w;}
     gainBall(best);return;
   }
-  if(head&&B.vy<0.5){header(aerialDuel(head,heads));}
+  if(head){const winner=aerialDuel(head,heads);if(winner)header(winner);}
 }
 function checkRules(){
   if(G.state!=='play')return;
@@ -3643,6 +3670,9 @@ function doKickoff(){
   if(!kt.human)passTo(k,kt.players.find(e=>e.k===6&&!e.off)||kt.players.find(e=>!e.isGK&&!e.off&&e!==k),'ground');
 }
 function startMatch(){
+  if(!NET.online&&AUTH.token&&(!AUTH.verified||!LIVE_CATALOG_READY)){say('계정과 선수 정보를 불러온 뒤 시작해 주세요.');return;}
+  if(!NET.online&&G.mode==='league'){const f=LG.s&&userFixture(LG.s.md);if(!f||G.set.home!==lgHome()||G.set.away!==f.opp){goMenu();say('리그 일정이 변경되어 최신 기록을 불러왔어요.');return;}}
+  clearTimeout(previewTimer);G.leagueMatch=null;
   D=NET.online?DIFFS[1]:DIFFS[G.set.diff];
   if(!NET.online)G.tac=[myTac(),G.oppTac||cpuTac()];
   buildTeams();
@@ -3682,8 +3712,9 @@ function fullTime(){
   const r=G.score[0]>G.score[1]?'w':G.score[0]<G.score[1]?'l':'d';
   if(!NET.online){const rec=getRec();rec[r]++;lsSet('fl11-rec',JSON.stringify(rec));}
   // a league fixture goes into the table, then the rest of the round is played out
-  if(!NET.online&&G.mode==='league'&&LG.s){delete LG.s.activeMatch;const md=LG.s.md,f=userFixture(md);
-    if(f&&(G.set.home===LG.s.club||(G.set.home===100&&LG.s.custom))&&G.set.away===f.opp){const [gh,ga]=f.home?[G.score[0],G.score[1]]:[G.score[1],G.score[0]];
+  const match=G.leagueMatch;
+  if(!NET.online&&G.mode==='league'&&LG.s&&match&&match.season===LG.s&&match.identity===seasonIdentity(LG.s)&&match.user===(AUTH.user||null)&&match.md===LG.s.md&&!match.settled){const md=match.md,f=userFixture(md);match.settled=true;delete LG.s.activeMatch;
+    if(f&&f.h===match.h&&f.a===match.a&&!LG.s.res[resKey(md,f.h,f.a)]&&(G.set.home===LG.s.club||(G.set.home===100&&LG.s.custom))&&G.set.away===f.opp){const [gh,ga]=f.home?[G.score[0],G.score[1]]:[G.score[1],G.score[0]];
       recordResult(md,f.h,f.a,gh,ga,G.goalLog);if(!G.forfeit){LG.s.playedRounds=Array.from(new Set([...(LG.s.playedRounds||[]),md]));}finishRound();const T=leagueTable(),pos=T.findIndex(x=>x.i===LG.s.club);G.lgRes={md,pos:pos+1,pts:T[pos].pts};}}
   showResult(true);
 }
@@ -3720,7 +3751,7 @@ function lockActive(pd){
     if(B.owner||!B.target||B.target.r!==c||G.t-B.kickT>3.5){pd.lock=null;return false;}
     return true;
   }
-  else if(G.t-L.t>1.0){pd.lock=null;return false;}
+  else if(G.t-L.t>0.12||jm>0.05||inp.btn?.thru||inp.edge?.shoot){pd.lock=null;return false;}
   if(jm<0.2)L.rel=true;
   else if(jm>0.35){
     if(L.rel||lm<0.2){pd.lock=null;return false;}
@@ -3730,25 +3761,44 @@ function lockActive(pd){
 }
 function nearestHuman(t,x,z,noGK){let b=null,bd=1e9;for(const e of t.players){if(noGK&&e.isGK)continue;if(e.stun>0.5||e.off)continue;const d=hyp(e.x-x,e.z-z);if(d<bd){bd=d;b=e;}}return b;}
 // A buffered action belongs to one uninterrupted flight, rather than a short arbitrary timer.
-function incomingFlight(pd){return !!(pd&&G.state==='play'&&!B.owner&&!B.shot&&B.target&&B.target.r&&B.target.r.team.i===pd.ti&&B.kicker&&B.kicker.team.i===pd.ti&&B.lastTeam===pd.ti);}
+function incomingFlight(pd){
+  if(!pd||G.state!=='play')return false;
+  if(B.owner)return B.owner.team.i===pd.ti&&!!B.owner.kick?.pass;
+  return !B.shot&&B.lastTeam===pd.ti&&!!B.kicker&&B.kicker.team.i===pd.ti;
+}
 function bufferedValid(pd,q,e){
-  if(!q||!pd||G.state!=='play')return false;
+  if(!q||!pd||!e||G.state!=='play')return false;
+  if(q.teamPass){return e.team?.i===pd.ti&&q.epoch===(pd.prepareEpoch||0)&&B.lastTeam===pd.ti&&(!B.owner||B.owner.team.i===pd.ti)&&(B.owner||!B.kicker||B.kicker.team.i===pd.ti)&&!B.shot;}
   if(q.flight==null)return e===pd.ctrl&&G.t-q.t<0.6;
   return q.receiver===e&&q.kicker===B.kicker&&q.flight===B.kickT&&B.lastTeam===pd.ti&&G.t-q.t<8&&(!B.owner||B.owner===e)&&(!B.target||B.target.r===e);
 }
 function bufferAction(pd,kind,power,sk){
-  const q={kind,power,sk,t:G.t};if(incomingFlight(pd))Object.assign(q,{flight:B.kickT,kicker:B.kicker,receiver:B.target.r});pd.queue=q;
+  const q={kind,power,sk,t:G.t};if(incomingFlight(pd))Object.assign(q,{teamPass:true,epoch:pd.prepareEpoch||0,flight:B.kickT,kicker:B.kicker});pd.queue=q;
 }
-function clearPreparedAgainst(ti){for(const pd of PADS){if(!pd||pd.ti===ti)continue;pd.queue=null;pd.consumedHeld=null;const i=pd.inp;if(!i)continue;for(const k in i.chg)i.chg[k]=false;i.charging=false;i.power=0;}}
+function clearPreparedAgainst(ti){for(const pd of PADS){
+  if(!pd||pd.ti===ti)continue;pd.prepareEpoch=(pd.prepareEpoch||0)+1;pd.queue=null;pd.consumedHeld=null;
+  const i=pd.inp;if(!i)continue;for(const k in i.chg)i.chg[k]=false;i.charging=false;i.power=0;
+  if(i.edge)for(const k of ['passUp','thruUp','tlobUp','lobUp','shootUp'])i.edge[k]=false;
+}}
+function syncPreparedInputs(){
+  if(G.state!=='play')return;
+  const team=B.owner?B.owner.team.i:B.lastTeam;if(team!==0&&team!==1)return;
+  for(const pd of PADS)if(pd&&pd.ti!==team&&(pd.queue||pd.inp?.charging)){clearPreparedAgainst(team);break;}
+}
+function peekPrepared(pd,e){
+  if(!pd||!e||e.isGK)return null;
+  if(bufferedValid(pd,pd.queue,e))return pd.queue;
+  const i=pd.inp;if(!i||!i.charging||pd.consumedHeld||!incomingFlight(pd)||e.team?.i!==pd.ti)return null;
+  const k=i.chargeK,kind=k==='thru'?(i.lift?.thru?'thruLob':'thru'):k==='pass'&&i.lift?.pass?'lob':k;
+  return {kind,power:clamp(i.power,0.08,1),sk:i.shotKind,teamPass:true,epoch:pd.prepareEpoch||0,flight:B.kickT,heldKey:k};
+}
 function takePrepared(pd,e){
-  if(!pd)return null;let q=pd.queue;
-  if(!bufferedValid(pd,q,e))q=null;
-  const i=pd.inp;
-  if(!q&&i&&i.charging&&!pd.consumedHeld&&incomingFlight(pd)&&B.target.r===e){const k=i.chargeK;let kind=k==='thru'?(i.lift&&i.lift.thru?'thruLob':'thru'):k==='pass'&&i.lift&&i.lift.pass?'lob':k;q={kind,power:clamp(i.power,0.08,1),sk:i.shotKind,flight:B.kickT,heldKey:k};}
-  if(q){pd.queue=null;pd.consumedHeld=q.heldKey||null;if(i){for(const k in i.chg)i.chg[k]=false;i.charging=false;i.power=0;}}return q;
+  const q=peekPrepared(pd,e);if(!q)return null;
+  pd.queue=null;pd.consumedHeld=q.heldKey||null;const i=pd.inp;
+  if(i){for(const k in i.chg)i.chg[k]=false;i.charging=false;i.power=0;}return q;
 }
 function preparedHeader(e,q,pd){
-  e.act=ACT.HEAD;e.actT=0;e.kick=null;
+  if(e.act!==ACT.HEAD)e.actT=0;e.act=ACT.HEAD;e.kick=null;
   if(q.kind==='shoot'){
     const gx=e.team.dir*HL,dist=hyp(gx-B.x,B.z),aim=Math.abs(pd.inp.jy)>0.25?pd.inp.jy:-Math.sign(B.z)*0.55;
     const tz=clamp(aim,-1,1)*(GW/2-0.4)+gauss()*(0.45+(1-e.st.shoot)*1.4+dist*0.022),ty=0.35+q.power*0.95+gauss()*0.4;
@@ -3894,8 +3944,19 @@ function shouldCollectLoose(c){
   const d=hyp(B.x-c.x,B.z-c.z);if(d>7||B.y>2.4)return false;
   return c.team.players.every(p=>p===c||p.off||p.isGK||p.stun>0||hyp(B.x-p.x,B.z-p.z)>=d-0.4);
 }
+function markCarrier(pd,c,o,press){
+  const inp=pd.inp,gx=ownGoalX(c.team),dx=gx-o.x,dz=-o.z,L=hyp(dx,dz)||1,d=hyp(o.x-c.x,o.z-c.z),nx=dx/L,nz=dz/L,jm=hyp(inp.jx,inp.jy);
+  const lateral=jm>0.05?(inp.jx*nz-inp.jy*nx)*(press?1.25:2.25):0,radial=jm>0.05?inp.jx*nx+inp.jy*nz:0,gap=clamp((press?1.05:1.8)+radial*1.15,0.75,3.4);
+  const tx=o.x+nx*gap+nz*lateral+o.vx*0.20,tz=o.z+nz*gap-nx*lateral+o.vz*0.20;
+  c.mark=o;pd.marking=true;
+  if(d<8)trackMove(c,tx,tz,o);else setMove(c,tx,tz,true,false);
+}
+function assistedDefence(pd,c,o){
+  if(!o||c.isGK)return false;const i=pd.inp,jm=hyp(i.jx,i.jy),d=hyp(o.x-c.x,o.z-c.z),toward=jm>0.05?((o.x-c.x)*i.jx+(o.z-c.z)*i.jy)/Math.max(0.01,d*jm):1;
+  if(i.btn.thru||jm<0.06||(!i.btn.sprint&&d<8&&toward>-0.35)){markCarrier(pd,c,o,!!i.btn.thru);return true;}return false;
+}
 function userStep(pd,dt){
-  let c=pd.ctrl;if(!c)return;
+  let c=pd.ctrl;if(!c)return;c.defJockey=false;
   const inp=pd.inp,mode=userMode(pd),E=inp.edge,jm=hyp(inp.jx,inp.jy);
   if(pd.queue&&!bufferedValid(pd,pd.queue,pd.queue.receiver||c))pd.queue=null;
   if(pd.consumedHeld){const k=pd.consumedHeld;if(E.pass||E.thru||E.shoot||E.lob)pd.consumedHeld=null;else{const ups=k==='pass'?['passUp','lobUp']:k==='thru'?['thruUp','tlobUp']:[k+'Up'];if(ups.some(u=>E[u])){for(const u of ups)E[u]=false;pd.consumedHeld=null;}}}
@@ -3942,22 +4003,22 @@ function userStep(pd,dt){
   }
   if(G.state==='kickoff'){c.mx=c.mz=0;clearEdges(inp);return;}
   if(c.stun>0||c.act===ACT.SLIDE||c.act===ACT.FALL){clearEdges(inp);return;}
-  const locked=!!pd.lock,opp=B.owner&&B.owner.team.i!==pd.ti?B.owner:null;
+  const opp=B.owner&&B.owner.team.i!==pd.ti?B.owner:null;pd.marking=false;c.defJockey=false;
+  if(mode==='def'&&opp&&(inp.btn.thru||jm<0.06))pd.lock=null;
+  const locked=!!pd.lock;
   // second man: Q, or holding contain and sprint together
   c.team.help=mode==='def'&&!!opp&&(!!inp.btn.skill||(!!inp.btn.thru&&!!inp.btn.sprint));
   if(!locked){
     c.strafe=false;c.faceTgt=null;
-    if(mode==='def'&&inp.btn.thru&&opp){
-      // contain: stay goal-side and face the carrier
-      const o=opp,gx=ownGoalX(c.team),vx=gx-o.x,vz=-o.z,vl=hyp(vx,vz)||1,d=hyp(o.x-c.x,o.z-c.z);
-      const tx=o.x+vx/vl*1.2+o.vx*0.25,tz=o.z+vz/vl*1.2+o.vz*0.25;
-      if(d<7)trackMove(c,tx,tz,o);else setMove(c,tx,tz,true,false);
+    if(mode==='def'&&assistedDefence(pd,c,opp)){
+      // Close defence follows the carrier; stick input adjusts the marking angle and gap.
     }else if(shouldCollectLoose(c)){
       chaseBall(c);
     }else if(jm>0.05){
       const sprint=inp.btn.sprint&&c.stamina>0.04;
       const sp=sprint?c.vmax:c.vmax*lerp(0.32,0.72,clamp(jm,0,1));
       c.mx=inp.jx/jm*sp;c.mz=inp.jy/jm*sp;c.sprint=sprint;
+      if(mode==='def'&&opp&&!sprint&&hyp(opp.x-c.x,opp.z-c.z)<5){c.defJockey=c.strafe=true;c.faceTgt=opp;}
     }else if(!B.owner&&((B.target&&B.target.r===c)||G.teams[pd.ti].chaser==null&&c.ipt<9&&G.teams[pd.ti].players.every(p=>p===c||p.isGK||p.off||c.ipt<=p.ipt+0.1))){
       // stick left alone: he goes and collects a loose ball (or a pass meant for him) the same way the AI would
       chaseBall(c);}
@@ -3967,7 +4028,8 @@ function userStep(pd,dt){
   if(mode==='atk'){
     const swipe=E.sku?'u':E.skd?'d':E.skl?'l':E.skr?'r':null;
     if(B.owner===c){
-      if(!c.kick){
+      if(c.kick?.pass){if(E.passUp)bufferAction(pd,'pass',inp.power);else if(E.thruUp)bufferAction(pd,'thru',inp.power);else if(E.tlobUp)bufferAction(pd,'thruLob',inp.power);else if(E.lobUp)bufferAction(pd,'lob',inp.power);else if(E.shootUp)bufferAction(pd,'shoot',inp.power,inp.shotKind);}
+      else if(!c.kick){
         if(E.passUp)doUserAction(pd,'pass',inp.power);
         else if(E.thruUp)doUserAction(pd,'thru',inp.power);
         else if(E.tlobUp)doUserAction(pd,'thruLob',inp.power);
@@ -3991,9 +4053,9 @@ function userStep(pd,dt){
       else if(d<5.5){c.face=Math.atan2(tx+(opp?opp.vx*0.25:B.vx*0.2)-c.x,tz+(opp?opp.vz*0.25:B.vz*0.2)-c.z);startSlide(c);}
       else{c.act=ACT.POKE;c.actT=0;}
     }
-    if(G.t-pd.lastSwitch>0.8&&jm<0.3&&!locked)autoSwitchDef(pd,false);
-    // your man has been beaten: hand over to someone still goal-side, even while you are steering
-    else if(opp&&G.t-pd.lastSwitch>0.5&&!locked){const gx=ownGoalX(c.team);if(hyp(c.x-gx,c.z)>hyp(opp.x-gx,opp.z)+1.5&&hyp(c.x-opp.x,c.z-opp.z)>2)autoSwitchDef(pd,true);}
+    if(G.t-pd.lastSwitch>0.8&&jm<0.06&&!locked&&!pd.marking)autoSwitchDef(pd,false);
+    // A voluntary steering or marking action keeps this player selected.
+    else if(opp&&G.t-pd.lastSwitch>0.5&&!locked&&!pd.marking&&jm<0.06){const gx=ownGoalX(c.team);if(hyp(c.x-gx,c.z)>hyp(opp.x-gx,opp.z)+1.5&&hyp(c.x-opp.x,c.z-opp.z)>2)autoSwitchDef(pd,true);}
   }
   // loose ball: hand control to whoever gets there first
   if(!B.owner&&G.t-pd.lastSwitch>0.4&&!(B.target&&B.target.r===c)&&B.kicker!==c&&!locked){
@@ -4032,6 +4094,7 @@ function step(dt){
     for(const e of G.ents)moveEnt(e,dt);
     separate();
     updateBall(dt);
+    syncPreparedInputs();
     checkRules();
     if(st==='play'||st==='out'||st==='foul'||st==='setpiece'){
       G.clock=Math.min((G.half===1?50:95),G.clock+dt*45/(LENS[G.set.len].m*30));
@@ -4453,19 +4516,19 @@ function lgSave(){
 }
 function lgLoad(recover=true){
   LG.s=null;try{const p=prof(),key=AUTH.user?'fl11-season:@'+AUTH.user:'fl11-season';let season=seasonOut(AUTH.user&&p&&p.srv&&p.season!==undefined?p.season:JSON.parse(lsGet(key)||'null'));
-    if(!season&&AUTH.user){const legacy=seasonOut(JSON.parse(lsGet('fl11-season')||'null'));if(legacy&&legacy.owner===AUTH.user)season=legacy;}
+    if(!season&&AUTH.user&&p?.season===undefined){const legacy=seasonOut(JSON.parse(lsGet('fl11-season')||'null'));if(legacy&&legacy.owner===AUTH.user)season=legacy;}
     if(season&&(AUTH.user?(!season.owner||season.owner===AUTH.user):!season.owner)){LG.s=season;if(recover)recoverLeagueMatch();}
   }catch(e){}
 }
 function markLeagueMatchActive(){
   if(NET.online||G.mode!=='league'||!LG.s)return;const f=userFixture(LG.s.md);if(!f||G.set.away!==f.opp||G.set.home!==lgHome())return;
   let device=lsGet('fl11-league-device');if(!device){device=globalThis.crypto?.randomUUID?.()||Date.now().toString(36)+'-'+Math.random().toString(36).slice(2);lsSet('fl11-league-device',device);}
-  LG.s.activeMatch={md:LG.s.md,h:f.h,a:f.a,home:f.home,user:AUTH.user||null,device};lgSave();
+  LG.s.activeMatch={md:LG.s.md,h:f.h,a:f.a,home:f.home,user:AUTH.user||null,device};G.leagueMatch={season:LG.s,identity:seasonIdentity(LG.s),...LG.s.activeMatch};lgSave();
 }
 function recoverLeagueMatch(){
   const s=LG.s,m=s?.activeMatch;if(!m||m.user!==(AUTH.user||null)||(m.device&&m.device!==lsGet('fl11-league-device')))return false;const f=userFixture(s.md);
   delete s.activeMatch;if(!f||m.md!==s.md||m.h!==f.h||m.a!==f.a){lgSave();return false;}
-  if(!s.res[resKey(s.md,f.h,f.a)])recordResult(s.md,f.h,f.a,f.home?0:3,f.home?3:0,[]);finishRound();return true;
+  if(s.res[resKey(s.md,f.h,f.a)]){lgSave();return false;}recordResult(s.md,f.h,f.a,f.home?0:3,f.home?3:0,[]);finishRound();return true;
 }
 function makeFixtures(seed,entrant){
   // circle method: every club meets every other club once per half, home and away swapped in the second half
@@ -4480,7 +4543,7 @@ function makeFixtures(seed,entrant){
   }
   return first.concat(first.map(p=>p.map(([h,a])=>[a,h])));
 }
-function newSeason(club,custom){const seed=(Date.now()%2147483647)>>>0;LG.s={v:2,club,custom:!!custom,md:0,seed,fx:makeFixtures(seed,club),res:{},goals:{},playedRounds:[]};lgSave();syncLeagueRewards();}
+function newSeason(club,custom){const p=prof();if(p?.srv){p._seasonAction='replace';p._seasonFrom=seasonIdentity(p._base&&Object.hasOwn(p._base,'season')?p._base.season:p.season);}const seed=(Date.now()%2147483647)>>>0;LG.s={v:2,epoch:p?.leagueEpoch||1,id:globalThis.crypto?.randomUUID?.()||'season-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2),...(AUTH.user?{owner:AUTH.user}:{}),club,custom:!!custom,md:0,seed,fx:makeFixtures(seed,club),res:{},goals:{},playedRounds:[]};lgSave();syncLeagueRewards();}
 const resKey=(md,h,a)=>md+':'+h+':'+a;
 function poisson(l){const L=Math.exp(-l);let k=0,p=1;do{k++;p*=Math.random();}while(p>L);return k-1;}
 // a simulated score: goal expectation from the gap in squad overall, plus home advantage
@@ -4493,7 +4556,7 @@ function simScorers(ci,n){
 }
 function recordResult(md,h,a,gh,ga,scorers){LG.s.res[resKey(md,h,a)]=[gh,ga];if(scorers)scorers.forEach(s=>addScorer(s.ci>=100?LG.s.club:s.ci,s.name));else{simScorers(h,gh);simScorers(a,ga);}}
 function userFixture(md){const s=LG.s;if(!s||md>=38)return null;const p=s.fx[md].find(([h,a])=>h===s.club||a===s.club);return p?{h:p[0],a:p[1],home:p[0]===s.club,opp:p[0]===s.club?p[1]:p[0]}:null;}
-function finishRound(){const s=LG.s,md=s.md;for(const [h,a] of s.fx[md])if(!s.res[resKey(md,h,a)]){const [gh,ga]=simGoals(h,a);recordResult(md,h,a,gh,ga);}s.md++;lgSave();syncLeagueRewards();}
+function finishRound(){const s=LG.s;if(!s||s.md>=38)return;const md=s.md;for(const [h,a] of s.fx[md])if(!s.res[resKey(md,h,a)]){const [gh,ga]=simGoals(h,a);recordResult(md,h,a,gh,ga);}s.md++;lgSave();syncLeagueRewards();}
 function leagueTable(){
   const s=LG.s,teams=s?s.fx[0].flat():PL_IDX;
   const T=teams.map(i=>({i,p:0,w:0,d:0,l:0,gf:0,ga:0,pts:0})),TI={};T.forEach(r=>TI[r.i]=r);
@@ -4574,7 +4637,7 @@ function syncMenu(){
   lsSet('fl11-set',JSON.stringify(G.set));
 }
 let previewTimer=null;
-function menuPreview(){clearTimeout(previewTimer);previewTimer=setTimeout(()=>{buildTeams();lineup();},60);}
+function menuPreview(){clearTimeout(previewTimer);previewTimer=setTimeout(()=>{if(G.state!=='menu')return;buildTeams();lineup();},60);}
 function lineup(){
   // teams lined up for the anthem, facing the main stand
   for(const t of G.teams)t.players.forEach((e,k)=>{e.x=(t.i===0?-1:1)*(1.2+k*1.05);e.z=-2;e.face=0;e.vx=e.vz=0;e.speed=0;e.act=0;});
@@ -4601,7 +4664,8 @@ function goFullscreen(){
   const el=document.documentElement;
   if(matchMedia('(pointer:coarse)').matches&&el.requestFullscreen&&!document.fullscreenElement){el.requestFullscreen({navigationUI:'hide'}).then(()=>{try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock('landscape').catch(()=>{});}catch(e){}}).catch(()=>{});}
 }
-$('goBtn').addEventListener('click',()=>{
+$('goBtn').addEventListener('click',async()=>{
+  if(AUTH.token){await srvRefresh();if(!AUTH.verified){say('서버의 리그 정보를 먼저 불러와 주세요.');return;}if(!await srvEnsureSaved())return;}
   if(!LG.s){renderPick(true);return;}
   AU.start();goFullscreen();
   const f=LG.s&&userFixture(LG.s.md);if(!f)return;
@@ -4672,7 +4736,7 @@ $('segM').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)
 function renderSkHelp(){const sk=cleanSk(G.set.skills);$('skHelp').innerHTML=SK_DIRS.map(([k,a])=>`<tr><td>질주 + ${a}</td><td>${SKILLS[sk[k]].n} <i>${SKILLS[sk[k]].d}</i></td><td>★${SKILLS[sk[k]].star}</td></tr>`).join('');}
 $('tacReset').addEventListener('click',()=>{G.set.tacs[G.set.home]=clubTac(G.set.home);tacSel=-1;renderTac();});
 $('tacBack').addEventListener('click',()=>{$('tac').hidden=true;});
-$('tacGo').addEventListener('click',()=>{$('tac').hidden=true;if(tacMode==='solo'){AU.start();startMatch();}else{const t=myTac();$('olTac').textContent='전술: '+t.form+' · '+MENTS.find(m=>m.v===t.ment).n;}});
+$('tacGo').addEventListener('click',async()=>{$('tac').hidden=true;if(tacMode==='solo'){if(AUTH.token){await srvRefresh();if(!await srvEnsureSaved())return;}AU.start();startMatch();}else{const t=myTac();$('olTac').textContent='전술: '+t.form+' · '+MENTS.find(m=>m.v===t.ment).n;}});
 // auto mode: the computer plays your side until you switch it off (single player only)
 function setAuto(on){
   if(NET.online||!G.teams.length)return;
@@ -4720,12 +4784,12 @@ $('pause').addEventListener('click',e=>{const a=e.target.dataset&&e.target.datas
   if(a==='forfeit')forfeit();
   if(a==='snd'){AU.setOn(!AU.on);$('pSnd').textContent='사운드: '+(AU.on?'켜짐':'꺼짐');}
   if(a==='restart'&&!NET.online&&G.mode==='league'){G.paused=false;$('pause').hidden=true;goMenu();return;}
-  if(a==='restart'){G.paused=false;$('pause').hidden=true;if(AU.ctx)AU.ctx.resume();startMatch();}
+  if(a==='restart'){if(!NET.online&&G.mode==='league'){goMenu();return;}G.paused=false;$('pause').hidden=true;if(AU.ctx)AU.ctx.resume();startMatch();}
   if(a==='menu'){G.paused=false;$('pause').hidden=true;if(AU.ctx)AU.ctx.resume();goMenu();}
 });
 $('rMain').addEventListener('click',()=>{
   if(G.state==='half'){$('result').hidden=true;G.half=2;G.clock=45;G.stoppage=null;G.periodPoss=null;G.kickTeam=1-G.firstKick;resetKickoff(G.kickTeam);G.state='kickoff';G.kickReady=false;banner('2ND HALF','후반전 시작',1600);}
-  else if(G.lgRes){hubTab='fix';goMenu();}
+  else if(G.lgRes||!NET.online&&G.mode==='league'){hubTab='fix';goMenu();}
   else startMatch();
 });
 $('rAlt').addEventListener('click',goMenu);
@@ -4739,11 +4803,11 @@ const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const pct=v=>Math.round(v*100);
 function tmSlots(){const t=prof().team,a=t.cards.slice();for(let i=0;i<BENCH_MAX;i++)a.push(t.bench[i]||null);return a;}
 function tmStore(a){const t=prof().team;t.cards=a.slice(0,11);t.bench=a.slice(11).filter(Boolean);accCommit();}
-function accCommit(){const p=prof();if(p)p.team=cleanSpec(p.team,profClub(p),cardAllowance(p));accSave();applyProfile();if(p&&p.srv)srvQueue();}
+function accCommit(){const p=prof();if(p)p.team=profileTeam(p);accSave();applyProfile();if(p&&p.srv)srvQueue();}
 /* ---- online accounts: log in with an id + password and the team is kept in the server's database,
    so it follows you to any device. The logged-in account sits in ACC.list as '@id' (srv:true) and every
    change to it is saved back a moment later. Accounts without login still work as before (this browser only) */
-const AUTH={token:null,user:null,state:'',saving:false,dirty:false,timer:0,ok:null,flushPromise:null,refreshing:false};
+const AUTH={token:null,user:null,state:'',saving:false,dirty:false,timer:0,ok:null,flushPromise:null,refreshing:false,verified:false};
 const srvKey=()=>AUTH.user?'@'+AUTH.user:null;
 function authLoad(){try{const a=JSON.parse(lsGet('fl11-auth')||'null');if(a&&a.token&&a.user){AUTH.token=a.token;AUTH.user=a.user;}}catch(e){}
   for(const k in ACC.list)if(ACC.list[k].srv&&k!==srvKey())delete ACC.list[k];
@@ -4766,26 +4830,52 @@ function seasonOut(s){
   return JSON.parse(JSON.stringify(s));
 }
 function adoptSeason(user,p,selected){
-  let migrated=false;if(!seasonOut(p.season)){
+  let migrated=false;if(p.season===undefined){
     for(const key of ['fl11-season:@'+user,'fl11-season'])try{const local=seasonOut(JSON.parse(lsGet(key)||'null'));if(local&&local.owner===user){p.season=local;migrated=true;break;}}catch(e){}
   }
-  if(selected){LG.s=seasonOut(p.season);lsSet('fl11-season:@'+user,JSON.stringify(LG.s));}
+  if(selected&&!matchActive()){LG.s=seasonOut(p.season);lsSet('fl11-season:@'+user,JSON.stringify(LG.s));}
   return migrated;
 }
-const profOut=p=>{const ci=profClub(p);return{name:p.name,club:p.club,team:cleanSpec(p.team,ci,cardAllowance(p)),skills:cleanSk(p.skills),tacs:cleanAccountTacs(p.tacs),...(p.season!==undefined?{season:seasonOut(p.season)}:{})};};
-function srvAdopt(user,data,revision=0,select=true){
-  const k='@'+user,legacyTacs=ACC.list[k]&&ACC.list[k].tacs||G.set.tacs,migrate=!!(data&&data.team&&data.tacs===undefined),p=data&&data.team?{name:String(data.name||user).slice(0,12),club:data.club,team:cleanSpec(data.team),skills:cleanSk(data.skills),inventory:Array.isArray(data.inventory)?data.inventory:undefined,coins:data.coins,tacs:cleanAccountTacs(migrate?legacyTacs:data.tacs),made:Date.now(),...(data.season!==undefined?{season:seasonOut(data.season)}:{})}:newProfile(user,0);
-  Object.assign(p,{srv:true,_revision:revision,_pending:false,_edit:0});ACC.list[k]=p;
-  if(select)ACC.cur=k;const seasonMigrated=adoptSeason(user,p,ACC.cur===k);if(ACC.cur===k)applyProfile();accSave();AUTH.dirty=false;syncLeagueRewards();
-  if(!data||!data.team||migrate||seasonMigrated){p._pending=true;AUTH.dirty=true;accSave();clearTimeout(AUTH.timer);AUTH.timer=setTimeout(srvFlush,0);}
+const profOut=p=>{const ci=profClub(p);return{name:p.name,club:p.club,...(p.leagueEpoch!==undefined?{leagueEpoch:p.leagueEpoch}:{}),team:profileTeam(p),skills:cleanSk(p.skills),tacs:cleanAccountTacs(p.tacs),...(p.season!==undefined?{season:seasonOut(p.season)}:{})};};
+// A live match owns its roster and season until it is settled, including half-time.
+function matchActive(){return !['menu','boot','full'].includes(G.state);}
+function profileTeam(p){return p.srv&&!LIVE_CATALOG_READY&&[...(p.team?.cards||[]),...(p.team?.bench||[])].some(id=>!cardById(id))?JSON.parse(JSON.stringify(p.team)):cleanSpec(p.team,profClub(p),cardAllowance(p));}
+const profileFields=['name','club','team','skills','tacs','season'];
+const seasonIdentity=s=>s?JSON.stringify([s.id||null,s.club,s.seed,!!s.custom]):null;
+function seasonExtends(local,remote){return !!local&&!!remote&&seasonIdentity(local)===seasonIdentity(remote)&&local.md>=remote.md&&Object.entries(remote.res||{}).every(([k,v])=>sameProfile(local.res?.[k],v))&&(remote.playedRounds||[]).every(r=>(local.playedRounds||[]).includes(r));}
+function srvAdopt(user,data,revision=0,select=true,quiet=false){
+  const k='@'+user,legacyTacs=ACC.list[k]?.tacs||G.set.tacs,migrate=!!(data?.team&&data.tacs===undefined),p=data?.team?{name:String(data.name||user).slice(0,12),club:data.club,team:JSON.parse(JSON.stringify(data.team)),skills:cleanSk(data.skills),inventory:Array.isArray(data.inventory)?data.inventory:undefined,coins:data.coins,tacs:cleanAccountTacs(migrate?legacyTacs:data.tacs),made:Date.now(),leagueEpoch:data.leagueEpoch,...(data.season!==undefined?{season:seasonOut(data.season)}:{})}:newProfile(user,0);
+  Object.assign(p,{srv:true,_revision:revision,_pending:false,_edit:0,leagueEpoch:data?.leagueEpoch??1});if(p.season===undefined)p.season=null;p.team=profileTeam(p);p._base=data?.team?profOut(p):{};if(data?.tacs===undefined)delete p._base.tacs;ACC.list[k]=p;AUTH.verified=true;
+  if(select)ACC.cur=k;const migrated=quiet?false:adoptSeason(user,p,ACC.cur===k);if(!quiet&&ACC.cur===k)applyProfile();accSave();AUTH.dirty=false;
+  if(!quiet&&!matchActive())syncLeagueRewards();
+  if(!quiet&&(!data?.team||migrate||migrated)){p._pending=true;AUTH.dirty=true;accSave();clearTimeout(AUTH.timer);AUTH.timer=setTimeout(srvFlush,0);}
 }
-function srvBackup(p){
-  if(!p||!p._pending)return;
+// Rebase only changes made since this browser last read the server. Conflicts keep the server value.
+function srvReconcile(user,data,revision,select=true){
+  const old=ACC.list['@'+user],local=old?profOut(old):null,remote=data?profOut({...data,srv:true}):null,keep={};let conflict=false;
+  if(old&&!old._pending&&local?.season&&remote?.season&&seasonIdentity(local.season)===seasonIdentity(remote.season)&&local.season.md>remote.season.md)srvBackup(old,true);
+  if(old?._pending&&remote){
+    for(const key of profileFields){
+      if(key==='season'&&old.leagueEpoch!==data.leagueEpoch){if(!sameProfile(local.season,remote.season))conflict=true;continue;}
+      if(sameProfile(local[key],old._base?.[key])||sameProfile(local[key],remote[key]))continue;
+      if(old._revision===revision||old._base&&sameProfile(old._base[key],remote[key])||key==='season'&&seasonExtends(local.season,remote.season))keep[key]=local[key];else conflict=true;
+    }
+    if(conflict)srvBackup(old);
+  }
+  srvAdopt(user,data,revision,select,true);const p=ACC.list['@'+user];Object.assign(p,keep);
+  if(Object.hasOwn(keep,'season')&&old?._seasonAction){p._seasonAction=old._seasonAction;p._seasonFrom=old._seasonFrom;}
+  const migrated=adoptSeason(user,p,ACC.cur==='@'+user);p._pending=Object.keys(keep).length>0||migrated||!data?.team||data.tacs===undefined;p._edit=old?._edit||0;AUTH.dirty=p._pending;
+  if(ACC.cur==='@'+user)applyProfile();accSave();if(!matchActive())syncLeagueRewards();
+  AUTH.state=p._pending?'저장 대기':conflict?'최신 기록을 불러왔어요. 겹치는 변경은 복구용 계정에 보관했어요.':'저장됨';return !conflict;
+}
+
+function srvBackup(p,force=false){
+  if(!p||!p._pending&&!force)return;
   const id='recovery-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,6);
   ACC.list[id]=Object.assign(profOut(p),{name:('복구용 '+p.name).slice(0,12),made:Date.now()});accSave();
 }
 function authDrop(){const k=srvKey(),p=ACC.list[k];if(p)srvBackup(p);if(k){delete ACC.list[k];if(ACC.cur===k)ACC.cur=Object.keys(ACC.list).find(i=>!ACC.list[i].srv)||null;}
-  AUTH.token=null;AUTH.user=null;AUTH.dirty=false;clearTimeout(AUTH.timer);authSave();accSave();applyProfile();lgLoad(false);}
+  AUTH.token=null;AUTH.user=null;AUTH.dirty=false;AUTH.verified=false;clearTimeout(AUTH.timer);authSave();accSave();applyProfile();lgLoad(false);}
 function srvQueue(delay=200){const p=prof();if(!p||!p.srv||ACC.cur!==srvKey()||!AUTH.token)return;
   p._pending=true;p._edit=(p._edit||0)+1;AUTH.dirty=true;AUTH.state='저장 대기';accSave();clearTimeout(AUTH.timer);AUTH.timer=setTimeout(srvFlush,delay);tmAuthLine();}
 function sameProfile(a,b){const canonical=v=>v&&typeof v==='object'?(Array.isArray(v)?v.map(canonical):Object.fromEntries(Object.keys(v).sort().map(k=>[k,canonical(v[k])]))):v;return JSON.stringify(canonical(a))===JSON.stringify(canonical(b));}
@@ -4793,23 +4883,27 @@ async function srvFlush(){
   if(AUTH.flushPromise)return AUTH.flushPromise;
   const k=srvKey(),p=ACC.list[k],token=AUTH.token,user=AUTH.user;
   if(!p||!token||!p._pending)return true;
+  if(!AUTH.verified){await srvRefresh();if(!AUTH.verified)return false;return srvFlush();}
+  if(p.srv&&!LIVE_CATALOG_READY&&[...(p.team?.cards||[]),...(p.team?.bench||[])].some(id=>!cardById(id))){AUTH.state='선수 정보를 불러온 뒤 저장해 주세요.';return false;}
   if(!Number.isSafeInteger(p._revision)){AUTH.state='서버 정보를 먼저 불러와 주세요.';return false;}
-  const edit=p._edit||0,payload=profOut(p);AUTH.saving=true;AUTH.state='저장 중…';tmAuthLine();
+  const edit=p._edit||0,payload=profOut(p),fields=p._base?profileFields.filter(k=>!sameProfile(payload[k],p._base[k])):profileFields;AUTH.saving=true;AUTH.state='저장 중…';tmAuthLine();
   const run=(async()=>{
     let ok=false;
     try{
-      const d=await api('/profile',{method:'PUT',token,keepalive:true,body:{profile:payload,revision:p._revision}});
+      const d=await api('/profile',{method:'PUT',token,keepalive:true,body:{profile:payload,revision:p._revision,fields,...(p._seasonAction?{seasonAction:p._seasonAction,previousSeason:p._seasonFrom}:{})}});
       if(AUTH.token!==token||ACC.list[k]!==p)return false;
-      p._revision=d.revision;p._pending=(p._edit||0)!==edit;AUTH.dirty=p._pending;AUTH.state=p._pending?'저장 대기':'저장됨';accSave();ok=true;
+      p._revision=d.revision;p._base=d.profile?profOut({...d.profile,srv:true}):payload;p._pending=(p._edit||0)!==edit;
+      if(!p._pending){Object.assign(p,p._base);delete p._seasonAction;delete p._seasonFrom;if(!matchActive()){adoptSeason(user,p,ACC.cur===k);if(ACC.cur===k)applyProfile();}}
+      AUTH.dirty=p._pending;AUTH.state=p._pending?'저장 대기':'저장됨';accSave();ok=true;
     }catch(e){
       if(AUTH.token!==token||ACC.list[k]!==p)return false;
       if(e.status===401){authDrop();AUTH.state='로그인이 필요해요.';if(G.state==='menu')renderHubAcc();}
       else if(e.status===409){
         if(sameProfile(payload,e.data.profile?profOut(e.data.profile):null)){
-          p._revision=e.data.revision;p._pending=(p._edit||0)!==edit;AUTH.dirty=p._pending;AUTH.state=p._pending?'저장 대기':'저장됨';accSave();ok=true;
+          p._revision=e.data.revision;p._base=payload;p._pending=(p._edit||0)!==edit;AUTH.dirty=p._pending;AUTH.state=p._pending?'저장 대기':'저장됨';accSave();ok=true;
         }else{
-          srvBackup(p);srvAdopt(user,e.data.profile,e.data.revision,ACC.cur===k);
-          AUTH.state='다른 브라우저의 최신 설정을 불러왔어요. 이 기기의 미저장 변경은 복구용 계정에 보관했어요.';
+          srvReconcile(user,e.data.profile,e.data.revision,ACC.cur===k);
+          ok=!AUTH.dirty;
           if(!$('team').hidden)renderTeam();
         }
       }else{AUTH.dirty=true;AUTH.state='저장 실패 · '+e.message;accSave();clearTimeout(AUTH.timer);AUTH.timer=setTimeout(srvFlush,5000);}
@@ -4827,19 +4921,18 @@ async function srvEnsureSaved(){
   return false;
 }
 async function srvRefresh(){
-  if(!AUTH.token||AUTH.refreshing||!['menu','boot','half','full'].includes(G.state))return;
+  if(!AUTH.token||AUTH.refreshing||matchActive()||AUTH.flushPromise)return;
   AUTH.refreshing=true;const token=AUTH.token,k=srvKey();
   try{
-    const cached=ACC.list[k];
-    if(cached&&cached._pending&&Number.isSafeInteger(cached._revision)&&!await srvEnsureSaved())return;
-    const before=ACC.list[k],edit=before&&(before._edit||0),d=await api('/me',{token});
-    if(AUTH.token!==token||ACC.list[k]!==before||(before&&((before._edit||0)!==edit||before._pending&&Number.isSafeInteger(before._revision))))return;
-    if(before&&before._pending)srvBackup(before);
-    srvAdopt(d.user.username,d.profile,d.revision,ACC.cur===k||!prof());AUTH.state='저장됨';
+    const d=await api('/me',{token});
+    if(AUTH.token!==token||matchActive())return;
+    srvReconcile(d.user.username,d.profile,d.revision,ACC.cur===k||!prof());
+    recoverLeagueMatch();
     if(!$('team').hidden)renderTeam();if(G.state==='menu'){renderHubAcc();if(typeof renderHub==='function')renderHub();}
   }catch(e){if(AUTH.token===token){AUTH.state=e.message;if(e.status===401){authDrop();if(G.state==='menu')renderHubAcc();if(!$('account').hidden)renderAccount();}}}
-  finally{AUTH.refreshing=false;tmAuthLine();}
+  finally{AUTH.refreshing=false;tmAuthLine();if(AUTH.token===token&&AUTH.verified&&AUTH.dirty){clearTimeout(AUTH.timer);AUTH.timer=setTimeout(srvFlush,200);}}
 }
+
 async function authBoot(){
   try{await loadLiveCatalog();}catch(e){}
   try{const st=await api('/status');AUTH.ok=true;AUTH.store=st.store;}catch(e){AUTH.ok=false;}
@@ -4849,7 +4942,7 @@ async function authBoot(){
 addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){accSave();if(AUTH.dirty){clearTimeout(AUTH.timer);srvFlush();}}else srvRefresh();});
 addEventListener('pagehide',()=>{accSave();if(AUTH.dirty){clearTimeout(AUTH.timer);srvFlush();}});
 addEventListener('focus',()=>srvRefresh());
-addEventListener('online',()=>{if(AUTH.dirty)srvFlush();else srvRefresh();});
+addEventListener('online',async()=>{AUTH.verified=false;await srvRefresh();if(AUTH.dirty)srvFlush();});
 function tmAuthLine(){const el=document.getElementById('authLine');if(el)el.textContent=AUTH.state;}
 async function authDo(kind){
   const u=($('authU').value||'').trim(),pw=$('authP').value||'';
@@ -5279,8 +5372,8 @@ function boot(data){
     if(s.dv===2&&s.tacs&&typeof s.tacs==='object')for(const k in s.tacs)if(CLUBS[k])G.set.tacs[k]=cleanTac(s.tacs[k]);G.set.skills=cleanSk(s.skills);}}catch(e){}
   G.set.skills=cleanSk(G.set.skills);
   accLoad();authLoad();applyProfile();
-  lgLoad(!(data&&data.inMatch));
-  if(data&&data.set){Object.assign(G.set,data.set);if(!G.set.tacs)G.set.tacs={};}
+  if(AUTH.token)LG.s=null;else lgLoad();
+  // Saved hot-reload snapshots do not contain all player/ball/substitution state. Return to the menu.
   $('camBtn').textContent=CAMS[G.set.cam].n;
   buildStands();buildBoards();buildFloods();
   // swap the simple bodies for the motion-captured ones once the model has arrived
@@ -5289,7 +5382,7 @@ function boot(data){
   goMenu();authBoot();
   setInterval(()=>{if(document.visibilityState==='visible')srvRefresh();},15000);
   $('loading').hidden=true;
-  if(data&&data.inMatch){startMatch();G.score=data.score||[0,0];G.clock=data.clock||0;G.half=data.half||1;hudScore();}
+  // An abandoned league fixture is settled only after the authoritative server profile is loaded.
   requestAnimationFrame(t=>{last=t;frame(t);});
 }
 try{window.claude&&window.claude.hot&&window.claude.hot.snapshot&&window.claude.hot.snapshot(()=>({set:G.set,inMatch:!NET.online&&!['menu','boot','full'].includes(G.state),score:G.score,clock:G.clock,half:G.half}));}catch(e){}
