@@ -70,6 +70,24 @@ test('a contested loose-ball winner receives a short recovery window even on a t
 });
 function tacticsContext(extra=''){return context(part('const PI=','/* ================= renderer & scene').replace(part('const PI=','function seeded'),'').replace(part('const ACT=','// skill moves:'),'')+part('function toW(t,','function carrierThink(e,dt)')+'function ownGoalX(t){return-t.dir*HL;}'+extra);}
 
+test('all nine attack/defence work-rate combinations affect support and recovery for every outfield role',()=>{
+  const ctx=tacticsContext();
+  vm.runInContext(`for(const dir of [-1,1])for(const [role,lbl,base] of [['DF','CB',[-.65,.2]],['DF','LB',[-.6,-.62]],['DF','RB',[-.6,.62]],['MF','CDM',[-.43,0]],['MF','CM',[-.33,-.34]],['MF','CAM',[-.33,.34]],['MF','LM',[-.28,-.62]],['FW','ST',[.05,0]],['FW','LW',[-.03,-.62]],['FW','RW',[-.03,.62]]]){const t={i:0,dir,players:[],ment:0,possT:5,lastLine:.7,inPoss:true},o={i:1,players:[]};t.opp=o;o.opp=t;const e={team:t,role,lbl,base,run:0,hid:{att:1,def:1}};t.players=[e];const support=[],recovery=[];for(let att=0;att<3;att++){support[att]=[];recovery[att]=[];for(let def=0;def<3;def++){e.hid={att,def};B.owner={team:t};B.x=dir*32;B.z=dir*12;support[att][def]=supportSpot(e)[0]*dir;t.inPoss=false;B.owner.team=o;B.x=-dir*32;B.z=-dir*12;t.defBallX=B.x;t.defBallZ=B.z;recovery[att][def]=formTarget(e)[0]*dir;t.inPoss=true;}}
+  for(let level=0;level<3;level++){assert.ok(support[0][level]<support[1][level]&&support[1][level]<support[2][level],role+' attack stages');assert.ok(recovery[0][level]<recovery[1][level]&&recovery[1][level]<recovery[2][level],role+' forward outlet stages');assert.ok(support[level][0]>support[level][1]&&support[level][1]>support[level][2],role+' cover preference stages');assert.ok(recovery[level][0]>recovery[level][1]&&recovery[level][1]>recovery[level][2],role+' recovery stages');}assert.equal(new Set(support.flat().map(x=>x.toFixed(6))).size,9);assert.equal(new Set(recovery.flat().map(x=>x.toFixed(6))).size,9);
+  }const c={x:0,z:0},p={x:10,z:0,hid:{def:0}};const low=pressScore(p,c);p.hid.def=1;const normal=pressScore(p,c);p.hid.def=2;assert.ok(low>normal&&normal>pressScore(p,c));p.x=2;for(const def of [0,1,2]){p.hid.def=def;assert.equal(pressScore(p,c),2);}`,ctx);
+});
+
+test('work rates choose recovery support and forward outlets without forbidding overlap or urgent covering',()=>{
+  const ctx=tacticsContext();
+  vm.runInContext(`for(const dir of [-1,1]){const t={i:0,dir,players:[],inPoss:true,ment:0,lastLine:.8,possT:8},o={i:1,players:[]};t.opp=o;o.opp=t;B.x=dir*40;B.z=dir*20;B.owner={team:t,x:B.x,z:B.z};for(const lbl of ['CB','LB','RB']){const e={team:t,role:'DF',lbl,base:[-.65,lbl==='CB'?.2:.62],hid:{att:1,def:2},run:0};const [x]=supportSpot(e);assert.ok(x*dir<0);e.hid={att:2,def:0};assert.ok(supportSpot(e)[0]*dir>x*dir+5);if(lbl!=='CB'){e.run=2;assert.ok(supportSpot(e)[0]*dir>HL*.6);}}
+  t.inPoss=false;B.owner.team=o;B.x=-dir*40;t.defBallX=B.x;t.defBallZ=0;const fw={team:t,role:'FW',lbl:'ST',base:[.05,0],hid:{att:2,def:1},run:0};assert.ok(formTarget(fw)[0]*dir>-5);}`,ctx);
+});
+
+test('a shared support plan reserves distinct spaces, reuses them briefly and clears on a possession change',()=>{
+  const ctx=tacticsContext(`function laneClear(){return 3;}`);
+  vm.runInContext(`const t={i:0,dir:1,players:[],ment:0,possT:7,lastLine:.7},o={i:1,players:[]};t.opp=o;o.opp=t;const c={team:t,k:9,x:32,z:0,isGK:false};B.owner=c;B.x=32;B.z=0;t.players=[c,...Array.from({length:5},(_,k)=>({team:t,k,role:k<2?'DF':'MF',lbl:k<2?'CB':'CM',base:[k<2?-.65:-.33,k%2?.3:-.3],x:32,z:0,run:0,hid:{att:1,def:k<2?2:1,roam:1}}))];planSupport(t);assert.equal(t.supportPlan.size,5);const points=[...t.supportPlan.values()];for(let i=0;i<points.length;i++)for(let j=0;j<i;j++)assert.ok(hyp(points[i][0]-points[j][0],points[i][1]-points[j][1])>4);const plan=t.supportPlan;G.t+=.1;planSupport(t);assert.equal(t.supportPlan,plan);B.owner={team:o};planSupport(t);assert.equal(t.supportPlan,null);B.owner=c;PADS[0]={ctrl:t.players[1],lock:null};planSupport(t);assert.equal(t.supportPlan.has(t.players[1]),false);`,ctx);
+});
+
 test('stopped PK and result poses do not independently track the moving ball with the neck',()=>{
   const ctx=context(part('function headLook(e,','function locoPose(e,P,dt)'));
   vm.runInContext(`const e={x:0,z:0,face:PI-.01,hy:.9,hx:.3};for(const state of ['setpiece','full','half','paused','out','foul','replay']){G.state=state;for(let i=0;i<120;i++){B.x=Math.sin(i)*10;B.z=Math.cos(i)*10;const [x,y]=headLook(e,0,.2,STEP);assert.equal(x,0);assert.equal(y,0);assert.equal(e.face,PI-.01);}}G.state='play';B.x=-.1;B.z=-10;for(let i=0;i<30;i++){const [x,y]=headLook(e,0,0,STEP);assert.ok(Math.abs(y)<.04);assert.ok(Number.isFinite(x));}B.x=10;B.z=0;for(let i=0;i<120;i++){const [,y]=headLook(e,0,0,STEP);assert.ok(Math.abs(y)<=1);}`,ctx);
@@ -98,7 +116,7 @@ test('body separation cannot push an AI off-ball runner over the touchline',()=>
 
 test('attacking support is free to overlap, advance and change lanes again',()=>{
   const ctx=tacticsContext();
-  vm.runInContext(`for(const dir of [-1,1]){const t={i:0,dir,inPoss:true,ment:0,lastLine:.92,players:[]},o={i:1,players:[]};t.opp=o;o.opp=t;B.x=dir*40;B.z=-dir*20;B.owner={team:t,x:B.x,z:B.z};const midfielder={team:t,k:6,role:'MF',lbl:'CM',base:[-.3,.3],run:0};const [x,z]=supportSpot(midfielder);assert.ok(x*dir>HL*.65);assert.ok(Math.abs(z-midfielder.base[1]*HW*dir)>6);const fullback={team:t,k:2,role:'DF',lbl:'LB',base:[-.6,-.7],run:0};const p=supportSpot(fullback);assert.ok(p[0]*dir>HL*.57);}
+  vm.runInContext(`for(const dir of [-1,1]){const t={i:0,dir,inPoss:true,ment:0,lastLine:.92,players:[]},o={i:1,players:[]};t.opp=o;o.opp=t;B.x=dir*40;B.z=-dir*20;B.owner={team:t,x:B.x,z:B.z};const midfielder={team:t,k:6,role:'MF',lbl:'CM',base:[-.3,.3],run:0};const [x,z]=supportSpot(midfielder);assert.ok(x*dir>HL*.65);midfielder.run=2;const [rx,rz]=supportSpot(midfielder);assert.ok(rx*dir>HL*.8);assert.ok(Math.abs(rz-midfielder.base[1]*HW*dir)>6);const fullback={team:t,k:2,role:'DF',lbl:'LB',base:[-.6,-.7],run:2};const p=supportSpot(fullback);assert.ok(p[0]*dir>HL*.57);}
   assert.equal(typeof formationLane,'undefined');`,ctx);
 });
 
