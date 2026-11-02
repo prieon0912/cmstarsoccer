@@ -117,8 +117,8 @@ test('marking crosses old formation corridors and nearby AI targets no longer st
   vm.runInContext(`for(const dir of [-1,1]){const t={i:0,dir,ment:0,inPoss:false,lastLine:.8,lineSm:(-HL+18)/HL,players:[],coverThreats:[]},o={i:1,players:[]};t.opp=o;o.opp=t;const c={team:o,x:dir*5,z:0,vx:0,vz:0},m={team:o,x:-dir*5,z:20,vx:0,vz:0},e={team:t,k:2,role:'DF',lbl:'CB',base:[-.65,-.3],x:-dir*30,z:-15,vx:0,vz:0,act:0,stun:0,vmax:maxRunSpeed(.8),stamina:1,style:'man'};t.players=[e];o.players=[c,m];t.defMarks=new Map([[e,m]]);B.owner=c;B.x=c.x;B.z=0;PADS[0]=null;const [x,z]=formTarget(e);think(e,1/60);assert.equal(e.mark,m);assert.ok(e.sx*dir>x*dir+5);assert.ok(e.sz>z+6);e.sx=e.sz=null;e.settled=true;setMove(e,e.x+dir*1.3,e.z,false,true);assert.ok(hyp(e.mx,e.mz)>0);}`,ctx);
 });
 
-test('automatic keepers stay near their goal for field play, loose balls and one-on-ones; manual movement and saves remain available',()=>{
-  const ctx=tacticsContext(part('function gkThink(e,dt)','// is a defender between')+`const D={react:.3};let saves=0,distributions=0;function nearestOpp(){return[null,10];}function gkDistribute(){distributions++;}function planSave(e){e.save={watch:true};}function gkSaveStep(){saves++;}function startSmother(){throw Error('automatic rush');}`);
+test('keepers hold the goalmouth before a rush cue matures; manual movement and saves remain available',()=>{
+  const ctx=tacticsContext(part('function gkThink(e,dt)','// is a defender between')+part('function goalSideCover(t,c,gx,dg)','// the keeper spreads')+`const D={react:.3};let saves=0,distributions=0;function nearestOpp(){return[null,10];}function gkDistribute(){distributions++;}function planSave(e){e.save={watch:true};}function gkSaveStep(){saves++;}function startSmother(){throw Error('automatic rush');}`);
   vm.runInContext(`for(const dir of [-1,1]){const t={i:0,dir,ment:0,players:[],lastLine:0},o={i:1,players:[]};t.opp=o;o.opp=t;const gx=-dir*HL,e={team:t,k:0,isGK:true,role:'GK',x:gx+dir*12,z:0,vx:0,vz:0,act:0,actT:0,stun:0,vmax:maxRunSpeed(.8),stamina:1,ipt:.1,ipx:gx+dir*20,ipz:0,holdT:0,gkSkill:.9},field={team:t,k:1,role:'DF',lbl:'CB',base:[-.65,0],x:gx+dir*18,z:0,act:0,stun:0,ipt:4,vmax:8};t.players=[e,field];assert.ok(Math.abs((formTarget(e)[0]-gx)*dir-1.1)<1e-9);const c={team:o,x:0,z:0,vx:0,vz:0,face:-dir*PI/2};o.players=[c];PADS[0]=null;
   for(const depth of [60,30,12,4]){c.x=gx+dir*depth;B.owner=c;B.x=c.x;B.z=5;B.shot=null;t.chaser=e;gkThink(e,1/60);assert.ok(Math.abs((e.sx-gx)*dir-1.1)<1e-9);assert.ok(e.mx*dir<0);}
   B.owner=null;B.shot=null;B.target=null;B.lastTeam=1;B.x=gx+dir*20;B.z=0;teamThink(t,1/60);assert.notEqual(t.chaser,e);gkThink(e,1/60);assert.ok(Math.abs((e.sx-gx)*dir-1.1)<1e-9);
@@ -131,6 +131,36 @@ function keeperContactContext(extra=''){
   return context(`const THREE={Vector3:class{set(x,y,z){this.x=x;this.y=y;this.z=z;return this;}}};let poses=0,catches=0;function applyPose(){poses++;}function applySkinned(){poses++;}function inOwnBox(){return true;}function gainBall(e){catches++;B.owner=e;}function node(x,y,z){return{p:{x,y,z},getWorldPosition(v){v.set(this.p.x,this.p.y,this.p.z);}};}
   function keeper(skinned=false){const e={team:{i:0,human:true},x:0,z:0,face:0,act:0,actT:0,cool:0,stun:0,isGK:true};e.rig={skinned,root:{updateMatrixWorld(){}},handL:node(0,1.2,-.42),handR:node(0,1.2,.42),bones:{hips:node(0,.95,0),sp2:node(0,1.4,0),head:node(0,1.7,0),upL:node(0,.9,-.1),lgL:node(0,.5,-.1),ftL:node(0,.08,-.1),upR:node(0,.9,.1),lgR:node(0,.5,.1),ftR:node(0,.08,.1)}};return e;}`+part('function keeperShapes(e)','function gkDistribute(e)')+extra);
 }
+
+test('celebration FOV remains bounded in portrait and landscape, and replay starts at a valid camera position',()=>{
+  const ctx=context(`class Vec{constructor(x=0,y=0,z=0){this.set(x,y,z);}set(x,y,z){this.x=x;this.y=y;this.z=z;return this;}copy(v){return this.set(v.x,v.y,v.z);}lerp(v,k){this.x+=(v.x-this.x)*k;this.y+=(v.y-this.y)*k;this.z+=(v.z-this.z)*k;return this;}lengthSq(){return this.x*this.x+this.y*this.y+this.z*this.z;}}const THREE={Vector3:Vec},CAM={aspect:1,fov:30,position:new Vec(),lookAt(){},updateProjectionMatrix(){}},NET={mirror:false},RP={side:1,cam:new Vec()};`+part('const camLook=new','/* ================= visuals per frame'));
+  vm.runInContext(`G.state='goal';G.timer=1.2;G.goal={scorer:{x:45,z:20,team:{dir:1}}};for(const aspect of [.6,1,2]){CAM.aspect=aspect;for(let i=0;i<600;i++){updateCam(1/60);assert.ok(Number.isFinite(CAM.fov)&&CAM.fov<100);assert.ok(Number.isFinite(CAM.position.x));}const expected=32*(aspect<1.5?Math.min(1.9,1.5/aspect*1.15):Math.pow(1.95/aspect,.35));assert.ok(Math.abs(CAM.fov-expected)<1e-9);}G.state='replay';B.x=45;B.z=0;RP.cam.set(0,0,0);updateCam(1/60);assert.ok(RP.cam.lengthSq()>900);`,ctx);
+});
+
+test('throw-in facing takes the short turn before release and never chases the ball through a full spin after release',()=>{
+  const ctx=context(part('function movementAgility(e)','function moveEnt(e,dt)'));
+  vm.runInContext(`const e={act:ACT.THROW,ap2:0,face:PI-.02,throwFace:-PI+.1,turnRate:0,vx:3,vz:0,mx:5,mz:0,vmax:8,st:{pace:.8,drib:.8}};let angle=0;for(let i=0;i<20;i++){const before=e.face;locomote(e,1/60);faceUpdate(e,1/60,0);angle+=Math.abs(e.face-before);assert.equal(hyp(e.vx,e.vz),0);}assert.ok(angle<.2);e.ap2=.4;B.owner=null;const released=e.face;for(let i=0;i<120;i++){B.x=Math.sin(i*.2)*5;B.z=Math.cos(i*.2)*5;faceUpdate(e,1/60,0);assert.equal(e.face,released);assert.equal(e.turnRate,0);}`,ctx);
+});
+
+test('automatic keeper comes out for a clear central one-on-one, returns when covered and ignores wide threats',()=>{
+  const ctx=context(`function ownGoalX(t){return-t.dir*HL;}`+part('function keeperMove(e,','// the keeper spreads'));
+  vm.runInContext(`for(const dir of [-1,1]){const t={i:0,dir,players:[]},o={i:1,players:[]};t.opp=o;o.opp=t;const gx=ownGoalX(t),e={team:t,isGK:true,x:gx+dir*1.1,z:0,vmax:maxRunSpeed(.8)},c={team:o,x:gx+dir*20,z:0,ipt:.7};t.players=[e];o.players=[c];G.state='play';Object.assign(B,{owner:c,x:c.x,z:0,shot:null});assert.equal(keeperRushPlan(e),null);G.t+=.13;const plan=keeperRushPlan(e);assert.ok(plan&&(plan.x-gx)*dir>1.1&&(plan.x-gx)*dir<=9);keeperMove(e,plan.x,plan.z,true);assert.ok(e.mx*dir>0);t.players.push({x:gx+dir*10,z:0,stun:0});assert.equal(keeperRushPlan(e),null);t.players.pop();c.z=18;assert.equal(keeperRushPlan(e),null);c.z=0;G.state='setpiece';assert.equal(keeperRushPlan(e),null);G.state='play';}`,ctx);
+});
+
+test('keeper attacks an interceptable through ball inside the box but not a shot or a ball reached first by an attacker',()=>{
+  const ctx=context(`function ownGoalX(t){return-t.dir*HL;}`+part('function keeperMove(e,','// the keeper spreads'));
+  vm.runInContext(`const t={i:0,dir:1,players:[]},o={i:1,players:[]};t.opp=o;const gx=ownGoalX(t),e={team:t,isGK:true,x:gx+1.1,z:0,ipx:gx+9,ipz:0,ipt:.6},r={team:o,x:gx+18,z:0,ipt:1.2,stun:0};t.players=[e];o.players=[r];Object.assign(B,{owner:null,lastTeam:1,shot:null,target:{r},y:.2,x:gx+10,z:0});assert.equal(keeperRushPlan(e),null);G.t+=.13;assert.equal(keeperRushPlan(e).loose,true);r.ipt=.4;assert.equal(keeperRushPlan(e),null);r.ipt=1.2;B.shot={team:1};assert.equal(keeperRushPlan(e),null);B.shot=null;e.ipx=gx+22;assert.equal(keeperRushPlan(e),null);`,ctx);
+});
+
+test('keeper dive and sideways tracking remain speed-bounded instead of teleporting to a planned root position',()=>{
+  const ctx=context(part('const easeOut=','const fadeW=')+part('function gkSaveStep(e)','function inOwnBoxP(t,x,z)')+part('function movementAgility(e)','function moveEnt(e,dt)'));
+  vm.runInContext(`const e={vmax:8,x:0,z:0,vx:0,vz:0,save:{t0:G.t-.01,T1:.25,z0:0,rootZ:20,tEnd:G.t+.25}};for(let i=0;i<25;i++){gkSaveStep(e);assert.ok(Math.abs(e.vz)<=e.vmax*1.5+1e-9);const before=e.z;e.z+=e.vz*STEP;assert.ok(Math.abs(e.z-before)<=.2+1e-9);G.t+=STEP;}const k={isGK:true,strafe:true,face:PI/2,vmax:8,stamina:1,st:{pace:.8,drib:.8},vx:0,vz:0,mx:0,mz:10};for(let i=0;i<60;i++)locomote(k,STEP);assert.ok(k.vz>8&&k.vz<=9.2);assert.equal(k.vx,0);`,ctx);
+});
+
+test('a crowded goalmouth cannot displace the keeper by a large body-collision jump in one step',()=>{
+  const ctx=context(part('function separate()','function refThink(r)'));
+  vm.runInContext(`const e={isGK:true,x:0,z:0,vmax:8,st:{phy:.8}},others=Array.from({length:8},(_,i)=>({x:.05+i*.025,z:0,st:{phy:.8}}));G.ents=[e,...others];separate();assert.ok(hyp(e.x,e.z)<=8*STEP*.6+1e-9);assert.ok(others.some(p=>p.x>.3));`,ctx);
+});
 
 test('no remote save for distant balls, wrong height or a predicted catch before the hands arrive',()=>{
   const ctx=keeperContactContext();
