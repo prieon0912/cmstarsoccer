@@ -4357,7 +4357,7 @@ const lgMine=()=>!!(LG.s&&LG.s.custom&&CUSTOM[0]);
 const lgClub=ci=>lgMine()&&ci===LG.s.club?CUSTOM[0]:CLUBS[ci];
 const lgHome=()=>lgMine()?100:LG.s.club;
 const clubOvr=ci=>lgClub(ci).rating;
-/* the league season: 20 clubs, 38 rounds, kept in this browser */
+/* League progress is account-scoped and included in the revisioned profile. */
 const LG={s:null};
 let leagueRewardsClient=null;
 function syncLeagueRewards(){
@@ -4365,14 +4365,23 @@ function syncLeagueRewards(){
   if(!leagueRewardsClient)leagueRewardsClient=FL11LeagueRewards({user:()=>AUTH.user,api,get:lsGet,set:lsSet,season:()=>LG.s,save:lgSave,inventory:receiveInventory});
   return leagueRewardsClient.sync(LG.s);
 }
-function lgSave(){if(LG.s)lsSet('fl11-season',JSON.stringify(LG.s));}
-function lgLoad(recover=true){try{const s=JSON.parse(lsGet('fl11-season')||'null');if(s&&s.v===2&&CLUBS[s.club]&&Array.isArray(s.fx)&&s.fx.length===38){LG.s=s;if(recover)recoverLeagueMatch();}}catch(e){}}
+function lgSave(){
+  if(!LG.s||(AUTH.user&&LG.s.owner&&LG.s.owner!==AUTH.user))return;lsSet(AUTH.user?'fl11-season:@'+AUTH.user:'fl11-season',JSON.stringify(LG.s));
+  const p=prof();if(AUTH.user&&p&&p.srv&&ACC.cur===srvKey()){const season=seasonOut(LG.s);if(!sameProfile(p.season,season)){p.season=season;srvQueue();}}
+}
+function lgLoad(recover=true){
+  LG.s=null;try{const p=prof(),key=AUTH.user?'fl11-season:@'+AUTH.user:'fl11-season';let season=seasonOut(AUTH.user&&p&&p.srv&&p.season!==undefined?p.season:JSON.parse(lsGet(key)||'null'));
+    if(!season&&AUTH.user){const legacy=seasonOut(JSON.parse(lsGet('fl11-season')||'null'));if(legacy&&legacy.owner===AUTH.user)season=legacy;}
+    if(season&&(AUTH.user?(!season.owner||season.owner===AUTH.user):!season.owner)){LG.s=season;if(recover)recoverLeagueMatch();}
+  }catch(e){}
+}
 function markLeagueMatchActive(){
   if(NET.online||G.mode!=='league'||!LG.s)return;const f=userFixture(LG.s.md);if(!f||G.set.away!==f.opp||G.set.home!==lgHome())return;
-  LG.s.activeMatch={md:LG.s.md,h:f.h,a:f.a,home:f.home,user:AUTH.user||null};lgSave();
+  let device=lsGet('fl11-league-device');if(!device){device=globalThis.crypto?.randomUUID?.()||Date.now().toString(36)+'-'+Math.random().toString(36).slice(2);lsSet('fl11-league-device',device);}
+  LG.s.activeMatch={md:LG.s.md,h:f.h,a:f.a,home:f.home,user:AUTH.user||null,device};lgSave();
 }
 function recoverLeagueMatch(){
-  const s=LG.s,m=s?.activeMatch;if(!m||m.user!==(AUTH.user||null))return false;const f=userFixture(s.md);
+  const s=LG.s,m=s?.activeMatch;if(!m||m.user!==(AUTH.user||null)||(m.device&&m.device!==lsGet('fl11-league-device')))return false;const f=userFixture(s.md);
   delete s.activeMatch;if(!f||m.md!==s.md||m.h!==f.h||m.a!==f.a){lgSave();return false;}
   if(!s.res[resKey(s.md,f.h,f.a)])recordResult(s.md,f.h,f.a,f.home?0:3,f.home?3:0,[]);finishRound();return true;
 }
@@ -4670,12 +4679,23 @@ async function api(path,opt={}){
   return d;
 }
 const cleanAccountTacs=t=>{const out={};if(t&&typeof t==='object')for(const k of Object.keys(t))if(/^(0|[1-9][0-9]*)$/.test(k)&&CLUBS[+k])out[k]=cleanTac(t[k]);return out;};
-const profOut=p=>{const ci=profClub(p);return{name:p.name,club:p.club,team:cleanSpec(p.team,ci,cardAllowance(p)),skills:cleanSk(p.skills),tacs:cleanAccountTacs(p.tacs)};};
+function seasonOut(s){
+  if(!s||s.v!==2||!CLUBS[s.club]||!Number.isInteger(s.md)||s.md<0||s.md>38||!Array.isArray(s.fx)||s.fx.length!==38||!s.res||typeof s.res!=='object'||Array.isArray(s.res))return null;
+  return JSON.parse(JSON.stringify(s));
+}
+function adoptSeason(user,p,selected){
+  let migrated=false;if(!seasonOut(p.season)){
+    for(const key of ['fl11-season:@'+user,'fl11-season'])try{const local=seasonOut(JSON.parse(lsGet(key)||'null'));if(local&&local.owner===user){p.season=local;migrated=true;break;}}catch(e){}
+  }
+  if(selected){LG.s=seasonOut(p.season);lsSet('fl11-season:@'+user,JSON.stringify(LG.s));}
+  return migrated;
+}
+const profOut=p=>{const ci=profClub(p);return{name:p.name,club:p.club,team:cleanSpec(p.team,ci,cardAllowance(p)),skills:cleanSk(p.skills),tacs:cleanAccountTacs(p.tacs),...(p.season!==undefined?{season:seasonOut(p.season)}:{})};};
 function srvAdopt(user,data,revision=0,select=true){
-  const k='@'+user,legacyTacs=ACC.list[k]&&ACC.list[k].tacs||G.set.tacs,migrate=!!(data&&data.team&&data.tacs===undefined),p=data&&data.team?{name:String(data.name||user).slice(0,12),club:data.club,team:cleanSpec(data.team),skills:cleanSk(data.skills),inventory:Array.isArray(data.inventory)?data.inventory:undefined,coins:data.coins,tacs:cleanAccountTacs(migrate?legacyTacs:data.tacs),made:Date.now()}:newProfile(user,0);
+  const k='@'+user,legacyTacs=ACC.list[k]&&ACC.list[k].tacs||G.set.tacs,migrate=!!(data&&data.team&&data.tacs===undefined),p=data&&data.team?{name:String(data.name||user).slice(0,12),club:data.club,team:cleanSpec(data.team),skills:cleanSk(data.skills),inventory:Array.isArray(data.inventory)?data.inventory:undefined,coins:data.coins,tacs:cleanAccountTacs(migrate?legacyTacs:data.tacs),made:Date.now(),...(data.season!==undefined?{season:seasonOut(data.season)}:{})}:newProfile(user,0);
   Object.assign(p,{srv:true,_revision:revision,_pending:false,_edit:0});ACC.list[k]=p;
-  if(select)ACC.cur=k;if(ACC.cur===k)applyProfile();accSave();AUTH.dirty=false;syncLeagueRewards();
-  if(!data||!data.team||migrate){p._pending=true;AUTH.dirty=true;accSave();clearTimeout(AUTH.timer);AUTH.timer=setTimeout(srvFlush,0);}
+  if(select)ACC.cur=k;const seasonMigrated=adoptSeason(user,p,ACC.cur===k);if(ACC.cur===k)applyProfile();accSave();AUTH.dirty=false;syncLeagueRewards();
+  if(!data||!data.team||migrate||seasonMigrated){p._pending=true;AUTH.dirty=true;accSave();clearTimeout(AUTH.timer);AUTH.timer=setTimeout(srvFlush,0);}
 }
 function srvBackup(p){
   if(!p||!p._pending)return;
@@ -4683,7 +4703,7 @@ function srvBackup(p){
   ACC.list[id]=Object.assign(profOut(p),{name:('복구용 '+p.name).slice(0,12),made:Date.now()});accSave();
 }
 function authDrop(){const k=srvKey(),p=ACC.list[k];if(p)srvBackup(p);if(k){delete ACC.list[k];if(ACC.cur===k)ACC.cur=Object.keys(ACC.list).find(i=>!ACC.list[i].srv)||null;}
-  AUTH.token=null;AUTH.user=null;AUTH.dirty=false;clearTimeout(AUTH.timer);authSave();accSave();applyProfile();}
+  AUTH.token=null;AUTH.user=null;AUTH.dirty=false;clearTimeout(AUTH.timer);authSave();accSave();applyProfile();lgLoad(false);}
 function srvQueue(delay=200){const p=prof();if(!p||!p.srv||ACC.cur!==srvKey()||!AUTH.token)return;
   p._pending=true;p._edit=(p._edit||0)+1;AUTH.dirty=true;AUTH.state='저장 대기';accSave();clearTimeout(AUTH.timer);AUTH.timer=setTimeout(srvFlush,delay);tmAuthLine();}
 function sameProfile(a,b){const canonical=v=>v&&typeof v==='object'?(Array.isArray(v)?v.map(canonical):Object.fromEntries(Object.keys(v).sort().map(k=>[k,canonical(v[k])]))):v;return JSON.stringify(canonical(a))===JSON.stringify(canonical(b));}
@@ -4734,7 +4754,7 @@ async function srvRefresh(){
     if(AUTH.token!==token||ACC.list[k]!==before||(before&&((before._edit||0)!==edit||before._pending&&Number.isSafeInteger(before._revision))))return;
     if(before&&before._pending)srvBackup(before);
     srvAdopt(d.user.username,d.profile,d.revision,ACC.cur===k||!prof());AUTH.state='저장됨';
-    if(!$('team').hidden)renderTeam();if(G.state==='menu')renderHubAcc();
+    if(!$('team').hidden)renderTeam();if(G.state==='menu'){renderHubAcc();if(typeof renderHub==='function')renderHub();}
   }catch(e){if(AUTH.token===token){AUTH.state=e.message;if(e.status===401){authDrop();if(G.state==='menu')renderHubAcc();if(!$('account').hidden)renderAccount();}}}
   finally{AUTH.refreshing=false;tmAuthLine();}
 }
