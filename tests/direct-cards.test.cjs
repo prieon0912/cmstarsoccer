@@ -4,6 +4,24 @@ test('all 17 proposed cards validate without any source card and retain their in
   assert.equal(presets.length,17);assert.equal(new Set(presets.map(p=>p.id)).size,17);
   for(const p of presets){const club=base.find(c=>c.clubId===p.clubId);const card=econ.validateCard({name:p.name,classId:'BALLON_DOR',clubIndex:club?.clubIndex??0,pos:p.pos,ovr:p.ovr,roster:{num:p.num,stars:p.stars,st:Object.fromEntries(Object.entries(p.st).map(([k,v])=>[k,v/100])),hid:p.hid,feet:{foot:p.foot,wf:p.wf}}},classes,null);assert.equal(card.ovr,p.ovr);assert.deepEqual(card.roster.hid,p.hid);assert.equal(card.roster.st.shoot,p.st.shoot/100);assert.equal(card.roster.feet.wf,p.wf);}
 });
+
+test('editing an existing player identity applies the requested ID while preserving card identity and attributes',()=>{
+  const p=presets.find(p=>p.id==='modric'),club=base.find(c=>c.clubId===p.clubId);
+  const input={name:'루카 모드리치',classId:'BALLON_DOR',clubIndex:club.clubIndex,pos:p.pos,ovr:p.ovr,playerId:'old-modric-id',roster:{num:p.num,stars:p.stars,st:Object.fromEntries(Object.entries(p.st).map(([k,v])=>[k,v/100])),hid:p.hid,feet:{foot:p.foot,wf:p.wf}}};
+  const existing=econ.validateCard(input,classes,null),updated=econ.validateCard({...input,playerId:'MIL|모드리치'},classes,existing);
+  assert.equal(updated.playerId,'MIL|모드리치');assert.equal(updated.id,existing.id);assert.equal(updated.ovr,existing.ovr);assert.deepEqual(updated.roster,existing.roster);
+  const omitted={...input};delete omitted.playerId;assert.equal(econ.validateCard(omitted,classes,updated).playerId,'MIL|모드리치');
+  assert.throws(()=>econ.validateCard({...input,playerId:''},classes,updated),/식별자/);
+  assert.equal(existing.playerId,'old-modric-id'); // no mutation of the original or unrelated cards
+});
+
+test('pack multiplier selector includes late ICON additions and supports class/name filtering without truncation',()=>{
+  const code=fs.readFileSync(path.join(__dirname,'../public/admin/manage.js'),'utf8'),a=code.indexOf('  function multOptions(){'),b=code.indexOf('  function renderMults()',a),elements={multSearch:{value:''},multClass:{value:''},multCard:{value:''}};
+  let options=[];Object.defineProperty(elements.multCard,'innerHTML',{set(html){options=[...html.matchAll(/<option value="([^"]+)">([^<]*)<\/option>/g)];this.value=options[0]?.[1]||'';}});
+  const cards=Array.from({length:720},(_,i)=>({id:'BASE|'+i,classId:'BASE',name:'베이스 '+i,clubId:'ARS',ovr:80})).concat(Array.from({length:107},(_,i)=>({id:'ICON|'+i,classId:'ICON',name:i<2?'크리스티아누 호날두':'아이콘 '+i,clubId:i?'RMA':'MUN',ovr:90,active:true})));
+  const ctx=vm.createContext({catalog:{cards},$:id=>elements[id],esc:String});vm.runInContext(code.slice(a,b),ctx);vm.runInContext('multOptions()',ctx);assert.equal(options.length,827);assert.ok(options.some(x=>x[1]==='ICON|106'));
+  elements.multClass.value='ICON';vm.runInContext('multOptions()',ctx);assert.equal(options.length,107);elements.multSearch.value='크리스티아누호날두';vm.runInContext('multOptions()',ctx);assert.equal(options.length,2);assert.ok(options.some(x=>x[2].includes('MUN')));assert.ok(options.some(x=>x[2].includes('RMA')));elements.multCard.value='ICON|1';vm.runInContext('multOptions()',ctx);assert.equal(elements.multCard.value,'ICON|1');
+});
 test('class add opens editable new-card form; edited preset values save and next card keeps the class',async()=>{
   const elements={},events={},saved=[];const catalog={classes,cards:[...base],packages:[]};
   function element(id){return elements[id]??=( {value:'',hidden:false,required:false,listeners:{},classList:{toggle(){}},addEventListener(type,fn){this.listeners[type]=fn;},scrollIntoView(){},checkValidity(){return !this.required||String(this.value)!=='';},reportValidity(){},querySelectorAll(){return Object.values(elements).filter(e=>e.isInput);}});}

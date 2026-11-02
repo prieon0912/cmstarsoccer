@@ -413,8 +413,8 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
 }
 </style>
 
-<link rel="stylesheet" href="/commerce.css?v=shop-2"><link rel="stylesheet" href="/pack-reveal.css?v=classes-6">
-<script src="/data/class-designs.js?v=classes-6"></script><script src="/data/card-classes.js?v=classes-6"></script><script src="/data/player-catalog.js?v=classes-6"></script><script src="/pack-reveal.js?v=classes-6"></script><script src="/commerce.js?v=shop-2"></script><script src="/league-rewards.js?v=classes-6"></script>
+<link rel="stylesheet" href="/commerce.css?v=shop-2"><link rel="stylesheet" href="/collection.css?v=book-1"><link rel="stylesheet" href="/pack-reveal.css?v=classes-6">
+<script src="/data/class-designs.js?v=classes-6"></script><script src="/data/card-classes.js?v=classes-6"></script><script src="/data/player-catalog.js?v=classes-6"></script><script src="/pack-reveal.js?v=classes-6"></script><script src="/commerce.js?v=shop-2"></script><script src="/collection.js?v=book-1"></script><script src="/league-rewards.js?v=classes-6"></script>
 </head>
 <body>
 <div id="app">
@@ -466,7 +466,7 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
         <div class="row"><label>난이도</label><div class="seg" id="segD"></div></div>
         <div class="row"><label>경기 시간</label><div class="seg" id="segL"></div></div>
         <div class="hub-acc" id="hubAcc"></div>
-        <div class="hub-more"><button id="accountBtn">로그인 / 회원가입</button><button id="shopBtn">상점</button><button id="teamBtn">팀 설정</button><button id="friendBtn">친선 경기</button><button id="olBtn">1대1 온라인</button><button id="newSeasonBtn">새 시즌</button></div>
+        <div class="hub-more"><button id="accountBtn">로그인 / 회원가입</button><button id="shopBtn">상점</button><button id="bookBtn">도감</button><button id="teamBtn">팀 설정</button><button id="friendBtn">친선 경기</button><button id="olBtn">1대1 온라인</button><button id="newSeasonBtn">새 시즌</button></div>
       </div>
       <div class="hub-r">
         <div class="hub-tabs" id="hubTabs"><button data-tab="table">순위</button><button data-tab="fix">일정·결과</button><button data-tab="sc">득점</button></div>
@@ -547,6 +547,9 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
   </section>
   <section id="shop" class="ov" role="dialog" aria-modal="true" aria-labelledby="shopTitle" hidden>
     <div class="card shop-card"><div class="shop-head"><h2 id="shopTitle">PLAYER STORE</h2><span class="coin-pill" id="shopCoins">— 코인</span><button id="shopClose">닫기</button></div><div class="shop-scroll" id="shopContent"></div><p class="note" id="shopMessage" role="status"></p></div>
+  </section>
+  <section id="collection" class="ov" role="dialog" aria-modal="true" aria-labelledby="bookTitle" hidden>
+    <div class="card book-card"><div class="book-head"><h2 id="bookTitle">COLLECTION</h2><span class="coin-pill" id="bookCoins">— 코인</span><button id="bookClose">닫기</button></div><div class="book-scroll" id="bookContent"></div><p class="note" id="bookMessage" role="status"></p></div>
   </section>
   <section id="subs" class="ov" hidden>
     <div class="card sub-card">
@@ -5339,6 +5342,10 @@ let commerce=null;
 function openShop(){if(AUTH.user&&ACC.list[srvKey()]&&ACC.cur!==srvKey()){ACC.cur=srvKey();applyProfile();accSave();renderHubAcc();}if(!commerce)commerce=FL11Commerce({user:()=>AUTH.user,api,loadCatalog:loadLiveCatalog,inventory:receiveInventory,card:cardById,cardHTML,classFor:cardClass,quantity:id=>(ACC.list[srvKey()]?.inventory||[]).find(c=>c.cardId===id)?.quantity||0,flush:srvEnsureSaved,openAccount,openTeam});commerce.open();}
 $('shopBtn').addEventListener('click',openShop);
 $('shop').addEventListener('keydown',e=>e.stopPropagation());
+let collectionBook=null;
+function openCollection(){if(AUTH.user&&ACC.list[srvKey()]&&ACC.cur!==srvKey()){ACC.cur=srvKey();applyProfile();accSave();renderHubAcc();}if(!collectionBook)collectionBook=FL11Collection({user:()=>AUTH.user,api,loadCatalog:loadLiveCatalog,inventory:receiveInventory,card:cardById,cardHTML,classFor:cardClass,club:id=>CLUBS.find(c=>c.id===id),crest:crestHTML,leagues:LEAGUES,openAccount});collectionBook.open();}
+$('bookBtn').addEventListener('click',openCollection);
+$('collection').addEventListener('keydown',e=>e.stopPropagation());
 
 let last=performance.now(),acc=0,fpsAcc=0,fpsN=0,fpsCheck=0;
 const STEP=1/60;

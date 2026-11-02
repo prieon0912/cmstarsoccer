@@ -42,6 +42,7 @@ await vm.runInContext(`(async()=>{
   // Legacy server profiles with foreign players are repaired before caching.
   srvAdopt('legacy',{club:CLUBS[20].id,team:newProfile('old',0).team});
   assert.ok(JSON.parse(lsGet('fl11-acc')).list['@legacy'].team.cards.every(id=>cardById(id).ci===20));
+  ACC.cur='local';AUTH.token=null;AUTH.user=null;AUTH.dirty=false;clearTimeout(AUTH.timer);applyProfile();
   for(let ci=0;ci<CLUBS.length;ci++){
     newSeason(ci,false);
     assert.equal(lgHome(),ci);assert.equal(lgClub(ci).id,CLUBS[ci].id);
