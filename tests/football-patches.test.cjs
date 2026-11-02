@@ -12,6 +12,26 @@ test('a half continues through passes and deflections, ends on controlled turnov
   G.state='goal';assert.equal(periodEndStep(),false);assert.equal(G.stoppage.ended,true);G.state='play';assert.equal(periodEndStep(),true);
   `,ctx);
 });
+
+test('the displayed clock freezes at 45 and 90 while internal stoppage time keeps advancing',()=>{
+  const ctx=context(part('function matchClockText(clock,half)','function hudFrame()'));
+  vm.runInContext(`for(const [half,limit] of [[1,45],[2,90]]){assert.equal(matchClockText(limit-1/120,half),(limit-1)+':59');for(const extra of [0,.5,2,5]){G.clock=limit+extra;assert.equal(matchClockText(G.clock,half),limit+':00');assert.equal(G.clock,limit+extra);}}assert.equal(matchClockText(0,1),'00:00');assert.equal(matchClockText(45,2),'45:00');`,ctx);
+});
+
+test('keeper planning reaches the shot sooner without widening physical collision or advancing off the line',()=>{
+  const ctx=context(`const HIP_H=.972;function ownGoalX(t){return -t.dir*HL;}function trajAt(){return {x:B.x,z:2.3,y:1.2};}function gkGo(){}`+part('function planSave(e)','function gkGo(e)')+part('function movementAgility(e)','function moveEnt(e,dt)'));
+  vm.runInContext(`const e={team:{i:0,dir:1},x:-HL+1.1,z:0,face:PI/2,gkSkill:.9,isGK:true};Object.assign(B,{x:e.x+20,z:0,y:BR,vx:-25,vy:0,vz:0});Math.random=()=>.7;planSave(e);assert.equal(e.save.ok,true);assert.ok(e.save.T1<.32);assert.equal(e.x,-HL+1.1);assert.equal(typeof keeperTouch,'undefined');e.save=null;e.strafe=true;e.faceTgt={x:e.x+10,z:0};e.face=PI/2;e.vx=0;e.vz=4;faceUpdate(e,1/60,4);assert.ok(Math.abs(angD(e.face,PI/2))<1e-9);`,ctx);
+});
+
+test('ordinary sprint dribbling stays closer to the feet without pulling the ball through the player',()=>{
+  const ctx=context(part('function skillBall(o)','/* ================= AI')+part('function updateBall(dt)','function checkRules()'));
+  vm.runInContext(`for(const hz of [30,60,120]){const e={x:0,z:0,vx:8,vz:0,face:PI/2,speed:8,phase:0,sprint:true,act:0};B.owner=e;B.x=.6;B.z=0;let far=0;for(let i=0;i<hz*3;i++){e.x+=8/hz;e.phase+=TAU*2/hz;updateBall(1/hz);const ahead=B.x-e.x;far=Math.max(far,ahead);assert.ok(ahead>=.499999);}assert.ok(far<1.2);assert.ok(far>.85);}`,ctx);
+});
+
+test('field-player pickup no longer reaches the former distant front edge, while close reception still works',()=>{
+  const ctx=context(`let gains=0;function integ(){}function ballCollide(){}function heavyTouch(){return false;}function fiftyFifty(e){return e;}function gainBall(e){gains++;B.owner=e;}`+part('function updateBall(dt)','function checkRules()'));
+  vm.runInContext(`const team={i:0},e={team,x:0,z:0,act:0,stun:0,cool:0,isGK:false};G.ents=[e];for(const [distance,speed,receiver] of [[1.12,8,true],[.95,3,false],[.85,8,false]]){Object.assign(B,{x:distance,z:0,y:BR,vx:speed,vy:0,vz:0,owner:null,shot:null,lastTeam:0,target:receiver?{r:e}:null});updateBall(1/60);assert.equal(B.owner,null);}Object.assign(B,{x:.65,z:0,y:BR,vx:8,vy:0,vz:0,owner:null,shot:null,lastTeam:0,target:{r:e}});updateBall(1/60);assert.equal(B.owner,e);assert.equal(gains,1);`,ctx);
+});
 test('body dimensions and contact distances leave realistic space; movement faces travel and agility controls turning',()=>{
   const ctx=context(part('function movementAgility(e)','function moveEnt(e,dt)'));
   vm.runInContext(`assert.equal(HL*2,105);assert.equal(HW*2,68);assert.equal(CONTACT.body,.6);assert.equal(CROQUETA_RANGE,.9);
@@ -103,7 +123,7 @@ test('automatic keepers stay near their goal for field play, loose balls and one
   for(const depth of [60,30,12,4]){c.x=gx+dir*depth;B.owner=c;B.x=c.x;B.z=5;B.shot=null;t.chaser=e;gkThink(e,1/60);assert.ok(Math.abs((e.sx-gx)*dir-1.1)<1e-9);assert.ok(e.mx*dir<0);}
   B.owner=null;B.shot=null;B.target=null;B.lastTeam=1;B.x=gx+dir*20;B.z=0;teamThink(t,1/60);assert.notEqual(t.chaser,e);gkThink(e,1/60);assert.ok(Math.abs((e.sx-gx)*dir-1.1)<1e-9);
   B.owner=e;B.held=true;e.holdT=.2;gkThink(e,1/60);assert.equal(e.mx,0);assert.equal(e.mz,0);e.holdT=2;gkThink(e,1/60);
-  B.owner=null;B.shot={team:1,t:G.t-2};gkThink(e,1/60);assert.ok(e.save);e.save=null;PADS[0]={ctrl:e,lock:null};e.mx=2;e.mz=3;gkThink(e,1/60);assert.equal(e.mx,2);assert.equal(e.mz,3);PADS[0]=null;
+  B.owner=null;B.shot={team:1,t:G.t-.18};gkThink(e,1/60);assert.ok(e.save);e.save=null;PADS[0]={ctrl:e,lock:null};e.mx=2;e.mz=3;gkThink(e,1/60);assert.equal(e.mx,2);assert.equal(e.mz,3);PADS[0]=null;
   }assert.equal(distributions,2);assert.equal(saves,2);`,ctx);
 });
 

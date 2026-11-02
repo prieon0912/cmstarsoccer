@@ -1516,7 +1516,7 @@ function locoPose(e,P,dt){
   let ready=0;
   if(gk)ready=B.owner===e?0:clamp(1-(bd-14)/24,0,1);
   else if(e.team&&B.owner&&B.owner!==e&&B.owner.team!==e.team)ready=clamp(1-(bd-2.5)/5,0,1);
-  e.rdy=lerp(e.rdy||0,ready,Math.min(1,(dt||0)*4));
+  e.rdy=lerp(e.rdy||0,ready,Math.min(1,(dt||0)*(gk?7:4)));
   const rd=e.rdy*(1-amp*0.8);
   P.fill(0);
   // pelvis: sinks with speed and in the stance, dips on each footfall, swings with the stride
@@ -2345,7 +2345,7 @@ function resolvePoke(d,c,bonus){
   const fx0=Math.sin(d.face),fz0=Math.cos(d.face),footX=d.x+fx0*POKE_REACH,footZ=d.z+fz0*POKE_REACH;
   const dist=hyp(B.x-footX,B.z-footZ);
   const fx=Math.sin(c.face),fz=Math.cos(c.face),dot=((d.x-c.x)*fx+(d.z-c.z)*fz)/Math.max(0.1,hyp(d.x-c.x,d.z-c.z));
-  if(dist>0.62){
+  if(dist>0.50){
     // missed the ball: through the man's legs from behind it is a foul, otherwise he is left lunging at air
     if(hyp(c.x-footX,c.z-footZ)<0.55&&Math.random()<(dot<-0.3?0.6:0.18)){callFoul(d,c,dot<-0.3?'behind':'trip');return false;}
     d.act=ACT.STUMBLE;d.actT=0;d.stun=0.38;d.tackleCd=0.9;d.poke=null;return false;
@@ -3091,7 +3091,7 @@ function gkThink(e,dt){
   if(e.aimFace!=null&&!e.kick)e.aimFace=null;
   if(e.save){gkSaveStep(e);return;}
   if(e.act===ACT.CATCH&&e.actT<0.35){e.mx=e.mz=0;return;}
-  if(!B.owner&&B.shot&&B.shot.team!==t.i&&G.t-B.shot.t>(t.human?0.2:D.react*0.6+0.05)*(B.shot.x0!=null?clamp(hyp(B.shot.x0-e.x,B.shot.z0-e.z)/14,0.35,1):1)){planSave(e);if(e.save){gkSaveStep(e);return;}}
+  if(!B.owner&&B.shot&&B.shot.team!==t.i&&G.t-B.shot.t>(t.human?0.12:D.react*0.42+0.03)*(B.shot.x0!=null?clamp(hyp(B.shot.x0-e.x,B.shot.z0-e.z)/14,0.35,1):1)){planSave(e);if(e.save){gkSaveStep(e);return;}}
   // Automatic positioning stays on the goal line; no sweeper, one-on-one rush or smother.
   const depth=1.1,tx=gx+t.dir*depth,tz=clamp(B.z*depth/Math.max(depth,Math.abs(B.x-gx)),-GW/2+0.35,GW/2-0.35);
   setMove(e,tx,tz,hyp(tx-e.x,tz-e.z)>3,false);e.strafe=true;e.faceTgt=B;
@@ -3172,21 +3172,21 @@ function planSave(e){
   // a dive rolls the body around the hips (hands ~1.25 m from the pelvis); the pelvis rises for high balls
   let tilt=0,py=HIP_H,hand=0.5,kind='catch';
   if(al>0.65||h>2.05){py=clamp(0.3+(h-0.35)*0.55,0.28,1.25);tilt=Math.acos(clamp((h-py)/1.25,0.05,0.97));hand=Math.sin(tilt)*1.25+0.1;kind='dive';}
-  const move=Math.max(0,al-hand),can=0.42+avail*6.2*PLAYER_SPEED;
+  const move=Math.max(0,al-hand),can=0.42+avail*6.2*PLAYER_SPEED*1.15;
   let ch=0;
-  if(move<=can)ch=e.gkSkill*(1.08-(move/Math.max(0.01,can))*0.62-Math.max(0,sp-17)/32-(al>2.5?0.16:0)-(h>2.0&&al>2.0?0.18:0)-(kind==='dive'&&h<0.45&&al>2.0?0.1:0));
-  ch=clamp(ch,0,0.88);
+  if(move<=can)ch=e.gkSkill*(1.18-(move/Math.max(0.01,can))*0.62-Math.max(0,sp-17)/42-(al>2.5?0.16:0)-(h>2.0&&al>2.0?0.18:0)-(kind==='dive'&&h<0.45&&al>2.0?0.1:0));
+  ch=clamp(ch,0,0.94);
   const ok=Math.random()<ch;
   const reachZ=pt.z-sideW*hand*0.95;
   // a real keeper sets himself and goes late with one explosive spring: the dive lasts only as long as the reach needs,
   // and until it is time to go he shuffles a little toward the ball's line on his toes (the odds above are unchanged)
-  const Td=clamp(0.26+move*0.05+(h>1.8?0.05:0),0.26,0.48),T1=Math.min(Td,Math.max(0.16,tP*0.92))/PLAYER_SPEED,delay=Math.max(0,tP-T1-0.03);
-  e.save={ok,done:false,tEnd:G.t+tP,t0:G.t+delay,T1,z0:e.z,rootZ:ok?reachZ:e.z+(reachZ-e.z)*rnd(0.45,0.75),handZ:pt.z,sideW,hand,catch:ok&&((sp<21&&(kind==='catch'||al<1.6)&&Math.random()<0.7)||(sp<28&&al<0.9&&Math.random()<0.45)),
+  const Td=clamp(0.24+move*0.043+(h>1.8?0.04:0),0.24,0.44),T1=Math.min(Td,Math.max(0.16,tP*0.92))/(PLAYER_SPEED*1.12),delay=Math.max(0,tP-T1-0.03);
+  e.save={ok,done:false,tEnd:G.t+tP,t0:G.t+delay,T1,z0:e.z,rootZ:ok?reachZ:e.z+(reachZ-e.z)*rnd(0.60,0.85),handZ:pt.z,sideW,hand,catch:ok&&((sp<21&&(kind==='catch'||al<1.6)&&Math.random()<0.82)||(sp<28&&al<0.9&&Math.random()<0.58)),
     pending:true,kind,tilt,py,sideL,h};
   if(delay<0.02)gkGo(e);
 }
 function gkGo(e){
-  const sv=e.save;sv.pending=false;sv.t0=G.t;sv.z0=e.z;
+  const sv=e.save;sv.pending=false;sv.t0=G.t;sv.z0=e.z;e.face=Math.atan2(B.x-e.x,B.z-e.z);
   if(sv.kind==='dive'){e.act=ACT.DIVE;e.actT=0;e.actD=sv.sideL;e.ap1=sv.tilt;e.ap2=sv.py;e.ap3=sv.T1;}
   else{e.act=ACT.CATCH;e.actT=0;e.ap1=sv.h;}
 }
@@ -3316,6 +3316,7 @@ function locomote(e,dt){
   }else{const next=Math.max(0,speed-lerp(12,21,agility)*PLAYER_SPEED*dt);e.vx=Math.sin(e.face)*next;e.vz=Math.cos(e.face)*next;e.turnRate=0;}
 }
 function faceUpdate(e,dt,sp){
+  if(e.isGK&&((e.strafe&&e.faceTgt)||(e.save&&!e.save.watch))&&e.act!==ACT.DIVE){const target=e.faceTgt||B,angle=Math.atan2(target.x-e.x,target.z-e.z),delta=clamp(angD(e.face,angle),-dt*12,dt*12);e.face+=delta;e.turnRate=delta/Math.max(dt,1e-3);return;}
   if(e.act===ACT.SKILL&&e.sk)return;if(e.act===ACT.POKE&&e.poke)return;
   if(e.act===ACT.SLIDE||e.act===ACT.DIVE||e.act===ACT.FALL||e.act===ACT.CARD){e.turnRate=0;return;}
   if(sp>0.2){e.face=Math.atan2(e.vx,e.vz);return;}
@@ -3380,7 +3381,7 @@ function updateBall(dt){
       }
       // dribbling: one touch per stride pushes the ball ahead, the runner catches up with it
       const fx=Math.sin(o.face),fz=Math.cos(o.face),sp=o.speed,cyc=((o.phase/TAU)%1+1)%1,run=Math.min(1,sp/7);
-      let lead=0.42+sp*0.045+run*(0.22+(o.sprint?0.38:0.1))*Math.sin(cyc*PI),side=0.05+0.04*Math.sin(cyc*TAU);
+      let lead=0.42+sp*0.035+run*(0.18+(o.sprint?0.24:0.08))*Math.sin(cyc*PI),side=0.05+0.04*Math.sin(cyc*TAU);
       if(o.kick){lead=0.56;side=0.12;}
       if(o.act===ACT.TRAP)lead=0.35+0.2*Math.min(1,o.actT/0.25);
       const tx=o.x+fx*lead-fz*side,tz=o.z+fz*lead+fx*side;
@@ -3409,7 +3410,7 @@ function updateBall(dt){
     const d=hyp(B.x-e.x,B.z-e.z);
     const gkHands=e.isGK&&inOwnBox(e);
     const recv=B.target&&B.target.r===e;
-    const slowB=hyp(B.vx,B.vz)<5&&B.y<0.5,reach=gkHands?1.3:recv?1.25:slowB?1.05:0.9,hmax=gkHands?2.6:recv?1.35:1.05;
+    const slowB=hyp(B.vx,B.vz)<5&&B.y<0.5,reach=gkHands?1.3:recv?1.05:slowB?0.9:0.78,hmax=gkHands?2.6:recv?1.35:1.05;
     if(d<reach&&B.y<hmax){if(d<bd){bd=d;best=e;}}
     else if(!e.isGK&&d<1.7&&B.y>=1.05&&B.y<2.4){heads.push({e,d});if(d<0.95&&d<hd){hd=d;head=e;}}
   }
@@ -4151,8 +4152,9 @@ function hudInit(){
 }
 function hudScore(){$('sH').textContent=G.score[0];$('sA').textContent=G.score[1];}
 function hudTag(){const c=LP().ctrl;if(!c)return;$('tNo').textContent=c.num;$('tNm').textContent=c.name;$('tPos').textContent=c.lbl;$('tStar').textContent=c.isGK?'':'★'+(c.stars||1);$('tCard').hidden=!(c.yellow>0);}
+function matchClockText(clock,half){const shown=Math.min(clock,half===1?45:90),m=Math.floor(shown),s=Math.floor((shown-m)*60);return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');}
 function hudFrame(){
-  const m=Math.floor(G.clock),s=Math.floor((G.clock-m)*60);const str=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  const str=matchClockText(G.clock,G.half);
   if(str!==lastClk){$('clk').textContent=str;lastClk=str;$('hlf').textContent=G.half===1?'전반':'후반';}
   const lc=LP().ctrl,mode=G.state==='play'||G.state==='setpiece'||G.state==='kickoff'?userMode(LP()):'atk';
   const spk=mode==='sp'?(G.state==='kickoff'?'kickoff':G.sp&&G.sp.type)||'kickoff':'',key=mode+spk;
