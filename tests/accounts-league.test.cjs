@@ -22,9 +22,9 @@ vm.runInContext([
 await vm.runInContext(`(async()=>{
   for(let ci=0;ci<CLUBS.length;ci++){
     const p=newProfile('test',ci), own=ownedCards(p);
-    assert.equal(own.length,20); assert.equal(p.team.cards.length,11);assert.equal(p.team.bench.length,9);
+    assert.equal(own.length,20); assert.equal(p.team.cards.length,11);assert.equal(p.team.bench.length,7);
     assert.ok(own.every(cd=>cd.ci===ci));
-    assert.equal(new Set([...p.team.cards,...p.team.bench]).size,20);
+    assert.equal(new Set([...p.team.cards,...p.team.bench]).size,18);
     // Export must remove foreign cards, even when a saved/imported team contains them.
     p.team.cards=CLUBS[(ci+1)%CLUBS.length].xi.map(x=>CLUBS[(ci+1)%CLUBS.length].id+'|'+x[0]);
     assert.ok(profOut(p).team.cards.every(id=>cardById(id).ci===ci));

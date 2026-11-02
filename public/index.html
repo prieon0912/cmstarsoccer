@@ -262,6 +262,7 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
 .club em{font-style:normal;font-size:10px;color:var(--mute);font-family:var(--f-num)}
 .seg{display:flex;gap:4px;flex-wrap:wrap}
 .seg button{flex:1 1 0;min-width:64px;padding:8px 6px;border-radius:6px;border:1px solid transparent;background:var(--glass-hi);font-size:13px;font-weight:700;cursor:pointer}
+.seg.forms{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}.seg.forms button{min-width:0;padding-left:2px;padding-right:2px;font-size:12px;white-space:nowrap;letter-spacing:-.02em}
 .seg button[aria-pressed="true"]{border-color:var(--flood);color:var(--flood);background:rgba(255,212,71,.1)}
 .vs{font-size:12px;color:var(--mute);margin:0;display:flex;justify-content:space-between;gap:8px}
 .vs b{color:var(--ink);font-weight:700}
@@ -300,8 +301,8 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
 .tm-head .bon{color:var(--flood);font-weight:700}
 .tm-pw{flex:1 1 0;min-height:0;container-type:size;display:grid;place-items:center}
 .tm-pw .tac-pitch{width:min(100cqw,calc(100cqh * 105 / 68));max-height:none}
-.tm-bench{display:grid;grid-template-columns:auto repeat(9,minmax(0,1fr));gap:4px;align-items:center}
-.tm-bench>i{font-style:normal;font-size:11px;color:var(--mute);font-weight:700;writing-mode:vertical-rl;transform:rotate(180deg)}
+.tm-bench{display:grid;grid-template-columns:auto repeat(7,minmax(0,1fr));gap:4px;align-items:center}
+.tm-bench>i{font-style:normal;font-size:11px;color:var(--mute);font-weight:700;writing-mode:vertical-rl;text-orientation:upright;letter-spacing:2px}
 .bs{display:grid;justify-items:center;gap:1px;padding:4px 2px;border-radius:7px;border:1px dashed var(--rule);background:rgba(255,255,255,.03);cursor:pointer;min-width:0;min-height:52px;align-content:center}
 .bs b{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--kit);color:var(--num);font-family:var(--f-num);font-weight:800;font-size:13px}
 .bs span{font-size:10px;font-weight:700;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -413,7 +414,7 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
 }
 </style>
 
-<link rel="stylesheet" href="/commerce.css?v=shop-2"><link rel="stylesheet" href="/collection.css?v=book-1"><link rel="stylesheet" href="/pack-reveal.css?v=classes-6">
+<link rel="stylesheet" href="/commerce.css?v=shop-2"><link rel="stylesheet" href="/collection.css?v=book-2"><link rel="stylesheet" href="/pack-reveal.css?v=classes-6">
 <script src="/data/class-designs.js?v=classes-6"></script><script src="/data/card-classes.js?v=classes-6"></script><script src="/data/player-catalog.js?v=classes-6"></script><script src="/pack-reveal.js?v=classes-6"></script><script src="/commerce.js?v=shop-2"></script><script src="/collection.js?v=book-1"></script><script src="/league-rewards.js?v=classes-6"></script>
 </head>
 <body>
@@ -518,7 +519,7 @@ button:focus-visible{outline:2px solid var(--flood);outline-offset:2px}
       <div class="tac-side">
         <h2>TACTICS</h2>
         <p class="tac-club" id="tacTitle"></p>
-        <div class="tac-row"><label>포메이션</label><div class="seg" id="segF"></div></div>
+        <div class="tac-row"><label>포메이션</label><div class="seg forms" id="segF"></div></div>
         <div class="tac-row"><label>운영</label><div class="seg" id="segM"></div></div>
         <p class="tac-info" id="tacInfo"></p>
         <p class="vs" id="tacOpp"></p>
@@ -876,7 +877,7 @@ NAP|밀린코비치사비치:43,25,80,40,30,81,1|올리베라:73,51,69,72,77,70,
 const PSTAT={};
 /* ================= cards, your own team, accounts =================
    Every account owns only its selected club's 20 base cards. A team is 11 starters (slot order of its formation) plus up
-   to 9 on the bench, a formation and mentality, a kit borrowed from any club, a name and a 3-letter tag. If all 11
+   to 7 on the bench, a formation and mentality, a kit borrowed from any club, a name and a 3-letter tag. If all 11
    starters come from the same club they play together better: +3 to every rating (and the keeper's overall).
    Custom teams live at index 100 (yours) and 101 (an online opponent's) so the match code can treat them like clubs */
 const CUSTOM=[null,null];
@@ -907,7 +908,7 @@ function customRoster(cl){
     return Object.assign({},m,{k,st,ovr:m.ovr+(one?3:0),card:cd.id});});
 }
 // a team spec checked over: 11 different real cards (keeper first if one is there), bench without repeats
-const BENCH_MAX=9;
+const BENCH_MAX=7;
 // own: the club whose cards may be used (an account's club); without it any real card is accepted (an online opponent's team)
 function cleanSpec(sp,fallbackCi,own){
   const fb=CLUBS[fallbackCi|0]||CLUBS[0],ids=new Set(),players=new Set(),ok=id=>{const cd=cardById(id);return !!cd&&(!own||(own instanceof Set?own.has(id):cd.club.id===own));},take=id=>{const cd=cardById(id);if(!ok(id)||ids.has(id)||players.has(cd.playerId))return false;ids.add(id);players.add(cd.playerId);return true;};
@@ -978,6 +979,18 @@ const FORMS={
    {p:[-0.42,-0.16],r:'MF',l:'CM'},{p:[-0.42,0.16],r:'MF',l:'CM'},{p:[-0.36,0.7],r:'MF',l:'RWB'},{p:[-0.06,-0.5],r:'FW',l:'LW'},{p:[0.06,0],r:'FW',l:'ST'},{p:[-0.06,0.5],r:'FW',l:'RW'}],
  '5-3-2':[GKS,{p:[-0.56,-0.68],r:'DF',l:'LWB'},{p:[-0.7,-0.3],r:'DF',l:'CB'},{p:[-0.73,0],r:'DF',l:'CB'},{p:[-0.7,0.3],r:'DF',l:'CB'},
    {p:[-0.56,0.68],r:'DF',l:'RWB'},{p:[-0.42,0],r:'MF',l:'CDM'},{p:[-0.34,0.3],r:'MF',l:'CM'},{p:[-0.34,-0.3],r:'MF',l:'CM'},{p:[0.04,-0.12],r:'FW',l:'ST'},{p:[0.01,0.14],r:'FW',l:'ST'}],
+ '4-1-2-1-2':[GKS,{p:[-0.6,-0.62],r:'DF',l:'LB'},{p:[-0.68,-0.21],r:'DF',l:'CB'},{p:[-0.68,0.21],r:'DF',l:'CB'},{p:[-0.6,0.62],r:'DF',l:'RB'},
+   {p:[-0.33,-0.32],r:'MF',l:'CM'},{p:[-0.48,0],r:'MF',l:'CDM'},{p:[-0.33,0.32],r:'MF',l:'CM'},{p:[-0.17,0],r:'MF',l:'CAM'},{p:[0.05,-0.2],r:'FW',l:'ST'},{p:[0.05,0.2],r:'FW',l:'ST'}],
+ '4-3-2-1':[GKS,{p:[-0.6,-0.62],r:'DF',l:'LB'},{p:[-0.68,-0.21],r:'DF',l:'CB'},{p:[-0.68,0.21],r:'DF',l:'CB'},{p:[-0.6,0.62],r:'DF',l:'RB'},
+   {p:[-0.37,-0.3],r:'MF',l:'CM'},{p:[-0.46,0],r:'MF',l:'CDM'},{p:[-0.37,0.3],r:'MF',l:'CM'},{p:[-0.13,-0.25],r:'FW',l:'CF'},{p:[0.07,0],r:'FW',l:'ST'},{p:[-0.13,0.25],r:'FW',l:'CF'}],
+ '4-1-4-1':[GKS,{p:[-0.6,-0.62],r:'DF',l:'LB'},{p:[-0.68,-0.21],r:'DF',l:'CB'},{p:[-0.68,0.21],r:'DF',l:'CB'},{p:[-0.6,0.62],r:'DF',l:'RB'},
+   {p:[-0.27,-0.64],r:'MF',l:'LM'},{p:[-0.5,0],r:'MF',l:'CDM'},{p:[-0.31,0.2],r:'MF',l:'CM'},{p:[-0.31,-0.2],r:'MF',l:'CM'},{p:[0.07,0],r:'FW',l:'ST'},{p:[-0.27,0.64],r:'MF',l:'RM'}],
+ '4-4-1-1':[GKS,{p:[-0.6,-0.62],r:'DF',l:'LB'},{p:[-0.68,-0.21],r:'DF',l:'CB'},{p:[-0.68,0.21],r:'DF',l:'CB'},{p:[-0.6,0.62],r:'DF',l:'RB'},
+   {p:[-0.3,-0.62],r:'MF',l:'LM'},{p:[-0.42,-0.15],r:'MF',l:'CM'},{p:[-0.42,0.15],r:'MF',l:'CM'},{p:[-0.3,0.62],r:'MF',l:'RM'},{p:[0.07,0],r:'FW',l:'ST'},{p:[-0.15,0],r:'FW',l:'CF'}],
+ '3-4-2-1':[GKS,{p:[-0.68,-0.35],r:'DF',l:'CB'},{p:[-0.72,0],r:'DF',l:'CB'},{p:[-0.68,0.35],r:'DF',l:'CB'},{p:[-0.36,-0.7],r:'MF',l:'LWB'},
+   {p:[-0.42,-0.16],r:'MF',l:'CM'},{p:[-0.42,0.16],r:'MF',l:'CM'},{p:[-0.36,0.7],r:'MF',l:'RWB'},{p:[-0.15,-0.26],r:'MF',l:'CAM'},{p:[0.07,0],r:'FW',l:'ST'},{p:[-0.15,0.26],r:'MF',l:'CAM'}],
+ '5-4-1':[GKS,{p:[-0.56,-0.68],r:'DF',l:'LWB'},{p:[-0.7,-0.3],r:'DF',l:'CB'},{p:[-0.73,0],r:'DF',l:'CB'},{p:[-0.7,0.3],r:'DF',l:'CB'},{p:[-0.56,0.68],r:'DF',l:'RWB'},
+   {p:[-0.41,-0.15],r:'MF',l:'CM'},{p:[-0.41,0.15],r:'MF',l:'CM'},{p:[-0.28,-0.6],r:'MF',l:'LM'},{p:[0.06,0],r:'FW',l:'ST'},{p:[-0.28,0.6],r:'MF',l:'RM'}],
 };
 const FORM_KEYS=Object.keys(FORMS);
 const MENTS=[{v:-1,n:'수비적'},{v:0,n:'균형'},{v:1,n:'공격적'}];
@@ -1988,7 +2001,7 @@ function buildTeams(){
     const club=kits[ti],mats=kitMats(club),rr=seeded(1000+ids[ti]*97);KIT_MATS.push(...Object.values(mats));
     const tac=cleanTac(G.tac[ti]),slots=FORMS[tac.form],roster=makeRoster(ids[ti]);
     const team={i:ti,club,dir:ti===0?1:-1,human:ti===0,players:[],chaser:null,recv:null,press1:null,press2:null,inPoss:false,lastLine:0,form:tac.form,ment:tac.ment,
-      mats,bench:(club.bench||[]).slice(),subs:0,bonus:club.cards&&club.single>=0?0.03:0};
+      mats,bench:(club.bench||[]).slice(0,BENCH_MAX),subs:0,bonus:club.cards&&club.single>=0?0.03:0};
     slots.forEach((f,k)=>{
       const m=roster[tac.order[k]],gk=k===0,st=m.st;
       const e={team,i:ti*11+k,k,role:f.r,isGK:gk,num:m.num,lbl:f.l,name:m.name,st,stars:m.stars,hid:m.hid,feet:m.feet,base:f.p,off:false,yellow:0,pbx:0,pbz:0,
@@ -4984,7 +4997,7 @@ function openAccount(mode){authMode=mode||'login';$('team').hidden=true;$('shop'
 function renderAccount(){const b=$('accountBody');b.innerHTML=authBox();if(tmMsg)b.insertAdjacentHTML('afterbegin',`<p class="note" style="color:var(--flood)">${esc(tmMsg)}</p>`);}
 function authBox(){
   if(AUTH.token)return `<div class="tm-sel"><b>@${esc(AUTH.user)}</b> 로그인됨 · <span id="authLine">${esc(AUTH.state||'')}</span><p class="note">선수단·팀·개인기는 서버에 저장돼요.</p>${ACC.cur!==srvKey()?`<button class="btn pri" data-use="${esc(srvKey())}">온라인 계정으로 플레이</button>`:''}<div class="two"><button class="btn" data-act="logout">로그아웃</button><button class="btn" data-act="srvsave">지금 저장</button></div></div>`+localAccountBox();
-  return `<div class="auth-modes" role="tablist"><button class="btn" data-auth-mode="login" aria-selected="${authMode==='login'}">로그인</button><button class="btn" data-auth-mode="register" aria-selected="${authMode==='register'}">회원가입</button></div><label>아이디<input id="authU" maxlength="16" autocomplete="username" autocapitalize="off" placeholder="아이디"></label><label>비밀번호<input id="authP" type="password" maxlength="72" autocomplete="${authMode==='register'?'new-password':'current-password'}" placeholder="비밀번호 (6자 이상)"></label>${authMode==='register'?`<label>시작 구단<select id="authC">${clubOptsG(0)}</select></label><p class="note">선택한 구단의 실버 베이스 카드 20장과 최초 1,000코인으로 시작해요.</p>`:''}<button class="btn pri" data-act="${authMode}" ${AUTH.busy?'disabled':''}>${AUTH.busy?'처리 중…':authMode==='register'?'회원가입':'로그인'}</button><p class="note">관리자 계정으로 로그인하면 관리자 화면이 별도 창으로 열려요.</p>`+localAccountBox();
+  return `<div class="auth-modes" role="tablist"><button class="btn" data-auth-mode="login" aria-selected="${authMode==='login'}">로그인</button><button class="btn" data-auth-mode="register" aria-selected="${authMode==='register'}">회원가입</button></div><label>아이디<input id="authU" maxlength="16" autocomplete="username" autocapitalize="off" placeholder="아이디"></label><label>비밀번호<input id="authP" type="password" maxlength="72" autocomplete="${authMode==='register'?'new-password':'current-password'}" placeholder="비밀번호 (6자 이상)"></label>${authMode==='register'?`<label>시작 구단<select id="authC">${clubOptsG(0)}</select></label><p class="note">선택한 구단의 실버 베이스 카드 20장과 최초 2,000코인으로 시작해요.</p>`:''}<button class="btn pri" data-act="${authMode}" ${AUTH.busy?'disabled':''}>${AUTH.busy?'처리 중…':authMode==='register'?'회원가입':'로그인'}</button><p class="note">관리자 계정으로 로그인하면 관리자 화면이 별도 창으로 열려요.</p>`+localAccountBox();
 }
 function localAccountBox(){const p=prof(),ids=Object.keys(ACC.list).filter(id=>!ACC.list[id].srv);return `<details><summary class="note">이 기기 계정 / 복구 코드</summary><div class="cl">${ids.map(id=>`<div class="acc-row"><span>${esc(ACC.list[id].name)}</span><button class="btn" data-use="${esc(id)}">사용</button></div>`).join('')}</div>${p?'<button class="btn" data-act="export">내보내기 코드</button>':''}<label>가져오기 / 내보내기 코드<textarea id="accCode" placeholder="복구 코드를 붙여 넣으세요"></textarea></label><button class="btn" data-act="import">이 기기 계정으로 가져오기</button></details>`;}
 function cardLine(cd){const m=cardRoster(cd),s=m.st;return m.nat==='GK'?`골키퍼 · 선방 능력은 OVR을 따라요 · 패스 ${pct(s.pass)} · 피지컬 ${pct(s.phy||0.75)}`:`속도 ${pct(s.pace)} 슈팅 ${pct(s.shoot)} 패스 ${pct(s.pass)} 드리블 ${pct(s.drib)} 태클 ${pct(s.tackle)} 피지컬 ${pct(s.phy||0.75)} · 개인기 ${'★'.repeat(m.stars||1)}`;}
@@ -5025,7 +5038,7 @@ function renderTmBody(){
     const t=p.team;
     b.innerHTML=`<div class="two"><label>팀 이름<input id="tmTn" maxlength="16" value="${esc(t.name)}"></label><label>약칭 (영문 3자)<input id="tmTg" maxlength="3" value="${esc(t.tag)}"></label></div>
       <label>유니폼<select id="tmKit">${clubOptsG(t.kit,c=>c.name+' 유니폼')}</select></label>
-      <div class="tac-row"><label>포메이션</label><div class="seg" id="tmForm">${FORM_KEYS.map(k=>`<button data-f="${k}" aria-pressed="${k===t.form}">${k}</button>`).join('')}</div></div>
+      <div class="tac-row"><label>포메이션</label><div class="seg forms" id="tmForm">${FORM_KEYS.map(k=>`<button data-f="${k}" aria-pressed="${k===t.form}">${k}</button>`).join('')}</div></div>
       <div class="tac-row"><label>운영</label><div class="seg" id="tmMent">${MENTS.map(m=>`<button data-m="${m.v}" aria-pressed="${m.v===t.ment}">${m.n}</button>`).join('')}</div></div>
       <p class="note">포메이션을 바꾸면 선수들이 가장 비슷한 자리로 옮겨 가요. 선발 11명이 모두 같은 클럽이면 <b>단일팀 보너스로 모든 능력치 +3</b>.</p>`;
   }else if(tmTab==='skills'){

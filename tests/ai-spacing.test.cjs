@@ -24,7 +24,7 @@ function simulation(html,form='4-3-3',attackDir=1,ballX=38,ballZ=0,seconds=28){
 const game=path.join(__dirname,'../public/index.html');
 
 test('both teams distribute support and recovery across six formations, both directions, centre and wing attacks',()=>{
-  for(const form of ['4-3-3','4-4-2','4-2-3-1','3-5-2','3-4-3','5-3-2'])for(const dir of [-1,1])for(const z of [0,22]){
+  for(const form of ['4-3-3','4-4-2','4-2-3-1','3-5-2','3-4-3','5-3-2','4-1-2-1-2','4-3-2-1','4-1-4-1','4-4-1-1','3-4-2-1','5-4-1'])for(const dir of [-1,1])for(const z of [0,22]){
     const {attack:a,defend:d}=simulation(game,form,dir,38,z),label=JSON.stringify({form,dir,z});
     assert.ok(a.positions.filter(e=>e.role==='DF').every(e=>e.x<1),label+' normal/high defenders should choose recovery support in their own half');
     assert.ok(d.positions.filter(e=>e.role==='FW').every(e=>e.x>-20),label+' high/normal attackers must not collapse into their own box');
