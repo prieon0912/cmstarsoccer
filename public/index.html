@@ -2289,6 +2289,7 @@ function header(e){
   sfx.kick(9);
 }
 function gainBall(e){
+  const keeperHit=e.isGK?keeperTouch(e):null;if(e.isGK&&!keeperHit)return;
   if(G.clock>=(G.half===1?45:90)&&G.stoppage&&e.team.i!==G.stoppage.team)G.stoppage.ended=true;
   if(B.offside&&offsideHit(e))return;
   B.offside=null;
@@ -2298,7 +2299,7 @@ function gainBall(e){
   B.owner=e;B.held=false;B.shot=null;B.target=null;B.vx=B.vy=B.vz=0;B.spin=0;
   if(tgt&&tgt.r.team===e.team&&B.kicker&&B.kicker.team===e.team&&B.kicker!==e)G.stats[e.team.i].passOk++;
   B.last=e;B.lastTeam=e.team.i;e.team.recv=null;e.kick=null;
-  if(e.isGK&&inOwnBox(e)){
+  if(e.isGK&&inOwnBox(e)&&keeperHit.hand){
     B.held=true;e.holdT=0;
     if(e.act!==ACT.DIVE){if(by>1.55||by<0.5){e.act=ACT.CATCH;e.ap1=by;}else e.act=ACT.HOLD;e.actT=0;}
   }else if(bsp>3.5&&e.act!==ACT.SLIDE&&e.act!==ACT.HEAD&&e.act!==ACT.POKE){e.act=ACT.TRAP;e.actT=0;}
@@ -2691,6 +2692,7 @@ function midfieldAdvance(e){
   const pd=padOf(e.team);return pd&&pd.ctrl===e&&!pd.lock?0:2.5;
 }
 function formTarget(e){
+  if(e.isGK)return[ownGoalX(e.team)+e.team.dir*1.1,0];
   const t=e.team,dir=t.dir,poss=t.inPoss,h=e.hid||{att:1,def:1};
   // where this player thinks the ball is: reactions lag a little behind the real thing (see step)
   const PBx=poss?(e.pbx??B.x):(t.defBallX??B.x),PBz=poss?(e.pbz??B.z):(t.defBallZ??B.z);
@@ -2699,18 +2701,15 @@ function formTarget(e){
   let az=e.base[1]*(poss?1.08:0.8)+bz*(poss?0.22:0.34);
   // full-backs push on when their side has the ball (how far depends on their appetite to attack);
   // centre-backs hold a higher line once it is in the other half
-  if(e.role==='DF'){if(poss&&e.wide)az=e.base[1]*1.18+bz*0.15;ax=clamp(ax+(poss&&e.wide?0.12+(h.att-1)*0.06:0),-0.9,(poss?(e.wide?0.52+(h.att-1)*0.06:0.32)+(bx>0.25?0.08:0):0.05)+t.ment*0.05+(e.run>0?0.3:0));}
-  else if(e.role==='MF')ax=clamp(ax,-0.78,0.62);
-  else ax=clamp(ax+(!poss&&h.def===0?0.08:0),-0.35,0.86);
+  if(e.role==='DF'){if(poss&&e.wide)az=e.base[1]*1.18+bz*0.15;ax+=(poss&&e.wide?0.12+(h.att-1)*0.06:0);}
+  else if(e.role!=='MF')ax+=!poss&&h.def===0?0.08:0;
   // the back line moves as one: everyone in it shares the team's line height (teamThink), which steps up when the
   // ball is under pressure and drops off when the man on it has time to pick a pass
   const dline=t.lineSm??lineFor(bx);
-  if(!poss&&e.role==='DF')ax=lerp(Math.min(ax,bx-0.06),dline,0.85);
-  if(!poss&&e.role==='MF')ax=Math.min(ax,dline+0.3);
-  if(!poss){const danger=clamp(1-(hyp(PBx-ownGoalX(t),PBz)-14)/40,0,1);az*=1-0.3*danger;if(e.role!=='FW')ax=Math.min(ax,lerp(ax,bx-0.12,danger*0.6));}
+  if(!poss&&e.role==='DF')ax=lerp(ax,dline,0.35);
+  if(!poss){const danger=clamp(1-(hyp(PBx-ownGoalX(t),PBz)-14)/40,0,1);az*=1-0.3*danger;if(e.role!=='FW')ax=lerp(ax,bx-0.12,danger*0.35);}
   ax+=midfieldAdvance(e)/HL;
-  if(e.role!=='DF'||e.run>0){const lim=Math.max(t.lastLine,bx)-0.012+(e.run>0?0.22:0);ax=Math.min(ax,lim);}
-  return toW(t,ax,clamp(az,-0.94,0.94));
+  return toW(t,clamp(ax,(-HL+1.5)/HL,(HL-1.5)/HL),clamp(az,(-HW+1.5)/HW,(HW-1.5)/HW));
 }
 /* attacking play: how dangerous a spot is, whether a pass gets there, and where each role goes */
 // value of having the ball at (x,z) for team t: rises toward their goal and the middle
@@ -2735,23 +2734,21 @@ function supportSpot(e){
     ax=build?bx-0.3:fin?0.16:bx-0.16;az=e.base[1]*(build?1.9:1.3);ax+=push;}
   else if(BACKS.has(L)){                                          // width, then high up the line; the far one tucks in
     ax=build?bx+0.08:fin?(same?line-0.02:0.5):bx+(same?0.26:0.12);az=fin&&!same?side*0.55:side*0.88;ax+=push;
-    if(e.run>0){ax=Math.min(0.9,line+0.04);az=side*0.88;}}
+    if(e.run>0){ax=line+0.04;az=side*0.88;}}
   else if(L==='CDM'){ax=fin?0.4:bx-0.06;az=bz*0.4+e.base[1]*0.5;ax+=push;}          // behind the ball, an outlet
   else if(L==='CM'){                                              // angles either side; in the final third one to the edge of the box, one arriving
     ax=fin?(same?0.6:0.76):bx+0.22;az=fin?(same?ballSide*0.4:-ballSide*0.12):e.base[1]*1.2+bz*0.3;ax+=push;
-    if(e.run>0){ax=Math.min(0.86,line+0.06);az=bz*0.2;}}
+    if(e.run>0){ax=line+0.06;az=bz*0.2;}}
   else if(L==='CAM'){ax=fin?0.68:Math.min(line-0.03,bx+0.34);az=fin?bz*0.2+e.base[1]*0.7:bz*0.45+e.base[1]*0.6;}   // hold the pocket behind the striker
   else if(WIDE.has(L)){                                           // hug the touchline, go in behind; in the final third the far one attacks the far post
     ax=Math.max(bx+0.28,e.base[0]+0.3);az=side*0.84;
     if(fin){if(same){ax=Math.max(bx-0.05,0.6);az=side*0.8;}else{ax=0.82;az=-ballSide*0.34;}}
-    if(e.run>0){ax=Math.min(0.9,line+0.15);az=side*0.6;}}
+    if(e.run>0){ax=line+0.15;az=side*0.6;}}
   else{                                                           // striker: on the last man's shoulder, in the box when the ball gets there
     ax=fin?0.88:line-0.02;az=(fin?(Math.abs(bz)>0.35?ballSide*0.12:bz*0.3):bz*0.3)+e.base[1]*0.9;
-    if(e.run>0){ax=Math.min(0.92,line+0.18);az=bz*0.2+e.base[1]*0.3;}}
+    if(e.run>0){ax=line+0.18;az=bz*0.2+e.base[1]*0.3;}}
   ax+=midfieldAdvance(e)/HL;
-  const boxMan=fin&&(L==='ST'||L==='CAM'||(WIDE.has(L)&&!same)||(L==='CM'&&!same));
-  if(!(e.run>0))ax=Math.min(ax,Math.max(line-0.01,bx-0.02,boxMan?0.72:-1));
-  return toW(t,clamp(ax,-0.88,0.92),clamp(az,-0.92,0.92));
+  return toW(t,clamp(ax,(-HL+1.5)/HL,(HL-1.5)/HL),clamp(az,(-HW+1.5)/HW,(HW-1.5)/HW));
 }
 // nudge a spot toward grass: away from markers, in sight of the ball, not on top of a team-mate
 function findSpace(e,tx,tz){
@@ -2786,19 +2783,12 @@ function teamThink(t,dt){
   // while a thumb is steering the selected player the AI leaves the loose ball to that person
   const pd=padOf(t),uc=pd&&!pd.lock?pd.ctrl:null,userDriven=!!uc;
   if(!B.owner){
-    let best=null,bt=1e9,gk=null;
+    let best=null,bt=1e9;
     for(const p of t.players){
       if(p.stun>0||p.act===ACT.FALL||p.off)continue;
-      if(p.isGK){gk=p;continue;}
+      if(p.isGK)continue;
       if(userDriven&&p===uc)continue;
       if(p.ipt<bt){bt=p.ipt;best=p;}
-    }
-    if(gk&&gk.act!==ACT.DIVE&&!gk.save){
-      const gx=ownGoalX(t),inBox=Math.abs(gk.ipx-gx)<16&&Math.abs(gk.ipz)<19;
-      // off his line to sweep up a ball played in behind, but only when he is sure to get there first
-      let ob=1e9;for(const o of oppOf(t).players)if(!o.off&&o.stun<=0&&o.ipt<ob)ob=o.ipt;
-      const sweep=Math.abs(gk.ipx-gx)<27&&Math.abs(gk.ipz)<22&&gk.ipt+0.3<Math.min(bt,ob)&&B.lastTeam!==t.i;
-      if((inBox&&gk.ipt<bt)||sweep){best=gk;bt=gk.ipt;}
     }
     if(userDriven){
       const inp=pd.inp,jm=hyp(inp.jx,inp.jy),bx=B.x-uc.x,bz=B.z-uc.z,bl=hyp(bx,bz)||1,toward=jm>0.3&&(inp.jx*bx+inp.jy*bz)/(jm*bl)>0.5;
@@ -2828,7 +2818,7 @@ function teamThink(t,dt){
   }
   const oldPress=t.press1;t.press1=t.press2=null;t.defMarks=new Map();
   if(B.owner&&B.owner.team!==t){
-    const c=B.owner,box=boxThreat(t,c),score=p=>hyp(p.x-c.x,p.z-c.z)+(!box&&p.role==='DF'&&p.lbl==='CB'&&hyp(p.x-c.x,p.z-c.z)>9?6:0);
+    const c=B.owner,box=boxThreat(t,c),score=p=>hyp(p.x-c.x,p.z-c.z);
     const arr=t.players.filter(p=>p!==uc&&p!==t.helper&&!p.isGK&&!p.off&&p.stun<=0&&p.act!==ACT.FALL).sort((a,b)=>score(a)-score(b));
     t.press1=arr[0]||null;
     if(arr.includes(oldPress)&&G.t<(t.pressUntil||0)&&score(oldPress)<=score(t.press1)+(box?0.75:3))t.press1=oldPress;
@@ -2847,7 +2837,7 @@ function assignDefMarks(t,c,uc){
     for(const m of c.team.players){
       if(m===c||m.isGK||m.off)continue;
       const threat=(t.coverThreats||[]).find(q=>q.e===m);if(e===t.press2&&!threat)continue;
-      const d=hyp(m.x-fx,m.z-fz);if(d>(threat?32:22))continue;
+      const d=hyp(m.x-fx,m.z-fz);
       const danger=clamp((fx-m.x)*t.dir,0,12)*0.22,keep=e.mark===m?1.5:0;
       pairs.push({e,m,cost:d+hyp(e.x-m.x,e.z-m.z)*0.18-danger-keep-(threat&&e.role==='DF'?8:0)});
     }
@@ -2861,7 +2851,7 @@ function setMove(e,tx,tz,sprint,smooth){
   if(smooth&&e.sx!=null&&hyp(tx-e.sx,tz-e.sz)<15){const k=Math.min(1,STEP*3.2);e.sx+=(tx-e.sx)*k;e.sz+=(tz-e.sz)*k;tx=e.sx;tz=e.sz;}
   else{e.sx=tx;e.sz=tz;}
   const dx=tx-e.x,dz=tz-e.z,d=hyp(dx,dz);
-  const dz2=e.team&&B.owner&&B.owner.team!==e.team;if(smooth){if(e.settled){if(d>(dz2?1.2:2.6))e.settled=false;}else if(d<(dz2?0.5:0.9))e.settled=true;}else e.settled=false;
+  const dz2=e.team&&B.owner&&B.owner.team!==e.team;if(smooth){if(e.settled){if(d>0.8)e.settled=false;}else if(d<0.3)e.settled=true;}else e.settled=false;
   if(e.settled){e.mx=e.mz=0;e.sprint=false;}
   else{
     // walk the last metres, jog to reposition, run only when far off or it matters; formation moves ease in.
@@ -2963,13 +2953,12 @@ function think(e,dt){
       [e.spX,e.spZ]=e.run>0?[sx,sz]:findSpace(e,sx,sz);e.spRun=e.run>0;
       // keep the spot a moment longer than before: fewer second thoughts, steadier runs
       e.spT=G.t+0.42+Math.random()*0.2;
-      if(!(e.run>0)){const lim=Math.max(Math.min(0.92,t.lastLine)-0.01,B.x*dir/HL-0.02,B.x*dir/HL>0.3&&(e.lbl==='ST'||e.lbl==='CAM'||WIDE.has(e.lbl)||e.lbl==='CM')?0.72:-1)*HL;if(e.spX*dir>lim)e.spX=lim*dir;}
     }
     setMove(e,e.spX,e.spZ,e.run>0||hyp(e.spX-e.x,e.spZ-e.z)>9,!(e.run>0));return;
   }
   // defending
   const c=B.owner;
-  const box=boxThreat(t,c),upd=padOf(t),userClose=!!(upd&&upd.ctrl&&upd.ctrl!==e&&!upd.lock&&hyp(upd.ctrl.x-c.x,upd.ctrl.z-c.z)<(box?2.5:7));
+  const box=boxThreat(t,c);
   if(e===t.helper){
     // second man in: called over by the defending player
     const gx=ownGoalX(t),vx=gx-c.x,vz=-c.z,vl=hyp(vx,vz)||1,d=hyp(c.x-e.x,c.z-e.z);
@@ -2977,7 +2966,7 @@ function think(e,dt){
     if(d<7)trackMove(e,tx,tz,c);else setMove(e,tx,tz,true,false);
     return;
   }
-  if(e===t.press1&&!userClose){
+  if(e===t.press1){
     // close down goal-side, curving in so the body shadows the carrier's most dangerous forward pass,
     // then jockey and only dive in when he turns his back or lets the ball run from his feet
     // goal-side of the ball itself (it runs ahead of the carrier's feet), close enough to reach it with a stride
@@ -3002,16 +2991,11 @@ function think(e,dt){
   if(e.role!=='FW'){
     const man=e.style==='man',lane=e.style==='lane';
     let m=t.defMarks&&t.defMarks.get(e);
-    if(m&&e.role==='DF'&&!(t.coverThreats||[]).some(q=>q.e===m)&&m.x*dir>(t.lineSm??lineFor(B.x*dir/HL))*HL+12)m=null;
     e.mark=m;
     if(m){
-      const zoneX=fx,zoneZ=fz;
       const gx=ownGoalX(t),vx=gx-m.x,vz=-m.z,vl=hyp(vx,vz)||1;
       if(lane&&hyp(m.x-c.x,m.z-c.z)<30){fx=lerp(fx,c.x+(m.x-c.x)*0.62+vx/vl*0.6,0.8);fz=lerp(fz,c.z+(m.z-c.z)*0.62+vz/vl*0.6,0.8);}
       else{const w=man?0.75:e.role==='DF'?0.55:0.42,off=man?1.1:1.6;fx=lerp(fx,m.x+vx/vl*off+m.vx*0.2,w);fz=lerp(fz,m.z+vz/vl*off+m.vz*0.2,w);}
-      // Mark inside a corridor: full-backs can cover wider, centre-backs keep the middle.
-      fz=clamp(fz,zoneZ-(e.wide?10:6),zoneZ+(e.wide?10:6));
-      if(e.role==='DF')fx=clamp(fx,zoneX-6,zoneX+5);
       const threat=(t.coverThreats||[]).find(q=>q.e===m);
       if(threat){fx=Math.min(fx*dir,threat.x-1.2)*dir;fz=lerp(fz,threat.z,0.85);}
     }
@@ -3094,15 +3078,13 @@ function carrierThink(e,dt){
   setMove(e,e.x+sx/sl*6,e.z+sz/sl*6,nd>2.5&&e.stamina>0.3,false);
 }
 function gkThink(e,dt){
-  const t=e.team,gx=ownGoalX(t);
+  const t=e.team,gx=ownGoalX(t),pd=padOf(t);
+  if(pd&&pd.ctrl===e&&!pd.lock)return; // explicit player control owns movement
   if(B.owner===e){
     e.holdT+=dt;e.strafe=false;
     if(e.act===ACT.DIVE||e.act===ACT.CATCH){e.mx=e.mz=0;return;}
     if(!e.kick)e.aimFace=Math.atan2(t.dir,0);
-    // carry the ball out a few steps before releasing it
-    if(B.held&&e.holdT>0.15&&e.holdT<1.25&&!e.kick){setMove(e,gx+t.dir*6.5,clamp(e.z,-9,9),false,false);e.mx*=0.55;e.mz*=0.55;e.strafe=false;}
-    else{e.mx=e.mz=0;}
-    const [,nd]=nearestOpp(e);
+    e.mx=e.mz=0;const [,nd]=nearestOpp(e);
     if(e.holdT>(B.held?1.6:nd<7?0.12:0.6)&&!e.kick){e.aimFace=null;gkDistribute(e);}
     return;
   }
@@ -3110,26 +3092,9 @@ function gkThink(e,dt){
   if(e.save){gkSaveStep(e);return;}
   if(e.act===ACT.CATCH&&e.actT<0.35){e.mx=e.mz=0;return;}
   if(!B.owner&&B.shot&&B.shot.team!==t.i&&G.t-B.shot.t>(t.human?0.2:D.react*0.6+0.05)*(B.shot.x0!=null?clamp(hyp(B.shot.x0-e.x,B.shot.z0-e.z)/14,0.35,1):1)){planSave(e);if(e.save){gkSaveStep(e);return;}}
-  if(t.chaser===e){const d=hyp(e.ipx-e.x,e.ipz-e.z);setMove(e,e.ipx,e.ipz,d>2,false);e.strafe=d<2;e.faceTgt=B;return;}
-  // on the line between ball and goal centre, further off it as play nears the box; a sweeper when it is far away
-  const bx=B.x-gx,bz=B.z,bd=hyp(bx,bz)||1;
-  let depth=clamp(0.7+bd*0.1,0.9,4.4);
-  if(bd>38)depth=clamp(5.5+(bd-38)*0.16,5.5,13);
-  let tx=gx+bx/bd*depth,tz=clamp(bz/bd*depth,-GW/2+0.35,GW/2-0.35);
-  const c=B.owner;let sprint=false;
-  if(c&&c.team!==t&&!c.isGK){
-    const cd=hyp(c.x-e.x,c.z-e.z),dg=hyp(c.x-gx,c.z)||1;
-    const through=dg<27&&(c.x-gx)*t.dir>1&&!goalSideCover(t,c,gx,dg);
-    if(through||(inOwnBoxP(t,c.x,c.z)&&dg<14)){
-      // come off the line to narrow the angle: one on one he charges out, with cover he only steps up
-      const ux=(c.x-gx)/dg,uz=c.z/dg,kd=through?clamp(dg-(1.7+dg*0.2),0.8,Math.min(14,dg-1.4)):clamp(dg*0.22,0.9,3.2);
-      tx=gx+ux*kd;tz=uz*kd;sprint=hyp(tx-e.x,tz-e.z)>2.2;
-      // and goes down at his feet when he is close enough
-      if(cd<2.7&&dg<17&&e.tackleCd<=0&&!e.smother&&Math.random()<dt*(3+5*e.gkSkill))startSmother(e);
-    }
-  }
-  setMove(e,tx,tz,sprint,false);
-  e.strafe=!sprint;e.faceTgt=B;
+  // Automatic positioning stays on the goal line; no sweeper, one-on-one rush or smother.
+  const depth=1.1,tx=gx+t.dir*depth,tz=clamp(B.z*depth/Math.max(depth,Math.abs(B.x-gx)),-GW/2+0.35,GW/2-0.35);
+  setMove(e,tx,tz,hyp(tx-e.x,tz-e.z)>3,false);e.strafe=true;e.faceTgt=B;
 }
 // is a defender between this attacker and the goal?
 function goalSideCover(t,c,gx,dg){
@@ -3153,13 +3118,13 @@ function smotherStep(e){
   if(el>0.7||e.act!==ACT.DIVE){e.smother=null;return;}
   if(s.done||el<0.08)return;
   const hx=e.x+Math.sin(e.face)*0.45,hz=e.z+Math.cos(e.face)*0.45;
-  if(hyp(B.x-hx,B.z-hz)>0.95||B.y>0.8)return;
+  const touch=keeperTouch(e);if(!touch)return;
   s.done=true;
   const c=B.owner&&B.owner.team!==e.team?B.owner:null;
   const p=clamp(0.3+e.gkSkill*0.4-(c?(c.st.drib-0.75)*0.9:0)-(c&&c.act===ACT.SKILL?0.25:0),0.12,0.75);
   if(Math.random()>=p){if(c&&Math.random()<0.15)callFoul(e,c,'trip');return;}
   if(c){c.act=ACT.STUMBLE;c.actT=0;c.stun=0.45;c.kick=null;}
-  if(inOwnBox(e)&&Math.random()<0.6){B.owner=null;gainBall(e);B.held=true;e.holdT=-0.9;say('골키퍼 '+e.name+', 발밑으로 뛰어들어 잡아냅니다!');}
+  if(inOwnBox(e)&&touch.hand&&Math.random()<0.6){B.owner=null;gainBall(e);B.held=true;e.holdT=-0.9;say('골키퍼 '+e.name+', 발밑으로 뛰어들어 잡아냅니다!');}
   else{const a=e.face+(Math.random()<0.5?1:-1)*rnd(1.0,1.7),v=rnd(5,9);B.owner=null;B.held=false;B.vx=Math.sin(a)*v;B.vz=Math.cos(a)*v;B.vy=rnd(0.3,1.6);
     B.last=e;B.lastTeam=e.team.i;B.kicker=e;B.kickT=G.t;B.shot=null;B.target=null;e.cool=0.6;say('골키퍼가 몸을 던져 막아냅니다!');sfx.kick(6);}
   AU.excite(0.9);
@@ -3171,7 +3136,6 @@ function gkSaveStep(e){
     const dx=sv.tx-e.x,dz=sv.tz-e.z,d=hyp(dx,dz),rem=Math.max(0.05,sv.tEnd-G.t),v=Math.min(6.2,d/rem)*PLAYER_SPEED;
     e.vx=d>0.05?dx/d*v:0;e.vz=d>0.05?dz/d*v:0;e.mx=e.vx;e.mz=e.vz;e.strafe=true;e.faceTgt=B;
     if(!sv.jumped&&rem<0.3){sv.jumped=true;e.act=ACT.CATCH;e.actT=0;e.ap1=2.3;}
-    if(!sv.done&&G.t>=sv.tEnd-0.03){if(sv.ok&&!B.owner&&hyp(B.x-e.x,B.z-e.z)<1.15&&B.y<2.9)doSave(e,sv);else sv.done=true;}
     if(G.t>sv.tEnd+0.4)e.save=null;
     return;
   }
@@ -3183,12 +3147,6 @@ function gkSaveStep(e){
   if(el<sv.T1+0.03){const u=clamp((el+STEP)/sv.T1,0,1),z=lerp(sv.z0,sv.rootZ,easeOut(u));e.vz=(z-e.z)/STEP;e.vx=0;}
   else{e.vz*=0.9;e.vx*=0.9;}
   e.mx=e.vx;e.mz=e.vz;
-  if(!sv.done&&G.t>=sv.tEnd-0.03){
-    // the save only counts where the hands actually are: body position plus the reach of the dive
-    const hz=e.z+(sv.sideW||0)*(sv.hand||0.5)*0.95;
-    if(sv.ok&&!B.owner&&Math.abs(B.x-e.x)<1.1&&Math.abs(B.z-hz)<0.85&&B.y<2.9)doSave(e,sv);
-    else sv.done=true;
-  }
   if(G.t>sv.tEnd+0.4)e.save=null;
 }
 function inOwnBoxP(t,x,z){return Math.abs(x-ownGoalX(t))<16.5&&Math.abs(z)<20.16;}
@@ -3205,7 +3163,7 @@ function planSave(e){
     if(ib<0){e.save={watch:true,ok:false,done:true,tEnd:G.t+tP};return;}
     const tb=ib*0.05,bx=TRAJ[ib*3],bz=TRAJ[ib*3+2],d=hyp(bx-e.x,bz-e.z),reach=1.2+5.6*PLAYER_SPEED*Math.max(0,tb-0.12);
     const ok=d<reach&&Math.random()<e.gkSkill*0.62*(1-0.7*d/reach);
-    e.save={back:true,ok,done:false,tEnd:G.t+tb,t0:G.t,tx:bx,tz:bz,handZ:bz,T1:tb,catch:false,z0:e.z};
+    e.save={back:true,ok,done:false,tEnd:G.t+tb,t0:G.t,tx:gx+e.team.dir*clamp((bx-gx)*e.team.dir,0.2,1.5),tz:bz,handZ:bz,T1:tb,catch:false,z0:e.z};
     return;
   }
   const lat=pt.z-e.z,h=clamp(pt.y,0.1,2.8),al=Math.abs(lat);
@@ -3232,11 +3190,45 @@ function gkGo(e){
   if(sv.kind==='dive'){e.act=ACT.DIVE;e.actT=0;e.actD=sv.sideL;e.ap1=sv.tilt;e.ap2=sv.py;e.ap3=sv.T1;}
   else{e.act=ACT.CATCH;e.actT=0;e.ap1=sv.h;}
 }
-function doSave(e,sv){
+// Contact uses the current animated rig, never a predicted hand height or a save probability.
+function keeperShapes(e){
+  const r=e.rig;if(!r||!r.root)return[];
+  const key=[G.t,e.x,e.z,e.face,e.act,e.actT].join('|');if(e.touchPose&&e.touchPose.key===key)return e.touchPose.shapes;
+  if(r.skinned)applySkinned(e,0);else applyPose(e,0);r.root.updateMatrixWorld(true);
+  const v=new THREE.Vector3(),point=node=>{if(!node)return null;node.getWorldPosition(v);return{x:v.x,y:v.y,z:v.z};},shapes=[];
+  const add=(a,b,radius,hand=false)=>{if(a&&b)shapes.push({a,b,radius,hand});},bn=r.bones||{};
+  for(const node of [r.handL,r.handR]){const p=point(node);add(p,p,0.12,true);}
+  const hip=point(bn.hips||r.pelvis),chest=point(bn.sp2||r.headG),head=point(bn.head||r.headG);
+  add(hip,chest,0.22);add(head,head,0.16);
+  for(const side of ['L','R']){
+    const knee=point(bn['lg'+side]||r['knee'+side]),foot=point(bn['ft'+side]||r['ank'+side]),upper=point(bn['up'+side]||r['hip'+side]);
+    add(upper,knee,0.12);add(knee,foot,0.09);add(foot,foot,0.13);
+    const arm=point(bn['arm'+side]||r['sh'+side]),elbow=point(bn['fa'+side]||r['el'+side]),hand=point(r['hand'+side]);add(arm,elbow,0.08);add(elbow,hand,0.07);
+  }
+  e.touchPose={key,shapes};return shapes;
+}
+function keeperTouch(e,from){
+  const start=from||B,u={x:B.x-start.x,y:B.y-start.y,z:B.z-start.z};let best=null;
+  for(const shape of keeperShapes(e)){
+    const p=shape.a,q=shape.b,v={x:q.x-p.x,y:q.y-p.y,z:q.z-p.z},w={x:start.x-p.x,y:start.y-p.y,z:start.z-p.z},dot=(a,b)=>a.x*b.x+a.y*b.y+a.z*b.z;
+    const a=dot(u,u),b=dot(u,v),c=dot(v,v),d=dot(u,w),ee=dot(v,w),den=a*c-b*b;let t=0,k=0;
+    if(a<1e-10)k=c>1e-10?clamp(ee/c,0,1):0;
+    else if(c<1e-10)t=clamp(-d/a,0,1);
+    else{t=den>1e-10?clamp((b*ee-c*d)/den,0,1):0;k=(b*t+ee)/c;if(k<0){k=0;t=clamp(-d/a,0,1);}else if(k>1){k=1;t=clamp((b-d)/a,0,1);}}
+    const x=start.x+u.x*t,y=start.y+u.y*t,z=start.z+u.z*t,dx=x-(p.x+v.x*k),dy=y-(p.y+v.y*k),dz=z-(p.z+v.z*k);
+    if(dx*dx+dy*dy+dz*dz>(BR+shape.radius)**2)continue;
+    if(Math.abs(x)>HL+BR&&Math.abs(z)<GW/2&&y<GH)continue; // a ball already over the goal line is a goal
+    if(!best||t<best.t||(t===best.t&&shape.hand))best={x,y,z,t,hand:shape.hand};
+  }
+  return best;
+}
+function doSave(e,sv,from){
+  if(B.owner)return false;const touch=keeperTouch(e,from);if(!touch)return false;
+  B.x=touch.x;B.y=touch.y;B.z=touch.z;
   const sp=hyp(B.vx,B.vy,B.vz);
   if(sv)sv.done=true;
   if(B.shot&&!B.shot.counted){B.shot.counted=true;G.stats[1-e.team.i].onT++;}
-  if(sv&&sv.catch){
+  if(sv&&sv.catch&&touch.hand&&inOwnBox(e)){
     gainBall(e);B.held=true;
     e.holdT=e.act===ACT.DIVE?-(actEnd(e)-e.actT):-0.3;
     say('골키퍼 '+e.name+', 잡아냅니다!');
@@ -3245,7 +3237,7 @@ function doSave(e,sv){
     B.vx=dir*rnd(1,4.5);B.vz=away*rnd(5,10);B.vy=rnd(1.5,4.5);B.last=e;B.lastTeam=e.team.i;B.kicker=e;B.kickT=G.t;B.shot=null;B.target=null;
     e.cool=0.7;say(['골키퍼의 슈퍼 세이브!','손끝으로 쳐냅니다!','몸을 날린 선방!'][Math.floor(Math.random()*3)]);
   }
-  B.shot=null;AU.excite(1);sfx.kick(sp*0.5);
+  B.shot=null;AU.excite(1);sfx.kick(sp*0.5);return true;
 }
 function gkDistribute(e){
   const t=e.team;let best=null,bs=-1e9,bk='ground';
@@ -3397,20 +3389,23 @@ function updateBall(dt){
     }
     return;
   }
-  for(let k=0;k<3;k++){integ(B,dt/3);ballCollide();}
+  for(let k=0;k<3;k++){
+    const from={x:B.x,y:B.y,z:B.z};integ(B,dt/3);ballCollide();
+    let saved=false;if(G.state==='play')for(const e of G.ents){
+      if(!e.team||!e.isGK||e.off||e.cool>0||e.stun>0||B.owner)continue;
+      if(B.shot&&B.shot.team!==e.team.i){const sv=e.save&&!e.save.watch?e.save:{catch:hyp(B.vx,B.vy,B.vz)<17};if(doSave(e,sv,from)){saved=true;break;}}
+    }
+    if(saved)break;
+  }
+  if(B.owner)return;
   if(B.shot&&(hyp(B.vx,B.vz)<7||G.t-B.shot.t>3))B.shot=null;
   if(G.state!=='play')return;
   // contact
   let best=null,bd=1e9,head=null,hd=1e9;const heads=[];
   for(const e of G.ents){
     if(!e.team||e.off||e.cool>0||e.stun>0||e.act===ACT.SLIDE)continue;
-    if(e.isGK&&e.save&&!e.save.ok)continue;
-    if(e.isGK&&B.shot&&B.shot.team!==e.team.i){
-      // a shot straight at the keeper's body is blocked or gathered
-      const spread=B.shot.x0!=null&&Math.abs(e.x-ownGoalX(e.team))>2.5&&hyp(B.shot.x0-e.x,B.shot.z0-e.z)<9;
-      if(hyp(B.x-e.x,B.z-e.z)<(spread?1.2:0.75)&&B.y<(spread?1.5:1.9)&&!(e.save&&e.save.done)){const sv={ok:true,catch:hyp(B.vx,B.vz)<17};if(e.act!==ACT.DIVE){e.act=ACT.CATCH;e.actT=0;e.ap1=B.y;}doSave(e,sv);return;}
-      continue;
-    }
+    if(e.isGK&&B.shot&&B.shot.team!==e.team.i)continue; // handled by swept 3D contact above
+    if(e.isGK&&!keeperTouch(e))continue;
     const d=hyp(B.x-e.x,B.z-e.z);
     const gkHands=e.isGK&&inOwnBox(e);
     const recv=B.target&&B.target.r===e;

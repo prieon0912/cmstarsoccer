@@ -58,13 +58,13 @@ test('attacking support is free to overlap, advance and change lanes again',()=>
 
 test('the default defensive block sits near the penalty-area edge in every formation and direction',()=>{
   const ctx=tacticsContext();
-  vm.runInContext(`for(const dir of [-1,1])for(const slots of Object.values(FORMS)){const t={i:0,dir,ment:0,inPoss:false,players:[],lastLine:.7},o={i:1,dir:-dir,players:[]};t.opp=o;o.opp=t;for(const [k,f] of slots.entries())t.players.push({team:t,k,role:f.r,lbl:f.l,base:f.p,isGK:k===0,x:(-HL+(k===0?1.5:18))*dir,z:f.p[1]*HW*dir,stun:0,act:0,wide:/^[LR]/.test(f.l),hid:{att:1,def:1},run:0});const c={team:o,x:0,z:0,face:-dir*PI/2};o.players=[c];B.owner=c;B.x=B.z=0;updateDefensiveLine(t,1/60);const depth=HL+t.lineSm*HL;assert.ok(depth>=15&&depth<=21,{depth});for(const e of t.players.filter(p=>p.role==='DF')){const [x]=formTarget(e);const d=HL+x*dir;assert.ok(d>=13&&d<=23,{d});}}`,ctx);
+  vm.runInContext(`for(const dir of [-1,1])for(const slots of Object.values(FORMS)){const t={i:0,dir,ment:0,inPoss:false,players:[],lastLine:.7},o={i:1,dir:-dir,players:[]};t.opp=o;o.opp=t;for(const [k,f] of slots.entries())t.players.push({team:t,k,role:f.r,lbl:f.l,base:f.p,isGK:k===0,x:(-HL+(k===0?1.5:18))*dir,z:f.p[1]*HW*dir,stun:0,act:0,wide:/^[LR]/.test(f.l),hid:{att:1,def:1},run:0});const c={team:o,x:0,z:0,face:-dir*PI/2};o.players=[c];B.owner=c;B.x=B.z=0;updateDefensiveLine(t,1/60);const depth=HL+t.lineSm*HL;assert.ok(depth>=15&&depth<=21,{depth});for(const e of t.players.filter(p=>p.role==='DF')){const [x]=formTarget(e);const d=HL+x*dir;assert.ok(d>=1.5&&d<=HL*2-1.5,{d});}}`,ctx);
 });
 
 test('automatic third-line positioning advances slightly in both directions while manual and active actions stay free',()=>{
   const ctx=tacticsContext();
   vm.runInContext(`for(const dir of [-1,1])for(const [form,slots] of Object.entries(FORMS))for(const poss of [false,true]){const t={i:0,dir,ment:0,inPoss:poss,lastLine:.92,players:[]},o={i:1,players:[]};t.opp=o;o.opp=t;B.x=-dir*10;B.z=dir*8;B.owner={team:poss?t:o};G.state='play';for(const [k,f] of slots.entries()){const e={team:t,k,role:f.r,lbl:f.l,base:f.p,isGK:k===0,run:0,hid:{att:1,def:1}};PADS[0]={ctrl:e,lock:null};const manual=formTarget(e),manualSupport=supportSpot(e);PADS[0]=null;const automatic=formTarget(e),automaticSupport=supportSpot(e);const wanted=e.role==='MF'&&e.lbl!=='CAM'?2.5:0;assert.ok(Math.abs((automatic[0]-manual[0])*dir-wanted)<1e-9,form+':'+f.l);assert.ok(Math.abs((automaticSupport[0]-manualSupport[0])*dir-wanted)<1e-9,form+':'+f.l);assert.equal(automatic[1],manual[1]);assert.equal(automaticSupport[1],manualSupport[1]);e.run=2;assert.equal(midfieldAdvance(e),0);e.run=0;B.owner=e;assert.equal(midfieldAdvance(e),0);B.owner={team:poss?t:o};G.state='setpiece';assert.equal(midfieldAdvance(e),0);G.state='play';}}
-  const t={i:0,dir:1,inPoss:true,ment:0,lastLine:.2,players:[]},o={i:1,players:[]};t.opp=o;B.owner={team:t};B.x=B.z=0;PADS[0]=null;const e={team:t,k:6,role:'MF',lbl:'CM',base:[-.3,0],run:0};assert.ok(supportSpot(e)[0]<=HL*(t.lastLine-.01)+1e-9);assert.equal(typeof formationLane,'undefined');`,ctx);
+  const t={i:0,dir:1,inPoss:true,ment:0,lastLine:.2,players:[]},o={i:1,players:[]};t.opp=o;B.owner={team:t};B.x=B.z=0;PADS[0]=null;const e={team:t,k:6,role:'MF',lbl:'CM',base:[-.3,0],run:0};assert.ok(supportSpot(e)[0]>HL*(t.lastLine-.01));assert.equal(typeof formationLane,'undefined');`,ctx);
 });
 
 test('onside runners and an already played through ball trigger retreat; offside campers do not',()=>{
@@ -87,9 +87,51 @@ test('box defence steps toward the carrier while a second defender covers inside
   function df(k,dist,z){return {k,team:t,role:'DF',lbl:'CB',x:c.x+dir*dist,z,base:[-.6,z/34*dir],act:0,stun:0,off:false,isGK:false,vmax:8,vx:0,vz:0,hid:{def:1,att:1},run:0};}
   const uc=df(1,6,0),near=df(2,3,0),cover=df(3,-5,3),far=df(4,-8,-7);t.players=[uc,near,cover,far];PADS[0]={ti:0,ctrl:uc,lock:null,inp:{}};
   teamThink(t,1/60);assert.equal(t.press1,near);assert.notEqual(t.press2,t.press1);pressing=[];think(near,1/60);assert.equal(pressing.length,1);assert.ok(hyp(near.tx-c.x,near.tz-c.z)<2);think(t.press2,1/60);assert.ok(hyp(t.press2.tx-c.x,t.press2.tz-c.z)<3.5);assert.ok(Math.abs(t.press2.tx)<HL);
-  uc.x=c.x+dir*2;pressing=[];think(near,1/60);assert.equal(pressing.length,0); // respect a user already engaging at close range
+  uc.x=c.x+dir*2;pressing=[];think(near,1/60);assert.equal(pressing.length,1); // a nearby user no longer disables AI pressure
   c.x=gx+dir*.5;B.x=c.x;const [x,z]=boxCoverPoint(t,c,t.press2);assert.ok(Math.abs(x)<=HL-1&&Math.abs(z)<=HW-1);
   }`,ctx);
+});
+
+test('marking crosses old formation corridors and nearby AI targets no longer stay frozen',()=>{
+  const ctx=tacticsContext();
+  vm.runInContext(`for(const dir of [-1,1]){const t={i:0,dir,ment:0,inPoss:false,lastLine:.8,lineSm:(-HL+18)/HL,players:[],coverThreats:[]},o={i:1,players:[]};t.opp=o;o.opp=t;const c={team:o,x:dir*5,z:0,vx:0,vz:0},m={team:o,x:-dir*5,z:20,vx:0,vz:0},e={team:t,k:2,role:'DF',lbl:'CB',base:[-.65,-.3],x:-dir*30,z:-15,vx:0,vz:0,act:0,stun:0,vmax:maxRunSpeed(.8),stamina:1,style:'man'};t.players=[e];o.players=[c,m];t.defMarks=new Map([[e,m]]);B.owner=c;B.x=c.x;B.z=0;PADS[0]=null;const [x,z]=formTarget(e);think(e,1/60);assert.equal(e.mark,m);assert.ok(e.sx*dir>x*dir+5);assert.ok(e.sz>z+6);e.sx=e.sz=null;e.settled=true;setMove(e,e.x+dir*1.3,e.z,false,true);assert.ok(hyp(e.mx,e.mz)>0);}`,ctx);
+});
+
+test('automatic keepers stay near their goal for field play, loose balls and one-on-ones; manual movement and saves remain available',()=>{
+  const ctx=tacticsContext(part('function gkThink(e,dt)','// is a defender between')+`const D={react:.3};let saves=0,distributions=0;function nearestOpp(){return[null,10];}function gkDistribute(){distributions++;}function planSave(e){e.save={watch:true};}function gkSaveStep(){saves++;}function startSmother(){throw Error('automatic rush');}`);
+  vm.runInContext(`for(const dir of [-1,1]){const t={i:0,dir,ment:0,players:[],lastLine:0},o={i:1,players:[]};t.opp=o;o.opp=t;const gx=-dir*HL,e={team:t,k:0,isGK:true,role:'GK',x:gx+dir*12,z:0,vx:0,vz:0,act:0,actT:0,stun:0,vmax:maxRunSpeed(.8),stamina:1,ipt:.1,ipx:gx+dir*20,ipz:0,holdT:0,gkSkill:.9},field={team:t,k:1,role:'DF',lbl:'CB',base:[-.65,0],x:gx+dir*18,z:0,act:0,stun:0,ipt:4,vmax:8};t.players=[e,field];assert.ok(Math.abs((formTarget(e)[0]-gx)*dir-1.1)<1e-9);const c={team:o,x:0,z:0,vx:0,vz:0,face:-dir*PI/2};o.players=[c];PADS[0]=null;
+  for(const depth of [60,30,12,4]){c.x=gx+dir*depth;B.owner=c;B.x=c.x;B.z=5;B.shot=null;t.chaser=e;gkThink(e,1/60);assert.ok(Math.abs((e.sx-gx)*dir-1.1)<1e-9);assert.ok(e.mx*dir<0);}
+  B.owner=null;B.shot=null;B.target=null;B.lastTeam=1;B.x=gx+dir*20;B.z=0;teamThink(t,1/60);assert.notEqual(t.chaser,e);gkThink(e,1/60);assert.ok(Math.abs((e.sx-gx)*dir-1.1)<1e-9);
+  B.owner=e;B.held=true;e.holdT=.2;gkThink(e,1/60);assert.equal(e.mx,0);assert.equal(e.mz,0);e.holdT=2;gkThink(e,1/60);
+  B.owner=null;B.shot={team:1,t:G.t-2};gkThink(e,1/60);assert.ok(e.save);e.save=null;PADS[0]={ctrl:e,lock:null};e.mx=2;e.mz=3;gkThink(e,1/60);assert.equal(e.mx,2);assert.equal(e.mz,3);PADS[0]=null;
+  }assert.equal(distributions,2);assert.equal(saves,2);`,ctx);
+});
+
+function keeperContactContext(extra=''){
+  return context(`const THREE={Vector3:class{set(x,y,z){this.x=x;this.y=y;this.z=z;return this;}}};let poses=0,catches=0;function applyPose(){poses++;}function applySkinned(){poses++;}function inOwnBox(){return true;}function gainBall(e){catches++;B.owner=e;}function node(x,y,z){return{p:{x,y,z},getWorldPosition(v){v.set(this.p.x,this.p.y,this.p.z);}};}
+  function keeper(skinned=false){const e={team:{i:0,human:true},x:0,z:0,face:0,act:0,actT:0,cool:0,stun:0,isGK:true};e.rig={skinned,root:{updateMatrixWorld(){}},handL:node(0,1.2,-.42),handR:node(0,1.2,.42),bones:{hips:node(0,.95,0),sp2:node(0,1.4,0),head:node(0,1.7,0),upL:node(0,.9,-.1),lgL:node(0,.5,-.1),ftL:node(0,.08,-.1),upR:node(0,.9,.1),lgR:node(0,.5,.1),ftR:node(0,.08,.1)}};return e;}`+part('function keeperShapes(e)','function gkDistribute(e)')+extra);
+}
+
+test('no remote save for distant balls, wrong height or a predicted catch before the hands arrive',()=>{
+  const ctx=keeperContactContext();
+  vm.runInContext(`for(const skinned of [false,true]){const e=keeper(skinned);G.stats[1].onT=0;for(const [x,y,z] of [[1,1.2,.42],[0,2.7,.42],[0,2.3,0],[0,1.2,1.3]]){Object.assign(B,{x,y,z,vx:20,vy:0,vz:0,owner:null,shot:{team:1}});const before=JSON.stringify(B),sv={ok:true,catch:true,back:true,h:y,handZ:z};assert.equal(doSave(e,sv),false);assert.equal(JSON.stringify(B),before);assert.equal(sv.done,undefined);assert.equal(G.stats[1].onT,0);} }assert.equal(catches,0);`,ctx);
+});
+
+test('a high catch requires the current animated glove and body contact produces a parry instead of a magnetic catch',()=>{
+  const ctx=keeperContactContext();
+  vm.runInContext(`const e=keeper(true);G.stats[1].onT=0;Object.assign(B,{x:0,y:2.3,z:.42,vx:12,vy:0,vz:0,owner:null,shot:{team:1}});assert.equal(keeperTouch(e),null);e.rig.handR.p.y=2.3;G.t+=1/60;assert.equal(keeperTouch(e).hand,true);assert.equal(doSave(e,{catch:true}),true);assert.equal(B.owner,e);assert.equal(catches,1);
+  Object.assign(B,{x:0,y:1.2,z:0,vx:25,vy:0,vz:0,owner:null,shot:{team:1}});G.t+=1/60;assert.equal(doSave(e,{catch:true}),true);assert.equal(B.owner,null);assert.equal(catches,1);assert.ok(B.vy>0);`,ctx);
+});
+
+test('swept contact catches fast shots crossing the hands, misses real gaps, and cannot save beyond the goal line',()=>{
+  const ctx=keeperContactContext();
+  vm.runInContext(`const e=keeper();Object.assign(B,{x:2,y:1.2,z:.42,owner:null});const hit=keeperTouch(e,{x:-2,y:1.2,z:.42});assert.ok(hit&&hit.hand);assert.ok(Math.abs(hit.x)<.25);B.z=2;assert.equal(keeperTouch(e,{x:-2,y:1.2,z:2}),null);
+  e.x=HL+.5;for(const node of [e.rig.handL,e.rig.handR,...Object.values(e.rig.bones)])node.p.x=e.x;Object.assign(B,{x:e.x,y:1.2,z:.42});G.t+=1/60;assert.equal(keeperTouch(e),null);`,ctx);
+});
+
+test('the ball update resolves physical hand contact during a fast shot without a timed save',()=>{
+  const ctx=keeperContactContext(`function integ(b,dt){b.x+=b.vx*dt;b.y+=b.vy*dt;b.z+=b.vz*dt;}function ballCollide(){}`+part('function updateBall(dt)','function checkRules()'));
+  vm.runInContext(`const e=keeper();G.ents=[e];G.stats[1].onT=0;Object.assign(B,{x:-.6,y:1.2,z:.42,vx:15,vy:0,vz:0,owner:null,shot:{team:1,t:G.t},target:null});updateBall(.08);assert.equal(B.owner,e);assert.equal(catches,1);assert.equal(G.stats[1].onT,1);`,ctx);
 });
 test('league exits forfeit once; friendly exits do not, and abandoned fixtures settle in home/away orientation',()=>{
   const ctx=context(`const NET={online:false},LG={s:{}},AUTH={user:'player'};let settled=0;function hudScore(){}function bannerOff(){}function fullTime(){settled++;G.state='full';}`+part('function settleLeagueExit()','function forfeit()'));
