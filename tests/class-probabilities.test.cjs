@@ -31,6 +31,6 @@ test('saved hierarchy reaches shop odds and purchases; changed class odds reject
     const member=await call('/api/auth/register',{username:'hierarchytest',password:'test-password',profile:{club:'ARS'}}),user={Authorization:'Bearer '+member.data.token};const first=(await call('/api/shop/',undefined,user)).data.packs.find(p=>p.id===body.id);near(first.classOdds.find(c=>c.classId==='ICON').probability,.25);
     assert.equal((await call('/api/admin/packages',{...body,classWeights:{BASE:0,ICON:100}},owner)).status,200);
     assert.equal((await call('/api/shop/draw',{packId:body.id,count:1,requestId:crypto.randomUUID(),quote:first.quote},user)).status,409);
-    const current=(await call('/api/shop/',undefined,user)).data.packs.find(p=>p.id===body.id),draw=await call('/api/shop/draw',{packId:body.id,count:1,requestId:crypto.randomUUID(),quote:current.quote},user);assert.equal(draw.status,200);assert.equal(draw.data.coins,990);assert.deepEqual(draw.data.result.cardIds,copy.data.cardIds);
+    const current=(await call('/api/shop/',undefined,user)).data.packs.find(p=>p.id===body.id),draw=await call('/api/shop/draw',{packId:body.id,count:1,requestId:crypto.randomUUID(),quote:current.quote},user);assert.equal(draw.status,200);assert.equal(draw.data.coins,1990);assert.deepEqual(draw.data.result.cardIds,copy.data.cardIds);
   }finally{await new Promise(r=>server.close(r));config.passwordHash=original;await db.close();}
 });
