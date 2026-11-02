@@ -39,9 +39,9 @@ test('shop draws, authoritative wallet/inventory, administrator catalog edits an
   try{
     const seed=require('../public/data/player-catalog'),starter=seed.filter(c=>c.clubId==='ARS');
     const profile={name:'shopper',club:'ARS',team:{name:'Test',tag:'TST',kit:0,form:'4-3-3',ment:0,cards:starter.filter(c=>c.starter).map(c=>c.id),bench:starter.filter(c=>!c.starter).map(c=>c.id)},skills:{u:13,d:3,l:1,r:2},tacs:{}};
-    const reg=await call('/api/auth/register',{username:'shopper',password:'shopper-password',profile:{...profile,coins:999999}});assert.equal(reg.status,201);const bearer={Authorization:'Bearer '+reg.data.token};assert.equal(reg.data.profile.coins,1000);assert.equal(reg.data.profile.inventory.length,20);
+    const reg=await call('/api/auth/register',{username:'shopper',password:'shopper-password',profile:{...profile,coins:999999}});assert.equal(reg.status,201);const bearer={Authorization:'Bearer '+reg.data.token};assert.equal(reg.data.profile.coins,2000);assert.equal(reg.data.profile.inventory.length,20);
     assert.equal((await call('/api/shop/')).status,401);
-    let snapshot=(await call('/api/shop/',undefined,bearer)).data;assert.equal(snapshot.coins,1000);assert.equal(snapshot.inventory.reduce((n,c)=>n+c.quantity,0),20);
+    let snapshot=(await call('/api/shop/',undefined,bearer)).data;assert.equal(snapshot.coins,2000);assert.equal(snapshot.inventory.reduce((n,c)=>n+c.quantity,0),20);
     assert.deepEqual(snapshot.packs,[]);
     assert.equal((await call('/api/shop/draw',{packId:'base-silver',count:1,requestId:crypto.randomUUID(),quote:'removed'},bearer)).status,404);
     const login=await call('/api/auth/login',{username:'prieon_auth',password:'local-test-admin-password'});const owner={Cookie:login.headers.get('set-cookie').split(';')[0],'X-CSRF-Token':login.data.csrfToken};
@@ -54,9 +54,9 @@ test('shop draws, authoritative wallet/inventory, administrator catalog edits an
     assert.equal((await call('/api/shop/draw',{packId:pack.id,count:1,requestId:crypto.randomUUID(),quote:'outdated'},bearer)).status,409);
     const key=crypto.randomUUID(),body={packId:pack.id,count:3,requestId:key,quote:pack.quote};
     const [first,retry]=await Promise.all([call('/api/shop/draw',body,bearer),call('/api/shop/draw',body,bearer)]);assert.equal(first.status,200);assert.equal(retry.status,200);assert.deepEqual(first.data.result.cardIds,retry.data.result.cardIds);
-    snapshot=(await call('/api/shop/',undefined,bearer)).data;assert.equal(snapshot.coins,700);assert.equal(snapshot.inventory.reduce((n,c)=>n+c.quantity,0),23);
-    assert.equal((await call('/api/shop/draw',{...body,requestId:crypto.randomUUID(),count:10},bearer)).status,400);
-    const b=await call('/api/auth/login',{username:'shopper',password:'shopper-password'});assert.equal(b.data.profile.coins,700);assert.deepEqual(b.data.profile.inventory,snapshot.inventory);
+    snapshot=(await call('/api/shop/',undefined,bearer)).data;assert.equal(snapshot.coins,1700);assert.equal(snapshot.inventory.reduce((n,c)=>n+c.quantity,0),23);
+    await call('/api/admin/packages',{...fixturePack,id:'expensive',price:2001},owner);const expensive=(await call('/api/shop/',undefined,bearer)).data.packs.find(p=>p.id==='expensive');assert.equal((await call('/api/shop/draw',{packId:expensive.id,count:1,quote:expensive.quote,requestId:crypto.randomUUID()},bearer)).status,400);
+    const b=await call('/api/auth/login',{username:'shopper',password:'shopper-password'});assert.equal(b.data.profile.coins,1700);assert.deepEqual(b.data.profile.inventory,snapshot.inventory);
     const search=await call('/api/admin/cards?q='+encodeURIComponent('사카'),undefined,owner);assert.ok(search.data.cards.some(c=>c.name==='사카'&&c.roster.hid.read!==undefined));
     const cls={id:'TEST',name:'테스트 클래스',accent:'#e2ad65',shape:'shield',cardArt:'/assets/test-card.png',boardArt:'/assets/test-board.png',slotArt:'/assets/test-slot.png',boardName:'TEST BOARD'};
     assert.equal((await call('/api/admin/classes',cls,owner)).status,200);
@@ -69,17 +69,17 @@ test('shop draws, authoritative wallet/inventory, administrator catalog edits an
     assert.equal((await call('/api/admin/packages',special,owner)).status,200);
     assert.equal((await call('/api/admin/packages',special,bearer)).status,401);
     const specials=(await call('/api/shop/',undefined,bearer)).data.packs.find(p=>p.id===special.id);
-    const got=await call('/api/shop/draw',{packId:special.id,count:1,quote:specials.quote,requestId:crypto.randomUUID()},bearer);assert.equal(got.status,200);assert.deepEqual(got.data.result.cardIds,[card.id]);assert.equal(got.data.coins,600);
+    const got=await call('/api/shop/draw',{packId:special.id,count:1,quote:specials.quote,requestId:crypto.randomUUID()},bearer);assert.equal(got.status,200);assert.deepEqual(got.data.result.cardIds,[card.id]);assert.equal(got.data.coins,1600);
     const save=async(data,revision)=>{const r=await fetch(base+'/api/profile',{method:'PUT',headers:{...bearer,'Content-Type':'application/json'},body:JSON.stringify({profile:data,revision})});return {status:r.status,data:await r.json()};};
     const composed=structuredClone(profile);composed.team.cards[8]=card.id;
     const saved=await save({...composed,coins:99999,inventory:seed.slice(0,5).map(c=>({cardId:c.id,quantity:999}))},reg.data.revision);assert.equal(saved.status,200);
-    const next=await call('/api/me',undefined,bearer);assert.equal(next.data.profile.coins,600);assert.equal(next.data.profile.team.cards[8],card.id);assert.equal(next.data.profile.inventory.find(c=>c.cardId===card.id).quantity,1);
+    const next=await call('/api/me',undefined,bearer);assert.equal(next.data.profile.coins,1600);assert.equal(next.data.profile.team.cards[8],card.id);assert.equal(next.data.profile.inventory.find(c=>c.cardId===card.id).quantity,1);
     const duplicate=structuredClone(composed);duplicate.team.cards[7]=source.id;assert.equal((await save(duplicate,saved.data.revision)).status,400);
     assert.equal((await call('/api/shop/catalog')).data.classes.find(c=>c.id==='TEST').boardArt,cls.boardArt);
     // A published probability change invalidates an old quote before any charge.
     assert.equal((await call('/api/admin/packages',{...special,price:110},owner)).status,200);
     assert.equal((await call('/api/shop/draw',{packId:special.id,count:1,quote:specials.quote,requestId:crypto.randomUUID()},bearer)).status,409);
-    assert.equal((await call('/api/shop/',undefined,bearer)).data.coins,600);
+    assert.equal((await call('/api/shop/',undefined,bearer)).data.coins,1600);
     const now=Date.now(),iso=offset=>new Date(now+offset).toISOString(),hour=3600000;
     const upcoming={...special,id:'future-pack',startsAt:iso(hour),endsAt:iso(2*hour)};
     const ended={...special,id:'ended-pack',startsAt:iso(-2*hour),endsAt:iso(-hour)};
@@ -90,15 +90,15 @@ test('shop draws, authoritative wallet/inventory, administrator catalog edits an
       const p=timedShop.packs.find(p=>p.id===id);assert.equal(p.available,false);assert.equal(p.period,state);assert.equal(p.odds[0].probability,1);
       assert.equal((await call('/api/shop/draw',{packId:id,count:1,quote:p.quote,requestId:crypto.randomUUID(),startsAt:iso(-hour),endsAt:iso(hour)},bearer)).status,409);
     }
-    assert.equal((await call('/api/shop/',undefined,bearer)).data.coins,600);
+    assert.equal((await call('/api/shop/',undefined,bearer)).data.coins,1600);
     assert.equal((await call('/api/admin/packages',{...special,id:'bad-time',startsAt:iso(hour),endsAt:iso(-hour)},owner)).status,400);
     const active={...special,id:'active-pack',startsAt:iso(-2*hour),endsAt:iso(hour)};
     assert.equal((await call('/api/admin/packages',active,owner)).status,200);
     const activeSnapshot=(await call('/api/shop/',undefined,bearer)).data.packs.find(p=>p.id===active.id);assert.equal(activeSnapshot.available,true);
     const activeRequest={packId:active.id,count:1,quote:activeSnapshot.quote,requestId:crypto.randomUUID()};
-    const activeDraw=await call('/api/shop/draw',activeRequest,bearer);assert.equal(activeDraw.status,200);assert.equal(activeDraw.data.coins,500);
+    const activeDraw=await call('/api/shop/draw',activeRequest,bearer);assert.equal(activeDraw.status,200);assert.equal(activeDraw.data.coins,1500);
     assert.equal((await call('/api/admin/packages',{...active,endsAt:iso(-1000)},owner)).status,200);
-    const expiredRetry=await call('/api/shop/draw',activeRequest,bearer);assert.equal(expiredRetry.status,200);assert.equal(expiredRetry.data.coins,500);assert.deepEqual(expiredRetry.data.result,activeDraw.data.result);
+    const expiredRetry=await call('/api/shop/draw',activeRequest,bearer);assert.equal(expiredRetry.status,200);assert.equal(expiredRetry.data.coins,1500);assert.deepEqual(expiredRetry.data.result,activeDraw.data.result);
     assert.equal((await call('/api/shop/draw',{...activeRequest,requestId:crypto.randomUUID()},bearer)).status,409);
     // Migrate an old automatic package without resetting other packages, coins or owned cards.
     assert.equal((await call('/api/admin/packages',{...fixturePack,id:'base-silver'},owner)).status,200);

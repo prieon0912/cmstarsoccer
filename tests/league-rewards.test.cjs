@@ -38,11 +38,11 @@ test('league API calculates the rank, credits once across retries and isolates a
     assert.equal((await call('/api/league/finish',body,second.data.token)).status,404);
     const draws=await Promise.all([call('/api/league/finish',body,token),call('/api/league/finish',body,token)]);
     assert.ok(draws.every(d=>d.status===200));assert.deepEqual(draws[0].data.result,{seasonId:season.seasonId,rank:10,amount:20});
-    assert.equal((await call('/api/me',undefined,token)).data.profile.coins,1020);
-    assert.equal((await call('/api/league/finish',{seasonId:season.seasonId},token)).data.coins,1020);
+    assert.equal((await call('/api/me',undefined,token)).data.profile.coins,2020);
+    assert.equal((await call('/api/league/finish',{seasonId:season.seasonId},token)).data.coins,2020);
     const low={seasonId:crypto.randomUUID(),club:19,seed:4,custom:false};await call('/api/league/start',low,token);
     assert.equal((await call('/api/league/finish',{seasonId:low.seasonId,results:resultsFor(low)},token)).data.result.amount,0);
-    assert.equal((await call('/api/me',undefined,token)).data.profile.coins,1020);
+    assert.equal((await call('/api/me',undefined,token)).data.profile.coins,2020);
     const owner=await db.adminByName('prieon_auth');await db.addAdminSession('test-admin-session',owner.id,new Date(Date.now()+60000));
     assert.equal(await db.clearUsers(),2);assert.equal((await db.adminOverview()).users,0);assert.ok(await db.adminSession('test-admin-session'));
     assert.equal((await call('/api/me',undefined,token)).status,401);assert.equal(await db.getLeague(first.data.user.id||1,season.seasonId),null);
