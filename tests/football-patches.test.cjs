@@ -55,7 +55,7 @@ test('special-move wrong-foot probability and recovery reflect dribbling, defend
   vm.runInContext(`Math.random=()=>.5;const d={x:0,z:2,off:false,stun:0,act:0,st:{tackle:.55,drib:.5,pace:.5},stamina:1,tackleCd:0},t={i:0,opp:{players:[d]}},c={x:0,z:0,team:t,sk:{f0:0},st:{drib:.99},stars:3};skillBeat(c,3,0,.6,0);assert.ok(d.stun>.6);d.stun=0;d.st.tackle=.99;c.st.drib=.5;skillBeat(c,3,0,.6,0);assert.equal(d.stun,0);
   Math.random=()=>.01;c.st.drib=.85;d.st.tackle=.75;d.st.drib=d.st.pace=.4;skillBeat(c,3,0,.6,0);const slow=d.stun;d.stun=0;d.st.drib=d.st.pace=.99;skillBeat(c,3,0,.6,0);assert.ok(d.stun<slow);`,ctx);
 });
-test('standing tackles retain ordinary strength but ease off during shot windup and just after a duel win',()=>{
+test('standing tackles are stronger while shot windup and recent duel wins remain protected',()=>{
   const ctx=context(`let attempts=0;function tryTackle(){attempts++;}`+part('function standTackles(t,dt)','/* physical duels */'));
   vm.runInContext(`const team={i:1,dir:-1,human:true,players:[]},c={x:0,z:0,face:0,team:{i:0},act:0},d={x:0,z:1.7,face:PI,st:{tackle:.8},hid:{press:'aggr',read:1},act:0,stun:0,tackleCd:0};team.players=[d];B.owner=c;B.z=.7;B.held=false;function count(wind){attempts=0;c.kick=wind?{}:null;for(let i=0;i<1000;i++){d.tackleCd=0;Math.random=()=>i/1000;standTackles(team,1/60);}return attempts;}const plain=count(false),shot=count(true);assert.ok(plain>0&&shot<plain*.5);c.duelGuardUntil=G.t+.55;assert.ok(count(false)<plain*.35);G.t+=.56;assert.equal(count(false),plain);d.z=2.6;assert.equal(count(false),0);`,ctx);
 });
@@ -69,6 +69,32 @@ test('a contested loose-ball winner receives a short recovery window even on a t
   vm.runInContext(`const team={i:0,players:[]},other={i:1,players:[]};team.opp=other;other.opp=team;const e={team,x:.2,z:0,st:{phy:1,pace:.9},cool:0,stun:0,act:0},o={team:other,x:.7,z:0,st:{phy:.3,pace:.4},cool:0,stun:0,act:0};team.players=[e];other.players=[o];B.y=BR;B.x=B.z=0;B.lastTeam=0;Math.random=()=>.5;assert.equal(fiftyFifty(e,1),e);assert.equal(e.duelWonAt,G.t);assert.ok(e.duelGuardUntil>G.t+.5);`,ctx);
 });
 function tacticsContext(extra=''){return context(part('const PI=','/* ================= renderer & scene').replace(part('const PI=','function seeded'),'').replace(part('const ACT=','// skill moves:'),'')+part('function toW(t,','function carrierThink(e,dt)')+'function ownGoalX(t){return-t.dir*HL;}'+extra);}
+
+test('stopped PK and result poses do not independently track the moving ball with the neck',()=>{
+  const ctx=context(part('function headLook(e,','function locoPose(e,P,dt)'));
+  vm.runInContext(`const e={x:0,z:0,face:PI-.01,hy:.9,hx:.3};for(const state of ['setpiece','full','half','paused','out','foul','replay']){G.state=state;for(let i=0;i<120;i++){B.x=Math.sin(i)*10;B.z=Math.cos(i)*10;const [x,y]=headLook(e,0,.2,STEP);assert.equal(x,0);assert.equal(y,0);assert.equal(e.face,PI-.01);}}G.state='play';B.x=-.1;B.z=-10;for(let i=0;i<30;i++){const [x,y]=headLook(e,0,0,STEP);assert.ok(Math.abs(y)<.04);assert.ok(Number.isFinite(x));}B.x=10;B.z=0;for(let i=0;i<120;i++){const [,y]=headLook(e,0,0,STEP);assert.ok(Math.abs(y)<=1);}`,ctx);
+});
+
+test('standing tackles win a clean contact more often without extending the foot hit area',()=>{
+  const ctx=context(`function gainBall(e){B.owner=e;}function callFoul(){}`+part('const POKE_HIT=','function callFoul('));
+  vm.runInContext(`const d={x:0,z:1.2,face:PI,st:{tackle:.8,phy:.8},team:{i:1}},c={x:0,z:0,face:0,st:{drib:.8,phy:.8},team:{i:0},act:0};G.stats[1].tack=0;B.owner=c;B.x=0;B.z=.7;Math.random=()=>.54;assert.equal(resolvePoke(d,c,0),true);assert.equal(B.owner,d);B.owner=c;d.z=2.6;assert.equal(resolvePoke(d,c,0),false);assert.equal(B.owner,c);assert.ok(d.stun>0);`,ctx);
+});
+
+test('AI off-ball movement stays on the pitch at every edge and recovers from outside without snapping',()=>{
+  const ctx=context(`function actEnd(){return 99;}`+part('function movementAgility(e)','function separate()'));
+  vm.runInContext(`for(const axis of ['x','z'])for(const sign of [-1,1]){const e={team:{i:0},x:0,z:0,mx:0,mz:0,vx:0,vz:0,face:axis==='x'?sign*PI/2:sign>0?0:PI,vmax:9,stamina:1,st:{drib:.8,pace:.8},act:0,stun:0,cool:0,tackleCd:0,phase:0};e[axis]=sign*(axis==='x'?HL-1:HW-1);e[axis==='x'?'vx':'vz']=sign*9;B.owner={team:{i:0}};for(let i=0;i<180;i++){e.mx=axis==='x'?sign*9:2;e.mz=axis==='z'?sign*9:2;moveEnt(e,STEP);assert.ok(Math.abs(e.x)<=HL-.35+1e-9);assert.ok(Math.abs(e.z)<=HW-.35+1e-9);}e[axis]=sign*((axis==='x'?HL:HW)+1);const before=e[axis];e.vx=e.vz=0;for(let i=0;i<240;i++){e.mx=e.mz=0;const old=e[axis];moveEnt(e,STEP);assert.ok(Math.abs(e[axis]-old)<=e.vmax*STEP+1e-9);}assert.ok(Math.abs(e[axis])<Math.abs(before));assert.ok(Math.abs(e[axis])<(axis==='x'?HL:HW));}
+  const manual={team:{i:0},x:HL-.1,z:0,mx:9,mz:0,vx:9,vz:0,vmax:9,act:0};PADS[0]={ctrl:manual,lock:null};steerOffBall(manual);assert.equal(manual.mx,9);PADS[0]=null;B.owner=manual;steerOffBall(manual);assert.equal(manual.mx,9);B.owner=null;G.state='setpiece';steerOffBall(manual);assert.equal(manual.mx,9);`,ctx);
+});
+
+test('forward support runs react faster and remain free across the full pitch',()=>{
+  const ctx=tacticsContext();
+  vm.runInContext(`const t={i:0,dir:1,players:[]},o={i:1,players:[]};t.opp=o;o.opp=t;B.x=0;B.z=0;B.owner={team:t,x:0,z:0};const fw={team:t,role:'FW',lbl:'CF',x:-15,z:0,vmax:9,stamina:1,mx:0,mz:0,base:[0,0]},mf={...fw,role:'MF',lbl:'CM'};setMove(fw,-3,0,false,false);setMove(mf,-3,0,false,false);assert.ok(hyp(fw.mx,fw.mz)>hyp(mf.mx,mf.mz));for(const [x,z] of [[30,25],[-30,-25],[40,-20]]){setMove(fw,x,z,true,false);assert.ok(fw.mx*(x-fw.x)+fw.mz*(z-fw.z)>0);assert.ok(hyp(fw.mx,fw.mz)>7);}assert.equal(typeof formationLane,'undefined');`,ctx);
+});
+
+test('body separation cannot push an AI off-ball runner over the touchline',()=>{
+  const ctx=context(part('function aiOffBall(e)','function moveEnt(e,dt)')+part('function separate()','function refThink(r)'));
+  vm.runInContext(`for(const axis of ['x','z'])for(const sign of [-1,1]){const limit=axis==='x'?HL:HW,t={i:0},a={team:t,x:0,z:0,st:{phy:.5},vmax:9},b={team:t,x:0,z:0,st:{phy:.9},vmax:9};a[axis]=sign*(limit-.36);b[axis]=sign*(limit-.8);G.ents=[a,b];separate();assert.ok(Math.abs(a[axis])<=limit-.35+1e-9);assert.ok(Math.abs(b[axis])<=limit-.35+1e-9);}`,ctx);
+});
 
 test('attacking support is free to overlap, advance and change lanes again',()=>{
   const ctx=tacticsContext();
@@ -158,7 +184,7 @@ test('keeper dive and sideways tracking remain speed-bounded instead of teleport
 });
 
 test('a crowded goalmouth cannot displace the keeper by a large body-collision jump in one step',()=>{
-  const ctx=context(part('function separate()','function refThink(r)'));
+  const ctx=context(part('function aiOffBall(e)','function moveEnt(e,dt)')+part('function separate()','function refThink(r)'));
   vm.runInContext(`const e={isGK:true,x:0,z:0,vmax:8,st:{phy:.8}},others=Array.from({length:8},(_,i)=>({x:.05+i*.025,z:0,st:{phy:.8}}));G.ents=[e,...others];separate();assert.ok(hyp(e.x,e.z)<=8*STEP*.6+1e-9);assert.ok(others.some(p=>p.x>.3));`,ctx);
 });
 

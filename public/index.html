@@ -1499,6 +1499,15 @@ function actEnd(e){
     default:return ACT_LIM[e.act]||0.5;
   }
 }
+// Rendering continues during stoppages, so ball tracking must stop explicitly.
+function headLook(e,bodyYaw,bodyLean,dt){
+  if(G.state!=='play'||e.off){e.hy=e.hx=0;return[0,0];}
+  const dx=B.x-e.x,dz=B.z-e.z,d=hyp(dx,dz);let hy=0,hx=0;
+  if(d>0.4){hy=clamp(angD(e.face,Math.atan2(dx,dz))-bodyYaw,-1.0,1.0);hx=clamp((1.5-B.y)/Math.max(2.5,d)*0.9,-0.35,0.4);}
+  if(B.owner===e){hy*=0.3;hx=0.45;}
+  const k=Math.min(1,(dt||0)*7);e.hy=lerp(e.hy||0,hy,k);e.hx=lerp(e.hx||0,hx-bodyLean*0.7,k);
+  return[e.hx,e.hy];
+}
 function locoPose(e,P,dt){
   const fx=Math.sin(e.face),fz=Math.cos(e.face);
   const sp=hyp(e.vx,e.vz),vf=e.vx*fx+e.vz*fz,vl=e.vx*fz-e.vz*fx;
@@ -1550,12 +1559,7 @@ function locoPose(e,P,dt){
   if(gk){P[ALX]=lerp(P[ALX],-0.8,rd);P[ARX]=lerp(P[ARX],-0.8,rd);P[ALZ]=lerp(P[ALZ],0.42,rd);P[ARZ]=lerp(P[ARZ],-0.42,rd);P[EL]=lerp(P[EL],-1.3,rd);P[ER]=lerp(P[ER],-1.3,rd);}
   else{P[ALZ]+=rd*0.3;P[ARZ]-=rd*0.3;P[EL]-=rd*0.4;P[ER]-=rd*0.4;}
   if(mov<0.15){const b=Math.sin(G.t*2.1+e.i*1.3)*0.02;P[ALZ]+=b;P[ARZ]-=b;P[SX]+=b*0.3;}
-  // head tracks the ball and stays level when the trunk leans
-  let hy=0,hx=0;
-  if(bd>0.4){hy=clamp(angD(e.face,Math.atan2(bdx,bdz))-P[SY]-P[PRY],-1.1,1.1);hx=clamp((1.5-B.y)/Math.max(2.5,bd)*0.9,-0.35,0.4);}
-  if(B.owner===e){hy*=0.3;hx=0.45;}
-  e.hy=lerp(e.hy||0,hy,Math.min(1,(dt||0)*7));
-  P[HY]=e.hy;P[HX]=hx-P[SX]*0.7;
+  const look=headLook(e,P[SY]+P[PRY],P[SX],dt);P[HX]=look[0];P[HY]=look[1];
 }
 function actionPose(e,P){
   const t=e.actT;
@@ -2351,7 +2355,7 @@ function resolvePoke(d,c,bonus){
     if(hyp(c.x-footX,c.z-footZ)<0.55&&Math.random()<(dot<-0.3?0.6:0.18)){callFoul(d,c,dot<-0.3?'behind':'trip');return false;}
     d.act=ACT.STUMBLE;d.actT=0;d.stun=0.38;d.tackleCd=0.9;d.poke=null;return false;
   }
-  let p=0.5+(d.st.tackle-c.st.drib)*0.9-(dist>0.4?0.1:0)+(bonus||0);
+  let p=0.58+(d.st.tackle-c.st.drib)*0.95-(dist>0.4?0.1:0)+(bonus||0);
   if(d.isGK)p=0.55*d.gkSkill+0.1;
   if(dot<-0.3)p-=0.15;
   // shielding: coming from the side or behind, strength decides as much as timing
@@ -2458,7 +2462,7 @@ function standTackles(t,dt){
     // (he turns into the lunge, but not from facing away: his body has to be open to the ball)
     if(Math.abs(angD(d.face,Math.atan2(B.x-d.x,B.z-d.z)))>1.6)continue;
     const h=d.hid||{press:'contain',read:1};
-    let rate=(1.15+exp*2.8+turned*0.8+trap*1.9)*(c.kick?0.25:1)*((c.duelGuardUntil||0)>G.t?0.2:1);
+    let rate=(1.45+exp*3.1+turned*0.9+trap*2.0)*(c.kick?0.25:1)*((c.duelGuardUntil||0)>G.t?0.2:1);
     rate*=(h.press==='aggr'?1.3:0.85)*(0.7+0.3*(h.read??1))*(0.6+d.st.tackle*0.6)*(dot>0.4?1.35:0.9)*(db>1.4?0.6:1);
     if(!t.human&&!NET.online)rate*=D.tackle/1.25;
     if(d===uc)rate*=1.4;
@@ -2807,12 +2811,12 @@ function teamThink(t,dt){
   // the cue to go: the man on the ball has time and is facing forward, so a pass can be played
   if(B.owner&&B.owner.team===t&&!B.owner.isGK){
     const c=B.owner,[,cn]=nearestOpp(c),bx=c.x*t.dir/HL,fwd=Math.sin(c.face)*t.dir;
-    if(cn>2.4&&fwd>0.2&&t.players.filter(p=>p.run>0).length<(bx>0.3?3:2)&&Math.random()<dt*(bx>0.3?2.4:1.6)){
+    if(cn>1.7&&fwd>-0.1&&t.players.filter(p=>p.run>0).length<(bx>0.3?3:2)&&Math.random()<dt*(bx>0.3?3.1:2.2)){
       const cand=t.players.filter(p=>p!==c&&!p.off&&!p.isGK&&!(p.run>0)&&!((p.runCd||0)>G.t)&&(!p.hid||p.hid.att>0||!BACKS.has(p.lbl))&&(
-        ((p.lbl==='ST'||WIDE.has(p.lbl))&&bx>-0.45)||((p.lbl==='CM'||p.lbl==='CAM')&&bx>0.05)||
+        ((p.role==='FW'||WIDE.has(p.lbl))&&bx>-0.55)||((p.lbl==='CM'||p.lbl==='CAM')&&bx>0.05)||
         (BACKS.has(p.lbl)&&bx>-0.1&&Math.sign(p.base[1])===(Math.sign(c.z*t.dir)||1))));
       // runners go far more often than players who like the ball to feet
-      if(cand.length){const w=cand.map(p=>{const h=p.hid;return h?(h.run==='runner'?2.2:h.run==='link'?0.5:1)*(h.att+0.5):1;});
+      if(cand.length){const w=cand.map(p=>{const h=p.hid;return (p.role==='FW'?1.35:1)*(h?(h.run==='runner'?2.2:h.run==='link'?0.7:1)*(h.att+0.5):1);});
         let r=Math.random()*w.reduce((a,b)=>a+b,0),i=0;while(i<cand.length-1&&(r-=w[i])>0)i++;
         const p=cand[i];p.run=rnd(2.4,3.6);p.runCd=G.t+p.run+rnd(1.5,3);}
     }
@@ -2870,7 +2874,7 @@ function setMove(e,tx,tz,sprint,smooth){
     }else if(e.team&&!e.isGK&&B.owner&&B.owner.team===e.team){
       // attacking: the closer the ball gets to their goal, the harder the runs into the box
       const og=hyp(B.x+ownGoalX(e.team),B.z),threat=clamp(1-(og-16)/40,0,1);
-      sp=Math.max(sp,d>3?e.vmax*(0.45+0.35*threat):e.vmax*0.3);ease=Math.max(ease,0.75+0.8*threat);
+      const forward=e.role==='FW'||WIDE.has(e.lbl);sp=Math.max(sp,d>3?e.vmax*((forward?0.60:0.45)+0.35*threat):e.vmax*(forward?0.4:0.3));ease=Math.max(ease,(forward?1.2:0.75)+0.8*threat);
     }
     const want=Math.min(sp,d*ease+0.3);
     e.mx=d>0.001?dx/d*want:0;e.mz=d>0.001?dz/d*want:0;e.sprint=(sprint||e.sprintReq)&&want>e.vmax*0.75;e.sprintReq=false;
@@ -2951,9 +2955,9 @@ function think(e,dt){
       let [sx,sz]=supportSpot(e);
       // players who like it to feet come short to receive in front of the defence rather than sit on the last man
       if(e.hid&&e.hid.run==='link'&&!(e.run>0)&&(e.lbl==='ST'||e.lbl==='CAM'||WIDE.has(e.lbl))&&B.x*dir/HL>-0.3&&B.x*dir/HL<0.55)sx-=dir*4.5;
-      [e.spX,e.spZ]=e.run>0?[sx,sz]:findSpace(e,sx,sz);e.spRun=e.run>0;
+      [e.spX,e.spZ]=findSpace(e,sx,sz);e.spRun=e.run>0;
       // keep the spot a moment longer than before: fewer second thoughts, steadier runs
-      e.spT=G.t+0.42+Math.random()*0.2;
+      e.spT=G.t+(e.role==='FW'||WIDE.has(e.lbl)?0.28:0.42)+Math.random()*0.16;
     }
     setMove(e,e.spX,e.spZ,e.run>0||hyp(e.spX-e.x,e.spZ-e.z)>9,!(e.run>0));return;
   }
@@ -3350,6 +3354,28 @@ function faceUpdate(e,dt,sp){
   if(target==null&&B.owner!==e&&hyp(B.x-e.x,B.z-e.z)>0.6)target=Math.atan2(B.x-e.x,B.z-e.z);
   if(target==null){e.turnRate=0;return;}const turn=lerp(6,13,movementAgility(e)),delta=clamp(angD(e.face,target),-turn*dt,turn*dt);e.face+=delta;e.turnRate=delta/Math.max(dt,1e-3);
 }
+// Pitch-edge steering only: no formation lanes, role zones or line caps.
+function aiOffBall(e){
+  if(G.state!=='play'||!e.team||e.off||e.isGK||B.owner===e||e.act||e.stun>0)return false;
+  const pd=padOf(e.team);return !(pd&&pd.ctrl===e&&!pd.lock);
+}
+function steerOffBall(e){
+  if(!aiOffBall(e))return;
+  for(const [pos,move,vel,limit] of [['x','mx','vx',HL],['z','mz','vz',HW]]){
+    const sign=Math.sign(e[pos])||1,out=Math.max(0,(e[vel]||0)*sign),distance=limit-0.35-Math.abs(e[pos]),margin=1.0+out*0.42+out*out/30;
+    if(distance<margin&&((e[move]||0)*sign>0||out>0.2||distance<0)){
+      e[move]=-sign*Math.min(e.vmax,Math.max(2.5,(margin-distance)*2));e.settled=false;e.strafe=false;e.faceTgt=null;
+    }
+  }
+  const v=hyp(e.mx,e.mz);if(v>e.vmax){e.mx*=e.vmax/v;e.mz*=e.vmax/v;}
+}
+function containOffBall(e,oldX,oldZ){
+  if(!aiOffBall(e))return;
+  for(const [pos,vel,previous,limit] of [['x','vx',oldX,HL-0.35],['z','vz',oldZ,HW-0.35]]){
+    // New crossings stop at the edge; players already outside run back without teleporting.
+    if(Math.abs(previous)<=limit&&Math.abs(e[pos])>limit){e[pos]=Math.sign(e[pos])*limit;if(e[vel]*e[pos]>0)e[vel]=0;}
+  }
+}
 function moveEnt(e,dt){
   if(e.off){e.vx=e.vz=0;e.speed=0;return;}
   if(e.cool>0)e.cool-=dt;if(e.tackleCd>0)e.tackleCd-=dt;
@@ -3364,8 +3390,9 @@ function moveEnt(e,dt){
   else if(e.act===ACT.POKE&&e.poke)pokeStep(e,dt);
   else if(e.save&&!e.save.watch){/* keeper spring: velocity is driven by gkSaveStep */}
   else if(e.stun>0||e.act===ACT.FALL||e.act===ACT.DIVE){if(e.stun>0)e.stun-=dt;const k=Math.exp(-5*dt);e.vx*=k;e.vz*=k;}
-  else locomote(e,dt);
-  e.x+=e.vx*dt;e.z+=e.vz*dt;
+  else{steerOffBall(e);locomote(e,dt);}
+  const oldX=e.x,oldZ=e.z;
+  e.x+=e.vx*dt;e.z+=e.vz*dt;containOffBall(e,oldX,oldZ);
   e.x=clamp(e.x,-HL-3.5,HL+3.5);e.z=clamp(e.z,-HW-2.8,HW+2.8);
   const sp=hyp(e.vx,e.vz),vf=e.vx*Math.sin(e.face)+e.vz*Math.cos(e.face);
   // cadence from distance covered; the cycle runs backwards when backpedalling, and turning on the spot takes small steps
@@ -3376,12 +3403,13 @@ function moveEnt(e,dt){
   faceUpdate(e,dt,sp);
 }
 function separate(){
-  const ps=G.ents,keepers=ps.filter(e=>e.isGK&&!e.off).map(e=>({e,x:e.x,z:e.z}));
+  const ps=G.ents,field=ps.filter(aiOffBall).map(e=>({e,x:e.x,z:e.z})),keepers=ps.filter(e=>e.isGK&&!e.off).map(e=>({e,x:e.x,z:e.z}));
   for(let i=0;i<ps.length;i++)for(let j=i+1;j<ps.length;j++){
     const a=ps[i],b=ps[j];if(a.off||b.off)continue;const dx=b.x-a.x,dz=b.z-a.z,d2=dx*dx+dz*dz;
     // bodies overlap: the stronger man gives less ground
     if(d2<CONTACT.body*CONTACT.body&&d2>1e-6){const d=Math.sqrt(d2),p=(CONTACT.body-d)*0.7,nx=dx/d,nz=dz/d,wa=0.6+(a.st?a.st.phy||0.75:0.75),wb=0.6+(b.st?b.st.phy||0.75:0.75),ka=wb/(wa+wb),kb=wa/(wa+wb);a.x-=nx*p*ka;a.z-=nz*p*ka;b.x+=nx*p*kb;b.z+=nz*p*kb;}
   }
+  for(const {e,x,z}of field)containOffBall(e,x,z);
   for(const {e,x,z}of keepers){const dx=e.x-x,dz=e.z-z,d=hyp(dx,dz),limit=(e.vmax||8)*STEP*0.6;if(d>limit){e.x=x+dx/d*limit;e.z=z+dz/d*limit;}}
 }
 function refThink(r){
@@ -4227,7 +4255,7 @@ function stopMatchMotion(){
   for(const e of G.ents){
     e.vx=e.vz=e.mx=e.mz=e.speed=e.turnRate=0;
     e.act=e.actT=e.actD=e.ap1=e.ap2=e.ap3=0;
-    e.kick=e.sk=e.save=e.aimFace=e.faceTgt=null;e.sprint=e.strafe=false;e.yawL=0;
+    e.kick=e.sk=e.save=e.aimFace=e.faceTgt=null;e.sprint=e.strafe=false;e.yawL=e.hy=e.hx=0;e.pFace=e.face;e.turnV=e.accS=0;
   }
   B.vx=B.vy=B.vz=B.spin=0;
   for(const pd of PADS)if(pd){pd.lock=pd.queue=null;clearEdges(pd.inp);}
